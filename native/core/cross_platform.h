@@ -1,5 +1,5 @@
 /**
- * @file cross_platform.h(utils)
+ * @file cross_platform.h(native/core)
  * @author senyun.yao
  * @brief
  * @version 0.1

@@ -1,5 +1,5 @@
 /**
- * @file utilize.hpp
+ * @file utilize.hxx(native)
  * @author senyun.yao
  * @brief C++ 本地方法导出模块（公共模块）
  * @brief native export module, common module
@@ -14,7 +14,7 @@
 #ifndef __DTY_COMMON_NATIVE_CORE_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_CORE_H_PLUS_PLUS__
 
-#include"./cross_platform.h"
-#include"./utilize.hh"
+#include"./core/cross_platform.h"
+#include"./core/utilize.hh"
 
 #endif // !__DTY_COMMON_NATIVE_H_PLUS_PLUS__

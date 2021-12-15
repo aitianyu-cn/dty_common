@@ -1,5 +1,5 @@
 /**
- * @file utilize.h(utils)
+ * @file utilize.h(native/core)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -100,9 +100,11 @@ __CMODE__
 {
 #endif // !__cplusplus && __CMODE__ {
 
+    // pure C mode
+
 #pragma region redefine for base data type
-    // 无符号字符 数据类型
-    typedef      unsigned char __VARIABLE__ uchar;
+// 无符号字符 数据类型
+typedef      unsigned char __VARIABLE__ uchar;
 // 有符号字节 数据类型
 typedef        signed char __VARIABLE__ sbyte;
 // 无符号字节 数据类型
