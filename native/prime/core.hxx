@@ -14,7 +14,15 @@
 #ifndef __DTY_COMMON_NATIVE_CORE_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_CORE_H_PLUS_PLUS__
 
-#include"./core/cross_platform.h"
-#include"./core/utilize.hh"
+#include"./core/internal.h"
+
+#ifdef __cplusplus
+
+#include "./core/property.hpp"
+#include "./core/error.hpp"
+#include "./core/pointer.hpp"
+#include "./core/event.hpp"
+
+#endif // !__cplusplus
 
 #endif // !__DTY_COMMON_NATIVE_H_PLUS_PLUS__

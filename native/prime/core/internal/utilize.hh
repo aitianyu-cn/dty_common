@@ -11,8 +11,8 @@
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_CORE_UTILIZE_HH__
-#define __DTY_COMMON_NATIVE_CORE_UTILIZE_HH__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__
 
 #ifndef __cplusplus
 #error only develop for C++
@@ -65,68 +65,4 @@
 
 constexpr auto null = nullptr;
 
-namespace dty
-{
-    template<class T>
-    class ReadOnlyProp
-    {
-        __PUB__ typedef T __VARIABLE__(__POINTER__ PropertyGetDelegate)();
-
-        __PRI__ PropertyGetDelegate __VARIABLE__ _Getter;
-
-        __PUB__ ReadOnlyProp(PropertyGetDelegate __VARIABLE__ getDelegate)
-        {
-            this->_Getter = getDelegate;
-        }
-        __PUB__ virtual ~ReadOnlyProp() { }
-
-        __PUB__ T __VARIABLE__ Get()
-        {
-            return this->_Getter();
-        }
-    };
-    template<class T>
-    class WriteOnlyProp
-    {
-        __PUB__ typedef void __VARIABLE__(__POINTER__ PropertySetDelegate)(T __VARIABLE__ value);
-
-        __PRI__ PropertySetDelegate __VARIABLE__ _Setter;
-
-        __PUB__ WriteOnlyProp(PropertySetDelegate __VARIABLE__ setDelegate)
-        {
-            this->_Getter = setDelegate;
-        }
-        __PUB__ virtual ~WriteOnlyProp() { }
-
-        __PUB__ void __VARIABLE__ Set(T __VARIABLE__ value)
-        {
-            this->_Setter(value);
-        }
-    };
-    template<class T>
-    class Property final :
-        public ReadOnlyProp<T>,
-        public WriteOnlyProp<T>
-    {
-        __PRI__ T __VARIABLE__ _Elem;
-
-        __PUB__ Property() :
-            ReadOnlyProp<T>(this->InternalGet),
-            WriteOnlyProp<T>(this->InternalSet),
-            _Elem()
-        { }
-        __PUB__ virtual ~Property() { }
-
-        __PUB__ T __VARIABLE__ InternalGet()
-        {
-            return this->_Elem;
-        }
-        __PUB__ void __VARIABLE__ InternalSet(T __VARIABLE__ value)
-        {
-            this->_Elem = value;
-        }
-    };
-
-}
-
-#endif // !__DTY_COMMON_NATIVE_CORE_UTILIZE_HH__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__

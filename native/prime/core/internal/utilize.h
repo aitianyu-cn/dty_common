@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_CORE_UTILIZE_H__
-#define __DTY_COMMON_NATIVE_CORE_UTILIZE_H__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
 
  // 字符类型有符号数最小值
 #define __SIGNED_CHAR_MIN__     (-128)
@@ -156,4 +156,4 @@ typedef      unsigned char __VARIABLE__ bool;
 typedef
 #endif // !__cplusplus }
 
-#endif // !__DTY_COMMON_NATIVE_CORE_UTILIZE_H__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
