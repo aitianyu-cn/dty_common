@@ -12,8 +12,7 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_ASYNC_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_ASYNC_H_PLUS_PLUS__
 
-#include "./core/internal.h"
-#include "./core/error.hpp"
+#include "./core.hxx"
 
 namespace dty
 {
@@ -22,26 +21,6 @@ namespace dty
         Unknown,
         Success,
         Failure,
-    };
-
-    class AsyncConsequence final
-    {
-        __PRI__ bool       __POINTER__  _IsCompleted;
-        __PRI__ AsyncState __POINTER__  _State;
-
-        __PRI__ int32      __POINTER__  _Reference;
-
-        __PRI__ bool       __VARIABLE__ _IsOwner;
-
-        __PUB__ AsyncConsequence();
-        __PUB__ AsyncConsequence(AsyncConsequence __REFERENCE__ other);
-        __PUB__ ~AsyncConsequence();
-
-        __PUB__ bool       __VARIABLE__ IsCompleted();
-        __PUB__ AsyncState __VARIABLE__ GetState();
-
-        __PUB__ void       __VARIABLE__ SetState(AsyncState __VARIABLE__ state);
-        __PUB__ void       __VARIABLE__ SetComplete();
     };
 
     template<class T>

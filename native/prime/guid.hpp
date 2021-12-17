@@ -13,12 +13,59 @@
 #define __DTY_COMMON_NATIVE_PRIME_GUID_H_PLUS_PLUS__
 
 #include "./core.hxx"
+#include "./string.hpp"
 
 namespace dty
 {
     class Guid final : public virtual dty::collection::IEquatable<dty::Guid>,
         public virtual dty::collection::ICompareable<dty::Guid>
     {
+        __PRI__::byte __VARIABLE__ _Guid[dty_native_id_default_size];
+
+        __PUB__ Guid(::byte __VARIABLE__ b[dty_native_id_default_size]);
+        __PUB__ Guid(String __VARIABLE__ g);
+        __PUB__ Guid
+        (
+            int32  __VARIABLE__ a,
+            int16  __VARIABLE__ b,
+            int16  __VARIABLE__ c,
+            ::byte __VARIABLE__ d,
+            ::byte __VARIABLE__ e,
+            ::byte __VARIABLE__ f,
+            ::byte __VARIABLE__ g,
+            ::byte __VARIABLE__ h,
+            ::byte __VARIABLE__ i,
+            ::byte __VARIABLE__ j,
+            ::byte __VARIABLE__ k
+        );
+        __PUB__ Guid
+        (
+            uint32 __VARIABLE__ a,
+            uint16 __VARIABLE__ b,
+            uint16 __VARIABLE__ c,
+            ::byte __VARIABLE__ d,
+            ::byte __VARIABLE__ e,
+            ::byte __VARIABLE__ f,
+            ::byte __VARIABLE__ g,
+            ::byte __VARIABLE__ h,
+            ::byte __VARIABLE__ i,
+            ::byte __VARIABLE__ j,
+            ::byte __VARIABLE__ k
+        );
+        __PUB__ Guid(Guid __REFERENCE__ other);
+        __PUB__ ~Guid();
+
+        __PUB__ Guid __VARIABLE__ NewGuid();
+        __PUB__ Guid __VARIABLE__ Parse(dty::String  __VARIABLE__ guid);
+        __PUB__ Guid __VARIABLE__ Parse(const string __VARIABLE__ guid);
+
+        // __PUB__ Array<byte> __VARIABLE__ ToByteArray();
+        __PUB__ dty::String __VARIABLE__ ToString();
+        __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
+
+        __PUB__ bool __VARIABLE__ TryParse(dty::String __VARIABLE__ guid, Guid __REFERENCE__ result);
+        __PUB__ bool __VARIABLE__ TryParse(const string __VARIABLE__ guid, Guid __REFERENCE__ result);
+
 #pragma region dty::collection::IEquatable and ICompareable interface
         __PUB__ virtual dty::collection::CompareResult __VARIABLE__ CompareTo(Guid __REFERENCE__ other) override;
 
@@ -31,6 +78,8 @@ namespace dty
         __PUB__ virtual bool __VARIABLE__ operator <=(Guid __REFERENCE__ other) override;
         __PUB__ virtual bool __VARIABLE__ operator >=(Guid __REFERENCE__ other) override;
 #pragma endregion
+
+        __PUB__ static Guid __VARIABLE__ Empty();
     };
 }
 

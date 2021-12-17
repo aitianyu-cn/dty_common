@@ -102,6 +102,8 @@ __CMODE__
 
     // pure C mode
 
+__DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
+
 #pragma region redefine for base data type
 // 无符号字符 数据类型
 typedef      unsigned char __VARIABLE__ uchar;
