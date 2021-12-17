@@ -71,6 +71,38 @@ namespace dty
             return this->_Elem;
         }
     };
+
+    // template<class T>
+    // class CProperty final : public IProperty<T>
+    // {
+    //     __PUB__ using PropertyGetDelegate = T    __VARIABLE__(__POINTER__)();
+    //     __PUB__ using PropertySetDelegate = void __VARIABLE__(__POINTER__)(T __VARIABLE__ value);
+
+    //     __PUB__ CProperty(PropertyGetDelegate __VARIABLE__ getter, PropertySetDelegate __VARIABLE__ setter)
+    //     {
+
+    //     }
+    //     __PUB__ virtual ~CProperty() override { }
+
+    //     __PUB__ virtual T    __VARIABLE__ Get() override
+    //     {
+    //         return this->_Elem;
+    //     }
+    //     __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) override
+    //     {
+    //         this->_Elem = value;
+    //     }
+
+    //     __PUB__ virtual operator T() override
+    //     {
+    //         return this->_Elem;
+    //     }
+    //     __PUB__ virtual T __VARIABLE__ operator =(T __VARIABLE__ value) override
+    //     {
+    //         this->_Elem = value;
+    //         return this->_Elem;
+    //     }
+    // };
 }
 
 #endif // !__cplusplus
