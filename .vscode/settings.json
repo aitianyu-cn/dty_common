@@ -88,5 +88,7 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "vsicons.associations.files": [],
-    "vsicons.associations.folders": []
+    "vsicons.associations.folders": [],
+    "json.format.enable": false,
+    "prettier.configPath": "config/.prettierrc"
 }
