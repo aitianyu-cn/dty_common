@@ -14,6 +14,7 @@
 
 #include "./core.hxx"
 #include "./string.hpp"
+#include "./array.hpp"
 
 namespace dty
 {
@@ -59,7 +60,8 @@ namespace dty
         __PUB__ Guid __VARIABLE__ Parse(dty::String  __VARIABLE__ guid);
         __PUB__ Guid __VARIABLE__ Parse(const string __VARIABLE__ guid);
 
-        // __PUB__ Array<byte> __VARIABLE__ ToByteArray();
+        __PUB__ dty::collection::Array<::byte> __VARIABLE__ ToByteArray();
+
         __PUB__ dty::String __VARIABLE__ ToString();
         __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
 

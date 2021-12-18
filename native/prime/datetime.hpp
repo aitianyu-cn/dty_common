@@ -13,6 +13,7 @@
 #define __DTY_COMMON_NATIVE_PRIME_DATETIME_H_PLUS_PLUS__
 
 #include "./core.hxx"
+#include "./string.hpp"
 #include <iostream>
 
 namespace dty

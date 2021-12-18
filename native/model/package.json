@@ -1,0 +1,31 @@
+{
+    "export":
+    {
+        "name": "dev.tianyu.model",
+        "dependency": 
+        [
+            {
+                "name": "dev.tianyu",
+                "external": false,
+                "repo": null
+            },
+            {
+                "name": "dev.tianyu.text",
+                "external": false,
+                "repo": null
+            }
+        ]
+    },
+    "params": 
+    {
+        "version":
+        {
+            "c++": "c++17",
+            "c": "c14"
+        }
+    },
+    "blacklist":
+    {
+
+    }
+}

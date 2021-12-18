@@ -12,7 +12,8 @@
 #ifndef __DTY_NATIVE_UTILS_STRING_H_PLUS_PLUS__
 #define __DTY_NATIVE_UTILS_STRING_H_PLUS_PLUS__
 
-#include"./core.hxx"
+#include "./core.hxx"
+#include "./array.hpp"
 #include<string>
 #include<ostream>
 #if __cplusplus >= 201103
@@ -92,13 +93,13 @@ namespace dty
         __PUB__ string    __VARIABLE__ ToCStr();
         __PUB__ string_sp __VARIABLE__ ToSafeCStr();
 
-        // __PUB__ collection::CharArray     __VARIABLE__ ToArray();
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar);
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, bool __VARIABLE__ ignoreEmpty);
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, int32 __VARIABLE__ maxSplit);
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, int32 __VARIABLE__ maxSplit, bool __VARIABLE__ ignoreEmpty);
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(String __REFERENCE__ splitStr, int32 __VARIABLE__ maxSplit); // 需要Sunday算法
-        // __PUB__ collection::Array<String> __VARIABLE__ Split(String __REFERENCE__ splitStr, int32 __VARIABLE__ maxSplit, bool __VARIABLE__ ignoreEmpty); // 需要Sunday算法
+        __PUB__ collection::CharArray     __VARIABLE__ ToArray();
+        __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar);
+        __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, bool __VARIABLE__ ignoreEmpty);
+        __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, int32 __VARIABLE__ maxSplit);
+        __PUB__ collection::Array<String> __VARIABLE__ Split(const char __VARIABLE__ splitChar, int32 __VARIABLE__ maxSplit, bool __VARIABLE__ ignoreEmpty);
+        __PUB__ collection::Array<String> __VARIABLE__ Split(String __REFERENCE__ splitStr, int32 __VARIABLE__ maxSplit); // 需要Sunday算法
+        __PUB__ collection::Array<String> __VARIABLE__ Split(String __REFERENCE__ splitStr, int32 __VARIABLE__ maxSplit, bool __VARIABLE__ ignoreEmpty); // 需要Sunday算法
 
         __PUB__ String __VARIABLE__ operator+(String __REFERENCE__ str);
         __PUB__ String __VARIABLE__ operator+(string __VARIABLE__  str);
