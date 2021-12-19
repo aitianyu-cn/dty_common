@@ -728,40 +728,40 @@ dty::string_sp dty::String::ToSafeCStr()
     return dty::string_sp(this->_StringValue, this->_StringLength, true);
 }
 
-// dty::collection::CharArray dty::String::ToArray()
-// {
-//     return dty::collection::CharArray(this->ToCStr(), this->_StringLength, true);
-// }
+dty::collection::CharArray dty::String::ToArray()
+{
+    return dty::collection::CharArray(this->ToCStr(), this->_StringLength, true);
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(const char splitChar)
-// {
-//     return this->Split(splitChar, false);
-// }
+dty::collection::Array<dty::String> dty::String::Split(const char splitChar)
+{
+    return this->Split(splitChar, false);
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(const char splitChar, bool ignoreEmpty)
-// {
-//     return this->Split(splitChar, -1, false);
-// }
+dty::collection::Array<dty::String> dty::String::Split(const char splitChar, bool ignoreEmpty)
+{
+    return this->Split(splitChar, -1, false);
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(const char splitChar, int32 maxSplit)
-// {
-//     return this->Split(splitChar, maxSplit, false);
-// }
+dty::collection::Array<dty::String> dty::String::Split(const char splitChar, int32 maxSplit)
+{
+    return this->Split(splitChar, maxSplit, false);
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(const char splitChar, int32 maxSplit, bool ignoreEmpty)
-// {
-//     throw dty::except::NotImplementationException();
-// }
+dty::collection::Array<dty::String> dty::String::Split(const char splitChar, int32 maxSplit, bool ignoreEmpty)
+{
+    throw dty::except::NotImplementationException();
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(String& splitStr, int32 maxSplit)
-// {
-//     return this->Split(splitStr, maxSplit, false);
-// }
+dty::collection::Array<dty::String> dty::String::Split(String& splitStr, int32 maxSplit)
+{
+    return this->Split(splitStr, maxSplit, false);
+}
 
-// dty::collection::Array<dty::String> dty::String::Split(String& splitStr, int32 maxSplit, bool ignoreEmpty)
-// {
-//     throw dty::except::NotImplementationException();
-// }
+dty::collection::Array<dty::String> dty::String::Split(String& splitStr, int32 maxSplit, bool ignoreEmpty)
+{
+    throw dty::except::NotImplementationException();
+}
 
 dty::String dty::String::operator+(dty::String& str)
 {
@@ -1219,7 +1219,22 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
 
     return dty::String(newStr, totalLen + joinCharCount, true);
 }
-#endif
+#endif // !__cplusplus >= 201103
+
+dty::String dty::String::GetString(const ::string source, bool needCopy = true)
+{
+    if (null == source)
+        throw dty::except::ArgumentNullException();
+
+    return dty::String::GetString(source, ::strlen(source), needCopy);
+}
+dty::String dty::String::GetString(const ::string source, int32 sourceLen, bool needCopy = true)
+{
+    if (null == source)
+        throw dty::except::ArgumentNullException();
+
+    return dty::String(source, sourceLen, !needCopy);
+}
 
 std::ostream& dty::operator<<(std::ostream& os, const dty::String& str)
 {

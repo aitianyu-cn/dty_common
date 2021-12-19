@@ -24,7 +24,6 @@ namespace dty
     {
         __PRI__::byte __VARIABLE__ _Guid[::dty_native_id_default_size];
 
-        __PUB__ Guid();
         __PUB__ Guid(::byte __VARIABLE__ b[::dty_native_id_default_size]);
         __PUB__ Guid(String __VARIABLE__ g);
         __PUB__ Guid
@@ -56,13 +55,13 @@ namespace dty
             ::byte __VARIABLE__ k
         );
         __PUB__ Guid(const Guid __REFERENCE__ other);
-        __PUB__ ~Guid();
+        __PUB__ virtual ~Guid() override;
 
-        __PUB__ dty::collection::Array<::byte> __VARIABLE__ ToByteArray();
+        __PUB__ dty::collection::ByteArray __VARIABLE__ ToByteArray();
 
-        __PUB__::string __VARIABLE__ ToString();
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
 
-        __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
+        __PUB__ dty::String __VARIABLE__ ToString(const ::string __VARIABLE__ formatter);
 
 
 #pragma region dty::collection::IEquatable and ICompareable interface
@@ -78,12 +77,13 @@ namespace dty
         __PUB__ virtual bool __VARIABLE__ operator >=(Guid __REFERENCE__ other) override;
 #pragma endregion
 
+        __PRI__ Guid();
         __PUB__ static Guid __VARIABLE__ Empty();
         __PUB__ static Guid __VARIABLE__ NewGuid();
         __PUB__ static Guid __VARIABLE__ Parse(dty::String  __VARIABLE__ guid);
-        __PUB__ static Guid __VARIABLE__ Parse(const string __VARIABLE__ guid);
+        __PUB__ static Guid __VARIABLE__ Parse(const ::string __VARIABLE__ guid);
         __PUB__ static bool __VARIABLE__ TryParse(dty::String __VARIABLE__ guid, Guid __REFERENCE__ result);
-        __PUB__ static bool __VARIABLE__ TryParse(const string __VARIABLE__ guid, Guid __REFERENCE__ result);
+        __PUB__ static bool __VARIABLE__ TryParse(const ::string __VARIABLE__ guid, Guid __REFERENCE__ result);
     };
 }
 

@@ -80,7 +80,8 @@
         "utility": "cpp",
         "vector": "cpp",
         "thread": "cpp",
-        "__availability": "cpp"
+        "__availability": "cpp",
+        "format": "cpp"
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,

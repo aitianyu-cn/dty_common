@@ -131,6 +131,9 @@ namespace dty
 #pragma endregion
 
 #pragma region Statics for Tianyu String
+        __PUB__ static String __VARIABLE__ GetString(const ::string __VARIABLE__ source, bool __VARIABLE__ needCopy);
+        __PUB__ static String __VARIABLE__ GetString(const ::string __VARIABLE__ source, int32 __VARIABLE__ sourceLen, bool __VARIABLE__ needCopy);
+
         __PUB__ static String __VARIABLE__ Empty;
 
 #if __cplusplus >= 201103
