@@ -16,7 +16,7 @@
 #include "./property.hpp"
 #include "./error.hpp"
 
-namespace dty::thread
+namespace dty::threading
 {
     enum class ThreadPriority
     {
@@ -44,7 +44,7 @@ namespace dty::thread
     typedef void __VARIABLE__(__POINTER__ ParameterizedThreadStart)(object __VARIABLE__ obj);
     typedef void __VARIABLE__(__POINTER__ ThreadStart)();
 
-    class Thread final
+    class Thread final : public TianyuObject
     {
         template<class T>
         class ReadProperty : public dty::IPropertyGetter<T>
@@ -92,6 +92,9 @@ namespace dty::thread
         __PUB__ void __VARIABLE__ Suspend();
 
         __PUB__ static Property<Thread __POINTER__> __VARIABLE__ CurrentThread;
+
+        __PRI__ const   ::string __VARIABLE__ ObjectName;
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
     _interface IRunnable
@@ -109,19 +112,22 @@ namespace dty::thread
         __PRO__ virtual void __VARIABLE__ _Executor(T __VARIABLE__ value) = 0;
     };
 
-    class ThreadPool
+    class ThreadPool : public virtual TianyuObject
     {
-
+        __PRI__ const   ::string __VARIABLE__ ObjectName;
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
-    class Mutex
+    class Mutex : public virtual TianyuObject
     {
-
+        __PRI__ const   ::string __VARIABLE__ ObjectName;
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
-    class Timer final
+    class Timer final : public TianyuObject
     {
-
+        __PRI__ const   ::string __VARIABLE__ ObjectName;
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 }
 

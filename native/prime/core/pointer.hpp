@@ -19,7 +19,7 @@
 namespace dty
 {
     template<typename T>
-    class SmartPointer
+    class SmartPointer : public virtual TianyuObject
     {
 #pragma region Tianyu SmartPointer Internal Block
         //
@@ -420,6 +420,18 @@ namespace dty
                 return this->_Pointer != other._Pointer;
             }
 
+        }
+
+        __PRI__ const ::string __VARIABLE__ PointerName = "dty.SmartPointer";
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            int32 strLen = 16;
+            ::string str = new char[strLen + 1];
+            for (int32 i = 0; i < strLen; ++i)
+                str[i] = SmartPointer<T>::ObjectName[i];
+            str[strLen] = '\0';
+
+            return str;
         }
     };
 

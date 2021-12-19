@@ -34,8 +34,40 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) const = 0;
     };
 
+    /**
+     * @brief Convert an object to string type
+     * @note must to convert to a pointer that can be delete by caller, like Console.WriteLine(obj),
+     *       when ToString is called in Console function implicitly, the ToString return should confirm
+     *       the string can be released.
+     *
+     * @warning if the ToString function does just return a reference pointer, unexpected things will happen.
+     *          Please make sure the incorrect realization does not be used for basic components of Tianyu
+     *          Library.
+     */
+    _interface IToString
+    {
+        __PUB__ virtual ::string __VARIABLE__ ToString() = 0;
+    };
+
+    abstract class TianyuObject : IToString
+    {
+        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.object";
+
+        __PUB__ virtual ~TianyuObject() { }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            ::string str = new char[11];
+            for (int32 i = 0; i < 10; ++i)
+                str[i] = TianyuObject::ObjectName[i];
+            str[10] = '\0';
+
+            return str;
+        }
+    };
+
     template<typename _Key, typename _Val>
-    class KeyValuePair final
+    class KeyValuePair final : public virtual TianyuObject
     {
         __PUB__ _Key __VARIABLE__ Key;
         __PUB__ _Val __VARIABLE__ Value;
@@ -45,7 +77,19 @@ namespace dty
         {
 
         }
-        __PUB__ ~KeyValuePair() { }
+        __PUB__ virtual ~KeyValuePair() override { }
+
+        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.KeyValuePair";
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            int32 strLen = 16;
+            ::string str = new char[strLen + 1];
+            for (int32 i = 0; i < strLen; ++i)
+                str[i] = KeyValuePair::ObjectName[i];
+            str[strLen] = '\0';
+
+            return str;
+        }
     };
 
     namespace collection
@@ -58,9 +102,9 @@ namespace dty
         };
 
         template<class Elem>
-        _interface IEquatable
+        _interface IEquatable : public virtual TianyuObject
         {
-            __PUB__ virtual ~IEquatable() { };
+            __PUB__ virtual ~IEquatable() override { };
 
             __PUB__ virtual bool __VARIABLE__ Equals(Elem __REFERENCE__ other) = 0;
             __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) = 0;
@@ -68,9 +112,9 @@ namespace dty
         };
 
         template<class Elem>
-        _interface ICompareable
+        _interface ICompareable : public virtual TianyuObject
         {
-            __PUB__ virtual ~ICompareable() { };
+            __PUB__ virtual ~ICompareable() override { };
 
             __PUB__ virtual CompareResult __VARIABLE__ CompareTo(Elem __REFERENCE__ other) = 0;
             __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) = 0;
@@ -93,9 +137,19 @@ namespace dty
 
 namespace dty
 {
-    class Random final
+    class Random final : public TianyuObject
     {
+        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.Random";
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            int32 strLen = 10;
+            ::string str = new char[strLen + 1];
+            for (int32 i = 0; i < strLen; ++i)
+                str[i] = Random::ObjectName[i];
+            str[strLen] = '\0';
 
+            return str;
+        }
     };
 }
 

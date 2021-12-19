@@ -6,7 +6,8 @@
  * @date 2021-12-17
  *
  * @copyright aitianyu.cn Copyright (c) 2021
- *
+ * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.timespan?view=net-6.0
+ * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime?view=net-6.0
  */
 
 #ifndef __DTY_COMMON_NATIVE_PRIME_DATETIME_H_PLUS_PLUS__

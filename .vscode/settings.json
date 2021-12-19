@@ -79,7 +79,8 @@
         "unordered_map": "cpp",
         "utility": "cpp",
         "vector": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__availability": "cpp"
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,

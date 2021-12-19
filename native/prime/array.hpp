@@ -17,7 +17,7 @@
 namespace dty::collection
 {
     template<class Elem>
-    class Array final
+    class Array final : public TianyuObject
     {
         __PRI__ Elem  __POINTER__  _Array;
         __PRI__ int32 __VARIABLE__ _Count;
@@ -93,6 +93,18 @@ namespace dty::collection
             this->_NeedFree = true;
         }
 #endif // !__DTY_UNSAFE_MODE__
+
+        __PRI__ const   ::string __VARIABLE__ ObjectName = "dty.Array";
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            int32 strLen = 9;
+            ::string str = new char[strLen + 1];
+            for (int32 i = 0; i < strLen; ++i)
+                str[i] = Array<Elem>::ObjectName[i];
+            str[strLen] = '\0';
+
+            return str;
+        }
     };
 
     using ByteArray = Array<byte>;

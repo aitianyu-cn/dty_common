@@ -18,12 +18,14 @@
 
 namespace dty
 {
-    class Guid final : public virtual dty::collection::IEquatable<dty::Guid>,
+    class Guid final : public virtual TianyuObject,
+        public virtual dty::collection::IEquatable<dty::Guid>,
         public virtual dty::collection::ICompareable<dty::Guid>
     {
-        __PRI__::byte __VARIABLE__ _Guid[dty_native_id_default_size];
+        __PRI__::byte __VARIABLE__ _Guid[::dty_native_id_default_size];
 
-        __PUB__ Guid(::byte __VARIABLE__ b[dty_native_id_default_size]);
+        __PUB__ Guid();
+        __PUB__ Guid(::byte __VARIABLE__ b[::dty_native_id_default_size]);
         __PUB__ Guid(String __VARIABLE__ g);
         __PUB__ Guid
         (
@@ -53,20 +55,15 @@ namespace dty
             ::byte __VARIABLE__ j,
             ::byte __VARIABLE__ k
         );
-        __PUB__ Guid(Guid __REFERENCE__ other);
+        __PUB__ Guid(const Guid __REFERENCE__ other);
         __PUB__ ~Guid();
-
-        __PUB__ Guid __VARIABLE__ NewGuid();
-        __PUB__ Guid __VARIABLE__ Parse(dty::String  __VARIABLE__ guid);
-        __PUB__ Guid __VARIABLE__ Parse(const string __VARIABLE__ guid);
 
         __PUB__ dty::collection::Array<::byte> __VARIABLE__ ToByteArray();
 
-        __PUB__ dty::String __VARIABLE__ ToString();
+        __PUB__::string __VARIABLE__ ToString();
+
         __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
 
-        __PUB__ bool __VARIABLE__ TryParse(dty::String __VARIABLE__ guid, Guid __REFERENCE__ result);
-        __PUB__ bool __VARIABLE__ TryParse(const string __VARIABLE__ guid, Guid __REFERENCE__ result);
 
 #pragma region dty::collection::IEquatable and ICompareable interface
         __PUB__ virtual dty::collection::CompareResult __VARIABLE__ CompareTo(Guid __REFERENCE__ other) override;
@@ -82,6 +79,11 @@ namespace dty
 #pragma endregion
 
         __PUB__ static Guid __VARIABLE__ Empty();
+        __PUB__ static Guid __VARIABLE__ NewGuid();
+        __PUB__ static Guid __VARIABLE__ Parse(dty::String  __VARIABLE__ guid);
+        __PUB__ static Guid __VARIABLE__ Parse(const string __VARIABLE__ guid);
+        __PUB__ static bool __VARIABLE__ TryParse(dty::String __VARIABLE__ guid, Guid __REFERENCE__ result);
+        __PUB__ static bool __VARIABLE__ TryParse(const string __VARIABLE__ guid, Guid __REFERENCE__ result);
     };
 }
 

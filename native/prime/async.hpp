@@ -24,7 +24,7 @@ namespace dty
     };
 
     template<class T>
-    class AsyncResult final
+    class AsyncResult final : public TianyuObject
     {
         __PRI__ bool       __POINTER__  _IsCompleted;
         __PRI__ AsyncState __POINTER__  _State;
@@ -77,6 +77,18 @@ namespace dty
         __PUB__ void       __VARIABLE__ SetResult(T __VARIABLE__ value)
         {
             __PTR_TO_VAR__(this->_Result) = value;
+        }
+
+        __PRI__ const   ::string __VARIABLE__ ObjectName = "dty.AsyncResult";
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            int32 strLen = 9;
+            ::string str = new char[strLen + 1];
+            for (int32 i = 0; i < strLen; ++i)
+                str[i] = AsyncResult<T>::ObjectName[i];
+            str[strLen] = '\0';
+
+            return str;
         }
     };
 
