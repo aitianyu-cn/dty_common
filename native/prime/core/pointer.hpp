@@ -422,16 +422,9 @@ namespace dty
 
         }
 
-        __PRI__ const ::string __VARIABLE__ PointerName = "dty.SmartPointer";
         __PUB__ virtual ::string __VARIABLE__ ToString() override
         {
-            int32 strLen = 16;
-            ::string str = new char[strLen + 1];
-            for (int32 i = 0; i < strLen; ++i)
-                str[i] = SmartPointer<T>::ObjectName[i];
-            str[strLen] = '\0';
-
-            return str;
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 

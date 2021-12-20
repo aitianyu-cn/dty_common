@@ -21,10 +21,15 @@
 
 namespace dty
 {
-    class EventArgs
+    class EventArgs : public virtual TianyuObject
     {
         __PUB__ EventArgs() { }
         __PUB__ virtual ~EventArgs() { }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
 
         __PUB__ static EventArgs __VARIABLE__ Empty;
     };
@@ -41,7 +46,7 @@ namespace dty
     };
 
     template<class TEventArgs>
-    class EventHandler
+    class EventHandler : public virtual TianyuObject
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
@@ -139,6 +144,11 @@ namespace dty
                 delete del;
                 this->Count = this->Count - 1;
             }
+        }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 }

@@ -93,11 +93,10 @@ namespace dty::threading
 
         __PUB__ static Property<Thread __POINTER__> __VARIABLE__ CurrentThread;
 
-        __PRI__ const   ::string __VARIABLE__ ObjectName;
         __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
-    _interface IRunnable
+    _interface IRunnable : public virtual TianyuObject
     {
         __PUB__ void __VARIABLE__ Run();
 
@@ -105,7 +104,7 @@ namespace dty::threading
     };
 
     template<class T>
-    _interface IParameterizedRunnable
+    _interface IParameterizedRunnable : public virtual TianyuObject
     {
         __PUB__ void __VARIABLE__ Run(T __VARIABLE__ value);
 
@@ -114,19 +113,16 @@ namespace dty::threading
 
     class ThreadPool : public virtual TianyuObject
     {
-        __PRI__ const   ::string __VARIABLE__ ObjectName;
         __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
     class Mutex : public virtual TianyuObject
     {
-        __PRI__ const   ::string __VARIABLE__ ObjectName;
         __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 
     class Timer final : public TianyuObject
     {
-        __PRI__ const   ::string __VARIABLE__ ObjectName;
         __PUB__ virtual ::string __VARIABLE__ ToString() override;
     };
 }

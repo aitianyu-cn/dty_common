@@ -17,8 +17,10 @@
 
 namespace dty
 {
-    class Math
+    class Math final
     {
+        __PUB__ Math() = delete;
+
         __PUB__ const double __VARIABLE__ E;
         __PUB__ const double __VARIABLE__ PI;
         __PUB__ const double __VARIABLE__ Tau;
@@ -96,8 +98,10 @@ namespace dty
         __PUB__ static double __VARIABLE__ Truncate(double __VARIABLE__ x);
     };
 
-    class MathF
+    class MathF final
     {
+        __PUB__ MathF() = delete;
+
         __PUB__ const float __VARIABLE__ E;
         __PUB__ const float __VARIABLE__ PI;
         __PUB__ const float __VARIABLE__ Tau;

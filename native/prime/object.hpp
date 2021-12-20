@@ -18,19 +18,19 @@ namespace dty
 {
     template <uint32 _Size>
     class Object : dty::TianyuObject,
-        public collection::ICompareable<ObjectType<_Size>>,
-        public collection::IEquatable<ObjectType<_Size>>
+        public collection::ICompareable<Object<_Size>>,
+        public collection::IEquatable<Object<_Size>>
     {
         __PRO__ byte  __POINTER__  _Obj;
 
-        __PUB__ explicit ObjectType()
+        __PUB__ explicit Object()
         {
             if (0 == _Size)
                 this->_Obj = null;
             else
                 this->_Obj = new byte[_Size];
         }
-        __PUB__ explicit ObjectType(ObjectType<_Size> __REFERENCE__ other)
+        __PUB__ explicit Object(Object<_Size> __REFERENCE__ other)
         {
             if (0 == _Size)
                 this->_Obj = null;
@@ -41,7 +41,7 @@ namespace dty
                     this->_Obj[i] = other._Obj[i];
             }
         }
-        __PUB__ virtual ~ObjectType()
+        __PUB__ virtual ~Object()
         {
             this->_Destroy();
         }
@@ -411,7 +411,7 @@ namespace dty
             return converter.TryConvert(this->_Obj, _Size, startIndex);
         }
 
-        __PUB__ ObjectType<_Size> __REFERENCE__ operator=(ObjectType<_Size> __REFERENCE__ other)
+        __PUB__ Object<_Size> __REFERENCE__ operator=(Object<_Size> __REFERENCE__ other)
         {
             if (0 != _Size)
                 for (int32 i = 0; i < _Size; ++i)
@@ -420,13 +420,13 @@ namespace dty
             return (__PTR_TO_REF__ this);
         }
 
-        __PUB__ virtual bool __VARIABLE__ Equals(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ Equals(Object<_Size> __REFERENCE__ other) override
         {
             return (__PTR_TO_REF__ this) == other;
         }
-        __PUB__ virtual bool __VARIABLE__ operator ==(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator ==(Object<_Size> __REFERENCE__ other) override
         {
-            if (0 == _Szie)
+            if (0 == _Size)
                 return true;
 
             bool result = true;
@@ -435,12 +435,12 @@ namespace dty
 
             return result;
         }
-        __PUB__ virtual bool __VARIABLE__ operator !=(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator !=(Object<_Size> __REFERENCE__ other) override
         {
             return !((__PTR_TO_REF__ this) == other);
         }
 
-        __PUB__ virtual bool __VARIABLE__ operator <(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator <(Object<_Size> __REFERENCE__ other) override
         {
             if (0 == _Size)
                 return false;
@@ -455,7 +455,7 @@ namespace dty
 
             return false;
         }
-        __PUB__ virtual bool __VARIABLE__ operator >(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator >(Object<_Size> __REFERENCE__ other) override
         {
             if (0 == _Size)
                 return false;
@@ -470,18 +470,18 @@ namespace dty
 
             return false;
         }
-        __PUB__ virtual bool __VARIABLE__ operator <=(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator <=(Object<_Size> __REFERENCE__ other) override
         {
             return !((__PTR_TO_REF__ this) > other);
         }
-        __PUB__ virtual bool __VARIABLE__ operator >=(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual bool __VARIABLE__ operator >=(Object<_Size> __REFERENCE__ other) override
         {
             return !((__PTR_TO_REF__ this) < other);
         }
 
-        __PUB__ virtual dty::collection::CompareResult __VARIABLE__ CompareTo(ObjectType<_Size> __REFERENCE__ other) override
+        __PUB__ virtual dty::collection::CompareResult __VARIABLE__ CompareTo(Object<_Size> __REFERENCE__ other) override
         {
-            ObjectType<_Size> __REFERENCE__ _this = (__PTR_TO_REF__ this);
+            Object<_Size> __REFERENCE__ _this = (__PTR_TO_REF__ this);
             return _this == other ? dty::collection::CompareResult::EQUAL
                 : _this > other ? dty::collection::CompareResult::GREAT
                 : dty::collection::CompareResult::LESS;
@@ -493,6 +493,11 @@ namespace dty
                 throw dty::except::ArgumentOutOfRangeException();
 
             return this->_Obj[index];
+        }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 

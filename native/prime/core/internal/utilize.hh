@@ -81,6 +81,7 @@ namespace dty
         __PRI__ static bool __VARIABLE__ _dummy;
 
         __PRI__::string __VARIABLE__ _Name;
+        __PRI__ uint64  __VARIABLE__ _Id;
         __PRI__ uint64  __VARIABLE__ _InstanceHash;
 
         __PRI__ Type() : _Name(null), _InstanceHash(0) { }
@@ -107,7 +108,7 @@ namespace dty
         }
         __PUB__ uint64  __VARIABLE__ Id()
         {
-            return typeid(T).hash_code();
+            return this->_Id;
         }
         __PUB__ uint64  __VARIABLE__ InstanceHashCode()
         {
@@ -123,7 +124,8 @@ namespace dty
     template<typename T>
     Type<T> __VARIABLE__ GetType()
     {
-        ::string sourceName = const_cast<::string>(typeid(T).name());
+        std::type_info info = typeid(T);
+        ::string sourceName = const_cast<::string>(info.name());
 
         Type<T> type;
 #ifdef __GNUC__
@@ -137,16 +139,23 @@ namespace dty
                 demangled_name[i] = sourceName[i];
             demangled_name[length] = '\0';
         }
-        type._Name = demangled_name;
 #else // !__GNUC__
-
+        int32 length = ::strlen(sourceName);
+        ::string demangled_name = new char[length + 1];
+        for (int32 i = 0; i < length; ++i)
+            demangled_name[i] = sourceName[i];
+        demangled_name[length] = '\0';
 #endif // !__GNUC__
+        type._Name = demangled_name;
+        type._Id = info.hash_code();
+
         return type;
     }
     template<typename T>
     Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj)
     {
-        ::string sourceName = const_cast<::string>(typeid(obj).name());
+        std::type_info info = typeid(T);
+        ::string sourceName = const_cast<::string>(info.name());
 
         Type<T> type((uint64)(__REF_TO_PTR__ obj));
 #ifdef __GNUC__
@@ -159,13 +168,19 @@ namespace dty
             for (int32 i = 0; i < length; ++i)
                 demangled_name[i] = sourceName[i];
             demangled_name[length] = '\0';
-        }
-        type._Name = demangled_name;
-#else // !__GNUC__
-
-#endif // !__GNUC__
-        return type;
     }
+#else // !__GNUC__
+        int32 length = ::strlen(sourceName);
+        ::string demangled_name = new char[length + 1];
+        for (int32 i = 0; i < length; ++i)
+            demangled_name[i] = sourceName[i];
+        demangled_name[length] = '\0';
+#endif // !__GNUC__
+        type._Name = demangled_name;
+        type._Id = info.hash_code();
+
+        return type;
+}
 }
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__

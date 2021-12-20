@@ -22,6 +22,7 @@
 #include "./core/error.hpp"
 #include "./core/pointer.hpp"
 #include "./core/event.hpp"
+#include "./core/thread.hpp"
 
 #endif // !__cplusplus
 

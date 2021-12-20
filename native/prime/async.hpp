@@ -79,23 +79,16 @@ namespace dty
             __PTR_TO_VAR__(this->_Result) = value;
         }
 
-        __PRI__ const   ::string __VARIABLE__ ObjectName = "dty.AsyncResult";
         __PUB__ virtual ::string __VARIABLE__ ToString() override
         {
-            int32 strLen = 9;
-            ::string str = new char[strLen + 1];
-            for (int32 i = 0; i < strLen; ++i)
-                str[i] = AsyncResult<T>::ObjectName[i];
-            str[strLen] = '\0';
-
-            return str;
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 
     using ActionCallbackDelegate = void __VARIABLE__(__POINTER__)();
 
     template<class ... Args>
-    class Action final
+    class Action final : public TianyuObject
     {
         __PUB__ using ActionDelegate = void __VARIABLE__(__POINTER__)(Args ...);
 
@@ -139,10 +132,15 @@ namespace dty
         {
             this->_Action(params...);
         }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
     };
 
     template<class TReturn, class ... Args>
-    class Func final
+    class Func final : public dty::TianyuObject
     {
         __PUB__ using FuncDelegate = TReturn __VARIABLE__(__POINTER__)(Args ...);
 
@@ -187,6 +185,11 @@ namespace dty
         __PUB__ TReturn             __VARIABLE__  operator()(Args ...params)
         {
             return this->_Func(params...);
+        }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 }

@@ -17,7 +17,7 @@
 namespace dty::collection
 {
     template<class Elem>
-    class FilterResult final
+    class FilterResult final : dty::TianyuObject
     {
         __PRI__ Elem  __POINTER__  Elems;
         __PRI__ int32 __VARIABLE__ Length;
@@ -68,10 +68,15 @@ namespace dty::collection
 
             return this->Elems[index];
         }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
     };
 
     template<class Elem>
-    abstract class IteratorBase
+    abstract class IteratorBase : public virtual dty::TianyuObject
     {
         __PUB__ typedef void __VARIABLE__(__POINTER__ fnItemMap)(Elem __REFERENCE__ elem);
         __PUB__ typedef bool __VARIABLE__(__POINTER__ fnItemCheck)(Elem __REFERENCE__ elem);
@@ -92,6 +97,11 @@ namespace dty::collection
         __PUB__ virtual FilterResult<Elem> __VARIABLE__ Every(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) = 0;
         __PUB__ virtual Elem               __POINTER__  Find(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) = 0;
         __PUB__ virtual int32              __VARIABLE__ FindIndex(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) = 0;
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
     };
 
     template<class Elem>
@@ -247,6 +257,11 @@ namespace dty::collection
                     return i;
 
             return -1;
+        }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 }

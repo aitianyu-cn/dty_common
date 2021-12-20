@@ -50,20 +50,27 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() = 0;
     };
 
+    template<typename T>
+    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj)
+    {
+        ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
+        int32 typeNameLen = ::strlen(typeName);
+
+        ::string str = new char[typeNameLen + 1];
+        for (int32 i = 0; i < typeNameLen; ++i)
+            str[i] = typeName[i];
+        str[typeNameLen] = '\0';
+
+        return str;
+    }
+
     abstract class TianyuObject : IToString
     {
-        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.object";
-
         __PUB__ virtual ~TianyuObject() { }
 
         __PUB__ virtual ::string __VARIABLE__ ToString() override
         {
-            ::string str = new char[11];
-            for (int32 i = 0; i < 10; ++i)
-                str[i] = TianyuObject::ObjectName[i];
-            str[10] = '\0';
-
-            return str;
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 
@@ -80,16 +87,9 @@ namespace dty
         }
         __PUB__ virtual ~KeyValuePair() override { }
 
-        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.KeyValuePair";
         __PUB__ virtual ::string __VARIABLE__ ToString() override
         {
-            int32 strLen = 16;
-            ::string str = new char[strLen + 1];
-            for (int32 i = 0; i < strLen; ++i)
-                str[i] = KeyValuePair::ObjectName[i];
-            str[strLen] = '\0';
-
-            return str;
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 
@@ -126,35 +126,6 @@ namespace dty
             __PUB__ virtual bool __VARIABLE__ operator >=(Elem __REFERENCE__ other) = 0;
         };
     }
-}
-
-namespace dty
-{
-    class Random : public virtual TianyuObject
-    {
-        __PUB__ Random();
-        __PUB__ Random(int32 __VARIABLE__ seed);
-
-        __PUB__ virtual int32  __VARIABLE__ Next();
-        __PUB__ virtual int32  __VARIABLE__ Next(int32 __VARIABLE__ maxValue);
-        __PUB__ virtual int32  __VARIABLE__ Next(int32 __VARIABLE__ minValue, int32 __VARIABLE__ maxValue);
-        __PUB__ virtual void   __VARIABLE__ NextBytes(::byte __POINTER__ buffer, int32 __VARIABLE__ blength);
-        __PUB__ virtual double __VARIABLE__ NextDouble();
-
-        __PRO__ virtual double __VARIABLE__ Sample();
-
-        __PRI__ const ::string __VARIABLE__ ObjectName = "dty.Random";
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
-        {
-            int32 strLen = 10;
-            ::string str = new char[strLen + 1];
-            for (int32 i = 0; i < strLen; ++i)
-                str[i] = Random::ObjectName[i];
-            str[strLen] = '\0';
-
-            return str;
-        }
-    };
 }
 
 #endif // !__cplusplus
