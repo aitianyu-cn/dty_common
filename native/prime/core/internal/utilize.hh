@@ -233,11 +233,11 @@ namespace dty
 
 // Macro Definition for Tianyu Class Type
 // Default externed from dty::TianyuObject, provide external functions
-#define _class(cname, args...) _ty_class(cname, public virtual dty::TianyuObject, ##args)
+#define _class(cname, ...) _ty_class(cname, public virtual dty::TianyuObject, ##__VA_ARGS__)
 
 // Macro Definition for Tianyu Class final Type
 // Default externed from dty::TianyuObject, provide external functions
-#define _sealed(cname, args...) _ty_class(cname final, public virtual dty::TianyuObject, ##args)
+#define _sealed(cname, ...) _ty_class(cname final, public virtual dty::TianyuObject, ##__VA_ARGS__)
 
 // Macro Definition for clearly enum define
 // enum class
