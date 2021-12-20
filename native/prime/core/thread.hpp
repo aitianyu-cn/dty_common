@@ -18,7 +18,7 @@
 
 namespace dty::threading
 {
-    enum class ThreadPriority
+    _enum ThreadPriority
     {
         Lowest = 0,
         BelowNormal = 1,
@@ -27,7 +27,7 @@ namespace dty::threading
         Highest = 4
     };
 
-    enum class ThreadState
+    _enum ThreadState
     {
         Running = 0,
         StopRequested = 1,

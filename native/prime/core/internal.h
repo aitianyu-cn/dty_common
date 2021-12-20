@@ -35,45 +35,6 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) const = 0;
     };
 
-    /**
-     * @brief Convert an object to string type
-     * @note must to convert to a pointer that can be delete by caller, like Console.WriteLine(obj),
-     *       when ToString is called in Console function implicitly, the ToString return should confirm
-     *       the string can be released.
-     *
-     * @warning if the ToString function does just return a reference pointer, unexpected things will happen.
-     *          Please make sure the incorrect realization does not be used for basic components of Tianyu
-     *          Library.
-     */
-    _interface IToString
-    {
-        __PUB__ virtual ::string __VARIABLE__ ToString() = 0;
-    };
-
-    template<typename T>
-    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj)
-    {
-        ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
-        int32 typeNameLen = ::strlen(typeName);
-
-        ::string str = new char[typeNameLen + 1];
-        for (int32 i = 0; i < typeNameLen; ++i)
-            str[i] = typeName[i];
-        str[typeNameLen] = '\0';
-
-        return str;
-    }
-
-    abstract class TianyuObject : IToString
-    {
-        __PUB__ virtual ~TianyuObject() { }
-
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
-    };
-
     template<typename _Key, typename _Val>
     class KeyValuePair final : public virtual TianyuObject
     {
@@ -95,7 +56,7 @@ namespace dty
 
     namespace collection
     {
-        enum class CompareResult : int32
+        _enum CompareResult : int32
         {
             LESS = -1,
             EQUAL = 0,

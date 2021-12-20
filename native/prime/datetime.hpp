@@ -19,7 +19,7 @@
 
 namespace dty
 {
-    enum class WeekType : int32
+    _enum WeekType : int32
     {
         Monday = 0,
         Tuesday = 1,
@@ -29,7 +29,7 @@ namespace dty
         Saturday = 5,
         Sunday = 6
     };
-    enum class MonthType : int32
+    _enum MonthType : int32
     {
         January = 0,
         February = 1,
@@ -44,7 +44,7 @@ namespace dty
         November = 10,
         December = 11
     };
-    enum class TimeKind : int32
+    _enum TimeKind : int32
     {
         UTC,
         Local

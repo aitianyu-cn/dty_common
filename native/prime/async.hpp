@@ -16,7 +16,7 @@
 
 namespace dty
 {
-    enum class AsyncState : int32
+    _enum AsyncState : int32
     {
         Unknown,
         Success,

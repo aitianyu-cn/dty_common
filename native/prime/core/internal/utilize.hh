@@ -124,8 +124,7 @@ namespace dty
     template<typename T>
     Type<T> __VARIABLE__ GetType()
     {
-        std::type_info info = typeid(T);
-        ::string sourceName = const_cast<::string>(info.name());
+        ::string sourceName = const_cast<::string>(typeid(T).name());
 
         Type<T> type;
 #ifdef __GNUC__
@@ -147,15 +146,14 @@ namespace dty
         demangled_name[length] = '\0';
 #endif // !__GNUC__
         type._Name = demangled_name;
-        type._Id = info.hash_code();
+        type._Id = typeid(T).hash_code();
 
         return type;
     }
     template<typename T>
     Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj)
     {
-        std::type_info info = typeid(T);
-        ::string sourceName = const_cast<::string>(info.name());
+        ::string sourceName = const_cast<::string>(typeid(T).name());
 
         Type<T> type((uint64)(__REF_TO_PTR__ obj));
 #ifdef __GNUC__
@@ -168,7 +166,7 @@ namespace dty
             for (int32 i = 0; i < length; ++i)
                 demangled_name[i] = sourceName[i];
             demangled_name[length] = '\0';
-    }
+        }
 #else // !__GNUC__
         int32 length = ::strlen(sourceName);
         ::string demangled_name = new char[length + 1];
@@ -177,10 +175,72 @@ namespace dty
         demangled_name[length] = '\0';
 #endif // !__GNUC__
         type._Name = demangled_name;
-        type._Id = info.hash_code();
+        type._Id = typeid(T).hash_code();
 
         return type;
+    }
+
+    /**
+     * @brief Convert an object to string type
+     * @note must to convert to a pointer that can be delete by caller, like Console.WriteLine(obj),
+     *       when ToString is called in Console function implicitly, the ToString return should confirm
+     *       the string can be released.
+     *
+     * @warning if the ToString function does just return a reference pointer, unexpected things will happen.
+     *          Please make sure the incorrect realization does not be used for basic components of Tianyu
+     *          Library.
+     */
+    _interface IToString
+    {
+        __PUB__ virtual ::string __VARIABLE__ ToString() = 0;
+    };
+
+    template<typename T>
+    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj)
+    {
+        ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
+        int32 typeNameLen = ::strlen(typeName);
+
+        ::string str = new char[typeNameLen + 1];
+        for (int32 i = 0; i < typeNameLen; ++i)
+            str[i] = typeName[i];
+        str[typeNameLen] = '\0';
+
+        return str;
+    }
+
+    abstract class TianyuObject : IToString
+    {
+        __PUB__ virtual ~TianyuObject() { }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
+        __PUB__ virtual uint64 __VARIABLE__ GetTypeId()
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
+        __PUB__ virtual uint64 __VARIABLE__ GetHashCode()
+        {
+            return (uint64)(this);
+        }
+    };
 }
-}
+
+// internal macro definition for tianyu class type
+#define _ty_class(cname, ...) class cname : __VA_ARGS__
+
+// Macro Definition for Tianyu Class Type
+// Default externed from dty::TianyuObject, provide external functions
+#define _class(cname, args...) _ty_class(cname, public virtual dty::TianyuObject, ##args)
+
+// Macro Definition for Tianyu Class final Type
+// Default externed from dty::TianyuObject, provide external functions
+#define _sealed(cname, args...) _ty_class(cname final, public virtual dty::TianyuObject, ##args)
+
+// Macro Definition for clearly enum define
+// enum class
+#define _enum enum class
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__
