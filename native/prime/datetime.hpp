@@ -44,12 +44,13 @@ namespace dty
         November = 10,
         December = 11
     };
-    enum class TimeLocal : int32
+    enum class TimeKind : int32
     {
         UTC,
         Local
     };
-    class TimeSpan final : dty::collection::IEquatable<TimeSpan>,
+    class TimeSpan final : dty::TianyuObject,
+        dty::collection::IEquatable<TimeSpan>,
         dty::collection::ICompareable<TimeSpan>
     {
         __PUB__ TimeSpan();
@@ -88,9 +89,10 @@ namespace dty
         __PUB__ TimeSpan __REFERENCE__ operator-(TimeSpan __REFERENCE__ span);
         __PUB__ TimeSpan __REFERENCE__ operator-(uint64 __VARIABLE__ ticks);
 
-        __PUB__ String __VARIABLE__ ToString() const;
-        __PUB__ String __VARIABLE__ ToString(const string __VARIABLE__ formatter) const;
-        __PUB__ String __VARIABLE__ ToString(String __VARIABLE__ formatter) const;
+        __PUB__ virtual ::string __VARIABLE__ ToString() override;
+
+        __PUB__ dty::String      __VARIABLE__ ToString(const string __VARIABLE__ formatter);
+        __PUB__ dty::String      __VARIABLE__ ToString(String __VARIABLE__ formatter);
 
 
         __PUB__ static TimeSpan __VARIABLE__ Parse(String __VARIABLE__ source);
@@ -113,11 +115,88 @@ namespace dty
 
         friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, TimeSpan __REFERENCE__ span);
     };
-    class DateTime final : dty::collection::IEquatable<DateTime>,
+    class DateTime final : dty::TianyuObject,
+        dty::collection::IEquatable<DateTime>,
         dty::collection::ICompareable<DateTime>
     {
-        __PUB__ DateTime();
+        __PUB__ DateTime(uint64 __VARIABLE__ ticks);
+        __PUB__ DateTime(uint64 __VARIABLE__ ticks, TimeKind __VARIABLE__ kind);
+        __PUB__ DateTime(int32 __VARIABLE__ year, int32 __VARIABLE__ month, int32 __VARIABLE__ day);
+        __PUB__ DateTime
+        (
+            int32 __VARIABLE__ year,
+            int32 __VARIABLE__ month,
+            int32 __VARIABLE__ day,
+            int32 __VARIABLE__ hours,
+            int32 __VARIABLE__ minutes,
+            int32 __VARIABLE__ seconds
+        );
+        __PUB__ DateTime
+        (
+            int32    __VARIABLE__ year,
+            int32    __VARIABLE__ month,
+            int32    __VARIABLE__ day,
+            int32    __VARIABLE__ hours,
+            int32    __VARIABLE__ minutes,
+            int32    __VARIABLE__ seconds,
+            TimeKind __VARIABLE__ kind
+        );
+        __PUB__ DateTime
+        (
+            int32    __VARIABLE__ year,
+            int32    __VARIABLE__ month,
+            int32    __VARIABLE__ day,
+            int32    __VARIABLE__ hours,
+            int32    __VARIABLE__ minutes,
+            int32    __VARIABLE__ seconds,
+            int32    __VARIABLE__ milliseconds
+        );
+        __PUB__ DateTime
+        (
+            int32    __VARIABLE__ year,
+            int32    __VARIABLE__ month,
+            int32    __VARIABLE__ day,
+            int32    __VARIABLE__ hours,
+            int32    __VARIABLE__ minutes,
+            int32    __VARIABLE__ seconds,
+            int32    __VARIABLE__ milliseconds,
+            TimeKind __VARIABLE__ kind
+        );
+        __PUB__ DateTime(const DateTime __REFERENCE__ other);
         __PUB__ virtual ~DateTime() override;
+
+        __PUB__ DateTime __VARIABLE__ Date();
+        __PUB__ TimeSpan __VARIABLE__ TimeOfDay();
+
+        __PUB__ int32 __VARIABLE__ Year();
+        __PUB__ int32 __VARIABLE__ Month();
+        __PUB__ int32 __VARIABLE__ Day();
+        __PUB__ int32 __VARIABLE__ Hour();
+        __PUB__ int32 __VARIABLE__ Minute();
+        __PUB__ int32 __VARIABLE__ Second();
+        __PUB__ int32 __VARIABLE__ Millisecond();
+
+        __PUB__ uint64   __VARIABLE__ Ticks();
+        __PUB__ TimeKind __VARIABLE__ Kind();
+
+        __PUB__ DateTime __VARIABLE__ Add(TimeSpan __REFERENCE__ span);
+        __PUB__ DateTime __VARIABLE__ AddDays(double __VARIABLE__ days);
+        __PUB__ DateTime __VARIABLE__ AddHours(double __VARIABLE__ hours);
+        __PUB__ DateTime __VARIABLE__ AddMinutes(double __VARIABLE__ minutes);
+        __PUB__ DateTime __VARIABLE__ AddSeconds(double __VARIABLE__ seconds);
+        __PUB__ DateTime __VARIABLE__ AddMilliseconds(double __VARIABLE__ milliseconds);
+        __PUB__ DateTime __VARIABLE__ AddYears(int32 __VARIABLE__ years);
+        __PUB__ DateTime __VARIABLE__ AddMonths(int32 __VARIABLE__ months);
+        __PUB__ DateTime __VARIABLE__ AddTicks(uint64 __VARIABLE__ ticks);
+
+        __PUB__ TimeSpan __VARIABLE__ Subtract(DateTime __REFERENCE__ date);
+        __PUB__ DateTime __VARIABLE__ Subtract(TimeSpan __REFERENCE__ span);
+        __PUB__ DateTime __VARIABLE__ ToUniversalTime();
+
+        __PUB__ virtual ::string ToString() override;
+
+        __PUB__ dty::String ToString(const ::string __VARIABLE__ formatter);
+        __PUB__ dty::String ToString(dty::String __VARIABLE__ formatter);
 
 #pragma region collection::ICompareable & collection::IEquatable interfaces
         __PUB__ virtual bool __VARIABLE__ Equals(DateTime __REFERENCE__ other) override;
@@ -129,6 +208,29 @@ namespace dty
         __PUB__ virtual bool __VARIABLE__ operator >=(DateTime __REFERENCE__ other) override;
 
         __PUB__ virtual collection::CompareResult __VARIABLE__ CompareTo(DateTime __REFERENCE__ other) override;
+#pragma endregion
+
+#pragma region operators
+        __PUB__ DateTime __VARIABLE__ operator+(TimeSpan __REFERENCE__ span);
+        __PUB__ DateTime __VARIABLE__ operator-(TimeSpan __REFERENCE__ span);
+        __PUB__ TimeSpan __VARIABLE__ operator-(DateTime __REFERENCE__ date);
+#pragma endregion
+
+#pragma region static definitions
+        __PUB__ static DateTime __VARIABLE__ MaxValue();
+        __PUB__ static DateTime __VARIABLE__ MinValue();
+        __PUB__ static DateTime __VARIABLE__ UnixEpoch();
+
+        __PUB__ static DateTime __VARIABLE__ Now();
+        __PUB__ static DateTime __VARIABLE__ UtcNow();
+        __PUB__ static DateTime __VARIABLE__ Today();
+
+        __PUB__ static DateTime __VARIABLE__ Parse(const ::string __VARIABLE__ date);
+        __PUB__ static DateTime __VARIABLE__ Parse(dty::String    __VARIABLE__ date);
+
+        __PUB__ static bool __VARIABLE__ IsLeapYear(int32 __VARIABLE__ year);
+
+        __PUB__ static dty::collection::CompareResult __VARIABLE__ Compare(DateTime __REFERENCE__ date1, DateTime __REFERENCE__ date2);
 #pragma endregion
 
         friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, DateTime __REFERENCE__ date);

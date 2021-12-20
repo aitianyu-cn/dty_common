@@ -9,6 +9,7 @@
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
+ * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.random?view=net-6.0
  */
 
 #ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
@@ -129,16 +130,19 @@ namespace dty
 
 namespace dty
 {
-    class OperationSystem final
+    class Random : public virtual TianyuObject
     {
+        __PUB__ Random();
+        __PUB__ Random(int32 __VARIABLE__ seed);
 
-    };
-}
+        __PUB__ virtual int32  __VARIABLE__ Next();
+        __PUB__ virtual int32  __VARIABLE__ Next(int32 __VARIABLE__ maxValue);
+        __PUB__ virtual int32  __VARIABLE__ Next(int32 __VARIABLE__ minValue, int32 __VARIABLE__ maxValue);
+        __PUB__ virtual void   __VARIABLE__ NextBytes(::byte __POINTER__ buffer, int32 __VARIABLE__ blength);
+        __PUB__ virtual double __VARIABLE__ NextDouble();
 
-namespace dty
-{
-    class Random final : public TianyuObject
-    {
+        __PRO__ virtual double __VARIABLE__ Sample();
+
         __PRI__ const ::string __VARIABLE__ ObjectName = "dty.Random";
         __PUB__ virtual ::string __VARIABLE__ ToString() override
         {

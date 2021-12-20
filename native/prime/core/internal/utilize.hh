@@ -65,4 +65,107 @@
 
 constexpr auto null = nullptr;
 
+#ifdef __GNUC__
+#include <cxxabi.h>
+#endif // !__GNUC__
+
+namespace dty
+{
+    __PREDEFINE__ template<typename T> class Type;
+    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType();
+    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj);
+
+    template<typename T>
+    class Type final
+    {
+        __PRI__ static bool __VARIABLE__ _dummy;
+
+        __PRI__::string __VARIABLE__ _Name;
+        __PRI__ uint64  __VARIABLE__ _InstanceHash;
+
+        __PRI__ Type() : _Name(null), _InstanceHash(0) { }
+        __PRI__ Type(uint64 __VARIABLE__ instance) : _Name(null), _InstanceHash(instance) { }
+        __PUB__ Type(const Type<T> __REFERENCE__ other) : _Name(null)
+        {
+            int32 nameLen = ::strlen(other._Name);
+
+            this->_Name = new char[nameLen + 1];
+            for (int32 i = 0; i < nameLen; ++i)
+                this->_Name[i] = other._Name[i];
+
+            this->_Name[nameLen] = '\0';
+        }
+        __PUB__ ~Type()
+        {
+            if (null != this->_Name)
+                delete [](this->_Name);
+        }
+
+        __PUB__::string __VARIABLE__ Name() const
+        {
+            return this->_Name;
+        }
+        __PUB__ uint64  __VARIABLE__ Id()
+        {
+            return typeid(T).hash_code();
+        }
+        __PUB__ uint64  __VARIABLE__ InstanceHashCode()
+        {
+            return this->_InstanceHash;
+        }
+
+        friend Type<T> __VARIABLE__ GetType<T>();
+        friend Type<T> __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
+    };
+
+    template<typename T> bool Type<T>::_dummy = false;
+
+    template<typename T>
+    Type<T> __VARIABLE__ GetType()
+    {
+        ::string sourceName = const_cast<::string>(typeid(T).name());
+
+        Type<T> type;
+#ifdef __GNUC__
+        int status;
+        ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
+        if (0 != status)
+        {
+            int32 length = ::strlen(sourceName);
+            demangled_name = new char[length + 1];
+            for (int32 i = 0; i < length; ++i)
+                demangled_name[i] = sourceName[i];
+            demangled_name[length] = '\0';
+        }
+        type._Name = demangled_name;
+#else // !__GNUC__
+
+#endif // !__GNUC__
+        return type;
+    }
+    template<typename T>
+    Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj)
+    {
+        ::string sourceName = const_cast<::string>(typeid(obj).name());
+
+        Type<T> type((uint64)(__REF_TO_PTR__ obj));
+#ifdef __GNUC__
+        int status;
+        ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
+        if (0 != status)
+        {
+            int32 length = ::strlen(sourceName);
+            demangled_name = new char[length + 1];
+            for (int32 i = 0; i < length; ++i)
+                demangled_name[i] = sourceName[i];
+            demangled_name[length] = '\0';
+        }
+        type._Name = demangled_name;
+#else // !__GNUC__
+
+#endif // !__GNUC__
+        return type;
+    }
+}
+
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__

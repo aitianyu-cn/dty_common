@@ -17,8 +17,8 @@
 namespace dty
 {
     template <uint32 _Size>
-    class Object
-        : public collection::ICompareable<ObjectType<_Size>>,
+    class Object : dty::TianyuObject,
+        public collection::ICompareable<ObjectType<_Size>>,
         public collection::IEquatable<ObjectType<_Size>>
     {
         __PRO__ byte  __POINTER__  _Obj;
