@@ -1,5 +1,5 @@
 /**
- * @file datetime.hpp(prime)
+ * @file times.hpp(prime)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -10,8 +10,8 @@
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_DATETIME_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_DATETIME_H_PLUS_PLUS__
+#ifndef __DTY_COMMON_NATIVE_PRIME_TIMES_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_TIMES_H_PLUS_PLUS__
 
 #include "./core.hxx"
 #include "./string.hpp"
@@ -49,9 +49,9 @@ namespace dty
         UTC,
         Local
     };
-    class TimeSpan final : dty::TianyuObject,
-        dty::collection::IEquatable<TimeSpan>,
-        dty::collection::ICompareable<TimeSpan>
+    class TimeSpan final : public virtual dty::TianyuObject,
+        public virtual dty::collection::IEquatable<TimeSpan>,
+        public virtual dty::collection::ICompareable<TimeSpan>
     {
         __PUB__ TimeSpan();
         __PUB__ TimeSpan(uint64 __VARIABLE__ ticks);
@@ -115,9 +115,9 @@ namespace dty
 
         friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, TimeSpan __REFERENCE__ span);
     };
-    class DateTime final : dty::TianyuObject,
-        dty::collection::IEquatable<DateTime>,
-        dty::collection::ICompareable<DateTime>
+    class DateTime final : public virtual dty::TianyuObject,
+        public virtual dty::collection::IEquatable<DateTime>,
+        public virtual dty::collection::ICompareable<DateTime>
     {
         __PUB__ DateTime(uint64 __VARIABLE__ ticks);
         __PUB__ DateTime(uint64 __VARIABLE__ ticks, TimeKind __VARIABLE__ kind);
@@ -194,7 +194,7 @@ namespace dty
         __PUB__ DateTime __VARIABLE__ ToUniversalTime();
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
 
         __PUB__ dty::String ToString(const ::string __VARIABLE__ formatter);
         __PUB__ dty::String ToString(dty::String __VARIABLE__ formatter);
@@ -241,4 +241,4 @@ namespace dty
     std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, DateTime __REFERENCE__ date);
 }
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_DATETIME_H_PLUS_PLUS__
+#endif // !__DTY_COMMON_NATIVE_PRIME_TIMES_H_PLUS_PLUS__

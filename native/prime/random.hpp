@@ -31,6 +31,10 @@ namespace dty
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+
+        __PUB__ static int32 __VARIABLE__ Dicing();
+        __PUB__ static int32 __VARIABLE__ Dicing(int32 __VARIABLE__ maxValue);
+        __PUB__ static int32 __VARIABLE__ Dicing(int32 __VARIABLE__ minValue, int32 __VARIABLE__ maxValue);
     };
 }
 

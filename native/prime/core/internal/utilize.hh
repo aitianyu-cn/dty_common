@@ -66,9 +66,42 @@
 // null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
 
+// #################################################################################################
+// The Core APIs for Tianyu Native
+// String Base APIs: in order to do some string operations without including a huge header files
+// #################################################################################################
+
+#pragma region c_string basic APIs
+int32    __VARIABLE__ strlen(const string __VARIABLE__ str);
+
+::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
+::string __VARIABLE__ sb2str(sbyte __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str(sbyte __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ s2str(int16 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ us2str(uint16 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ i2str(int32 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ l2str(int64 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ f2str(float __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ d2str(double __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+#pragma endregion
+
+// #################################################################################################
+// Data Type definition for Tianyu Class base
+// Tianyu Type Helper (Type<T>)
+// Tianyu ToString Interface (IToString)
+// Tianyu Object Base (TianyuObject)
+// Tianyu Object Null Pointer (TianyuEmptyObject)
+// 
+// Tianyu Class Type Marco Definition
+// #################################################################################################
+
 #ifdef __GNUC__
 #include <cxxabi.h>
 #endif // !__GNUC__
+
+#include <typeinfo>
 
 namespace dty
 {
@@ -91,7 +124,7 @@ namespace dty
         __PRI__ Type(uint64 __VARIABLE__ instance) : _Name(::null), _InstanceHash(instance) { }
         __PUB__ Type(const Type<T> __REFERENCE__ other) : _Name(::null)
         {
-            int32 nameLen = ::strlen(other._Name);
+            int32 nameLen = strlen(other._Name);
 
             this->_Name = new char[nameLen + 1];
             for (int32 i = 0; i < nameLen; ++i)
@@ -135,7 +168,7 @@ namespace dty
         ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
         if (0 != status)
         {
-            int32 length = ::strlen(sourceName);
+            int32 length = strlen(sourceName);
             demangled_name = new char[length + 1];
             for (int32 i = 0; i < length; ++i)
                 demangled_name[i] = sourceName[i];
@@ -164,7 +197,7 @@ namespace dty
         ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
         if (0 != status)
         {
-            int32 length = ::strlen(sourceName);
+            int32 length = strlen(sourceName);
             demangled_name = new char[length + 1];
             for (int32 i = 0; i < length; ++i)
                 demangled_name[i] = sourceName[i];
@@ -212,7 +245,7 @@ namespace dty
     __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept
     {
         ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
-        int32 typeNameLen = ::strlen(typeName);
+        int32 typeNameLen = strlen(typeName);
 
         ::string str = new char[typeNameLen + 1];
         for (int32 i = 0; i < typeNameLen; ++i)

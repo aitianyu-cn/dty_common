@@ -107,6 +107,9 @@ namespace dty::collection
     template<class Elem>
     class Iterator final : public virtual TianyuObject, IteratorBase<Elem>
     {
+        __PUB__ typedef void __VARIABLE__(__POINTER__ fnItemMap)(Elem __REFERENCE__ elem);
+        __PUB__ typedef bool __VARIABLE__(__POINTER__ fnItemCheck)(Elem __REFERENCE__ elem);
+
         __PRI__ Elem  __POINTER__  _Pointer;
         __PRI__ int32 __VARIABLE__ _Size;
         __PRI__ int32 __VARIABLE__ _Current;
@@ -186,7 +189,7 @@ namespace dty::collection
             return SmartPointer<Elem>((this->_Pointer) + this->_Size - 1, 1, true);
         }
 
-        __PUB__ virtual void               __VARIABLE__ ForEach(IteratorBase<Elem>::fnItemMap __VARIABLE__ fnForEach) override
+        __PUB__ virtual void               __VARIABLE__ ForEach(Iterator<Elem>::fnItemMap __VARIABLE__ fnForEach) override
         {
             if (0 == this->Size())
                 return;
@@ -194,7 +197,7 @@ namespace dty::collection
             for (int32 i = 0; i < this->_Size; ++i)
                 fnForEach(this->_Pointer[i]);
         }
-        __PUB__ virtual Elem               __POINTER__  Some(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
+        __PUB__ virtual Elem               __POINTER__  Some(Iterator<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
             for (int32 i = 0; i < this->_Size; ++i)
                 if (!fnForEach(this->_Pointer[i]))
@@ -202,7 +205,7 @@ namespace dty::collection
 
             return ::null;
         }
-        __PUB__ virtual FilterResult<Elem> __VARIABLE__ Filter(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
+        __PUB__ virtual FilterResult<Elem> __VARIABLE__ Filter(Iterator<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
             if (0 == this->Size())
                 return FilterResult<Elem>();
@@ -222,7 +225,7 @@ namespace dty::collection
 
             return FilterResult<Elem>(results, length, this->_Size);
         }
-        __PUB__ virtual FilterResult<Elem> __VARIABLE__ Every(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
+        __PUB__ virtual FilterResult<Elem> __VARIABLE__ Every(Iterator<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
             if (0 == this->Size())
                 return FilterResult<Elem>();
@@ -242,7 +245,7 @@ namespace dty::collection
 
             return FilterResult<Elem>(results, length, this->_Size);
         }
-        __PUB__ virtual Elem               __POINTER__  Find(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
+        __PUB__ virtual Elem               __POINTER__  Find(Iterator<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
             for (int32 i = 0; i < this->_Size; ++i)
                 if (fnForEach(this->_Pointer[i]))
@@ -250,7 +253,7 @@ namespace dty::collection
 
             return ::null;
         }
-        __PUB__ virtual int32              __VARIABLE__ FindIndex(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
+        __PUB__ virtual int32              __VARIABLE__ FindIndex(Iterator<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
             for (int32 i = 0; i < this->_Size; ++i)
                 if (fnForEach(this->_Pointer[i]))

@@ -88,7 +88,8 @@ namespace dty
             if (_Size <= startIndex)
                 throw dty::except::ArgumentOutOfRangeException();
 
-            this->_Obj[i] = _value;
+            for (int32 i = startIndex; i < _Size; ++i)
+                this->_Obj[i] = _value;
         }
         __PUB__ void __VARIABLE__ Set(char __VARIABLE__ _value)
         {
@@ -115,7 +116,7 @@ namespace dty
 
             for (int32 i = 0; i < 2 && i < _Size - startIndex; ++i)
             {
-                this->_Obj[i + startIndex] = (byte)(_value && 0xFF);
+                this->_Obj[i + startIndex] = (byte)(_value & 0xFF);
                 _value >>= 8;
             }
         }
@@ -133,7 +134,7 @@ namespace dty
 
             for (int32 i = 0; i < 4 && i < _Size - startIndex; ++i)
             {
-                this->_Obj[i + startIndex] = (byte)(_value && 0xFF);
+                this->_Obj[i + startIndex] = (byte)(_value & 0xFF);
                 _value >>= 8;
             }
         }
@@ -151,7 +152,7 @@ namespace dty
 
             for (int32 i = 0; i < 8 && i < _Size - startIndex; ++i)
             {
-                this->_Obj[i + startIndex] = (byte)(_value && 0xFF);
+                this->_Obj[i + startIndex] = (byte)(_value & 0xFF);
                 _value >>= 8;
             }
         }
@@ -205,9 +206,9 @@ namespace dty
         __PUB__ sbyte  __VARIABLE__ ToSByte()
         {
             if (0 == _Size)
-                return (syte)0;
+                return (sbyte)0;
 
-            return (sbyte __VARIABLE__)(this->ToByte(startIndex));
+            return (sbyte __VARIABLE__)(this->ToByte(0));
         }
         __PUB__ int16  __VARIABLE__ ToInt16()
         {
@@ -261,7 +262,7 @@ namespace dty
         __PUB__ double __VARIABLE__ ToDouble()
         {
             if (0 == _Size)
-                return 0.0lf;
+                return 0.0;
 
             return this->ToDouble(0);
         }
@@ -322,7 +323,7 @@ namespace dty
                 result |= this->_Obj[i];
             }
 
-            return (int16)(result && 0xFFFF);
+            return (int16)(result & 0xFFFF);
         }
         __PUB__ uint16 __VARIABLE__ ToUInt16(int32 __VARIABLE__ startIndex)
         {
@@ -344,7 +345,7 @@ namespace dty
                 result |= this->_Obj[i];
             }
 
-            return result
+            return result;
         }
         __PUB__ uint32 __VARIABLE__ ToUInt32(int32 __VARIABLE__ startIndex)
         {
@@ -366,7 +367,7 @@ namespace dty
                 result |= this->_Obj[i];
             }
 
-            return result
+            return result;
         }
         __PUB__ uint64 __VARIABLE__ ToUInt64(int32 __VARIABLE__ startIndex)
         {

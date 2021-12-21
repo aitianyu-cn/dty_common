@@ -243,6 +243,11 @@ namespace dty
 
             return __PTR_TO_REF__(this->_Pointer);
         }
+
+        __PUB__                      operator T __POINTER__()
+        {
+            return this->_Pointer;
+        }
         /**
          * @brief
          * @brief

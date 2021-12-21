@@ -1270,8 +1270,5 @@ bool dty::String::Equals(dty::TianyuObject& other)
     if (this->GetHashCode() == other.GetHashCode())
         return true;
 
-    ::string other_str = other.ToString();
-    dty::String otherString(other_str, strlen(other_str), true);
-
-    return (__PTR_TO_REF__ this) == otherString;
+    return (__PTR_TO_REF__ this) == dynamic_cast<dty::String __REFERENCE__>(other);
 }
