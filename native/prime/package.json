@@ -1,0 +1,13 @@
+{
+    "export": {
+        "name": "dev.tianyu",
+        "dependency": []
+    },
+    "params": {
+        "version": {
+            "c++": "c++17",
+            "c": "c14"
+        }
+    },
+    "blacklist": {}
+}

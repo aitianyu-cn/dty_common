@@ -1,0 +1,12 @@
+{
+    "package": ["native/prime", "native/text", "native/model", "native/io"],
+    "build": {
+        "default": "g++",
+        "builder": [
+            {
+                "compiler": "g++",
+                "params": {}
+            }
+        ]
+    }
+}

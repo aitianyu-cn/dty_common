@@ -1,5 +1,5 @@
 /**
- * @file cross_platform.h(utils)
+ * @file cross_platform.h(native/core)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_CORE_CROSS_PLATFORM_H__
-#define __DTY_COMMON_NATIVE_CORE_CROSS_PLATFORM_H__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_CROSS_PLATFORM_H__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_CROSS_PLATFORM_H__
 
  /**
   * Environment Defs:
@@ -122,4 +122,17 @@
 #error Unknown OS is not supported for Tianyu Platform
 #endif // !!defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
 
-#endif // !__DTY_COMMON_NATIVE_CORE_CROSS_PLATFORM_H__
+#ifdef __cplusplus
+namespace dty
+{
+    enum class PlatformID : int
+    {
+        MacOSX = 6,
+        Other = 7,
+        Unix = 4,
+        Windows = 1
+    };
+}
+#endif // !__cplusplus
+
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_CROSS_PLATFORM_H__

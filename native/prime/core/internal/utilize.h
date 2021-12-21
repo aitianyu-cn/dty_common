@@ -1,5 +1,5 @@
 /**
- * @file utilize.h(utils)
+ * @file utilize.h(native/core)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_CORE_UTILIZE_H__
-#define __DTY_COMMON_NATIVE_CORE_UTILIZE_H__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
 
  // 字符类型有符号数最小值
 #define __SIGNED_CHAR_MIN__     (-128)
@@ -100,17 +100,19 @@ __CMODE__
 {
 #endif // !__cplusplus && __CMODE__ {
 
+    // pure C mode
+
 #pragma region redefine for base data type
-    // 无符号字符 数据类型
-    typedef      unsigned char __VARIABLE__ uchar;
+// 无符号字符 数据类型
+typedef      unsigned char __VARIABLE__ uchar;
 // 有符号字节 数据类型
 typedef        signed char __VARIABLE__ sbyte;
 // 无符号字节 数据类型
 typedef      unsigned char __VARIABLE__ byte;
 // 有符号8位整数 数据类型
-typedef        signed char __VARIABLE__ int8;
+// typedef        signed char __VARIABLE__ int8;
 // 无符号8位整数 数据类型
-typedef      unsigned char __VARIABLE__ uint8;
+// typedef      unsigned char __VARIABLE__ uint8;
 // 有符号16位整数 数据类型
 typedef       signed short __VARIABLE__ int16;
 // 无符号16位整数 数据类型
@@ -128,11 +130,11 @@ typedef               void __POINTER__  object;
 // 字符串类型 数据类型 指针类型
 typedef               char __POINTER__  string;
 // 有符号天宇字符 数据类型
-typedef       signed short __VARIABLE__ tychar;
+// typedef       signed short __VARIABLE__ tychar;
 // 无符号天宇字符 数据类型
-typedef     unsigned short __VARIABLE__ tyuchar;
+// typedef     unsigned short __VARIABLE__ tyuchar;
 // 错误类型 数据类型
-typedef               char __VARIABLE__ error;
+// typedef               char __VARIABLE__ error;
 
 #ifndef __cplusplus
 // 布尔类型 数据类型
@@ -144,6 +146,8 @@ typedef      unsigned char __VARIABLE__ bool;
 
 #pragma endregion
 
+__DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
+
 #ifdef __cplusplus
 }
 #endif // !__cplusplus }
@@ -154,4 +158,4 @@ typedef      unsigned char __VARIABLE__ bool;
 typedef
 #endif // !__cplusplus }
 
-#endif // !__DTY_COMMON_NATIVE_CORE_UTILIZE_H__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__
