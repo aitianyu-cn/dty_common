@@ -25,9 +25,9 @@ namespace dty::collection
         __PRI__ bool  __VARIABLE__ _NeedFree;
 
         __PUB__ Array(Elem __POINTER__ arraySrc, int32 __VARIABLE__ count, bool __VARIABLE__ needFree = true)
-            : _Reference(null), _NeedFree(needFree)
+            : _Reference(::null), _NeedFree(needFree)
         {
-            if (null == arraySrc && 0 != count)
+            if (::null == arraySrc && 0 != count)
                 throw dty::except::ArgumentNullException();
 
             if (0 > count)
@@ -65,7 +65,7 @@ namespace dty::collection
 
         __PUB__ bool           __VARIABLE__   IsNull()
         {
-            return null == this->_Array;
+            return ::null == this->_Array;
         }
         __PUB__ int32          __VARIABLE__   Size()
         {

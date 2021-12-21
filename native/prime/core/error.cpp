@@ -27,7 +27,7 @@ const char* Exception::what() const noexcept
 }
 string __VARIABLE__ Exception::ToString() noexcept
 {
-    return null;
+    return ::null;
 }
 bool Exception::Equals(Exception& other)
 {

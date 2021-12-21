@@ -31,25 +31,25 @@ int main()
     e.Event = 1;
 
     handler.AddHandler(1, Fun1);
-    handler.Invoke(null, e);
+    handler.Invoke(::null, e);
 
     cout << "#####################" << endl;
 
     e.Event = 2;
     handler.AddHandler(2, Fun2);
-    handler.Invoke(null, e);
+    handler.Invoke(::null, e);
 
     cout << "#####################" << endl;
 
     e.Event = 3;
     handler.AddHandler(3, Fun3);
-    handler.Invoke(null, e);
+    handler.Invoke(::null, e);
 
     cout << "#####################" << endl;
 
     e.Event = 4;
     handler.RemoveHandler(2);
-    handler.Invoke(null, e);
+    handler.Invoke(::null, e);
 
     return 0;
 }

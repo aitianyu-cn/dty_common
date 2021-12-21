@@ -84,9 +84,9 @@ namespace dty
         __PRI__ uint64  __VARIABLE__ _Id;
         __PRI__ uint64  __VARIABLE__ _InstanceHash;
 
-        __PRI__ Type() : _Name(null), _InstanceHash(0) { }
-        __PRI__ Type(uint64 __VARIABLE__ instance) : _Name(null), _InstanceHash(instance) { }
-        __PUB__ Type(const Type<T> __REFERENCE__ other) : _Name(null)
+        __PRI__ Type() : _Name(::null), _InstanceHash(0) { }
+        __PRI__ Type(uint64 __VARIABLE__ instance) : _Name(::null), _InstanceHash(instance) { }
+        __PUB__ Type(const Type<T> __REFERENCE__ other) : _Name(::null)
         {
             int32 nameLen = ::strlen(other._Name);
 
@@ -98,7 +98,7 @@ namespace dty
         }
         __PUB__ ~Type()
         {
-            if (null != this->_Name)
+            if (::null != this->_Name)
                 delete [](this->_Name);
         }
 
@@ -211,6 +211,8 @@ namespace dty
 
     abstract class TianyuObject : IToString
     {
+        __PRO__ TianyuObject() { }
+
         __PUB__ virtual ~TianyuObject() { }
 
         __PUB__ virtual ::string __VARIABLE__ ToString() override
@@ -225,7 +227,44 @@ namespace dty
         {
             return (uint64)(this);
         }
+        __PUB__ virtual bool   __VARIABLE__ IsNull()
+        {
+            return false;
+        }
+        __PUB__ bool __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj)
+        {
+            return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
+        }
+
+        __PUB__ static bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj)
+        {
+            return 0ULL == obj.GetHashCode();
+        }
     };
+
+    class TianyuEmptyObject final : TianyuObject
+    {
+        __PUB__ virtual ~TianyuEmptyObject() { }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        {
+            return new char[] { 'n', 'u', 'l', 'l', '\0' };
+        }
+        __PUB__ virtual uint64 __VARIABLE__ GetTypeId() override
+        {
+            return 0ULL;
+        }
+        __PUB__ virtual uint64 __VARIABLE__ GetHashCode() override
+        {
+            return 0ULL;
+        }
+        __PUB__ virtual bool   __VARIABLE__ IsNull() override
+        {
+            return true;
+        }
+    };
+
+    const TianyuEmptyObject __VARIABLE__ null;
 }
 
 // internal macro definition for tianyu class type

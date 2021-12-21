@@ -48,7 +48,7 @@ dty::String::String(const string str, int32 length)
     : dty::collection::IEquatable<dty::String>(),
     dty::collection::ICompareable<dty::String>()
 {
-    if (null == str)
+    if (::null == str)
         throw dty::except::ArgumentNullException();
 
     int32 strLength = strlen(str);
@@ -68,7 +68,7 @@ dty::String::String(const string str, int32 length, bool notCopy)
     : dty::collection::IEquatable<dty::String>(),
     dty::collection::ICompareable<dty::String>()
 {
-    if (null == str)
+    if (::null == str)
         throw dty::except::ArgumentNullException();
 
     int32 strLength = strlen(str);
@@ -96,7 +96,7 @@ dty::String::String(const string str, int32 startIndex, int32 endIndex)
     : dty::collection::IEquatable<dty::String>(),
     dty::collection::ICompareable<dty::String>()
 {
-    if (null == str)
+    if (::null == str)
         throw dty::except::ArgumentNullException();
 
     int32 strLength = strlen(str);
@@ -126,7 +126,7 @@ dty::String::String(const string str)
     : dty::collection::IEquatable<dty::String>(),
     dty::collection::ICompareable<dty::String>()
 {
-    if (null == str)
+    if (::null == str)
         throw dty::except::ArgumentNullException();
 
     int32 strLength = strlen(str);
@@ -341,7 +341,7 @@ dty::String dty::String::Insert(int32 insertIndex, const char ch)
 
 dty::String dty::String::Insert(int32 insertIndex, string str)
 {
-    if (null == str)
+    if (::null == str)
         throw dty::except::ArgumentNullException();
 
     if (0 > insertIndex || insertIndex > this->_StringLength)
@@ -816,7 +816,7 @@ dty::String dty::String::operator=(dty::String& source)
 
 dty::String dty::String::operator=(const string source)
 {
-    if (null == source)
+    if (::null == source)
         throw dty::except::ArgumentNullException();
 
     this->UpdateSource(strlen(source), source);
@@ -978,7 +978,7 @@ dty::String dty::String::Join(const char joinChar, string str1, int32 length1, s
     if ('\0' == joinChar)
         throw dty::except::ArgumentException();
 
-    if (null == str1 || null == str2)
+    if (::null == str1 || ::null == str2)
         throw dty::except::ArgumentNullException();
 
     if (0 > length1 || 0 > length2)
@@ -1076,7 +1076,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
     int32 totalLen = 0;
     int32 totalCount = 0;
     for (const string* it = strs.begin(); it != strs.end(); ++it)
-        if (null != (__PTR_TO_VAR__ it))
+        if (::null != (__PTR_TO_VAR__ it))
         {
             totalLen += strlen(__PTR_TO_VAR__ it);
             ++totalCount;
@@ -1091,7 +1091,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
     for (const string* it = strs.begin(); it != strs.end(); ++it)
     {
         const string itv = (__PTR_TO_VAR__ it);
-        if (null == itv)
+        if (::null == itv)
             continue;
         int32 len = strlen(itv);
         for (int32 i = 0; i < len; ++i, ++newStrI)
@@ -1117,7 +1117,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<dty::St
     if (0 == strs.size())
         return dty::String::Empty;
 
-    dty::String* firstFact = null;
+    dty::String* firstFact = ::null;
     int32 totalLen = 0;
     int32 totalCount = 0;
     for (const dty::String* it = strs.begin(); it != strs.end(); ++it)
@@ -1125,7 +1125,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<dty::St
         {
             totalLen += it->_StringLength;
             ++totalCount;
-            if (null == firstFact)
+            if (::null == firstFact)
                 firstFact = (dty::String __POINTER__)it;
         }
 
@@ -1133,7 +1133,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<dty::St
         return dty::String::Empty;
 
     if (1 == totalCount)
-        return null != firstFact
+        return ::null != firstFact
         ? (__PTR_TO_VAR__ firstFact)
         : throw dty::except::Exception();
 
@@ -1172,7 +1172,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
         return dty::String::Empty;
 
     dty::int_ptr eachLen(new int32[strs.size()], (int64)strs.size());
-    string firstFact = null;
+    string firstFact = ::null;
     int32 totalLen = 0;
     int32 totalCount = 0;
     int32 i = 0;
@@ -1183,7 +1183,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
         {
             totalLen += eachLen[i];
             ++totalCount;
-            if (null == firstFact)
+            if (::null == firstFact)
                 firstFact = __PTR_TO_VAR__ it;
         }
     }
@@ -1192,7 +1192,7 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
         return dty::String::Empty;
 
     if (1 == totalCount)
-        return null != firstFact
+        return ::null != firstFact
         ? dty::String(firstFact)
         : throw dty::except::Exception();
 
@@ -1223,14 +1223,14 @@ dty::String dty::String::Join(const char joinChar, std::initializer_list<string>
 
 dty::String dty::String::GetString(const ::string source, bool needCopy = true)
 {
-    if (null == source)
+    if (::null == source)
         throw dty::except::ArgumentNullException();
 
     return dty::String::GetString(source, ::strlen(source), needCopy);
 }
 dty::String dty::String::GetString(const ::string source, int32 sourceLen, bool needCopy = true)
 {
-    if (null == source)
+    if (::null == source)
         throw dty::except::ArgumentNullException();
 
     return dty::String(source, sourceLen, !needCopy);

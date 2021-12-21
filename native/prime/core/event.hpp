@@ -59,7 +59,7 @@ namespace dty
             static_assert(std::is_base_of<EventArgs, TEventArgs>::value, "expect EventArgs or its child class");
 
             this->_Handlers->_id = 0;
-            this->_Handlers->_next = null;
+            this->_Handlers->_next = ::null;
         }
         __PUB__ virtual ~EventHandler()
         {
@@ -74,7 +74,7 @@ namespace dty
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (null != head->_next)
+            while (::null != head->_next)
             {
                 head->_next->_handler(sender, e);
                 head = head->_next;
@@ -85,7 +85,7 @@ namespace dty
         {
             bool hasFind = false;
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (null != head->_next && !hasFind)
+            while (::null != head->_next && !hasFind)
             {
                 if (handlerId == head->_next->_id)
                     hasFind = true;
@@ -113,7 +113,7 @@ namespace dty
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (null != head->_next)
+            while (::null != head->_next)
             {
                 EventHandlerItem<TEventArgs> __POINTER__ del = head->_next;
                 head->_next = del->_next;
@@ -128,8 +128,8 @@ namespace dty
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            EventHandlerItem<TEventArgs> __POINTER__ del = null;
-            while (null != head->_next && null == del)
+            EventHandlerItem<TEventArgs> __POINTER__ del = ::null;
+            while (::null != head->_next && ::null == del)
             {
                 if (handlerId == head->_next->_id)
                 {
@@ -139,7 +139,7 @@ namespace dty
                 head = head->_next;
             }
 
-            if (null != del)
+            if (::null != del)
             {
                 delete del;
                 this->Count = this->Count - 1;

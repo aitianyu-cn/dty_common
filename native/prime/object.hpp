@@ -26,14 +26,14 @@ namespace dty
         __PUB__ explicit Object()
         {
             if (0 == _Size)
-                this->_Obj = null;
+                this->_Obj = ::null;
             else
                 this->_Obj = new byte[_Size];
         }
         __PUB__ explicit Object(Object<_Size> __REFERENCE__ other)
         {
             if (0 == _Size)
-                this->_Obj = null;
+                this->_Obj = ::null;
             else
             {
                 this->_Obj = new byte[_Size];
@@ -48,7 +48,7 @@ namespace dty
 
         __PRI__ void _Destroy()
         {
-            if (null != this->_Obj)
+            if (::null != this->_Obj)
                 delete [] this->_Obj;
         }
 
@@ -186,7 +186,7 @@ namespace dty
         }
         __PUB__ void __VARIABLE__ Set(byte __POINTER__ _value, int32 __VARIABLE__ length, int32 __VARIABLE__ startIndex)
         {
-            if (null == _value)
+            if (::null == _value)
                 throw dty::except::ArgumentNullException();
             if (_Size <= startIndex || 0 >= length)
                 throw dty::except::ArgumentOutOfRangeException();
@@ -282,7 +282,7 @@ namespace dty
         __PUB__ string __VARIABLE__ ToString(IStringConverter __REFERENCE__ converter) const
         {
             if (0 == _Size)
-                return null;
+                return ::null;
 
             return converter.TryConvert(this->_Obj, _Size);
         }

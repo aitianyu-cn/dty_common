@@ -29,7 +29,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -43,7 +43,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -57,7 +57,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -71,7 +71,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -85,7 +85,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -99,7 +99,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -113,7 +113,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -127,7 +127,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -141,7 +141,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -155,7 +155,7 @@ class ConsoleWriteHandler
         // newItem->_StrLength = ;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -170,7 +170,7 @@ class ConsoleWriteHandler
         newItem->_StrLength = 1;
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -188,7 +188,7 @@ class ConsoleWriteHandler
         newItem->_Str[newItem->_StrLength] = '\0';
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -206,7 +206,7 @@ class ConsoleWriteHandler
         newItem->_Str[newItem->_StrLength] = '\0';
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;
@@ -224,7 +224,7 @@ class ConsoleWriteHandler
         newItem->_StrLength = strlen(newItem->_Str);
 
         preItem->_Next = newItem;
-        newItem->_Next = null;
+        newItem->_Next = ::null;
 
         // call override HandleParams to process the next params
         return ConsoleWriteHandler::HandleParams(preItem->_Next, params...) + 1;

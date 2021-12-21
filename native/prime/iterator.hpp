@@ -25,14 +25,14 @@ namespace dty::collection
         __PRI__ bool  __VARIABLE__ NeedFree;
 
         __PUB__ FilterResult()
-            : Elems(null), Length(0), Size(0), NeedFree(false)
+            : Elems(::null), Length(0), Size(0), NeedFree(false)
         {
 
         }
         __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = true)
             : NeedFree(needFree)
         {
-            if (null == elems)
+            if (::null == elems)
                 throw dty::except::ArgumentNullException();
 
             if (0 >= length || length > size)
@@ -115,9 +115,9 @@ namespace dty::collection
         __PRI__ int32 __POINTER__  _Reference;
 
         __PUB__ explicit Iterator(Elem __POINTER__ pointer, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = false)
-            : _Current(0), _NeedFree(needFree), _Reference(null)
+            : _Current(0), _NeedFree(needFree), _Reference(::null)
         {
-            if (null == pointer && 0 != size)
+            if (::null == pointer && 0 != size)
                 throw dty::except::ArgumentNullException();
 
             if (0 > size)
@@ -200,7 +200,7 @@ namespace dty::collection
                 if (!fnForEach(this->_Pointer[i]))
                     return (this->_Pointer) + i;
 
-            return null;
+            return ::null;
         }
         __PUB__ virtual FilterResult<Elem> __VARIABLE__ Filter(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {
@@ -248,7 +248,7 @@ namespace dty::collection
                 if (fnForEach(this->_Pointer[i]))
                     return (this->_Pointer) + i;
 
-            return null;
+            return ::null;
         }
         __PUB__ virtual int32              __VARIABLE__ FindIndex(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) override
         {

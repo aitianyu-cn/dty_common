@@ -43,7 +43,7 @@ namespace dty
          */
         __PRI__ void __VARIABLE__ Release()
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 return;
 
             // 选择是释放单个对象还是多个数组
@@ -82,22 +82,22 @@ namespace dty
 
         /**
          * @brief 创建一个空指针对象
-         * @brief Create a null pointer
+         * @brief Create a ::null pointer
          */
         __PUB__ explicit SmartPointer()
             : _SmartPointerType(SPType::STRONG),
-            _Pointer(null),
+            _Pointer(::null),
             _Size(0)
         { }
         /**
          * @brief 由指定的指针创建智能指针对象
          * @brief Create a smart pointer from a specified pointer
          *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is null
+         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
          */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer)
         {
-            if (null == pointer)
+            if (::null == pointer)
                 throw dty::except::NullPointerException();
 
             // create a strong pointer in default.
@@ -109,12 +109,12 @@ namespace dty
          * @brief 由指定的指针和对象长度创建智能指针对象
          * @brief Create a smart pointer from a specified pointer and object size
          *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is null
+         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
          * @exception dty::except::IndexOutOfRangeException: throw an exception if the specified pointer size is not more than zero.
          */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, int64 __VARIABLE__ size)
         {
-            if (null == pointer)
+            if (::null == pointer)
                 throw dty::except::NullPointerException();
 
             if (0 >= size)
@@ -129,7 +129,7 @@ namespace dty
          * @brief 由指定的指针创建智能指针对象，并指定指针类型
          * @brief Create a smart pointer from a specified pointer and set the default pointer type
          *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is null
+         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
          */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, bool __VARIABLE__ weak)
             : SmartPointer<T>(pointer)
@@ -142,7 +142,7 @@ namespace dty
          * @brief 由指定的指针和对象长度创建智能指针对象，并指定指针类型
          * @brief Create a smart pointer from a specified pointer and object size and set the default pointer type
          *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is null
+         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
          * @exception dty::except::IndexOutOfRangeException: throw an exception if the specified pointer size is not more than zero.
          */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, int64 __VARIABLE__ size, bool __VARIABLE__ weak)
@@ -180,7 +180,7 @@ namespace dty
                 // unsafe mode should change const to normal reference
                 // --dty-cpp-lint: unsafe-convert-constRef_to_Ref
                 SmartPointer<T>& spMove = (SmartPointer<T> __REFERENCE__)sp;
-                spMove._Pointer = null;
+                spMove._Pointer = ::null;
                 spMove._Size = 0;
             }
         }
@@ -199,13 +199,13 @@ namespace dty
 
         /**
          * @brief 获取一个bool值指示当前实例是否为空指针
-         * @brief Get a bool value indicates whether the current pointer is null
+         * @brief Get a bool value indicates whether the current pointer is ::null
          *
-         * @return {bool} return true if current pointer is null, other wise is false
+         * @return {bool} return true if current pointer is ::null, other wise is false
          */
         __PUB__ bool __VARIABLE__ IsNull()
         {
-            return null == this->_Pointer;
+            return ::null == this->_Pointer;
         }
         /**
          * @brief 获取一个值指示当前指针实例的大小
@@ -238,7 +238,7 @@ namespace dty
          */
         __PUB__ T      __REFERENCE__ operator __POINTER__()
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 throw dty::except::NullPointerException();
 
             return __PTR_TO_REF__(this->_Pointer);
@@ -251,7 +251,7 @@ namespace dty
          */
         __PUB__ T      __POINTER__   operator ->()
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 throw dty::except::NullPointerException();
 
             return this->_Pointer;
@@ -264,7 +264,7 @@ namespace dty
          */
         __PUB__ T      __POINTER__   operator ->() const
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 throw dty::except::NullPointerException();
 
             return this->_Pointer;
@@ -278,7 +278,7 @@ namespace dty
          */
         __PUB__ T      __REFERENCE__ operator[] (int64 __VARIABLE__ index)
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 throw dty::except::NullPointerException();
 
             if (0 > index || this->_Size <= index)
@@ -295,7 +295,7 @@ namespace dty
          */
         __PUB__ T      __REFERENCE__ operator[] (int64 __VARIABLE__ index) const
         {
-            if (null == this->_Pointer)
+            if (::null == this->_Pointer)
                 throw dty::except::NullPointerException();
 
             if (0 > index || this->_Size <= index)
@@ -328,7 +328,7 @@ namespace dty
             if (this->_Pointer == sp._Pointer)
                 return false;
 
-            if (SPType::STRONG == this->_SmartPointerType && null != this->_Pointer)
+            if (SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
             {
                 if (1 < this->_Size)
                     delete [] this->_Pointer;
@@ -340,7 +340,7 @@ namespace dty
             this->_Pointer = sp._Pointer;
             this->_Size = sp._Size;
 
-            sp._Pointer = null;
+            sp._Pointer = ::null;
             sp._Size = 0;
 
             return true;

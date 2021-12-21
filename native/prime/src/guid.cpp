@@ -92,7 +92,7 @@ dty::collection::ByteArray dty::Guid::ToByteArray()
 
 ::string dty::Guid::ToString()
 {
-    return _dty_native_cpp_guid_toString(null);
+    return _dty_native_cpp_guid_toString(::null);
 }
 
 dty::String dty::Guid::ToString(const ::string formatter)
