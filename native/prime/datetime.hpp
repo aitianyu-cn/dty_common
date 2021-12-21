@@ -193,7 +193,8 @@ namespace dty
         __PUB__ DateTime __VARIABLE__ Subtract(TimeSpan __REFERENCE__ span);
         __PUB__ DateTime __VARIABLE__ ToUniversalTime();
 
-        __PUB__ virtual ::string ToString() noexcept override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
 
         __PUB__ dty::String ToString(const ::string __VARIABLE__ formatter);
         __PUB__ dty::String ToString(dty::String __VARIABLE__ formatter);

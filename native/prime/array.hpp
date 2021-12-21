@@ -98,6 +98,10 @@ namespace dty::collection
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
     };
 
     using ByteArray = Array<byte>;

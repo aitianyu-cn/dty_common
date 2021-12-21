@@ -34,6 +34,7 @@ namespace dty
 
         __PRI__ const   ::string __VARIABLE__ ObjectName;
         __PRI__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
 
         __PUB__ static OperationSystem __VARIABLE__ CurrentOS();
     };

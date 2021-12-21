@@ -94,6 +94,7 @@ namespace dty::threading
         __PUB__ static Property<Thread __POINTER__> __VARIABLE__ CurrentThread;
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
     };
 
     _interface IRunnable : public virtual TianyuObject
@@ -114,16 +115,19 @@ namespace dty::threading
     class ThreadPool : public virtual TianyuObject
     {
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
     };
 
     class Mutex : public virtual TianyuObject
     {
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
     };
 
     class Timer final : public TianyuObject
     {
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
     };
 }
 

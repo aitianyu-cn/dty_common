@@ -22,7 +22,9 @@
 
 namespace dty
 {
-    class String : public virtual dty::collection::IEquatable<String>,
+    class String
+        : public virtual dty::TianyuObject,
+        public virtual dty::collection::IEquatable<String>,
         public virtual dty::collection::ICompareable<String>
     {
         __PRI__ string __VARIABLE__ _StringValue;
@@ -93,9 +95,10 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
         __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
-        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other);
+        __PUB__ virtual bool     __VARIABLE__ IsNull() override;
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other) override;
 
-        __PUB__::string  __VARIABLE__ ToCStr();
+        __PUB__::string   __VARIABLE__ ToCStr();
         __PUB__ string_sp __VARIABLE__ ToSafeCStr();
 
         __PUB__ collection::CharArray     __VARIABLE__ ToArray();

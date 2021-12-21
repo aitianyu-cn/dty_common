@@ -713,7 +713,7 @@ void dty::String::TrimEnd(char ch [], int32 length)
     throw dty::except::NotImplementationException();
 }
 
-string dty::String::ToCStr()
+::string dty::String::ToCStr()
 {
     string cstr = new char[this->_StringLength + 1];
     for (int32 i = 0; i < this->_StringLength; ++i)
@@ -1240,4 +1240,38 @@ std::ostream& dty::operator<<(std::ostream& os, const dty::String& str)
 {
     os << str._StringValue;
     return os;
+}
+
+::string dty::String::ToString() noexcept
+{
+    return this->ToCStr();
+}
+
+uint64 dty::String::GetTypeId()
+{
+    return dty::GetType(__PTR_TO_REF__ this).Id();
+}
+
+uint64 dty::String::GetHashCode()
+{
+    return (uint64)(this->_StringValue);
+}
+
+bool dty::String::IsNull()
+{
+    return ::null == this->_StringValue;
+}
+
+bool dty::String::Equals(dty::TianyuObject& other)
+{
+    if (this->GetTypeId() != other.GetTypeId())
+        return false;
+
+    if (this->GetHashCode() == other.GetHashCode())
+        return true;
+
+    ::string other_str = other.ToString();
+    dty::String otherString(other_str, strlen(other_str), true);
+
+    return (__PTR_TO_REF__ this) == otherString;
 }

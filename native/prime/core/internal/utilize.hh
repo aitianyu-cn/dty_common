@@ -2,7 +2,7 @@
  * @file utilize.hh(native/core)
  * @author senyun.yao
  * @brief 用于天宇平台的公用组件核心
- * @brief AiTianyu Platform Public Common Core
+ * @brief AiTianyu Platform Public Common Core (C++ only)
  *
  * @version 0.1
  * @date 2021-11-09
@@ -29,8 +29,8 @@
   * @brief The flag that allow unsafe memory operations in Tianyu Library when it is defined
   */
   // #define __DTY_UNSAFE_MODE__ "Tianyu Library Unsafe Mode"
-    // #define __DTY_DEEP_LEARNING_MODE__
-      // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
+  // #define __DTY_DEEP_LEARNING_MODE__
+  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
 #if __cplusplus < 201700
 #error library needs C++17 or later
@@ -58,11 +58,12 @@
 // 值→引用类型转换 标志 用于标识值类型到引用类型的转换
 #define __VAR_TO_REF__
 
-//
+// abstract class define
 #define abstract
-//
+// define interface that is an abstract class
 #define _interface abstract class
 
+// null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
 
 #ifdef __GNUC__
@@ -71,6 +72,8 @@ constexpr auto null = nullptr;
 
 namespace dty
 {
+    // general data type class
+    // get a name and type id to indicate a specified type
     __PREDEFINE__ template<typename T> class Type;
     __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType();
     __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj);
@@ -195,6 +198,16 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept = 0;
     };
 
+    /**
+     * @brief internal default function: to get a general object full name from a template type
+     *        (specified object).
+     *
+     * @tparam T template type
+     * @param obj specified object
+     * @return __DEFAULT__::string return a full name of the specified object
+     *
+     * @warning Pay attention: MUST to release the return value before it is discarded.
+     */
     template<typename T>
     __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept
     {
@@ -219,14 +232,15 @@ namespace dty
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
-        __PUB__ virtual uint64 __VARIABLE__ GetTypeId()
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()
         {
             return dty::GetType(__PTR_TO_REF__ this).Id();
         }
-        __PUB__ virtual uint64 __VARIABLE__ GetHashCode()
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode()
         {
             return (uint64)(this);
         }
+
         __PUB__ virtual bool   __VARIABLE__ IsNull()
         {
             return false;
@@ -268,6 +282,9 @@ namespace dty
         }
     };
 
+    // null value of Tianyu Object
+    // should be used by adding namespace dty (dty::null)
+    // if not, some unexpected error could be happended.
     const TianyuEmptyObject __VARIABLE__ null;
 }
 

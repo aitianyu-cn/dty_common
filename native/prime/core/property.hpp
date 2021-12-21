@@ -55,6 +55,15 @@ namespace dty
         __PUB__ Property(T __VARIABLE__ value) : IPropertyGetter<T>(), IPropertySetter<T>(), _Elem(value) { }
         __PUB__ virtual ~Property() { }
 
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
+        {
+            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
+
         __PUB__ virtual T    __VARIABLE__ Get() override
         {
             return this->_Elem;

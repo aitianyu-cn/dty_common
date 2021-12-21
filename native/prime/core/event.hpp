@@ -30,6 +30,10 @@ namespace dty
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
 
         __PUB__ static EventArgs __VARIABLE__ Empty;
     };
@@ -149,6 +153,10 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
         }
     };
 }

@@ -125,7 +125,7 @@
 #ifdef __cplusplus
 namespace dty
 {
-    enum class PlatformID : int
+    enum class PlatformID : signed int
     {
         MacOSX = 6,
         Other = 7,
