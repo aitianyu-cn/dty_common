@@ -26,7 +26,7 @@ namespace dty
         __PUB__ EventArgs() { }
         __PUB__ virtual ~EventArgs() { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
@@ -146,7 +146,7 @@ namespace dty
             }
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }

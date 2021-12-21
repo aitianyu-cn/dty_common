@@ -17,7 +17,7 @@
 
 namespace dty
 {
-    class Math final
+    class Math final : public virtual TianyuObject
     {
         __PUB__ Math() = delete;
 
@@ -98,7 +98,7 @@ namespace dty
         __PUB__ static double __VARIABLE__ Truncate(double __VARIABLE__ x);
     };
 
-    class MathF final
+    class MathF final : public virtual TianyuObject
     {
         __PUB__ MathF() = delete;
 

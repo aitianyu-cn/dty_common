@@ -89,7 +89,7 @@ namespace dty
         __PUB__ TimeSpan __REFERENCE__ operator-(TimeSpan __REFERENCE__ span);
         __PUB__ TimeSpan __REFERENCE__ operator-(uint64 __VARIABLE__ ticks);
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
         __PUB__ dty::String      __VARIABLE__ ToString(const string __VARIABLE__ formatter);
         __PUB__ dty::String      __VARIABLE__ ToString(String __VARIABLE__ formatter);
@@ -193,7 +193,7 @@ namespace dty
         __PUB__ DateTime __VARIABLE__ Subtract(TimeSpan __REFERENCE__ span);
         __PUB__ DateTime __VARIABLE__ ToUniversalTime();
 
-        __PUB__ virtual ::string ToString() override;
+        __PUB__ virtual ::string ToString() noexcept override;
 
         __PUB__ dty::String ToString(const ::string __VARIABLE__ formatter);
         __PUB__ dty::String ToString(dty::String __VARIABLE__ formatter);

@@ -35,7 +35,8 @@ namespace dty::except
     constexpr uint64 __VARIABLE__ DTY_Generic_OperationFailedException = 0x3000000000000001ULL;
 #pragma endregion
 
-    class Exception : public std::exception,
+    class Exception : dty::TianyuObject,
+        public std::exception,
         public virtual collection::IEquatable<Exception>,
         public virtual collection::ICompareable<Exception>
     {
@@ -46,7 +47,7 @@ namespace dty::except
         __PUB__ virtual uint64     __VARIABLE__ GetExceptionId();
         __PUB__ virtual const char __POINTER__ what() const noexcept override;
 
-        __PUB__ virtual string     __VARIABLE__ ToString() noexcept;
+        __PUB__ virtual ::string   __VARIABLE__ ToString() noexcept override;
 
 #pragma region Tianyu IEquatable Interface
         __PUB__ virtual bool __VARIABLE__ Equals(Exception __REFERENCE__ other) override;

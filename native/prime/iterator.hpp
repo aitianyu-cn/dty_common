@@ -69,7 +69,7 @@ namespace dty::collection
             return this->Elems[index];
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
@@ -98,14 +98,14 @@ namespace dty::collection
         __PUB__ virtual Elem               __POINTER__  Find(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) = 0;
         __PUB__ virtual int32              __VARIABLE__ FindIndex(IteratorBase<Elem>::fnItemCheck __VARIABLE__ fnForEach) = 0;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
     };
 
     template<class Elem>
-    class Iterator final : IteratorBase<Elem>
+    class Iterator final : public virtual TianyuObject, IteratorBase<Elem>
     {
         __PRI__ Elem  __POINTER__  _Pointer;
         __PRI__ int32 __VARIABLE__ _Size;
@@ -259,7 +259,7 @@ namespace dty::collection
             return -1;
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }

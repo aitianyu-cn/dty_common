@@ -48,7 +48,7 @@ namespace dty
         __PUB__ Version __VARIABLE__ Parse(dty::String  __VARIABLE__ version);
         __PUB__ Version __VARIABLE__ Parse(const string __VARIABLE__ version);
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
         __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
 

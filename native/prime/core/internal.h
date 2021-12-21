@@ -24,12 +24,12 @@
 
 namespace dty
 {
-    _interface IObjectConverter
+    _interface IObjectConverter : public virtual TianyuObject
     {
         __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize) = 0;
         __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) = 0;
     };
-    _interface IStringConverter
+    _interface IStringConverter : public virtual TianyuObject
     {
         __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize) const = 0;
         __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) const = 0;
@@ -48,7 +48,7 @@ namespace dty
         }
         __PUB__ virtual ~KeyValuePair() override { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }

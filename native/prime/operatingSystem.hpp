@@ -33,7 +33,7 @@ namespace dty
         __PUB__ bool __VARIABLE__ IsWindows();
 
         __PRI__ const   ::string __VARIABLE__ ObjectName;
-        __PRI__ virtual ::string __VARIABLE__ ToString() override;
+        __PRI__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
         __PUB__ static OperationSystem __VARIABLE__ CurrentOS();
     };

@@ -79,7 +79,7 @@ namespace dty
             __PTR_TO_VAR__(this->_Result) = value;
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
@@ -133,7 +133,7 @@ namespace dty
             this->_Action(params...);
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
@@ -187,7 +187,7 @@ namespace dty
             return this->_Func(params...);
         }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }

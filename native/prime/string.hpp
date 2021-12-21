@@ -90,7 +90,12 @@ namespace dty
         __PUB__ void   __VARIABLE__ TrimEnd(const char __VARIABLE__ ch);
         __PUB__ void   __VARIABLE__ TrimEnd(char __VARIABLE__ ch [], int32 __VARIABLE__ length);
 
-        __PUB__ string    __VARIABLE__ ToCStr();
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other);
+
+        __PUB__::string  __VARIABLE__ ToCStr();
         __PUB__ string_sp __VARIABLE__ ToSafeCStr();
 
         __PUB__ collection::CharArray     __VARIABLE__ ToArray();

@@ -192,11 +192,11 @@ namespace dty
      */
     _interface IToString
     {
-        __PUB__ virtual ::string __VARIABLE__ ToString() = 0;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept = 0;
     };
 
     template<typename T>
-    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj)
+    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept
     {
         ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
         int32 typeNameLen = ::strlen(typeName);
@@ -215,7 +215,7 @@ namespace dty
 
         __PUB__ virtual ~TianyuObject() { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
@@ -230,6 +230,10 @@ namespace dty
         __PUB__ virtual bool   __VARIABLE__ IsNull()
         {
             return false;
+        }
+        __PUB__ virtual bool   __VARIABLE__ Equals(TianyuObject __REFERENCE__ obj)
+        {
+            return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
         }
         __PUB__ bool __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj)
         {
@@ -246,9 +250,9 @@ namespace dty
     {
         __PUB__ virtual ~TianyuEmptyObject() { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() override
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
-            return new char[] { 'n', 'u', 'l', 'l', '\0' };
+            return new char[5]{ 'n', 'u', 'l', 'l', '\0' };
         }
         __PUB__ virtual uint64 __VARIABLE__ GetTypeId() override
         {

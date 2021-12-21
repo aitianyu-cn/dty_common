@@ -19,7 +19,7 @@
 namespace dty
 {
     template<class T>
-    _interface IPropertyGetter
+    _interface IPropertyGetter : public virtual TianyuObject
     {
         __PUB__ virtual ~IPropertyGetter() { }
 
@@ -29,7 +29,7 @@ namespace dty
     };
 
     template<class T>
-    _interface IPropertySetter
+    _interface IPropertySetter : public virtual TianyuObject
     {
         __PUB__ virtual ~IPropertySetter() { }
 
@@ -38,13 +38,16 @@ namespace dty
     };
 
     template<class T>
-    _interface IProperty : public virtual IPropertyGetter<T>, public virtual IPropertySetter<T>
+    _interface IProperty
+        : public virtual TianyuObject,
+        public virtual IPropertyGetter<T>,
+        public virtual IPropertySetter<T>
     {
         __PUB__ virtual ~IProperty() override { }
     };
 
     template<class T>
-    class Property final : public IProperty<T>
+    class Property final : public virtual TianyuObject, public IProperty<T>
     {
         __PRI__ T __VARIABLE__ _Elem;
 
