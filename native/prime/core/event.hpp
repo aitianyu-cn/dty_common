@@ -54,11 +54,12 @@ namespace dty
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
-        __PUB__ Property<int32>              __VARIABLE__ Count;
+        __PUB__ IPropertyGetter<int32>       __REFERENCE__ Count = this->_Count;
 
+        __PRI__ Property<int32>              __VARIABLE__ _Count;
         __PRI__ EventHandlerItem<TEventArgs> __POINTER__  _Handlers;
 
-        __PUB__ EventHandler() : Count(0), _Handlers(new EventHandlerItem<TEventArgs>())
+        __PUB__ EventHandler() : _Count(0), _Handlers(new EventHandlerItem<TEventArgs>())
         {
             static_assert(std::is_base_of<EventArgs, TEventArgs>::value, "expect EventArgs or its child class");
 
@@ -74,7 +75,7 @@ namespace dty
 
         __PUB__ void __VARIABLE__ Invoke(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e)
         {
-            if (0 == this->Count)
+            if (0 == this->_Count)
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
@@ -108,12 +109,12 @@ namespace dty
 
                 newHandler->_next = head->_next;
                 head->_next = newHandler;
-                this->Count = this->Count + 1;
+                this->_Count = this->_Count + 1;
             }
         }
         __PUB__ void __VARIABLE__ Clear()
         {
-            if (0 == this->Count)
+            if (0 == this->_Count)
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
@@ -124,11 +125,11 @@ namespace dty
                 delete del;
             }
 
-            this->Count = 0;
+            this->_Count = 0;
         }
         __PUB__ void __VARIABLE__ RemoveHandler(int32 __VARIABLE__ handlerId)
         {
-            if (0 == this->Count)
+            if (0 == this->_Count)
                 return;
 
             EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
@@ -146,7 +147,7 @@ namespace dty
             if (::null != del)
             {
                 delete del;
-                this->Count = this->Count - 1;
+                this->_Count = this->_Count - 1;
             }
         }
 

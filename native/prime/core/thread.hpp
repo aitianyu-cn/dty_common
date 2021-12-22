@@ -46,29 +46,13 @@ namespace dty::threading
 
     class Thread final : public TianyuObject
     {
-        template<class T>
-        class ReadProperty : public dty::IPropertyGetter<T>
-        {
-            __PRO__ T __VARIABLE__ _Value;
+        __PUB__ IPropertyGetter<bool>  __REFERENCE__ IsAlive = this->_IsAlive;
+        __PUB__ IPropertyGetter<bool>  __REFERENCE__ IsThreadPoolThread = this->_IsThreadPoolThread;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ ManagedThreadId = this->_ManagedThreadId;
 
-            __PUB__ ReadProperty() :_Value() { }
-            __PUB__ virtual ~ReadProperty() override { }
-
-            __PUB__ virtual T __VARIABLE__ Get() override
-            {
-                return this->_Value;
-            }
-            __PUB__ virtual operator T() override
-            {
-                return this->_Value;
-            }
-
-            friend class Thread;
-        };
-
-        __PUB__ ReadProperty<bool>  __VARIABLE__ IsAlive;
-        __PUB__ ReadProperty<bool>  __VARIABLE__ IsThreadPoolThread;
-        __PUB__ ReadProperty<int32> __VARIABLE__ ManagedThreadId;
+        __PRI__ Property<bool>  __VARIABLE__ _IsAlive;
+        __PRI__ Property<bool>  __VARIABLE__ _IsThreadPoolThread;
+        __PRI__ Property<int32> __VARIABLE__ _ManagedThreadId;
 
         __PUB__ Property<string>         __VARIABLE__ Name;
         __PUB__ Property<ThreadPriority> __VARIABLE__ Priority;

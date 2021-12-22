@@ -19,10 +19,13 @@ namespace dty::collection
     template<class Elem>
     class Array final : public TianyuObject
     {
+        __PUB__ IPropertyGetter __REFERENCE__ Count = this->_Count;
+
         __PRI__ Elem  __POINTER__  _Array;
-        __PRI__ int32 __VARIABLE__ _Count;
         __PRI__ int32 __POINTER__  _Reference;
-        __PRI__ bool  __VARIABLE__ _NeedFree;
+
+        __PRI__ Property<int32> __VARIABLE__ _Count;
+        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ Array(Elem __POINTER__ arraySrc, int32 __VARIABLE__ count, bool __VARIABLE__ needFree = true)
             : _Reference(::null), _NeedFree(needFree)
@@ -66,10 +69,6 @@ namespace dty::collection
         __PUB__ bool           __VARIABLE__   IsNull()
         {
             return ::null == this->_Array;
-        }
-        __PUB__ int32          __VARIABLE__   Size()
-        {
-            return this->_Count;
         }
         __PUB__ Elem           __REFERENCE__  operator[](int32 __VARIABLE__ index)
         {

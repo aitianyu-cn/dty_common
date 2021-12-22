@@ -17,9 +17,9 @@
 namespace dty
 {
     template <uint32 _Size>
-    class Object : dty::TianyuObject,
-        public collection::ICompareable<Object<_Size>>,
-        public collection::IEquatable<Object<_Size>>
+    class Object : public virtual dty::TianyuObject,
+        public virtual collection::ICompareable<Object<_Size>>,
+        public virtual collection::IEquatable<Object<_Size>>
     {
         __PRO__ byte  __POINTER__  _Obj;
 
@@ -50,11 +50,6 @@ namespace dty
         {
             if (::null != this->_Obj)
                 delete [] this->_Obj;
-        }
-
-        __PUB__ int32 __VARIABLE__ Size()
-        {
-            return (int32)_Size;
         }
 
         __PUB__ void __VARIABLE__ Clear()
@@ -503,6 +498,12 @@ namespace dty
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
         {
             return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
+
+
+        __PUB__ static int32 __VARIABLE__ Size()
+        {
+            return (int32)_Size;
         }
     };
 

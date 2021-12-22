@@ -19,18 +19,21 @@ namespace dty::collection
     template<class Elem>
     class FilterResult final : dty::TianyuObject
     {
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Length = this->_Length;
+
         __PRI__ Elem  __POINTER__  Elems;
-        __PRI__ int32 __VARIABLE__ Length;
-        __PRI__ int32 __VARIABLE__ Size;
-        __PRI__ bool  __VARIABLE__ NeedFree;
+
+        __PRI__ Property<int32> __VARIABLE__ _Length;
+        __PRI__ Property<int32> __VARIABLE__ _Size;
+        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ FilterResult()
-            : Elems(::null), Length(0), Size(0), NeedFree(false)
+            : Elems(::null), _Length(0), _Size(0), _NeedFree(false)
         {
 
         }
         __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = true)
-            : NeedFree(needFree)
+            : _NeedFree(needFree)
         {
             if (::null == elems)
                 throw dty::except::ArgumentNullException();
@@ -39,15 +42,15 @@ namespace dty::collection
                 throw dty::except::ArgumentOutOfRangeException();
 
             this->Elems = elems;
-            this->Length = length;
-            this->Size = size;
+            this->_Length = length;
+            this->_Size = size;
         }
         __PUB__ ~FilterResult()
         {
-            if (!this->NeedFree)
+            if (!this->_NeedFree)
                 return;
 
-            if (1 == this->Size)
+            if (1 == this->_Size)
                 delete this->Elems;
             else
                 delete [] this->Elems;
@@ -55,15 +58,11 @@ namespace dty::collection
 
         __PUB__ bool  __VARIABLE__ IsEmpty()
         {
-            return 0 == this->Length;
-        }
-        __PUB__ int32 __VARIABLE__ GetLength()
-        {
-            return this->Length;
+            return 0 == this->_Length;
         }
         __PUB__ Elem  __REFERENCE__ operator[](int32 __VARIABLE__ index)
         {
-            if (index >= this->Length)
+            if (index >= this->_Length)
                 throw dty::except::ArgumentOutOfRangeException();
 
             return this->Elems[index];
@@ -73,13 +72,17 @@ namespace dty::collection
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
         }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
+        }
     };
 
     template<class Elem>
     abstract class IteratorBase : public virtual dty::TianyuObject
     {
-        __PUB__ typedef void __VARIABLE__(__POINTER__ fnItemMap)(Elem __REFERENCE__ elem);
-        __PUB__ typedef bool __VARIABLE__(__POINTER__ fnItemCheck)(Elem __REFERENCE__ elem);
+        __PUB__ using fnItemMap = void __VARIABLE__(__POINTER__)(Elem __REFERENCE__ elem);
+        __PUB__ using fnItemCheck = bool __VARIABLE__(__POINTER__)(Elem __REFERENCE__ elem);
 
         __PUB__ IteratorBase() { }
         __PUB__ virtual ~IteratorBase() { }
@@ -107,15 +110,17 @@ namespace dty::collection
     template<class Elem>
     class Iterator final : public virtual TianyuObject, IteratorBase<Elem>
     {
-        __PUB__ typedef void __VARIABLE__(__POINTER__ fnItemMap)(Elem __REFERENCE__ elem);
-        __PUB__ typedef bool __VARIABLE__(__POINTER__ fnItemCheck)(Elem __REFERENCE__ elem);
+        __PUB__ using fnItemMap = void __VARIABLE__(__POINTER__)(Elem __REFERENCE__ elem);
+        __PUB__ using fnItemCheck = bool __VARIABLE__(__POINTER__)(Elem __REFERENCE__ elem);
+
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Size = this->_Size;
 
         __PRI__ Elem  __POINTER__  _Pointer;
-        __PRI__ int32 __VARIABLE__ _Size;
-        __PRI__ int32 __VARIABLE__ _Current;
-
-        __PRI__ bool  __VARIABLE__ _NeedFree;
         __PRI__ int32 __POINTER__  _Reference;
+
+        __PRI__ Property<int32> __VARIABLE__ _Size;
+        __PRI__ Property<int32> __VARIABLE__ _Current;
+        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ explicit Iterator(Elem __POINTER__ pointer, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = false)
             : _Current(0), _NeedFree(needFree), _Reference(::null)
@@ -153,11 +158,6 @@ namespace dty::collection
             }
             else
                 (__PTR_TO_VAR__(this->_Reference)) -= 1;
-        }
-
-        __PUB__ virtual int32              __VARIABLE__ Size() override
-        {
-            return this->_Size;
         }
 
         __PUB__ virtual void               __VARIABLE__ Reset() override

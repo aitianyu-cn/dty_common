@@ -47,13 +47,13 @@ namespace dty
     };
 
     template<class T>
-    class Property final : public virtual TianyuObject, public IProperty<T>
+    class Property final : public virtual TianyuObject, public virtual IProperty<T>
     {
         __PRI__ T __VARIABLE__ _Elem;
 
-        __PUB__ Property() : IPropertyGetter<T>(), IPropertySetter<T>(), _Elem() { }
-        __PUB__ Property(T __VARIABLE__ value) : IPropertyGetter<T>(), IPropertySetter<T>(), _Elem(value) { }
-        __PUB__ virtual ~Property() { }
+        __PUB__ Property() : TianyuObject(), IPropertyGetter<T>(), IPropertySetter<T>(), _Elem() { }
+        __PUB__ Property(T __VARIABLE__ value) : TianyuObject(), IPropertyGetter<T>(), IPropertySetter<T>(), _Elem(value) { }
+        __PUB__ virtual ~Property() override { }
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {

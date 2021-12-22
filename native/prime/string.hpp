@@ -27,9 +27,11 @@ namespace dty
         public virtual dty::collection::IEquatable<String>,
         public virtual dty::collection::ICompareable<String>
     {
-        __PRI__ string __VARIABLE__ _StringValue;
-        __PRI__ int32  __VARIABLE__ _StringLength;
-        __PRI__ int32  __POINTER__  _Reference;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Length = this->_StringLength;
+
+        __PRI__ Property<string> __VARIABLE__ _StringValue;
+        __PRI__ Property<int32>  __VARIABLE__ _StringLength;
+        __PRI__ int32            __POINTER__  _Reference;
 
         __PUB__ String();
         __PUB__ String(string_sp    __VARIABLE__ item);
@@ -44,7 +46,6 @@ namespace dty
         __PUB__ virtual ~String() override;
 
 #pragma region Tianyu String Function
-        __PUB__ int32  __VARIABLE__ Length();
         __PUB__ bool   __VARIABLE__ IsEmpty();
         __PUB__ bool   __VARIABLE__ RemoveAt(int32 __VARIABLE__ index);
         __PUB__ void   __VARIABLE__ Clear();
