@@ -9,7 +9,7 @@
  *
  */
 
-#include "../new_iterator.hpp"
+#include "../iterator.hpp"
 
 template<class T>
 dty::collection::IIteratorEntity<T>::IIteratorEntity(dty::IPropertyGetter<int32>& size)

@@ -9,7 +9,7 @@
  *
  */
 
-#include "../new_iterator.hpp"
+#include "../iterator.hpp"
 
 template<class T>
 dty::collection::Iterator<T>::Iterator(dty::collection::IIteratorEntity<T>& entity)

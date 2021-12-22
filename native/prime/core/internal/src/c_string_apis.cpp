@@ -1,4 +1,4 @@
-#include "./utilize.h"
+#include "../utilize.hh"
 
 int32 __VARIABLE__ strlen(const string __VARIABLE__ str)
 {

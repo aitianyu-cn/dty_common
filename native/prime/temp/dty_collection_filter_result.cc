@@ -9,7 +9,7 @@
  *
  */
 
-#include "../new_iterator.hpp"
+#include "../iterator.hpp"
 
 template<class T>
 dty::collection::FilterResult<T>::FilterResult()

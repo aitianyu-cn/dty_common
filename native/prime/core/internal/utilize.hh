@@ -319,7 +319,7 @@ namespace dty
     // should be used by adding namespace dty (dty::null)
     // if not, some unexpected error could be happended.
     const TianyuEmptyObject __VARIABLE__ null;
-}
+    }
 
 // internal macro definition for tianyu class type
 #define _ty_class(cname, ...) class cname : __VA_ARGS__

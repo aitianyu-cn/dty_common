@@ -1,4 +1,4 @@
-#include"./error.hpp"
+#include"../error.hpp"
 #include<string>
 
 using namespace dty::except;
