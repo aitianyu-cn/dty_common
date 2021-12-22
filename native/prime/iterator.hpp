@@ -126,9 +126,9 @@ namespace dty::collection
     };
 }
 
-#include "./temp/dty_collection_filter_result.cc"
-#include "./temp/dty_collection_i_iterator_entity.cc"
-#include "./temp/dty_collection_iterator.cc"
-#include "./temp/dty_collection_iterator_entity.cc"
+#include "./key/dty_collection_filter_result.cc"
+#include "./key/dty_collection_i_iterator_entity.cc"
+#include "./key/dty_collection_iterator.cc"
+#include "./key/dty_collection_iterator_entity.cc"
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
