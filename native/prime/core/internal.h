@@ -41,21 +41,13 @@ namespace dty
         __PUB__ _Key __VARIABLE__ Key;
         __PUB__ _Val __VARIABLE__ Value;
 
-        __PUB__ KeyValuePair(_Key key, _Val val)
-            : Key(key), Value(val)
-        {
+        __PUB__ KeyValuePair(_Key __VARIABLE__ key, _Val __VARIABLE__ val);
+        __PUB__ KeyValuePair(const KeyValuePair<_Key, _Val> __REFERENCE__ other);
+        __PUB__ virtual ~KeyValuePair() override;
 
-        }
-        __PUB__ virtual ~KeyValuePair() override { }
-
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
-        {
-            return dty::GetType(__PTR_TO_REF__ this).Id();
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
     };
 
     namespace collection
@@ -70,6 +62,7 @@ namespace dty
         template<class Elem>
         _interface IEquatable : public virtual TianyuObject
         {
+            __PUB__ IEquatable() : TianyuObject() { }
             __PUB__ virtual ~IEquatable() override { };
 
             __PUB__ virtual bool __VARIABLE__ Equals(Elem __REFERENCE__ other) = 0;
@@ -80,6 +73,7 @@ namespace dty
         template<class Elem>
         _interface ICompareable : public virtual TianyuObject
         {
+            __PUB__ ICompareable() : TianyuObject() { }
             __PUB__ virtual ~ICompareable() override { };
 
             __PUB__ virtual CompareResult __VARIABLE__ CompareTo(Elem __REFERENCE__ other) = 0;

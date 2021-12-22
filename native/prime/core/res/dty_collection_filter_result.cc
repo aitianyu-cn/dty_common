@@ -33,6 +33,12 @@ dty::collection::FilterResult<T>::FilterResult(T* elems, int32 length, int32 siz
 }
 
 template<class T>
+dty::collection::FilterResult<T>::FilterResult(const dty::collection::FilterResult<T>& fr)
+    : dty::TianyuObject(),
+    _Elems(fr._Elems), _Length(fr._Length), _Size(fr._Size), _NeedFree(fr._NeedFree)
+{ }
+
+template<class T>
 dty::collection::FilterResult<T>::~FilterResult()
 {
     if (!this->_NeedFree)

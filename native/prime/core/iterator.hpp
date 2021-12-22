@@ -12,12 +12,14 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
 
-#include "./core.hxx"
+#include "./internal.h"
+#include "./property.hpp"
+#include "./pointer.hpp"
 
 namespace dty::collection
 {
     template<class Elem>
-    class FilterResult final : dty::TianyuObject
+    class FilterResult final : public virtual dty::TianyuObject
     {
         __PUB__ const IPropertyGetter<int32> __REFERENCE__ Length = this->_Length;
 
@@ -29,6 +31,7 @@ namespace dty::collection
 
         __PUB__ FilterResult();
         __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, int32 __VARIABLE__ size, bool __VARIABLE__ needFree);
+        __PUB__ FilterResult(const FilterResult<Elem> __REFERENCE__ fr);
         __PUB__ ~FilterResult();
 
         __PUB__ bool __VARIABLE__  IsEmpty();
@@ -65,6 +68,7 @@ namespace dty::collection
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
     };
 
     template<class T>
@@ -111,18 +115,28 @@ namespace dty::collection
         __PRI__ using T_SP = dty::SmartPointer<T>;
         __PRI__ using T_FR = dty::collection::FilterResult<T>;
 
-        __PUB__ virtual T_SP __VARIABLE__ Get(int32 __VARIABLE__ index) = 0;
-        __PUB__ virtual T_SP __VARIABLE__ End() = 0;
+        __PRI__ T               __POINTER__  _Pointer;
 
-        __PUB__ virtual void  __VARIABLE__ ForEach(IIteratorEntity<T>::ItemMapDelegate __VARIABLE__ delegate) = 0;
-        __PUB__ virtual T     __POINTER__  Some(IIteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) = 0;
-        __PUB__ virtual T_FR  __VARIABLE__ Filter(IIteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) = 0;
-        __PUB__ virtual T_FR  __VARIABLE__ Every(IIteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) = 0;
-        __PUB__ virtual T     __POINTER__  Find(IIteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) = 0;
-        __PUB__ virtual int32 __VARIABLE__ FindIndex(IIteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) = 0;
+        __PRI__ Property<int32> __VARIABLE__ _Size;
+        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
+
+        __PUB__ explicit IteratorEntity(T __POINTER__ pointer, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = false);
+        __PUB__ IteratorEntity(const Iterator<T> __REFERENCE__ it);
+        __PUB__ virtual ~IteratorEntity() override;
+
+        __PUB__ virtual T_SP __VARIABLE__ Get(int32 __VARIABLE__ index) override;
+        __PUB__ virtual T_SP __VARIABLE__ End() override;
+
+        __PUB__ virtual void  __VARIABLE__ ForEach(IteratorEntity<T>::ItemMapDelegate __VARIABLE__ delegate) override;
+        __PUB__ virtual T     __POINTER__  Some(IteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) override;
+        __PUB__ virtual T_FR  __VARIABLE__ Filter(IteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) override;
+        __PUB__ virtual T_FR  __VARIABLE__ Every(IteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) override;
+        __PUB__ virtual T     __POINTER__  Find(IteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) override;
+        __PUB__ virtual int32 __VARIABLE__ FindIndex(IteratorEntity<T>::ItemChkDelegate __VARIABLE__ delegate) override;
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
     };
 }
 

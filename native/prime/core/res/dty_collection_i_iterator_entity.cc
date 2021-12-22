@@ -13,10 +13,8 @@
 
 template<class T>
 dty::collection::IIteratorEntity<T>::IIteratorEntity(dty::IPropertyGetter<int32>& size)
-    : dty::TianyuObject()
-{
-    this->Size = size;
-}
+    : dty::TianyuObject(), Size(size)
+{ }
 
 template<class T>
 ::string dty::collection::IIteratorEntity<T>::ToString() noexcept
