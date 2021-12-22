@@ -125,6 +125,10 @@
 #ifdef __cplusplus
 namespace dty
 {
+    /**
+     * @brief 定义天宇平台支持的平台
+     * @brief Defination for Tianyu Native Platform Supported
+     */
     enum class PlatformID : signed int
     {
         MacOSX = 6,
