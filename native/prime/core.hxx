@@ -23,6 +23,9 @@
 #include "./core/pointer.hpp"
 #include "./core/event.hpp"
 #include "./core/thread.hpp"
+#include "./core/iterator.hpp"
+#include "./core/icollections.hpp"
+#include "./core/formatter.hpp"
 
 #endif // !__cplusplus
 

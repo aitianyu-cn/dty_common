@@ -12,7 +12,7 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__
 
-#include "./icollections.hpp"
+#include "./core.hxx"
 
 namespace dty::collection
 {
