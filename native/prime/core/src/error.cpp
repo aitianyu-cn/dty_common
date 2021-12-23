@@ -25,7 +25,7 @@ const char* Exception::what() const noexcept
 }
 string Exception::ToString() noexcept
 {
-    return ::null;
+    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 uint64 Exception::GetTypeId()
 {

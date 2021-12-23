@@ -59,13 +59,13 @@ template<class T>
 }
 
 template<class T>
-uint64 dty::Property<T>::GetTypeId() noexcept
+uint64 dty::Property<T>::GetTypeId()
 {
     return dty::GetType(__PTR_TO_REF__ this).Id();
 }
 
 template<class T>
-uint64 dty::Property<T>::GetHashCode() noexcept
+uint64 dty::Property<T>::GetHashCode()
 {
     return (uint64)(this);
 }

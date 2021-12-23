@@ -1,5 +1,7 @@
 #include "../utilize.hh"
 
+const dty::TianyuObject& dty::null = dty::TianyuEmptyObject();
+
 dty::TianyuEmptyObject::TianyuEmptyObject() : dty::TianyuObject() { }
 
 dty::TianyuEmptyObject::~TianyuEmptyObject() { }

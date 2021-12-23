@@ -14,22 +14,27 @@
 template<typename T> bool dty::Type<T>::_dummy = false;
 
 template<typename T>
-dty::Type<T>::Type() : _Name(::null), _InstanceHash(0ULL) { }
+dty::Type<T>::Type() : _Name(::null), _Id(0), _InstanceHash(0ULL) { }
 
 template<typename T>
-dty::Type<T>::Type(uint64 instance) : _Name(::null), _InstanceHash(instance) { }
+dty::Type<T>::Type(uint64 instance) : _Name(::null), _Id(0), _InstanceHash(instance) { }
 
 template<typename T>
 dty::Type<T>::Type(const dty::Type<T>& other)
-    : _Name(::null), _InstanceHash(other._InstanceHash)
+    : _Name(::null), _Id(other._Id), _InstanceHash(other._InstanceHash)
 {
-    int32 nameLen = strlen(other._Name);
+    // int32 nameLen = ::strlen(other._Name);
 
-    this->_Name = new char[nameLen + 1];
-    for (int32 i = 0; i < nameLen; ++i)
-        this->_Name[i] = other._Name[i];
+    // this->_Name = new char[nameLen + 1];
+    // for (int32 i = 0; i < nameLen; ++i)
+    //     this->_Name[i] = other._Name[i];
 
-    this->_Name[nameLen] = '\0';
+    // this->_Name[nameLen] = '\0';
+
+    dty::Type<T>& copy = const_cast<dty::Type<T>&>(other);
+    this->_Name = copy._Name;
+
+    copy._Name = ::null;
 }
 
 template<typename T>

@@ -75,8 +75,6 @@ namespace dty
         __PRI__ PropertyGetDelegate __VARIABLE__ _Getter;
         __PRI__ PropertySetDelegate __VARIABLE__ _Setter;
 
-        __PUB__ LProperty(PropertyGetDelegate __VARIABLE__ getter);
-        __PUB__ LProperty(PropertySetDelegate __VARIABLE__ setter);
         __PUB__ LProperty(PropertyGetDelegate __VARIABLE__ getter, PropertySetDelegate __VARIABLE__ setter);
         __PUB__ LProperty(const LProperty<T> __REFERENCE__ lp);
         __PUB__ virtual ~LProperty() override;

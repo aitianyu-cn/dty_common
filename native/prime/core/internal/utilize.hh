@@ -72,11 +72,11 @@ constexpr std::nullptr_t null = nullptr;
 // #################################################################################################
 
 #pragma region c_string basic APIs
-int32    __VARIABLE__ strlen(const string __VARIABLE__ str);
+int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
 
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
 ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ b2str(byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
 ::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
 ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
 ::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
@@ -140,8 +140,9 @@ namespace dty
         __PUB__ uint64  __VARIABLE__ Id();
         __PUB__ uint64  __VARIABLE__ InstanceHashCode();
 
-        friend Type<T> __VARIABLE__ GetType<T>();
-        friend Type<T> __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
+        friend Type<T>  __VARIABLE__ GetType<T>();
+        friend Type<T>  __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
+        friend ::string __VARIABLE__ _dty_native_cpp_default_to_string<T>(T __REFERENCE__ obj) noexcept;
     };
 
     /**
@@ -197,7 +198,7 @@ namespace dty
     // null value of Tianyu Object
     // should be used by adding namespace dty (dty::null)
     // if not, some unexpected error could be happended.
-    const TianyuObject __REFERENCE__ null = TianyuEmptyObject();
+    extern const TianyuObject __REFERENCE__ null;
 }
 
 // internal macro definition for tianyu class type

@@ -17,7 +17,7 @@
 
 #include <typeinfo>
 
-template<typename T> dty::Type<T> GetType()
+template<typename T> dty::Type<T> dty::GetType()
 {
     ::string sourceName = const_cast<::string>(typeid(T).name());
 
@@ -46,7 +46,7 @@ template<typename T> dty::Type<T> GetType()
     return type;
 }
 
-template<typename T> dty::Type<T> GetType(T& obj)
+template<typename T> dty::Type<T> dty::GetType(T& obj)
 {
     ::string sourceName = const_cast<::string>(typeid(T).name());
 
@@ -77,13 +77,17 @@ template<typename T> dty::Type<T> GetType(T& obj)
 
 template<typename T> ::string dty::_dty_native_cpp_default_to_string(T& obj) noexcept
 {
-    ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
-    int32 typeNameLen = ::strlen(typeName);
+    dty::Type<T> otype = dty::GetType(obj);
+    // ::string typeName = const_cast<::string>(otype.Name());
+    // int32 typeNameLen = ::strlen(typeName);
 
-    ::string str = new char[typeNameLen + 1];
-    for (int32 i = 0; i < typeNameLen; ++i)
-        str[i] = typeName[i];
-    str[typeNameLen] = '\0';
+    // ::string str = new char[typeNameLen + 1];
+    // for (int32 i = 0; i < typeNameLen; ++i)
+    //     str[i] = typeName[i];
+    // str[typeNameLen] = '\0';
+    ::string str = otype._Name;
+
+    otype._Name = ::null;
 
     return str;
 }

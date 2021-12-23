@@ -13,18 +13,6 @@
 #include "../error.hpp"
 
 template<class T>
-dty::LProperty<T>::LProperty(dty::LProperty<T>::PropertyGetDelegate getter)
-    :dty::TianyuObject(), _Getter(getter),
-    _Setter([](T _) -> {throw dty::except::OperationNotSupportException();})
-{ }
-
-template<class T>
-dty::LProperty<T>::LProperty(dty::LProperty<T>::PropertySetDelegate setter)
-    : dty::TianyuObject(), _Getter([]() -> {throw dty::except::OperationNotSupportException();}),
-    _Setter(setter)
-{ }
-
-template<class T>
 dty::LProperty<T>::LProperty
 (
     dty::LProperty<T>::PropertyGetDelegate getter,
@@ -56,6 +44,7 @@ template<class T>
 T dty::LProperty<T>::operator=(T value)
 {
     this->_Setter(value);
+
     return this->_Getter();
 }
 
@@ -63,6 +52,7 @@ template<class T>
 T dty::LProperty<T>::operator=(dty::IPropertyGetter<T>& value)
 {
     this->_Setter(value);
+
     return this->_Getter();
 }
 
@@ -73,13 +63,13 @@ template<class T>
 }
 
 template<class T>
-uint64 dty::LProperty<T>::GetTypeId() noexcept
+uint64 dty::LProperty<T>::GetTypeId()
 {
     return dty::GetType(__PTR_TO_REF__ this).Id();
 }
 
 template<class T>
-uint64 dty::LProperty<T>::GetHashCode() noexcept
+uint64 dty::LProperty<T>::GetHashCode()
 {
     return (uint64)(this);
 }
