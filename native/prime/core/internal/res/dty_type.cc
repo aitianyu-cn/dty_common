@@ -23,14 +23,6 @@ template<typename T>
 dty::Type<T>::Type(const dty::Type<T>& other)
     : _Name(::null), _Id(other._Id), _InstanceHash(other._InstanceHash)
 {
-    // int32 nameLen = ::strlen(other._Name);
-
-    // this->_Name = new char[nameLen + 1];
-    // for (int32 i = 0; i < nameLen; ++i)
-    //     this->_Name[i] = other._Name[i];
-
-    // this->_Name[nameLen] = '\0';
-
     dty::Type<T>& copy = const_cast<dty::Type<T>&>(other);
     this->_Name = copy._Name;
 

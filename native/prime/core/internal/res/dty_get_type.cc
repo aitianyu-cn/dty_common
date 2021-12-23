@@ -78,13 +78,6 @@ template<typename T> dty::Type<T> dty::GetType(T& obj)
 template<typename T> ::string dty::_dty_native_cpp_default_to_string(T& obj) noexcept
 {
     dty::Type<T> otype = dty::GetType(obj);
-    // ::string typeName = const_cast<::string>(otype.Name());
-    // int32 typeNameLen = ::strlen(typeName);
-
-    // ::string str = new char[typeNameLen + 1];
-    // for (int32 i = 0; i < typeNameLen; ++i)
-    //     str[i] = typeName[i];
-    // str[typeNameLen] = '\0';
     ::string str = otype._Name;
 
     otype._Name = ::null;
