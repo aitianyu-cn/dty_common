@@ -35,13 +35,12 @@ namespace dty
 
         __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) = 0;
         __PUB__ virtual T    __VARIABLE__ operator =(T __VARIABLE__ value) = 0;
+        __PUB__ virtual T    __VARIABLE__ operator =(IPropertyGetter<T> __REFERENCE__ value) = 0;
     };
 
     template<class T>
-    _interface IProperty
-        : public virtual TianyuObject,
-        public virtual IPropertyGetter<T>,
-        public virtual IPropertySetter<T>
+    _interface IProperty : public virtual TianyuObject,
+        public virtual IPropertyGetter<T>, public virtual IPropertySetter<T>
     {
         __PUB__ virtual ~IProperty() override { }
     };
@@ -51,71 +50,53 @@ namespace dty
     {
         __PRI__ T __VARIABLE__ _Elem;
 
-        __PUB__ Property() : TianyuObject(), IProperty<T>(), _Elem() { }
-        __PUB__ Property(T __VARIABLE__ value) : TianyuObject(), IProperty<T>(), _Elem(value) { }
-        __PUB__ virtual ~Property() override { }
+        __PUB__ Property();
+        __PUB__ Property(T __VARIABLE__ value);
+        __PUB__ virtual ~Property() override;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
-        {
-            return dty::GetType(__PTR_TO_REF__ this).Id();
-        }
+        __PUB__ virtual T    __VARIABLE__ Get() override;
+        __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) override;
 
-        __PUB__ virtual T    __VARIABLE__ Get() override
-        {
-            return this->_Elem;
-        }
-        __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) override
-        {
-            this->_Elem = value;
-        }
+        __PUB__ virtual operator T() override;
+        __PUB__ virtual T __VARIABLE__ operator =(T __VARIABLE__ value) override;
+        __PUB__ virtual T __VARIABLE__ operator =(IPropertyGetter<T> __REFERENCE__ value) override;
 
-        __PUB__ virtual operator T() override
-        {
-            return this->_Elem;
-        }
-        __PUB__ virtual T __VARIABLE__ operator =(T __VARIABLE__ value) override
-        {
-            this->_Elem = value;
-            return this->_Elem;
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
     };
 
-    // template<class T>
-    // class CProperty final : public IProperty<T>
-    // {
-    //     __PUB__ using PropertyGetDelegate = T    __VARIABLE__(__POINTER__)();
-    //     __PUB__ using PropertySetDelegate = void __VARIABLE__(__POINTER__)(T __VARIABLE__ value);
+    template<class T>
+    class LProperty final : public virtual TianyuObject, public virtual IProperty<T>
+    {
+        __PUB__ using PropertyGetDelegate = T    __VARIABLE__(__POINTER__)();
+        __PUB__ using PropertySetDelegate = void __VARIABLE__(__POINTER__)(T __VARIABLE__ value);
 
-    //     __PUB__ CProperty(PropertyGetDelegate __VARIABLE__ getter, PropertySetDelegate __VARIABLE__ setter)
-    //     {
+        __PRI__ PropertyGetDelegate __VARIABLE__ _Getter;
+        __PRI__ PropertySetDelegate __VARIABLE__ _Setter;
 
-    //     }
-    //     __PUB__ virtual ~CProperty() override { }
+        __PUB__ LProperty(PropertyGetDelegate __VARIABLE__ getter);
+        __PUB__ LProperty(PropertySetDelegate __VARIABLE__ setter);
+        __PUB__ LProperty(PropertyGetDelegate __VARIABLE__ getter, PropertySetDelegate __VARIABLE__ setter);
+        __PUB__ LProperty(const LProperty<T> __REFERENCE__ lp);
+        __PUB__ virtual ~LProperty() override;
 
-    //     __PUB__ virtual T    __VARIABLE__ Get() override
-    //     {
-    //         return this->_Elem;
-    //     }
-    //     __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) override
-    //     {
-    //         this->_Elem = value;
-    //     }
+        __PUB__ virtual T    __VARIABLE__ Get() override;
+        __PUB__ virtual void __VARIABLE__ Set(T __VARIABLE__ value) override;
 
-    //     __PUB__ virtual operator T() override
-    //     {
-    //         return this->_Elem;
-    //     }
-    //     __PUB__ virtual T __VARIABLE__ operator =(T __VARIABLE__ value) override
-    //     {
-    //         this->_Elem = value;
-    //         return this->_Elem;
-    //     }
-    // };
+        __PUB__ virtual operator T() override;
+        __PUB__ virtual T __VARIABLE__ operator =(T __VARIABLE__ value) override;
+        __PUB__ virtual T __VARIABLE__ operator =(IPropertyGetter<T> __REFERENCE__ value) override;
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
+    };
 }
+
+// import implementation of Property and LProperty
+#include "./res/dty_property.cc"
+#include "./res/dty_lproperty.cc"
 
 #endif // !__cplusplus
 

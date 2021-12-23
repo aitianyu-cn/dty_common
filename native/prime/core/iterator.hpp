@@ -9,6 +9,7 @@
  *
  */
 
+#pragma once
 #ifndef __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
 
@@ -30,7 +31,8 @@ namespace dty::collection
         __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ FilterResult();
-        __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, int32 __VARIABLE__ size, bool __VARIABLE__ needFree);
+        __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, bool __VARIABLE__ needFree = true);
+        __PUB__ FilterResult(Elem __POINTER__ elems, int32 __VARIABLE__ length, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = true);
         __PUB__ FilterResult(const FilterResult<Elem> __REFERENCE__ fr);
         __PUB__ ~FilterResult();
 
@@ -116,12 +118,13 @@ namespace dty::collection
         __PRI__ using T_FR = dty::collection::FilterResult<T>;
 
         __PRI__ T               __POINTER__  _Pointer;
+        __PRI__ int32           __POINTER__  _Reference;
 
         __PRI__ Property<int32> __VARIABLE__ _Size;
         __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ explicit IteratorEntity(T __POINTER__ pointer, int32 __VARIABLE__ size, bool __VARIABLE__ needFree = false);
-        __PUB__ IteratorEntity(const Iterator<T> __REFERENCE__ it);
+        __PUB__ IteratorEntity(const IteratorEntity<T> __REFERENCE__ it);
         __PUB__ virtual ~IteratorEntity() override;
 
         __PUB__ virtual T_SP __VARIABLE__ Get(int32 __VARIABLE__ index) override;

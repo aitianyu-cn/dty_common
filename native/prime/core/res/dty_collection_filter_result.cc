@@ -18,6 +18,21 @@ dty::collection::FilterResult<T>::FilterResult()
 { }
 
 template<class T>
+dty::collection::FilterResult<T>::FilterResult(T* elems, int32 length, bool needFree = true)
+    : dty::TianyuObject(), _NeedFree(needFree)
+{
+    if (::null == elems)
+        throw dty::except::ArgumentNullException();
+
+    if (0 >= length)
+        throw dty::except::ArgumentOutOfRangeException();
+
+    this->_Elems = elems;
+    this->_Length = length;
+    this->_Size = length;
+}
+
+template<class T>
 dty::collection::FilterResult<T>::FilterResult(T* elems, int32 length, int32 size, bool needFree = true)
     : dty::TianyuObject(), _NeedFree(needFree)
 {

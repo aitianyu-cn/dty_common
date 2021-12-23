@@ -11,11 +11,20 @@
     "C_Cpp.vcFormat.space.beforeEmptySquareBrackets": true,
     "C_Cpp.vcFormat.space.betweenEmptyBraces": true,
     "C_Cpp.vcFormat.space.afterComma": true,
-    "C_Cpp.default.cppStandard": "c++14",
+    "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.intelliSenseEngine": "Default",
     "C_Cpp.errorSquiggles": "Enabled",
     "cmake.configureOnOpen": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.project": false
+    },
     "files.associations": {
         "utilize.h": "cpp",
         "__functional_base_03": "cpp",
