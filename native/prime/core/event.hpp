@@ -66,7 +66,7 @@ namespace dty
     };
 }
 
-#include "./res/dty_event_handler.cc"
+#include "./res/event.cc"
 
 #endif // !__cplusplus
 

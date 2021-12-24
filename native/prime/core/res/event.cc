@@ -1,9 +1,23 @@
+/**
+ * @file event.cc
+ * @author your name (you@domain.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-12-24
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "../event.hpp"
 
 #include <type_traits>
 
-template<class T>
-dty::EventHandler<T>::EventHandler()
+ // to cancel the macro definitions
+#define __TEMPLATE_DEF__ template<class T>
+#define __EVENT_HD_DEF__ dty::EventHandler<T>
+
+__TEMPLATE_DEF__ __EVENT_HD_DEF__::EventHandler()
     : dty::TianyuObject(), _Count(0), _Handlers(new dty::EventHandlerItem<T>())
 {
     static_assert(std::is_base_of<dty::EventArgs, T>::value, "expect dty::EventArgs or its child class");
@@ -12,16 +26,14 @@ dty::EventHandler<T>::EventHandler()
     this->_Handlers->_next = ::null;
 }
 
-template<class T>
-dty::EventHandler<T>::~EventHandler()
+__TEMPLATE_DEF__ __EVENT_HD_DEF__::~EventHandler()
 {
     this->Clear();
 
     delete (this->_Handlers);
 }
 
-template<class T>
-void dty::EventHandler<T>::Invoke(object sender, T e)
+__TEMPLATE_DEF__ void __EVENT_HD_DEF__::Invoke(object sender, T e)
 {
     if (0 == this->_Count)
         return;
@@ -34,8 +46,7 @@ void dty::EventHandler<T>::Invoke(object sender, T e)
     }
 }
 
-template<class T>
-void dty::EventHandler<T>::AddHandler(int32 handlerId, dty::EventHandler<T>::EventHandlerDelegate handler)
+__TEMPLATE_DEF__ void __EVENT_HD_DEF__::AddHandler(int32 handlerId, __EVENT_HD_DEF__::EventHandlerDelegate handler)
 {
     bool hasFind = false;
     dty::EventHandlerItem<T>* head = this->_Handlers;
@@ -62,8 +73,7 @@ void dty::EventHandler<T>::AddHandler(int32 handlerId, dty::EventHandler<T>::Eve
     }
 }
 
-template<class T>
-void dty::EventHandler<T>::Clear()
+__TEMPLATE_DEF__ void __EVENT_HD_DEF__::Clear()
 {
     if (0 == this->_Count)
         return;
@@ -79,8 +89,7 @@ void dty::EventHandler<T>::Clear()
     this->_Count = 0;
 }
 
-template<class T>
-void dty::EventHandler<T>::RemoveHandler(int32 handlerId)
+__TEMPLATE_DEF__ void __EVENT_HD_DEF__::RemoveHandler(int32 handlerId)
 {
     if (0 == this->_Count)
         return;
@@ -104,20 +113,21 @@ void dty::EventHandler<T>::RemoveHandler(int32 handlerId)
     }
 }
 
-template<class T>
-::string dty::EventHandler<T>::ToString() noexcept
+__TEMPLATE_DEF__::string __EVENT_HD_DEF__::ToString() noexcept
 {
     return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
-template<class T>
-uint64 dty::EventHandler<T>::GetTypeId()
+__TEMPLATE_DEF__ uint64 __EVENT_HD_DEF__::GetTypeId()
 {
     return dty::GetType(__PTR_TO_REF__ this).Id();
 }
 
-template<class T>
-uint64 dty::EventHandler<T>::GetHashCode()
+__TEMPLATE_DEF__ uint64 __EVENT_HD_DEF__::GetHashCode()
 {
     return (uint64)(this);
 }
+
+// to cancel the macro definitions
+#undef __TEMPLATE_DEF__
+#undef __EVENT_HD_DEF__

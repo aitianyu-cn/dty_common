@@ -221,7 +221,7 @@ namespace dty
 }
 
 // import the implementation from res
-#include "./res/dty_smart_pointer.cc"
+#include "./res/pointer.cc"
 
 namespace dty
 {

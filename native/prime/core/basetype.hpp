@@ -7,7 +7,7 @@
  *
  * @copyright Copyright (c) 2021
  *
- * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.char?view=net-6.0
+ * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.TB?view=net-6.0
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.byte?view=net-6.0
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.sbyte?view=net-6.0
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.int16?view=net-6.0
@@ -26,7 +26,8 @@
 
 #ifdef __cplusplus
 
-#include "./core.hxx"
+#include "./internal.h"
+#include "./formatter.hpp"
 
 namespace dty
 {
@@ -42,7 +43,7 @@ namespace dty
         __PRI__ TB __VARIABLE__ _Value;
 
         __PUB__ TIntegerBase();
-        __PUB__ TIntegerBase(char __VARIABLE__ value);
+        __PUB__ TIntegerBase(TB __VARIABLE__ value);
         __PUB__ TIntegerBase(const TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
         __PUB__ virtual ~TIntegerBase() override;
 
@@ -59,35 +60,35 @@ namespace dty
         __PUB__ virtual bool __VARIABLE__ operator >=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ other) override;
 
         __PUB__ operator TB();
-        __PUB__ char __VARIABLE__ operator ++();
-        __PUB__ char __VARIABLE__ operator --();
-        __PUB__ char __VARIABLE__ operator ++(int);
-        __PUB__ char __VARIABLE__ operator --(int);
+        __PUB__ TB __VARIABLE__ operator ++();
+        __PUB__ TB __VARIABLE__ operator --();
+        __PUB__ TB __VARIABLE__ operator ++(int);
+        __PUB__ TB __VARIABLE__ operator --(int);
 
-        __PUB__ char __VARIABLE__ operator +(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator -(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator *(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator /(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator %(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator !();
-        __PUB__ char __VARIABLE__ operator &(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator |(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator ~();
-        __PUB__ char __VARIABLE__ operator ^(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator <<(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator >>(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator =(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator +(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator -(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator *(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator /(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator %(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator !();
+        __PUB__ TB __VARIABLE__ operator &(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator |(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator ~();
+        __PUB__ TB __VARIABLE__ operator ^(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator <<(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator >>(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator =(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
 
-        __PUB__ char __VARIABLE__ operator +=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator -=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator *=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator /=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator %=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator &=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator |=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator ^=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator <<=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
-        __PUB__ char __VARIABLE__ operator >>=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator +=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator -=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator *=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator /=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator %=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator &=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator |=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator ^=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator <<=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
+        __PUB__ TB __VARIABLE__ operator >>=(TIntegerBase<TB, _Max, _Min> __REFERENCE__ value);
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
@@ -266,6 +267,9 @@ namespace dty
         __PUB__ const bool __VARIABLE__ MinValue = false;
     };
 }
+
+// import implementation for integer base
+#include "./res/basetype.cc"
 
 namespace dty
 {

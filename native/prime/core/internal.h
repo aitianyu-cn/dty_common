@@ -87,6 +87,8 @@ namespace dty
     }
 }
 
+#include "./res/internal.cc"
+
 #endif // !__cplusplus
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__

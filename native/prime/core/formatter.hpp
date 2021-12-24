@@ -34,6 +34,46 @@ namespace dty
     {
 
     };
+
+    class FormatHelper final : public virtual dty::TianyuObject
+    {
+        __PUB__ static ::string __VARIABLE__ Format(char __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(uchar __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(int16 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(uint16 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(int32 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(uint32 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(int64 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(uint64 __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(float __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(double __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(bool __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+
+        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter)
+        {
+            return ::null;
+        }
+    };
+
+    class ParseHelper final : public virtual dty::TianyuObject
+    {
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ char __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ uchar __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ int16 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ uint16 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ int32 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ uint32 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ int64 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ uint64 __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ float __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ double __REFERENCE__ result);
+        __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ bool __REFERENCE__ result);
+
+        __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result)
+        {
+            // Todo: keep none operation
+        }
+    };
 }
 
 #endif // !__cplusplus

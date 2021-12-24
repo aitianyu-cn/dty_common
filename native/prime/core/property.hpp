@@ -93,8 +93,7 @@ namespace dty
 }
 
 // import implementation of Property and LProperty
-#include "./res/dty_property.cc"
-#include "./res/dty_lproperty.cc"
+#include "./res/property.cc"
 
 #endif // !__cplusplus
 

@@ -29,6 +29,6 @@ namespace dty::collection
     };
 }
 
-#include "./res/dty_collection_i_collections.cc"
+#include "./res/icollections.cc"
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__

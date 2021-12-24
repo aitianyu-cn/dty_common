@@ -219,7 +219,6 @@ namespace dty
 // #################################################################################################
 // Import all of the Template class implementation files
 // #################################################################################################
-#include "./res/dty_get_type.cc"
-#include "./res/dty_type.cc"
+#include "./res/utilize.cc"
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__

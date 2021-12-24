@@ -1,5 +1,5 @@
 /**
- * @file dty_smart_pointer.cc
+ * @file pointer.cc
  * @author your name (you@domain.com)
  * @brief
  * @version 0.1
@@ -11,10 +11,12 @@
 
 #include "../pointer.hpp"
 
+#define __TEMPLATE_DEF__ template<typename T>
+#define __DTY_SPTR_DEF__ dty::SmartPointer<T>
+
 #pragma region Tianyu SmartPointer Internal Block
 
-template<typename T>
-void dty::SmartPointer<T>::Release()
+__TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Release()
 {
     if (::null == this->_Pointer)
         return;
@@ -27,8 +29,7 @@ void dty::SmartPointer<T>::Release()
         delete [] this->_Pointer;
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::IsSame(dty::SmartPointer<T>& sp)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsSame(__DTY_SPTR_DEF__& sp)
 {
     // 检查是否为相同对象
     if (this->_Pointer == sp._Pointer)
@@ -46,26 +47,25 @@ bool dty::SmartPointer<T>::IsSame(dty::SmartPointer<T>& sp)
 
 #pragma endregion
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer()
     : dty::TianyuObject(),
-    _SmartPointerType(dty::SmartPointer<T>::SPType::STRONG), _Pointer(::null), _Size(0)
+    _SmartPointerType(__DTY_SPTR_DEF__::SPType::STRONG), _Pointer(::null), _Size(0)
 { }
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer(T* pointer) : dty::TianyuObject(), _Size()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer)
+    : dty::TianyuObject(), _Size()
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
 
     // create a strong pointer in default.
-    this->_SmartPointerType = dty::SmartPointer<T>::SPType::STRONG;
+    this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::STRONG;
     this->_Pointer = pointer;
     this->_Size = 1;
 }
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer(T* pointer, int64 size) : dty::TianyuObject(), _Size()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size)
+    : dty::TianyuObject(), _Size()
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
@@ -74,78 +74,69 @@ dty::SmartPointer<T>::SmartPointer(T* pointer, int64 size) : dty::TianyuObject()
         throw dty::except::IndexOutOfRangeException();
 
     // create a strong pointer in default.
-    this->_SmartPointerType = dty::SmartPointer<T>::SPType::STRONG;
+    this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::STRONG;
     this->_Pointer = pointer;
     this->_Size = size;
 }
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer(T* pointer, bool weak) : dty::SmartPointer<T>(pointer)
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, bool weak)
+    : __DTY_SPTR_DEF__(pointer)
 {
     // To reset pointer type only if weak is true
     if (weak)
-        this->_SmartPointerType = dty::SmartPointer<T>::SPType::WEAK;
+        this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
 }
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer(T* pointer, int64 size, bool weak) : dty::SmartPointer<T>(pointer, size)
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size, bool weak)
+    : __DTY_SPTR_DEF__(pointer, size)
 {
     // To reset pointer type only if weak is true
     if (weak)
-        this->_SmartPointerType = dty::SmartPointer<T>::SPType::WEAK;
+        this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
 }
 
-template<typename T>
-dty::SmartPointer<T>::SmartPointer(const dty::SmartPointer<T>& sp)
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPTR_DEF__& sp)
 // to copy a weak smart pointer by copy constructor only when in __DTY_SMART_POINTER_COPY_WEAK_MODE__
 // and in __DTY_UNSAFE_MODE__ mode
 #if defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
-    : _SmartPointerType(dty::SmartPointer<T>::SPType::WEAK),
-    _Pointer(sp._Pointer),
-    _Size(sp._Size)
+    : _SmartPointerType(__DTY_SPTR_DEF__::SPType::WEAK), _Pointer(sp._Pointer), _Size(sp._Size)
 { }
 #else
 
             // safe copy constructor mode is move pointer owner
-    : _SmartPointerType(sp._SmartPointerType),
-    _Pointer(sp._Pointer),
-    _Size(sp._Size)
+    : _SmartPointerType(sp._SmartPointerType), _Pointer(sp._Pointer), _Size(sp._Size)
 {
     // move pointer from source pointer only when it is strong pointer
     // weak pointer just to copy
-    if (dty::SmartPointer<T>::SPType::STRONG == sp._SmartPointerType)
+    if (__DTY_SPTR_DEF__::SPType::STRONG == sp._SmartPointerType)
     {
         // unsafe mode should change const to normal reference
         // --dty-cpp-lint: unsafe-convert-constRef_to_Ref
-        dty::SmartPointer<T>& spMove = const_cast<dty::SmartPointer<T> &>(sp);
+        __DTY_SPTR_DEF__& spMove = const_cast<__DTY_SPTR_DEF__&>(sp);
         spMove._Pointer = ::null;
         spMove._Size = 0;
     }
 }
 #endif // !defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
 
-template<typename T>
-dty::SmartPointer<T>::~SmartPointer()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::~SmartPointer()
 {
     // to release pointer only when the current instance is strong type
-    if (dty::SmartPointer<T>::SPType::STRONG == this->_SmartPointerType)
+    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType)
         this->Release();
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::IsNull()
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsNull()
 {
     return ::null == this->_Pointer;
 }
 
-template<typename T>
-dty::SmartPointer<T>::operator T* ()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__::operator T* ()
 {
     return this->_Pointer;
 }
 
-template<typename T>
-uint64 dty::SmartPointer<T>::operator &()
+__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::operator &()
 {
     if (this->IsNull())
         return 0ULL;
@@ -153,8 +144,7 @@ uint64 dty::SmartPointer<T>::operator &()
     return (uint64)(this->_Pointer);
 }
 
-template<typename T>
-T& dty::SmartPointer<T>::operator *()
+__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator *()
 {
     if (::null == this->_Pointer)
         throw dty::except::NullPointerException();
@@ -162,8 +152,7 @@ T& dty::SmartPointer<T>::operator *()
     return __PTR_TO_REF__(this->_Pointer);
 }
 
-template<typename T>
-T* dty::SmartPointer<T>::operator ->()
+__TEMPLATE_DEF__ T* __DTY_SPTR_DEF__::operator ->()
 {
     if (::null == this->_Pointer)
         throw dty::except::NullPointerException();
@@ -171,8 +160,7 @@ T* dty::SmartPointer<T>::operator ->()
     return this->_Pointer;
 }
 
-template<typename T>
-T* dty::SmartPointer<T>::operator ->() const
+__TEMPLATE_DEF__ T* __DTY_SPTR_DEF__::operator ->() const
 {
     if (::null == this->_Pointer)
         throw dty::except::NullPointerException();
@@ -180,8 +168,7 @@ T* dty::SmartPointer<T>::operator ->() const
     return this->_Pointer;
 }
 
-template<typename T>
-T& dty::SmartPointer<T>::operator[] (int64 index)
+__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator[] (int64 index)
 {
     if (::null == this->_Pointer)
         throw dty::except::NullPointerException();
@@ -192,8 +179,7 @@ T& dty::SmartPointer<T>::operator[] (int64 index)
     return (this->_Pointer)[index];
 }
 
-template<typename T>
-T& dty::SmartPointer<T>::operator[] (int64 index) const
+__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator[] (int64 index) const
 {
     if (::null == this->_Pointer)
         throw dty::except::NullPointerException();
@@ -204,8 +190,7 @@ T& dty::SmartPointer<T>::operator[] (int64 index) const
     return (this->_Pointer)[index];
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::operator==(dty::SmartPointer<T>& other)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(__DTY_SPTR_DEF__& other)
 {
     try
     {
@@ -218,8 +203,7 @@ bool dty::SmartPointer<T>::operator==(dty::SmartPointer<T>& other)
 
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::operator!=(dty::SmartPointer<T>& other)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(__DTY_SPTR_DEF__& other)
 {
     try
     {
@@ -232,8 +216,7 @@ bool dty::SmartPointer<T>::operator!=(dty::SmartPointer<T>& other)
 
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::operator==(dty::SmartPointer<T> other)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(__DTY_SPTR_DEF__ other)
 {
     try
     {
@@ -246,8 +229,7 @@ bool dty::SmartPointer<T>::operator==(dty::SmartPointer<T> other)
 
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::operator!=(dty::SmartPointer<T> other)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(__DTY_SPTR_DEF__ other)
 {
     try
     {
@@ -260,22 +242,20 @@ bool dty::SmartPointer<T>::operator!=(dty::SmartPointer<T> other)
 
 }
 
-template<typename T>
-dty::SmartPointer<T> dty::SmartPointer<T>::GetWeak()
+__TEMPLATE_DEF__ __DTY_SPTR_DEF__ __DTY_SPTR_DEF__::GetWeak()
 {
     return SmartPointer<T>(this->_Pointer, this->_Size, true);
 }
 
-template<typename T>
-bool dty::SmartPointer<T>::Move(dty::SmartPointer<T>& sp)
+__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::Move(__DTY_SPTR_DEF__& sp)
 {
-    if (dty::SmartPointer<T>::SPType::STRONG != sp._SmartPointerType)
+    if (__DTY_SPTR_DEF__::SPType::STRONG != sp._SmartPointerType)
         return false;
 
     if (this->_Pointer == sp._Pointer)
         return false;
 
-    if (dty::SmartPointer<T>::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
+    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
     {
         if (1 < this->_Size)
             delete [] this->_Pointer;
@@ -293,20 +273,21 @@ bool dty::SmartPointer<T>::Move(dty::SmartPointer<T>& sp)
     return true;
 }
 
-template<typename T>
-::string dty::SmartPointer<T>::ToString() noexcept
+__TEMPLATE_DEF__::string __DTY_SPTR_DEF__::ToString() noexcept
 {
     return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
-template<typename T>
-uint64 dty::SmartPointer<T>::GetTypeId()
+__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::GetTypeId()
 {
     return dty::GetType(__PTR_TO_REF__ this).Id();
 }
 
-template<typename T>
-uint64 dty::SmartPointer<T>::GetHashCode()
+__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::GetHashCode()
 {
     return (uint64)(this->_Pointer);
 }
+
+// to cancel the macro definitions
+#undef __TEMPLATE_DEF__
+#undef __DTY_SPTR_DEF__
