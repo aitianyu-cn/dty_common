@@ -248,10 +248,10 @@ namespace dty
         __PUB__ operator bool();
         __PUB__ operator int32();
 
-        __PUB__ double __VARIABLE__ operator !();
-        __PUB__ double __VARIABLE__ operator &&(Boolean __REFERENCE__ value);
-        __PUB__ double __VARIABLE__ operator ||(Boolean __REFERENCE__ value);
-        __PUB__ double __VARIABLE__ operator =(Boolean __REFERENCE__ value);
+        __PUB__ bool __VARIABLE__ operator !();
+        __PUB__ bool __VARIABLE__ operator &&(Boolean __REFERENCE__ value);
+        __PUB__ bool __VARIABLE__ operator ||(Boolean __REFERENCE__ value);
+        __PUB__ bool __VARIABLE__ operator =(Boolean __REFERENCE__ value);
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
