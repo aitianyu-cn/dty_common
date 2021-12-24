@@ -57,11 +57,6 @@ bool dty::Boolean::operator!()
     return !(this->_Value);
 }
 
-__DOUBLE_OPERATOR__(bool, dty::Boolean, == )
-__DOUBLE_OPERATOR__(bool, dty::Boolean, != )
-__DOUBLE_OPERATOR__(bool, dty::Boolean, &&)
-__DOUBLE_OPERATOR__(bool, dty::Boolean, || )
-
 ::string dty::Boolean::ToString() noexcept
 {
     return this->ToString(::null);
@@ -114,5 +109,10 @@ bool dty::Boolean::TryParse(const ::string s, dty::Boolean& result)
         return false;
     }
 }
+
+__DOUBLE_OPERATOR__(bool, dty::Boolean, == )
+__DOUBLE_OPERATOR__(bool, dty::Boolean, != )
+__DOUBLE_OPERATOR__(bool, dty::Boolean, &&)
+__DOUBLE_OPERATOR__(bool, dty::Boolean, || )
 
 #undef __DOUBLE_OPERATOR__

@@ -16,23 +16,39 @@
 #define __TEMPLATE_DEF__ template<class TB, TB _Max, TB _Min>
 #define __TINTEGER_DEF__ dty::TIntegerBase<TB, _Max, _Min>
 
+#define __OPERATOR_OVERRIDE_DEF__(ret, type)                                    \
+    __TEMPLATE_DEF__ ret __TINTEGER_DEF__::operator type(__TINTEGER_DEF__& obj) \
+    {                                                                           \
+        return this->_Value type obj->_Value;                                   \
+    }
+
+#define __OPERATOR_EQ_OVERRIDE_DEF__(ret, type)                                 \
+    __TEMPLATE_DEF__ ret __TINTEGER_DEF__::operator type(__TINTEGER_DEF__& obj) \
+    {                                                                           \
+        this->_Value = this->_Value type obj->_Value;                           \
+        return this->_Value;                                                    \
+    }
+
+#define __STATIC_ASSERT_DEF__                       \
+    static_assert(                                  \
+        std::is_base_of<char, TB>::value            \
+        || std::is_base_of<uchar, T>::value         \
+        || std::is_base_of<int16, T>::value         \
+        || std::is_base_of<uint16, T>::value        \
+        || std::is_base_of<int32, T>::value         \
+        || std::is_base_of<uint32, T>::value        \
+        || std::is_base_of<int64, T>::value         \
+        || std::is_base_of<uint64, T>::value,       \
+        "only basic value data type is supported"   \
+    )
+
 __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase()
     : dty::TianyuObject(),
     dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
     dty::IFormatter(), _Value()
 {
-    static_assert(
-        std::is_base_of<char, TB>::value
-        || std::is_base_of<uchar, T>::value
-        || std::is_base_of<int16, T>::value
-        || std::is_base_of<uint16, T>::value
-        || std::is_base_of<int32, T>::value
-        || std::is_base_of<uint32, T>::value
-        || std::is_base_of<int64, T>::value
-        || std::is_base_of<uint64, T>::value,
-        "only basic value data type is supported"
-        );
+    __STATIC_ASSERT_DEF__;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
@@ -41,17 +57,7 @@ __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
     dty::IFormatter(), _Value(value)
 {
-    static_assert(
-        std::is_base_of<char, TB>::value
-        || std::is_base_of<uchar, T>::value
-        || std::is_base_of<int16, T>::value
-        || std::is_base_of<uint16, T>::value
-        || std::is_base_of<int32, T>::value
-        || std::is_base_of<uint32, T>::value
-        || std::is_base_of<int64, T>::value
-        || std::is_base_of<uint64, T>::value,
-        "only basic value data type is supported"
-        );
+    __STATIC_ASSERT_DEF__;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
@@ -60,17 +66,7 @@ __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
     dty::IFormatter(), _Value(value)
 {
-    static_assert(
-        std::is_base_of<char, TB>::value
-        || std::is_base_of<uchar, T>::value
-        || std::is_base_of<int16, T>::value
-        || std::is_base_of<uint16, T>::value
-        || std::is_base_of<int32, T>::value
-        || std::is_base_of<uint32, T>::value
-        || std::is_base_of<int64, T>::value
-        || std::is_base_of<uint64, T>::value,
-        "only basic value data type is supported"
-        );
+    __STATIC_ASSERT_DEF__;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(const __TINTEGER_DEF__& value)
@@ -99,36 +95,6 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator==(dty::TianyuObject& obj)
 __TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(__TINTEGER_DEF__& obj)
 {
     return this->_Value == obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator==(__TINTEGER_DEF__& obj)
-{
-    return this->_Value == obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator!=(__TINTEGER_DEF__& obj)
-{
-    return this->_Value != obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator<=(__TINTEGER_DEF__& obj)
-{
-    return this->_Value <= obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator>=(__TINTEGER_DEF__& obj)
-{
-    return this->_Value >= obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator<(__TINTEGER_DEF__& obj)
-{
-    return this->_Value < obj->_Value;
-}
-
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator>(__TINTEGER_DEF__& obj)
-{
-    return this->_Value > obj->_Value;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::operator TB()
@@ -162,44 +128,9 @@ __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator--(int)
     return preValue;
 }
 
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator+(__TINTEGER_DEF__& obj)
-{
-    return this->_Value + obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator-(__TINTEGER_DEF__& obj)
-{
-    return this->_Value - obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator*(__TINTEGER_DEF__& obj)
-{
-    return this->_Value * obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator/(__TINTEGER_DEF__& obj)
-{
-    return this->_Value / obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator%(__TINTEGER_DEF__& obj)
-{
-    return this->_Value % obj->_Value;
-}
-
 __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator!()
 {
     return !(this->_Value);
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator&(__TINTEGER_DEF__& obj)
-{
-    return this->_Value & obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator|(__TINTEGER_DEF__& obj)
-{
-    return this->_Value | obj->_Value;
 }
 
 __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator~()
@@ -207,84 +138,9 @@ __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator~()
     return ~(this->_Value);
 }
 
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator^(__TINTEGER_DEF__& obj)
-{
-    return this->_Value ^ obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator<<(__TINTEGER_DEF__& obj)
-{
-    return this->_Value << obj->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator>>(__TINTEGER_DEF__& obj)
-{
-    return this->_Value >> obj->_Value;
-}
-
 __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator=(__TINTEGER_DEF__& obj)
 {
     this->_Value = obj._Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator+=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value + obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator-=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value - obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator*=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value * obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator/(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value / obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator%(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value % obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator&=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value & obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator|=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value | obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator^=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value ^ obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator<<=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value << obj->_Value;
-    return this->_Value;
-}
-
-__TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator>>=(__TINTEGER_DEF__& obj)
-{
-    this->_Value = this->_Value >> obj->_Value;
     return this->_Value;
 }
 
@@ -346,6 +202,42 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::TryParse(const ::string s, __TINTEGER_DE
     }
 }
 
+// implement some operator by macro define
+// because they have the totally same structure
+__OPERATOR_OVERRIDE_DEF__(bool, == )
+__OPERATOR_OVERRIDE_DEF__(bool, != )
+__OPERATOR_OVERRIDE_DEF__(bool, <= )
+__OPERATOR_OVERRIDE_DEF__(bool, >= )
+__OPERATOR_OVERRIDE_DEF__(bool, > )
+__OPERATOR_OVERRIDE_DEF__(bool, < );
+
+//
+__OPERATOR_OVERRIDE_DEF__(TB, +)
+__OPERATOR_OVERRIDE_DEF__(TB, -)
+__OPERATOR_OVERRIDE_DEF__(TB, *)
+__OPERATOR_OVERRIDE_DEF__(TB, / )
+__OPERATOR_OVERRIDE_DEF__(TB, %)
+__OPERATOR_OVERRIDE_DEF__(TB, &)
+__OPERATOR_OVERRIDE_DEF__(TB, | )
+__OPERATOR_OVERRIDE_DEF__(TB, ^)
+__OPERATOR_OVERRIDE_DEF__(TB, << )
+__OPERATOR_OVERRIDE_DEF__(TB, >> )
+
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, +=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, -=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, *=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, /=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, %=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, &=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, |=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, ^=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, >>=)
+__OPERATOR_EQ_OVERRIDE_DEF__(TB, <<=)
+
 // to cancel the macro definitions
 #undef __TEMPLATE_DEF__
 #undef __TINTEGER_DEF__
+
+#undef __OPERATOR_OVERRIDE_DEF__
+#undef __OPERATOR_EQ_OVERRIDE_DEF__
+#undef __STATIC_ASSERT_DEF__
