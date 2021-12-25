@@ -20,7 +20,7 @@
 namespace dty
 {
     template<typename T>
-    class SmartPointer : public virtual TianyuObject
+    class SmartPointer : public virtual dty::TianyuObject
     {
 #pragma region Tianyu SmartPointer Internal Block
         //
@@ -105,13 +105,13 @@ namespace dty
          *
          * @param {const SmartPointer<T>&} sp specified source smart pointer.
          */
-        __PUB__ SmartPointer(const SmartPointer<T> __REFERENCE__ sp);
+        __PUB__          SmartPointer(const SmartPointer<T> __REFERENCE__ sp);
 
         /**
          * @brief 析构函数 
          * @brief disconstructor
          */
-        __PUB__ virtual ~SmartPointer();
+        __PUB__ virtual  ~SmartPointer();
 
         /**
          * @brief 获取一个bool值指示当前实例是否为空指针
@@ -134,10 +134,10 @@ namespace dty
          * @param {SmartPointer<T>&} sp
          * @return {bool}
          */
-        __PUB__ bool            __VARIABLE__ Move(SmartPointer<T> __REFERENCE__ sp);
+        __PUB__ bool   __VARIABLE__ Move(SmartPointer<T> __REFERENCE__ sp);
         /**
          * @brief 运算符 & 重载：获取当前指针的绝对地址
-         * @brief override operator &: Get the absoult address of current pointer.
+         * @brief __override_func operator &: Get the absoult address of current pointer.
          *
          * @return {uint64} return current address
          */
@@ -214,9 +214,9 @@ namespace dty
          */
         __PUB__ bool __VARIABLE__ operator !=(SmartPointer<T> __VARIABLE__ other);
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
     };
 }
 

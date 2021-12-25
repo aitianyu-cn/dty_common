@@ -22,12 +22,17 @@
 //##########################################################################
 // Implementation for FilterResult class
 //##########################################################################
-__TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult()
-    : dty::TianyuObject(), _Elems(::null), _Length(0), _Size(0), _NeedFree(false)
+__TEMPLATE_DEF__ __construction__ __F_RESULT_DEF__::FilterResult() :
+    dty::TianyuObject(),
+    _Elems(::null),
+    _Length(0),
+    _Size(0),
+    _NeedFree(false)
 { }
 
-__TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, bool needFree = true)
-    : dty::TianyuObject(), _NeedFree(needFree)
+__TEMPLATE_DEF__ __construction__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, bool needFree = true) :
+    dty::TianyuObject(),
+    _NeedFree(needFree)
 {
     if (::null == elems)
         throw dty::except::ArgumentNullException();
@@ -40,8 +45,9 @@ __TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, bool nee
     this->_Size = length;
 }
 
-__TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, int32 size, bool needFree = true)
-    : dty::TianyuObject(), _NeedFree(needFree)
+__TEMPLATE_DEF__ __construction__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, int32 size, bool needFree = true) :
+    dty::TianyuObject(),
+    _NeedFree(needFree)
 {
     if (::null == elems)
         throw dty::except::ArgumentNullException();
@@ -54,11 +60,15 @@ __TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult(T* elems, int32 length, int32 si
     this->_Size = size;
 }
 
-__TEMPLATE_DEF__ __F_RESULT_DEF__::FilterResult(const __F_RESULT_DEF__& fr)
-    : dty::TianyuObject(), _Elems(fr._Elems), _Length(fr._Length), _Size(fr._Size), _NeedFree(fr._NeedFree)
+__TEMPLATE_DEF__ __cp_construct__ __F_RESULT_DEF__::FilterResult(const __F_RESULT_DEF__& fr)
+    : dty::TianyuObject(),
+    _Elems(fr._Elems),
+    _Length(fr._Length),
+    _Size(fr._Size),
+    _NeedFree(fr._NeedFree)
 { }
 
-__TEMPLATE_DEF__ __F_RESULT_DEF__::~FilterResult()
+__TEMPLATE_DEF__ __destruction__  __F_RESULT_DEF__::~FilterResult()
 {
     if (!this->_NeedFree)
         return;
@@ -101,8 +111,12 @@ __TEMPLATE_DEF__ uint64 __F_RESULT_DEF__::GetHashCode()
 //##########################################################################
 // Implementation for IIteratorEntity interface
 //##########################################################################
-__TEMPLATE_DEF__ __II_ENTIT_DEF__::IIteratorEntity(dty::IPropertyGetter<int32>& size)
-    : dty::TianyuObject(), Size(size)
+__TEMPLATE_DEF__ __construction__ __II_ENTIT_DEF__::IIteratorEntity(dty::IPropertyGetter<int32>& size) :
+    dty::TianyuObject(),
+    Size(size)
+{ }
+
+__TEMPLATE_DEF__ __destruction__  __II_ENTIT_DEF__::~IIteratorEntity()
 { }
 
 __TEMPLATE_DEF__::string __II_ENTIT_DEF__::ToString() noexcept
@@ -118,15 +132,20 @@ __TEMPLATE_DEF__ uint64 __II_ENTIT_DEF__::GetTypeId()
 //##########################################################################
 // Implementation for Iterator class
 //##########################################################################
-__TEMPLATE_DEF__ __ITERATOR_DEF__::Iterator(__II_ENTIT_DEF__& entity)
-    : dty::TianyuObject(), _Entity(entity), _CurrentIndex(0)
+__TEMPLATE_DEF__ __construction__ __ITERATOR_DEF__::Iterator(__II_ENTIT_DEF__& entity) :
+    dty::TianyuObject(),
+    _Entity(entity),
+    _CurrentIndex(0)
 { }
 
-__TEMPLATE_DEF__ __ITERATOR_DEF__::Iterator(const __ITERATOR_DEF__& iterator)
-    : dty::TianyuObject(), _Entity(iterator._Entity), _CurrentIndex(iterator._CurrentIndex)
+__TEMPLATE_DEF__ __construction__ __ITERATOR_DEF__::Iterator(const __ITERATOR_DEF__& iterator) :
+    dty::TianyuObject(),
+    _Entity(iterator._Entity),
+    _CurrentIndex(iterator._CurrentIndex)
 { }
 
-__TEMPLATE_DEF__ __ITERATOR_DEF__::~Iterator() { }
+__TEMPLATE_DEF__ __destruction__  __ITERATOR_DEF__::~Iterator()
+{ }
 
 __TEMPLATE_DEF__ void __ITERATOR_DEF__::Reset()
 {
@@ -205,8 +224,11 @@ __TEMPLATE_DEF__ uint64 __ITERATOR_DEF__::GetHashCode()
 //##########################################################################
 // Implementation for IteratorEntity class
 //##########################################################################
-__TEMPLATE_DEF__ __IT_ENTIT_DEF__::IteratorEntity(T* pointer, int32 size, bool needFree = false)
-    : dty::TianyuObject(), _Pointer(pointer), _Reference(::null), _Current(0), _NeedFree(needFree)
+__TEMPLATE_DEF__ __construction__ __IT_ENTIT_DEF__::IteratorEntity(T* pointer, int32 size, bool needFree = false) :
+    dty::TianyuObject(),
+    _Pointer(pointer),
+    _Reference(::null),
+    _NeedFree(needFree)
 {
     if (::null == pointer && 0 != size)
         throw dty::except::ArgumentNullException();
@@ -218,14 +240,18 @@ __TEMPLATE_DEF__ __IT_ENTIT_DEF__::IteratorEntity(T* pointer, int32 size, bool n
         this->_Reference = new int32(1);
 }
 
-__TEMPLATE_DEF__ __IT_ENTIT_DEF__::IteratorEntity(const __IT_ENTIT_DEF__& it)
-    :dty::TianyuObject(), _Pointer(it._Pointer), _Size(it._Size), _NeedFree(it._NeedFree), _Reference(it._Reference)
+__TEMPLATE_DEF__ __cp_construct__ __IT_ENTIT_DEF__::IteratorEntity(const __IT_ENTIT_DEF__& it) :
+    dty::TianyuObject(),
+    _Pointer(it._Pointer),
+    _Size(it._Size),
+    _NeedFree(it._NeedFree),
+    _Reference(it._Reference)
 {
     if (this->_NeedFree && 0 < it._Size)
         (__PTR_TO_VAR__(this->_Reference)) += 1;
 }
 
-__TEMPLATE_DEF__ __IT_ENTIT_DEF__::~IteratorEntity()
+__TEMPLATE_DEF__ __destruction__  __IT_ENTIT_DEF__::~IteratorEntity()
 {
     if (!this->_NeedFree || 0 == this->_Size)
         return;
@@ -247,7 +273,7 @@ __TEMPLATE_DEF__ dty::SmartPointer<T> __IT_ENTIT_DEF__::Get(int32 index)
     if (index >= this->_Size)
         index = this->_Size - 1;
 
-    return dty::SmartPointer<T>((this->_Pointer) + index, 1, true);
+    return dty::SmartPointer<T>((this->_Pointer) + index, 1, true /* weak pointer */);
 }
 
 __TEMPLATE_DEF__ dty::SmartPointer<T> __IT_ENTIT_DEF__::End()
@@ -255,7 +281,7 @@ __TEMPLATE_DEF__ dty::SmartPointer<T> __IT_ENTIT_DEF__::End()
     if (0 == this->_Size)
         return dty::SmartPointer<T>();
 
-    return dty::SmartPointer<T>((this->_Pointer) + this->_Size - 1, 1, true);
+    return dty::SmartPointer<T>((this->_Pointer) + this->_Size - 1, 1, true /* weak pointer */);
 }
 
 __TEMPLATE_DEF__ void __IT_ENTIT_DEF__::ForEach(__IT_ENTIT_DEF__::ItemMapDelegate delegate)

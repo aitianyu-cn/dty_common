@@ -47,13 +47,16 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsSame(__DTY_SPTR_DEF__& sp)
 
 #pragma endregion
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer()
-    : dty::TianyuObject(),
-    _SmartPointerType(__DTY_SPTR_DEF__::SPType::STRONG), _Pointer(::null), _Size(0)
+__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer() :
+    dty::TianyuObject(),
+    _SmartPointerType(__DTY_SPTR_DEF__::SPType::STRONG),
+    _Pointer(::null),
+    _Size(0)
 { }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer)
-    : dty::TianyuObject(), _Size()
+__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer) :
+    dty::TianyuObject(),
+    _Size()
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
@@ -64,8 +67,9 @@ __TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer)
     this->_Size = 1;
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size)
-    : dty::TianyuObject(), _Size()
+__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size) :
+    dty::TianyuObject(),
+    _Size()
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
@@ -79,32 +83,36 @@ __TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size)
     this->_Size = size;
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, bool weak)
-    : __DTY_SPTR_DEF__(pointer)
+__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, bool weak) :
+    __DTY_SPTR_DEF__(pointer)
 {
     // To reset pointer type only if weak is true
     if (weak)
         this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size, bool weak)
-    : __DTY_SPTR_DEF__(pointer, size)
+__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size, bool weak) :
+    __DTY_SPTR_DEF__(pointer, size)
 {
     // To reset pointer type only if weak is true
     if (weak)
         this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPTR_DEF__& sp)
-// to copy a weak smart pointer by copy constructor only when in __DTY_SMART_POINTER_COPY_WEAK_MODE__
-// and in __DTY_UNSAFE_MODE__ mode
+__TEMPLATE_DEF__ __cp_construct__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPTR_DEF__& sp) :
+    // to copy a weak smart pointer by copy constructor only when in __DTY_SMART_POINTER_COPY_WEAK_MODE__
+    // and in __DTY_UNSAFE_MODE__ mode
 #if defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
-    : _SmartPointerType(__DTY_SPTR_DEF__::SPType::WEAK), _Pointer(sp._Pointer), _Size(sp._Size)
+    _SmartPointerType(__DTY_SPTR_DEF__::SPType::WEAK),
+    _Pointer(sp._Pointer),
+    _Size(sp._Size)
 { }
 #else
 
-            // safe copy constructor mode is move pointer owner
-    : _SmartPointerType(sp._SmartPointerType), _Pointer(sp._Pointer), _Size(sp._Size)
+    // safe copy constructor mode is move pointer owner
+    _SmartPointerType(sp._SmartPointerType),
+    _Pointer(sp._Pointer),
+    _Size(sp._Size)
 {
     // move pointer from source pointer only when it is strong pointer
     // weak pointer just to copy
@@ -119,7 +127,7 @@ __TEMPLATE_DEF__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPTR_DEF__& sp)
 }
 #endif // !defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::~SmartPointer()
+__TEMPLATE_DEF__ __destruction__  __DTY_SPTR_DEF__::~SmartPointer()
 {
     // to release pointer only when the current instance is strong type
     if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType)

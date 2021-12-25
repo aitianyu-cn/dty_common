@@ -1,8 +1,11 @@
 #include "../utilize.hh"
 
-dty::TianyuObject::TianyuObject() : dty::IToString() { }
+__construction__ dty::TianyuObject::TianyuObject()
+    : dty::IToString()
+{ }
 
-dty::TianyuObject::~TianyuObject() { }
+__destruction__  dty::TianyuObject::~TianyuObject()
+{ }
 
 bool dty::TianyuObject::IsNull()
 {

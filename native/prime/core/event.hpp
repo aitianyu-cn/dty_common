@@ -19,14 +19,14 @@
 
 namespace dty
 {
-    class EventArgs : public virtual TianyuObject
+    class EventArgs : public virtual dty::TianyuObject
     {
-        __PUB__ EventArgs();
-        __PUB__ virtual ~EventArgs() override;
+        __PUB__         EventArgs();
+        __PUB__ virtual ~EventArgs() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
 
         __PUB__ static EventArgs __VARIABLE__ Empty;
     };
@@ -43,7 +43,7 @@ namespace dty
     };
 
     template<class TEventArgs>
-    class EventHandler : public virtual TianyuObject
+    class EventHandler : public virtual dty::TianyuObject
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
@@ -52,17 +52,17 @@ namespace dty
         __PRI__ Property<int32>              __VARIABLE__ _Count;
         __PRI__ EventHandlerItem<TEventArgs> __POINTER__  _Handlers;
 
-        __PUB__ EventHandler();
-        __PUB__ virtual ~EventHandler() override;
+        __PUB__         EventHandler();
+        __PUB__ virtual ~EventHandler() __override_func;
 
         __PUB__ void __VARIABLE__ Invoke(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
         __PUB__ void __VARIABLE__ AddHandler(int32 __VARIABLE__ handlerId, EventHandlerDelegate __VARIABLE__ handler);
         __PUB__ void __VARIABLE__ Clear();
         __PUB__ void __VARIABLE__ RemoveHandler(int32 __VARIABLE__ handlerId);
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
     };
 }
 

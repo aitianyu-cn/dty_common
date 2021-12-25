@@ -31,8 +31,8 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
 
     __DTY_TYPE_DEF__ type;
 #ifdef __GNUC__
-    int status;
-    ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
+    int32 status;
+    ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
         int32 length = ::strlen(sourceName);
@@ -60,8 +60,8 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
 
     __DTY_TYPE_DEF__ type((uint64)(__REF_TO_PTR__ obj));
 #ifdef __GNUC__
-    int status;
-    ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
+    int32 status;
+    ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
         int32 length = ::strlen(sourceName);
@@ -98,12 +98,22 @@ __TEMPLATE_DEF__::string dty::_dty_native_cpp_default_to_string(T& obj) noexcept
 //#######################################################################################
 __TEMPLATE_DEF__ bool __DTY_TYPE_DEF__::_dummy = false;
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__::Type() : _Name(::null), _Id(0), _InstanceHash(0ULL) { }
+__TEMPLATE_DEF__ __construction__ __DTY_TYPE_DEF__::Type()
+    : _Name(::null),
+    _Id(0ULL),
+    _InstanceHash(0ULL)
+{ }
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__::Type(uint64 instance) : _Name(::null), _Id(0), _InstanceHash(instance) { }
+__TEMPLATE_DEF__ __construction__ __DTY_TYPE_DEF__::Type(uint64 instance)
+    : _Name(::null),
+    _Id(0ULL),
+    _InstanceHash(instance)
+{ }
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__::Type(const __DTY_TYPE_DEF__& other)
-    : _Name(::null), _Id(other._Id), _InstanceHash(other._InstanceHash)
+__TEMPLATE_DEF__ __cp_construct__ __DTY_TYPE_DEF__::Type(const __DTY_TYPE_DEF__& other)
+    : _Name(::null),
+    _Id(other._Id),
+    _InstanceHash(other._InstanceHash)
 {
     __DTY_TYPE_DEF__& copy = const_cast<__DTY_TYPE_DEF__&>(other);
     this->_Name = copy._Name;
@@ -111,7 +121,7 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__::Type(const __DTY_TYPE_DEF__& other)
     copy._Name = ::null;
 }
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__::~Type()
+__TEMPLATE_DEF__ __destruction__  __DTY_TYPE_DEF__::~Type()
 {
     if (::null != this->_Name)
         delete [](this->_Name);

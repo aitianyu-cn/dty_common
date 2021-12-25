@@ -15,6 +15,7 @@
 #ifdef __cplusplus
 
 #include "./internal.h"
+#include "./property.hpp"
 
 namespace dty
 {
@@ -22,14 +23,45 @@ namespace dty
     {
         __PUB__ virtual ~IFormatter() { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString(const ::string __VARIABLE__ formatter) = 0;
+        __PUB__ virtual ::string __VARIABLE__ ToString(const ::string __VARIABLE__ formatter) __pure_virtual_fun;
     };
 
+    _enum NumberSystem : int32
+    {
+        BIN,
+        OCT,
+        DEC,
+        HEX
+    };
+
+    class Formatter final : public virtual dty::TianyuObject
+    {
+        __PUB__ Property<bool>         __VARIABLE__ ExplicitSign;
+        __PUB__ Property<int32>        __VARIABLE__ FullLength;
+        __PUB__ Property<int32>        __VARIABLE__ IntegerLength;
+        __PUB__ Property<int32>        __VARIABLE__ DecimalsLength;
+        __PUB__ Property<NumberSystem> __VARIABLE__ NumberConvert;
+        __PUB__ Property<bool>         __VARIABLE__ Percentage;
+
+        __PUB__         Formatter();
+        __PUB__         Formatter(const ::string __VARIABLE__ formatter);
+        __PUB__ virtual ~Formatter() __override_func;
+
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+    };
+
+    // format handler class
+    // get an object to indicate the formatter parameters
+    // provide a decoder for formatter string
     class FormatHandler final : public virtual dty::TianyuObject
     {
 
     };
 
+    // format processor class
+    // provide static methods to process base type
     class FormatProcessor final : public virtual dty::TianyuObject
     {
 

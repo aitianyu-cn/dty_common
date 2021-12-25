@@ -20,11 +20,18 @@
 // Implementation for Property class
 // ####################################################################################################
 
-__PROPERTY_TEMPLATE_DEF__ __TPROPERTY_DEF__::Property() :dty::TianyuObject(), _Elem() { }
+__PROPERTY_TEMPLATE_DEF__ __construction__ __TPROPERTY_DEF__::Property() :
+    dty::TianyuObject(),
+    _Elem()
+{ }
 
-__PROPERTY_TEMPLATE_DEF__ __TPROPERTY_DEF__::Property(T value) : dty::TianyuObject(), _Elem(value) { }
+__PROPERTY_TEMPLATE_DEF__ __construction__ __TPROPERTY_DEF__::Property(T value) :
+    dty::TianyuObject(),
+    _Elem(value)
+{ }
 
-__PROPERTY_TEMPLATE_DEF__ __TPROPERTY_DEF__::~Property() { }
+__PROPERTY_TEMPLATE_DEF__ __destruction__  __TPROPERTY_DEF__::~Property()
+{ }
 
 __PROPERTY_TEMPLATE_DEF__ T __TPROPERTY_DEF__::Get()
 {
@@ -72,13 +79,18 @@ __PROPERTY_TEMPLATE_DEF__ uint64 __TPROPERTY_DEF__::GetHashCode()
 // Implementation for Lambda Property class
 // ####################################################################################################
 
-__PROPERTY_TEMPLATE_DEF__ __TLPROPERTY_DEF__::LProperty
+__PROPERTY_TEMPLATE_DEF__ __construction__ __TLPROPERTY_DEF__::LProperty
 (
     __TLPROPERTY_DEF__::PropertyGetDelegate getter,
     __TLPROPERTY_DEF__::PropertySetDelegate setter
-) : dty::TianyuObject(), _Getter(getter), _Setter(setter) { }
+) :
+    dty::TianyuObject(),
+    _Getter(getter),
+    _Setter(setter)
+{ }
 
-__PROPERTY_TEMPLATE_DEF__ __TLPROPERTY_DEF__::~LProperty() { }
+__PROPERTY_TEMPLATE_DEF__ __destruction__  __TLPROPERTY_DEF__::~LProperty()
+{ }
 
 __PROPERTY_TEMPLATE_DEF__ T __TLPROPERTY_DEF__::Get()
 {

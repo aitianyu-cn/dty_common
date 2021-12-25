@@ -44,6 +44,22 @@
 // 继承访问权标志 指示修饰的函数与属性子类可访问
 #define __PRO__ protected:
 
+// 构造函数返回值替换宏定义
+#define __construction__
+// 复制构造函数返回值替换宏定义
+#define __cp_construct__
+// 析构函数返回值替换宏定义
+#define __destruction__
+
+// 纯虚函数后缀
+#define __pure_virtual_fun = 0
+// 纯虚常函数后缀
+#define __pure_const_fn const = 0
+// 函数重载
+#define __override_func override
+// 常函数重载
+#define __override_cfun const override
+
 // 引用类型 标志 用于标识以引用类型保存、传递的属性、变量和参数
 #define __REFERENCE__ &
 // 指针引用类型 标志 用于标识以指针引用类型保存、传递的属性、变量和参数
@@ -64,7 +80,7 @@
 #define _interface abstract class
 
 // null value for pointer, must to be used by adding "::" ahead (::null)
-constexpr std::nullptr_t null = nullptr;
+constexpr auto null = nullptr;
 
 // #################################################################################################
 // The Core APIs for Tianyu Native
@@ -102,8 +118,9 @@ namespace dty
     // general data type class
     // get a name and type id to indicate a specified type
     __PREDEFINE__ template<typename T> class Type;
-    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType();
-    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj);
+
+    __PREDEFINE__ template<typename T> Type<T>  __VARIABLE__ GetType();
+    __PREDEFINE__ template<typename T> Type<T>  __VARIABLE__ GetType(T __REFERENCE__ obj);
     /**
      * @brief internal default function: to get a general object full name from a template type
      *        (specified object).
@@ -131,10 +148,10 @@ namespace dty
         __PRI__ uint64  __VARIABLE__ _Id;
         __PRI__ uint64  __VARIABLE__ _InstanceHash;
 
-        __PRI__ Type();
-        __PRI__ Type(uint64        __VARIABLE__  instance);
-        __PUB__ Type(const Type<T> __REFERENCE__ other);
-        __PUB__ ~Type();
+        __PRI__ __construction__ Type();
+        __PRI__ __construction__ Type(uint64        __VARIABLE__  instance);
+        __PUB__ __cp_construct__ Type(const Type<T> __REFERENCE__ other);
+        __PUB__ __destruction__  ~Type();
 
         __PUB__::string __VARIABLE__ Name() const;
         __PUB__ uint64  __VARIABLE__ Id();
@@ -157,21 +174,21 @@ namespace dty
      */
     _interface IToString
     {
-        __PUB__ virtual ~IToString() { }
+        __PUB__ virtual __destruction__ ~IToString() { }
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept = 0;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __pure_virtual_fun;
     };
 
     // Tianyu Object 
     // this is a basic object type for Tianyu Native and all of the sub type in Tianyu Native
     // this is a hierarchy root for Data Type in Tianyu Native
     // Tianyu Object provides the basic and generic interfaces.
-    abstract class TianyuObject : public virtual IToString
+    abstract class TianyuObject : public virtual dty::IToString
     {
-        __PRO__ TianyuObject();
-        __PUB__ virtual ~TianyuObject() override;
+        __PRO__         __construction__ TianyuObject();
+        __PUB__ virtual __destruction__  ~TianyuObject() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
         __PUB__ virtual uint64   __VARIABLE__ GetHashCode();
 
@@ -184,15 +201,15 @@ namespace dty
 
     // Internal Implementation for Tianyu Null Object
     // this is a sealed class and only provides null object replacement
-    class TianyuEmptyObject final : public virtual TianyuObject
+    class TianyuEmptyObject final : public virtual dty::TianyuObject
     {
-        __PUB__ TianyuEmptyObject();
-        __PUB__ virtual ~TianyuEmptyObject() override;
+        __PUB__         __construction__ TianyuEmptyObject();
+        __PUB__ virtual __destruction__  ~TianyuEmptyObject() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
-        __PUB__ virtual bool     __VARIABLE__ IsNull() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        __PUB__ virtual bool     __VARIABLE__ IsNull()      __override_func;
     };
 
     // null value of Tianyu Object

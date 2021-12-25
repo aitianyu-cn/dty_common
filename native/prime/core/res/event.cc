@@ -17,8 +17,10 @@
 #define __TEMPLATE_DEF__ template<class T>
 #define __EVENT_HD_DEF__ dty::EventHandler<T>
 
-__TEMPLATE_DEF__ __EVENT_HD_DEF__::EventHandler()
-    : dty::TianyuObject(), _Count(0), _Handlers(new dty::EventHandlerItem<T>())
+__TEMPLATE_DEF__ __construction__ __EVENT_HD_DEF__::EventHandler() :
+    dty::TianyuObject(),
+    _Count(0),
+    _Handlers(new dty::EventHandlerItem<T>())
 {
     static_assert(std::is_base_of<dty::EventArgs, T>::value, "expect dty::EventArgs or its child class");
 
@@ -26,7 +28,7 @@ __TEMPLATE_DEF__ __EVENT_HD_DEF__::EventHandler()
     this->_Handlers->_next = ::null;
 }
 
-__TEMPLATE_DEF__ __EVENT_HD_DEF__::~EventHandler()
+__TEMPLATE_DEF__ __destruction__  __EVENT_HD_DEF__::~EventHandler()
 {
     this->Clear();
 

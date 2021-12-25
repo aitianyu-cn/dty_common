@@ -12,9 +12,10 @@
 #include "../icollections.hpp"
 
 template<typename T>
-dty::collection::ICollections<T>::ICollections(dty::IPropertyGetter<int32>& count)
-    :dty::TianyuObject(), Count(count)
+__construction__ dty::collection::ICollections<T>::ICollections(dty::IPropertyGetter<int32>& count) :
+    dty::TianyuObject(),
+    Count(count)
 { }
 
 template<typename T>
-dty::collection::ICollections<T>::~ICollections() { }
+__destruction__  dty::collection::ICollections<T>::~ICollections() { }

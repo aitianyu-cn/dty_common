@@ -42,41 +42,45 @@
         "only basic value data type is supported"   \
     )
 
-__TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase()
-    : dty::TianyuObject(),
+__TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase() :
+    dty::TianyuObject(),
     dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(), _Value()
+    dty::IFormatter(),
+    _Value()
 {
     __STATIC_ASSERT_DEF__;
 }
 
-__TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
-    : dty::TianyuObject(),
+__TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase(TB value) :
+    dty::TianyuObject(),
     dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(), _Value(value)
+    dty::IFormatter(),
+    _Value(value)
 {
     __STATIC_ASSERT_DEF__;
 }
 
-__TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(TB value)
-    : dty::TianyuObject(),
+__TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase(TB value) :
+    dty::TianyuObject(),
     dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(), _Value(value)
+    dty::IFormatter(),
+    _Value(value)
 {
     __STATIC_ASSERT_DEF__;
 }
 
-__TEMPLATE_DEF__ __TINTEGER_DEF__::TIntegerBase(const __TINTEGER_DEF__& value)
+__TEMPLATE_DEF__ __cp_construct__ __TINTEGER_DEF__::TIntegerBase(const __TINTEGER_DEF__& value)
     : dty::TianyuObject(),
     dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(), _Value(value._Value)
+    dty::IFormatter(),
+    _Value(value._Value)
 { }
 
-__TEMPLATE_DEF__ __TINTEGER_DEF__::~TIntegerBase() { }
+__TEMPLATE_DEF__ __destruction__  __TINTEGER_DEF__::~TIntegerBase() { }
 
 __TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(dty::TianyuObject& obj)
 {
