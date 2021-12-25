@@ -100,6 +100,11 @@ dty::String dty::Guid::ToString(const ::string formatter)
     return dty::String::GetString(_dty_native_cpp_guid_toString(formatter), false);
 }
 
+uint64 dty::Guid::GetTypeId()
+{
+    return dty::GetType(__PTR_TO_REF__ this).Id();
+}
+
 dty::collection::CompareResult dty::Guid::CompareTo(dty::Guid& other)
 {
     int32 compareResult = 0;

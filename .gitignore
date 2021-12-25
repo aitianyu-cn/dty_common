@@ -1,5 +1,5 @@
 #ignore configure files of MacOS
-
+**/.VSCodeCounter
 **/.DS_Store
 
 **/bin/*

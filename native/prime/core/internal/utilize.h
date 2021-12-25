@@ -1,7 +1,7 @@
 /**
  * @file utilize.h(native/core)
  * @author senyun.yao
- * @brief
+ * @brief Tianyu Native basic definitions
  * @version 0.1
  * @date 2021-11-29
  *
@@ -109,10 +109,6 @@ typedef      unsigned char __VARIABLE__ uchar;
 typedef        signed char __VARIABLE__ sbyte;
 // 无符号字节 数据类型
 typedef      unsigned char __VARIABLE__ byte;
-// 有符号8位整数 数据类型
-// typedef        signed char __VARIABLE__ int8;
-// 无符号8位整数 数据类型
-// typedef      unsigned char __VARIABLE__ uint8;
 // 有符号16位整数 数据类型
 typedef       signed short __VARIABLE__ int16;
 // 无符号16位整数 数据类型
@@ -129,12 +125,6 @@ typedef unsigned long long __VARIABLE__ uint64;
 typedef               void __POINTER__  object;
 // 字符串类型 数据类型 指针类型
 typedef               char __POINTER__  string;
-// 有符号天宇字符 数据类型
-// typedef       signed short __VARIABLE__ tychar;
-// 无符号天宇字符 数据类型
-// typedef     unsigned short __VARIABLE__ tyuchar;
-// 错误类型 数据类型
-// typedef               char __VARIABLE__ error;
 
 #ifndef __cplusplus
 // 布尔类型 数据类型
@@ -146,6 +136,7 @@ typedef      unsigned char __VARIABLE__ bool;
 
 #pragma endregion
 
+// 定义用于tianyu native的通用id字节长度
 __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 
 #ifdef __cplusplus
@@ -154,8 +145,6 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 
 #ifndef __cplusplus
 #define NULL ((void __POINTER__)0)
-
-typedef
 #endif // !__cplusplus }
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_H__

@@ -1,4 +1,4 @@
-#include "./thread.hpp"
+#include "../thread.hpp"
 #include <thread>
 
 // init current thread

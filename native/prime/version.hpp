@@ -39,21 +39,24 @@ namespace dty
         __PRI__ Int16Property __VARIABLE__ _MinorRevision;
 
         __PUB__ Version();
-        __PUB__ Version(dty::String  __VARIABLE__ version);
-        __PUB__ Version(const string __VARIABLE__ version);
+        __PUB__ Version(const Version __REFERENCE__ other);
+        __PUB__ Version(dty::String    __VARIABLE__ version);
+        __PUB__ Version(const ::string __VARIABLE__ version);
         __PUB__ Version(int32 __VARIABLE__ major, int32 __VARIABLE__ minor);
         __PUB__ Version(int32 __VARIABLE__ major, int32 __VARIABLE__ minor, int32 __VARIABLE__ build);
         __PUB__ Version(int32 __VARIABLE__ major, int32 __VARIABLE__ minor, int32 __VARIABLE__ build, int32 __VARIABLE__ revision);
 
-        __PUB__ Version __VARIABLE__ Parse(dty::String  __VARIABLE__ version);
-        __PUB__ Version __VARIABLE__ Parse(const string __VARIABLE__ version);
+        __PUB__ static Version __VARIABLE__ Parse(dty::String  __VARIABLE__ version);
+        __PUB__ static Version __VARIABLE__ Parse(const string __VARIABLE__ version);
 
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other) override;
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
         __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
 
-        __PUB__ bool __VARIABLE__ TryParse(dty::String __VARIABLE__ guid, Version __REFERENCE__ result);
-        __PUB__ bool __VARIABLE__ TryParse(const string __VARIABLE__ guid, Version __REFERENCE__ result);
+        __PUB__ static bool __VARIABLE__ TryParse(dty::String __VARIABLE__ version, Version __REFERENCE__ result);
+        __PUB__ static bool __VARIABLE__ TryParse(const string __VARIABLE__ version, Version __REFERENCE__ result);
 
 #pragma region dty::collection::IEquatable and ICompareable interface
         __PUB__ virtual dty::collection::CompareResult __VARIABLE__ CompareTo(Version __REFERENCE__ other) override;

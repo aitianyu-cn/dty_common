@@ -1,5 +1,6 @@
 {
-    "package": ["native/prime", "native/text", "native/model", "native/io"],
+    "workspace": "test",
+    "target": "test/bin",
     "build": {
         "default": "g++",
         "builder": [

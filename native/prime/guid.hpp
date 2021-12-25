@@ -60,6 +60,7 @@ namespace dty
         __PUB__ dty::collection::ByteArray __VARIABLE__ ToByteArray();
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
 
         __PUB__ dty::String __VARIABLE__ ToString(const ::string __VARIABLE__ formatter);
 

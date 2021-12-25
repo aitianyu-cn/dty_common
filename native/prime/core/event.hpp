@@ -17,19 +17,16 @@
 #include "./internal.h"
 #include "./property.hpp"
 
-#include <type_traits>
-
 namespace dty
 {
-    class EventArgs : public virtual TianyuObject
+    class EventArgs : public virtual dty::TianyuObject
     {
-        __PUB__ EventArgs() { }
-        __PUB__ virtual ~EventArgs() { }
+        __PUB__         EventArgs();
+        __PUB__ virtual ~EventArgs() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
 
         __PUB__ static EventArgs __VARIABLE__ Empty;
     };
@@ -46,112 +43,30 @@ namespace dty
     };
 
     template<class TEventArgs>
-    class EventHandler : public virtual TianyuObject
+    class EventHandler : public virtual dty::TianyuObject
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
-        __PUB__ Property<int32>              __VARIABLE__ Count;
+        __PUB__ const IPropertyGetter<int32> __REFERENCE__ Count = this->_Count;
 
+        __PRI__ Property<int32>              __VARIABLE__ _Count;
         __PRI__ EventHandlerItem<TEventArgs> __POINTER__  _Handlers;
 
-        __PUB__ EventHandler() : Count(0), _Handlers(new EventHandlerItem<TEventArgs>())
-        {
-            static_assert(std::is_base_of<EventArgs, TEventArgs>::value, "expect EventArgs or its child class");
+        __PUB__         EventHandler();
+        __PUB__ virtual ~EventHandler() __override_func;
 
-            this->_Handlers->_id = 0;
-            this->_Handlers->_next = ::null;
-        }
-        __PUB__ virtual ~EventHandler()
-        {
-            this->Clear();
+        __PUB__ void __VARIABLE__ Invoke(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
+        __PUB__ void __VARIABLE__ AddHandler(int32 __VARIABLE__ handlerId, EventHandlerDelegate __VARIABLE__ handler);
+        __PUB__ void __VARIABLE__ Clear();
+        __PUB__ void __VARIABLE__ RemoveHandler(int32 __VARIABLE__ handlerId);
 
-            delete (this->_Handlers);
-        }
-
-        __PUB__ void __VARIABLE__ Invoke(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e)
-        {
-            if (0 == this->Count)
-                return;
-
-            EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (::null != head->_next)
-            {
-                head->_next->_handler(sender, e);
-                head = head->_next;
-            }
-        }
-
-        __PUB__ void __VARIABLE__ AddHandler(int32 __VARIABLE__ handlerId, EventHandlerDelegate __VARIABLE__ handler)
-        {
-            bool hasFind = false;
-            EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (::null != head->_next && !hasFind)
-            {
-                if (handlerId == head->_next->_id)
-                    hasFind = true;
-
-                if (handlerId < head->_next->_id)
-                    break;
-
-                head = head->_next;
-            }
-
-            if (!hasFind)
-            {
-                EventHandlerItem<TEventArgs> __POINTER__ newHandler = new EventHandlerItem<TEventArgs>();
-                newHandler->_handler = handler;
-                newHandler->_id = handlerId;
-
-                newHandler->_next = head->_next;
-                head->_next = newHandler;
-                this->Count = this->Count + 1;
-            }
-        }
-        __PUB__ void __VARIABLE__ Clear()
-        {
-            if (0 == this->Count)
-                return;
-
-            EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            while (::null != head->_next)
-            {
-                EventHandlerItem<TEventArgs> __POINTER__ del = head->_next;
-                head->_next = del->_next;
-                delete del;
-            }
-
-            this->Count = 0;
-        }
-        __PUB__ void __VARIABLE__ RemoveHandler(int32 __VARIABLE__ handlerId)
-        {
-            if (0 == this->Count)
-                return;
-
-            EventHandlerItem<TEventArgs> __POINTER__ head = this->_Handlers;
-            EventHandlerItem<TEventArgs> __POINTER__ del = ::null;
-            while (::null != head->_next && ::null == del)
-            {
-                if (handlerId == head->_next->_id)
-                {
-                    del = head->_next;
-                    head->_next = del->_next;
-                }
-                head = head->_next;
-            }
-
-            if (::null != del)
-            {
-                delete del;
-                this->Count = this->Count - 1;
-            }
-        }
-
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
     };
 }
+
+#include "./res/event.cc"
 
 #endif // !__cplusplus
 

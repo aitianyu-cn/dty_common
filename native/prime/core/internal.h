@@ -24,34 +24,34 @@
 
 namespace dty
 {
-    _interface IObjectConverter : public virtual TianyuObject
+    _interface IObjectConverter : public virtual dty::TianyuObject
     {
-        __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize) = 0;
-        __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) = 0;
+        __PUB__ virtual ~IObjectConverter() { }
+
+        __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize)                                __pure_virtual_fun;
+        __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) __pure_virtual_fun;
     };
-    _interface IStringConverter : public virtual TianyuObject
+    _interface IStringConverter : public virtual dty::TianyuObject
     {
-        __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize) const = 0;
-        __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) const = 0;
+        __PUB__ virtual ~IStringConverter() { }
+
+        __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize)                                const __pure_virtual_fun;
+        __PUB__ virtual ::string __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) const __pure_virtual_fun;
     };
 
     template<typename _Key, typename _Val>
-    class KeyValuePair final : public virtual TianyuObject
+    class KeyValuePair final : public virtual dty::TianyuObject
     {
         __PUB__ _Key __VARIABLE__ Key;
         __PUB__ _Val __VARIABLE__ Value;
 
-        __PUB__ KeyValuePair(_Key key, _Val val)
-            : Key(key), Value(val)
-        {
+        __PUB__         KeyValuePair(_Key __VARIABLE__ key, _Val __VARIABLE__ val);
+        __PUB__         KeyValuePair(const KeyValuePair<_Key, _Val> __REFERENCE__ other);
+        __PUB__ virtual ~KeyValuePair() __override_func;
 
-        }
-        __PUB__ virtual ~KeyValuePair() override { }
-
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
     };
 
     namespace collection
@@ -64,30 +64,36 @@ namespace dty
         };
 
         template<class Elem>
-        _interface IEquatable : public virtual TianyuObject
+        _interface IEquatable : public virtual dty::TianyuObject
         {
-            __PUB__ virtual ~IEquatable() override { };
+            __PUB__         IEquatable() : TianyuObject() { }
+            __PUB__ virtual ~IEquatable() __override_func { };
 
-            __PUB__ virtual bool __VARIABLE__ Equals(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator !=(Elem __REFERENCE__ other) = 0;
+            __PUB__ virtual bool __VARIABLE__ Equals(Elem __REFERENCE__ other)      __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator !=(Elem __REFERENCE__ other) __pure_virtual_fun;
         };
 
         template<class Elem>
-        _interface ICompareable : public virtual TianyuObject
+        _interface ICompareable : public virtual dty::TianyuObject
         {
-            __PUB__ virtual ~ICompareable() override { };
+            using CPRT = dty::collection::CompareResult;
 
-            __PUB__ virtual CompareResult __VARIABLE__ CompareTo(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator !=(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator <(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator >(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator <=(Elem __REFERENCE__ other) = 0;
-            __PUB__ virtual bool __VARIABLE__ operator >=(Elem __REFERENCE__ other) = 0;
+            __PUB__         ICompareable() : TianyuObject() { }
+            __PUB__ virtual ~ICompareable() __override_func { };
+
+            __PUB__ virtual CPRT __VARIABLE__ CompareTo(Elem __REFERENCE__ other)   __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator ==(Elem __REFERENCE__ other) __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator !=(Elem __REFERENCE__ other) __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator <(Elem __REFERENCE__ other)  __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator >(Elem __REFERENCE__ other)  __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator <=(Elem __REFERENCE__ other) __pure_virtual_fun;
+            __PUB__ virtual bool __VARIABLE__ operator >=(Elem __REFERENCE__ other) __pure_virtual_fun;
         };
     }
 }
+
+#include "./res/internal.cc"
 
 #endif // !__cplusplus
 

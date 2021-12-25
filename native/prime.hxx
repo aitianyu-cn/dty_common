@@ -27,11 +27,11 @@
 
 #include "./prime/string.hpp"
 
-#include "./prime/datetime.hpp"
+#include "./prime/times.hpp"
 #include "./prime/guid.hpp"
 #include "./prime/version.hpp"
 
-#include "./prime/operatingSystem.hpp"
+#include "./prime/system.hpp"
 #include "./prime/console.hpp"
 
 #include "./prime/list.hpp"

@@ -22,12 +22,16 @@
 
 namespace dty
 {
-    class String : public virtual dty::collection::IEquatable<String>,
+    class String
+        : public virtual dty::TianyuObject,
+        public virtual dty::collection::IEquatable<String>,
         public virtual dty::collection::ICompareable<String>
     {
-        __PRI__ string __VARIABLE__ _StringValue;
-        __PRI__ int32  __VARIABLE__ _StringLength;
-        __PRI__ int32  __POINTER__  _Reference;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Length = this->_StringLength;
+
+        __PRI__ Property<string> __VARIABLE__ _StringValue;
+        __PRI__ Property<int32>  __VARIABLE__ _StringLength;
+        __PRI__ int32            __POINTER__  _Reference;
 
         __PUB__ String();
         __PUB__ String(string_sp    __VARIABLE__ item);
@@ -42,7 +46,6 @@ namespace dty
         __PUB__ virtual ~String() override;
 
 #pragma region Tianyu String Function
-        __PUB__ int32  __VARIABLE__ Length();
         __PUB__ bool   __VARIABLE__ IsEmpty();
         __PUB__ bool   __VARIABLE__ RemoveAt(int32 __VARIABLE__ index);
         __PUB__ void   __VARIABLE__ Clear();
@@ -93,9 +96,10 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
         __PUB__ virtual uint64   __VARIABLE__ GetHashCode() override;
-        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other);
+        __PUB__ virtual bool     __VARIABLE__ IsNull() override;
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other) override;
 
-        __PUB__::string  __VARIABLE__ ToCStr();
+        __PUB__::string   __VARIABLE__ ToCStr();
         __PUB__ string_sp __VARIABLE__ ToSafeCStr();
 
         __PUB__ collection::CharArray     __VARIABLE__ ToArray();

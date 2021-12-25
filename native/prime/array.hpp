@@ -12,20 +12,21 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__
 
-#include "./iterator.hpp"
+#include "./core.hxx"
 
 namespace dty::collection
 {
     template<class Elem>
-    class Array final : public TianyuObject
+    class Array final : public virtual TianyuObject, public virtual ICollections<Elem>
     {
         __PRI__ Elem  __POINTER__  _Array;
-        __PRI__ int32 __VARIABLE__ _Count;
         __PRI__ int32 __POINTER__  _Reference;
-        __PRI__ bool  __VARIABLE__ _NeedFree;
+
+        __PRI__ Property<int32> __VARIABLE__ _Count;
+        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ Array(Elem __POINTER__ arraySrc, int32 __VARIABLE__ count, bool __VARIABLE__ needFree = true)
-            : _Reference(::null), _NeedFree(needFree)
+            : TianyuObject(), ICollections<Elem>(_Count), _Reference(::null), _NeedFree(needFree)
         {
             if (::null == arraySrc && 0 != count)
                 throw dty::except::ArgumentNullException();
@@ -41,6 +42,8 @@ namespace dty::collection
             // other wise this is a counter only
             if (0 != count)
                 this->_Reference = new int32(1);
+
+            ICollections<Elem>::Count = this->_Count;
         }
         __PUB__ Array(const Array<Elem> __REFERENCE__ arr)
             : _Array(arr._Array), _Count(arr._Count), _Reference(arr._Reference), _NeedFree(arr._NeedFree)
@@ -63,13 +66,9 @@ namespace dty::collection
                 (__PTR_TO_VAR__(this->_Reference)) -= 1;
         }
 
-        __PUB__ bool           __VARIABLE__   IsNull()
+        __PUB__ virtual bool           __VARIABLE__   IsNull() override
         {
             return ::null == this->_Array;
-        }
-        __PUB__ int32          __VARIABLE__   Size()
-        {
-            return this->_Count;
         }
         __PUB__ Elem           __REFERENCE__  operator[](int32 __VARIABLE__ index)
         {
@@ -78,7 +77,7 @@ namespace dty::collection
 
             return this->_Array[index];
         }
-        __PUB__ IteratorBase<Elem> __VARIABLE__   GetIterator()
+        __PUB__ virtual Iterator<Elem> __VARIABLE__   GetIterator() override
         {
             return Iterator<Elem>(this->_Array, this->_Count);
         }
@@ -97,6 +96,10 @@ namespace dty::collection
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
         {
             return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+        }
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override
+        {
+            return dty::GetType(__PTR_TO_REF__ this).Id();
         }
     };
 

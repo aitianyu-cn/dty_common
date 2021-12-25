@@ -2,7 +2,7 @@
  * @file utilize.hh(native/core)
  * @author senyun.yao
  * @brief 用于天宇平台的公用组件核心
- * @brief AiTianyu Platform Public Common Core
+ * @brief AiTianyu Platform Public Common Core (C++ only)
  *
  * @version 0.1
  * @date 2021-11-09
@@ -29,8 +29,8 @@
   * @brief The flag that allow unsafe memory operations in Tianyu Library when it is defined
   */
   // #define __DTY_UNSAFE_MODE__ "Tianyu Library Unsafe Mode"
-    // #define __DTY_DEEP_LEARNING_MODE__
-      // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
+  // #define __DTY_DEEP_LEARNING_MODE__
+  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
 #if __cplusplus < 201700
 #error library needs C++17 or later
@@ -43,6 +43,22 @@
 #define __PRI__ private:
 // 继承访问权标志 指示修饰的函数与属性子类可访问
 #define __PRO__ protected:
+
+// 构造函数返回值替换宏定义
+#define __construction__
+// 复制构造函数返回值替换宏定义
+#define __cp_construct__
+// 析构函数返回值替换宏定义
+#define __destruction__
+
+// 纯虚函数后缀
+#define __pure_virtual_fun = 0
+// 纯虚常函数后缀
+#define __pure_const_fn const = 0
+// 函数重载
+#define __override_func override
+// 常函数重载
+#define __override_cfun const override
 
 // 引用类型 标志 用于标识以引用类型保存、传递的属性、变量和参数
 #define __REFERENCE__ &
@@ -58,127 +74,93 @@
 // 值→引用类型转换 标志 用于标识值类型到引用类型的转换
 #define __VAR_TO_REF__
 
-//
+// abstract class define
 #define abstract
-//
+// define interface that is an abstract class
 #define _interface abstract class
 
+// null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
 
-#ifdef __GNUC__
-#include <cxxabi.h>
-#endif // !__GNUC__
+// #################################################################################################
+// The Core APIs for Tianyu Native
+// String Base APIs: in order to do some string operations without including a huge header files
+// #################################################################################################
+
+#pragma region c_string basic APIs
+int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+
+::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
+::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ l2str(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ f2str(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ d2str(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+#pragma endregion
+
+// #################################################################################################
+// Data Type definition for Tianyu Class base
+// Tianyu Type Helper (Type<T>)
+// Tianyu ToString Interface (IToString)
+// Tianyu Object Base (TianyuObject)
+// Tianyu Object Null Pointer (TianyuEmptyObject)
+// 
+// Tianyu Class Type Marco Definition
+// #################################################################################################
 
 namespace dty
 {
+    // general data type class
+    // get a name and type id to indicate a specified type
     __PREDEFINE__ template<typename T> class Type;
-    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType();
-    __PREDEFINE__ template<typename T> Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj);
 
-    template<typename T>
-    class Type final
+    __PREDEFINE__ template<typename T> Type<T>  __VARIABLE__ GetType();
+    __PREDEFINE__ template<typename T> Type<T>  __VARIABLE__ GetType(T __REFERENCE__ obj);
+    /**
+     * @brief internal default function: to get a general object full name from a template type
+     *        (specified object).
+     *
+     * @tparam T template type
+     * @param obj specified object
+     * @return __DEFAULT__::string return a full name of the specified object
+     *
+     * @warning Pay attention: MUST to release the return value before it is discarded.
+     */
+    __PREDEFINE__ template<typename T> ::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept;
+
+    /**
+     * @brief Tianyu Type Operation Object
+     *
+     * @tparam T Type
+     */
+    template<typename T> class Type final
     {
+        // static object for each object
+        // to make diffs for different data type
         __PRI__ static bool __VARIABLE__ _dummy;
 
         __PRI__::string __VARIABLE__ _Name;
         __PRI__ uint64  __VARIABLE__ _Id;
         __PRI__ uint64  __VARIABLE__ _InstanceHash;
 
-        __PRI__ Type() : _Name(::null), _InstanceHash(0) { }
-        __PRI__ Type(uint64 __VARIABLE__ instance) : _Name(::null), _InstanceHash(instance) { }
-        __PUB__ Type(const Type<T> __REFERENCE__ other) : _Name(::null)
-        {
-            int32 nameLen = ::strlen(other._Name);
+        __PRI__ __construction__ Type();
+        __PRI__ __construction__ Type(uint64        __VARIABLE__  instance);
+        __PUB__ __cp_construct__ Type(const Type<T> __REFERENCE__ other);
+        __PUB__ __destruction__  ~Type();
 
-            this->_Name = new char[nameLen + 1];
-            for (int32 i = 0; i < nameLen; ++i)
-                this->_Name[i] = other._Name[i];
+        __PUB__::string __VARIABLE__ Name() const;
+        __PUB__ uint64  __VARIABLE__ Id();
+        __PUB__ uint64  __VARIABLE__ InstanceHashCode();
 
-            this->_Name[nameLen] = '\0';
-        }
-        __PUB__ ~Type()
-        {
-            if (::null != this->_Name)
-                delete [](this->_Name);
-        }
-
-        __PUB__::string __VARIABLE__ Name() const
-        {
-            return this->_Name;
-        }
-        __PUB__ uint64  __VARIABLE__ Id()
-        {
-            return this->_Id;
-        }
-        __PUB__ uint64  __VARIABLE__ InstanceHashCode()
-        {
-            return this->_InstanceHash;
-        }
-
-        friend Type<T> __VARIABLE__ GetType<T>();
-        friend Type<T> __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
+        friend Type<T>  __VARIABLE__ GetType<T>();
+        friend Type<T>  __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
+        friend ::string __VARIABLE__ _dty_native_cpp_default_to_string<T>(T __REFERENCE__ obj) noexcept;
     };
-
-    template<typename T> bool Type<T>::_dummy = false;
-
-    template<typename T>
-    Type<T> __VARIABLE__ GetType()
-    {
-        ::string sourceName = const_cast<::string>(typeid(T).name());
-
-        Type<T> type;
-#ifdef __GNUC__
-        int status;
-        ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
-        if (0 != status)
-        {
-            int32 length = ::strlen(sourceName);
-            demangled_name = new char[length + 1];
-            for (int32 i = 0; i < length; ++i)
-                demangled_name[i] = sourceName[i];
-            demangled_name[length] = '\0';
-        }
-#else // !__GNUC__
-        int32 length = ::strlen(sourceName);
-        ::string demangled_name = new char[length + 1];
-        for (int32 i = 0; i < length; ++i)
-            demangled_name[i] = sourceName[i];
-        demangled_name[length] = '\0';
-#endif // !__GNUC__
-        type._Name = demangled_name;
-        type._Id = typeid(T).hash_code();
-
-        return type;
-    }
-    template<typename T>
-    Type<T> __VARIABLE__ GetType(T __REFERENCE__ obj)
-    {
-        ::string sourceName = const_cast<::string>(typeid(T).name());
-
-        Type<T> type((uint64)(__REF_TO_PTR__ obj));
-#ifdef __GNUC__
-        int status;
-        ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, &status);
-        if (0 != status)
-        {
-            int32 length = ::strlen(sourceName);
-            demangled_name = new char[length + 1];
-            for (int32 i = 0; i < length; ++i)
-                demangled_name[i] = sourceName[i];
-            demangled_name[length] = '\0';
-        }
-#else // !__GNUC__
-        int32 length = ::strlen(sourceName);
-        ::string demangled_name = new char[length + 1];
-        for (int32 i = 0; i < length; ++i)
-            demangled_name[i] = sourceName[i];
-        demangled_name[length] = '\0';
-#endif // !__GNUC__
-        type._Name = demangled_name;
-        type._Id = typeid(T).hash_code();
-
-        return type;
-    }
 
     /**
      * @brief Convert an object to string type
@@ -192,83 +174,48 @@ namespace dty
      */
     _interface IToString
     {
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept = 0;
+        __PUB__ virtual __destruction__ ~IToString() { }
+
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __pure_virtual_fun;
     };
 
-    template<typename T>
-    __DEFAULT__::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept
+    // Tianyu Object 
+    // this is a basic object type for Tianyu Native and all of the sub type in Tianyu Native
+    // this is a hierarchy root for Data Type in Tianyu Native
+    // Tianyu Object provides the basic and generic interfaces.
+    abstract class TianyuObject : public virtual dty::IToString
     {
-        ::string typeName = const_cast<::string>(dty::GetType(obj).Name());
-        int32 typeNameLen = ::strlen(typeName);
+        __PRO__         __construction__ TianyuObject();
+        __PUB__ virtual __destruction__  ~TianyuObject() __override_func;
 
-        ::string str = new char[typeNameLen + 1];
-        for (int32 i = 0; i < typeNameLen; ++i)
-            str[i] = typeName[i];
-        str[typeNameLen] = '\0';
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode();
 
-        return str;
-    }
+        __PUB__ virtual bool __VARIABLE__ IsNull();
+        __PUB__ virtual bool __VARIABLE__ Equals(TianyuObject __REFERENCE__ obj);
+        __PUB__ virtual bool __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj);
 
-    abstract class TianyuObject : IToString
-    {
-        __PRO__ TianyuObject() { }
-
-        __PUB__ virtual ~TianyuObject() { }
-
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-        }
-        __PUB__ virtual uint64 __VARIABLE__ GetTypeId()
-        {
-            return dty::GetType(__PTR_TO_REF__ this).Id();
-        }
-        __PUB__ virtual uint64 __VARIABLE__ GetHashCode()
-        {
-            return (uint64)(this);
-        }
-        __PUB__ virtual bool   __VARIABLE__ IsNull()
-        {
-            return false;
-        }
-        __PUB__ virtual bool   __VARIABLE__ Equals(TianyuObject __REFERENCE__ obj)
-        {
-            return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
-        }
-        __PUB__ bool __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj)
-        {
-            return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
-        }
-
-        __PUB__ static bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj)
-        {
-            return 0ULL == obj.GetHashCode();
-        }
+        __PUB__ static  bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj);
     };
 
-    class TianyuEmptyObject final : TianyuObject
+    // Internal Implementation for Tianyu Null Object
+    // this is a sealed class and only provides null object replacement
+    class TianyuEmptyObject final : public virtual dty::TianyuObject
     {
-        __PUB__ virtual ~TianyuEmptyObject() { }
+        __PUB__         __construction__ TianyuEmptyObject();
+        __PUB__ virtual __destruction__  ~TianyuEmptyObject() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
-        {
-            return new char[5]{ 'n', 'u', 'l', 'l', '\0' };
-        }
-        __PUB__ virtual uint64 __VARIABLE__ GetTypeId() override
-        {
-            return 0ULL;
-        }
-        __PUB__ virtual uint64 __VARIABLE__ GetHashCode() override
-        {
-            return 0ULL;
-        }
-        __PUB__ virtual bool   __VARIABLE__ IsNull() override
-        {
-            return true;
-        }
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        __PUB__ virtual bool     __VARIABLE__ IsNull()      __override_func;
     };
 
-    const TianyuEmptyObject __VARIABLE__ null;
+    // null value of Tianyu Object
+    // should be used by adding namespace dty (dty::null)
+    // if not, some unexpected error could be happended.
+    extern const TianyuObject __REFERENCE__ null;
 }
 
 // internal macro definition for tianyu class type
@@ -285,5 +232,10 @@ namespace dty
 // Macro Definition for clearly enum define
 // enum class
 #define _enum enum class
+
+// #################################################################################################
+// Import all of the Template class implementation files
+// #################################################################################################
+#include "./res/utilize.cc"
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_UTILIZE_HH__

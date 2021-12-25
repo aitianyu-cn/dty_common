@@ -169,11 +169,6 @@ void dty::String::UpdateSource(int32 length, string str)
     this->_StringValue = str;
 }
 
-int32 dty::String::Length()
-{
-    return this->_StringLength;
-}
-
 bool dty::String::IsEmpty()
 {
     return 0 == this->_StringLength;
@@ -228,10 +223,10 @@ bool dty::String::EndWith(const char ch)
 
 bool dty::String::EndWith(String& str)
 {
-    if (0 == this->_StringLength || 0 == str.Length() || str.Length() > this->_StringLength)
+    if (0 == this->_StringLength || 0 == str.Length || str.Length > this->_StringLength)
         return false;
 
-    for (int i = str.Length() - 1, j = this->_StringLength - 1; i >= 0; --i, --j)
+    for (int i = str.Length - 1, j = this->_StringLength - 1; i >= 0; --i, --j)
         if (this->_StringValue[j] != str._StringValue[i])
             return false;
 
@@ -585,10 +580,10 @@ bool dty::String::StartWith(const char ch)
 
 bool dty::String::StartWith(String& str)
 {
-    if (0 == this->_StringLength || 0 == str.Length() || this->_StringLength < str.Length())
+    if (0 == this->_StringLength || 0 == str.Length || this->_StringLength < str.Length)
         return false;
 
-    for (int32 i = 0; i < str.Length(); ++i)
+    for (int32 i = 0; i < str.Length; ++i)
         if (this->_StringValue[i] != str._StringValue[i])
             return false;
 
@@ -713,7 +708,7 @@ void dty::String::TrimEnd(char ch [], int32 length)
     throw dty::except::NotImplementationException();
 }
 
-string dty::String::ToCStr()
+::string dty::String::ToCStr()
 {
     string cstr = new char[this->_StringLength + 1];
     for (int32 i = 0; i < this->_StringLength; ++i)
@@ -1238,6 +1233,37 @@ dty::String dty::String::GetString(const ::string source, int32 sourceLen, bool 
 
 std::ostream& dty::operator<<(std::ostream& os, const dty::String& str)
 {
-    os << str._StringValue;
+    os << const_cast<dty::Property<string> __REFERENCE__>(str._StringValue);
     return os;
+}
+
+::string dty::String::ToString() noexcept
+{
+    return this->ToCStr();
+}
+
+uint64 dty::String::GetTypeId()
+{
+    return dty::GetType(__PTR_TO_REF__ this).Id();
+}
+
+uint64 dty::String::GetHashCode()
+{
+    return (uint64)(::string)(this->_StringValue);
+}
+
+bool dty::String::IsNull()
+{
+    return ::null == this->_StringValue;
+}
+
+bool dty::String::Equals(dty::TianyuObject& other)
+{
+    if (this->GetTypeId() != other.GetTypeId())
+        return false;
+
+    if (this->GetHashCode() == other.GetHashCode())
+        return true;
+
+    return (__PTR_TO_REF__ this) == dynamic_cast<dty::String __REFERENCE__>(other);
 }
