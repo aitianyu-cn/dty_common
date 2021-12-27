@@ -14,7 +14,7 @@
 
  //
 // import the core definition of Tianyu Native
-#include "../../native/prime/core/internal/utilize.h"
-#include "../../native/prime/core/internal/utilize.hh"
+#include "../utilize.h"
+#include "../utilize.hh"
 
 #endif // !__DTY_COMMON_NATIVE_TEST_FRAME_COMMON_H__

@@ -22,6 +22,12 @@
 
 #include "./internal/utilize.hh"
 
+#ifdef __DTEST_CORE__
+
+#include "./internal/tfw.hpp"
+
+#endif // !__DTEST_CORE__
+
 namespace dty
 {
     _interface IObjectConverter : public virtual dty::TianyuObject
