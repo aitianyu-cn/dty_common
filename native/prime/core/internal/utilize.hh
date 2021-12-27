@@ -91,16 +91,16 @@ constexpr auto null = nullptr;
 int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
 
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
-::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ l2str(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ f2str(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
-::string __VARIABLE__ d2str(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ l2str(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ f2str(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
+// ::string __VARIABLE__ d2str(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
 #pragma endregion
 
 // #################################################################################################
