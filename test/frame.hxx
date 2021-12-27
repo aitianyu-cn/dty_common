@@ -12,8 +12,8 @@
 #ifndef __DTY_COMMON_NATIVE_TEST_FRAME_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_TEST_FRAME_H_PLUS_PLUS__
 
-#include "./frame/common.h"
-#include "./frame/test_entity.hpp"
-#include "./frame/definition.hpp"
+#define __DTEST_CORE__
+
+#include "../native/prime/core/internal.h"
 
 #endif // !__DTY_COMMON_NATIVE_TEST_FRAME_H_PLUS_PLUS__
