@@ -16,5 +16,6 @@
 // import the core definition of Tianyu Native
 #include "../utilize.h"
 #include "../utilize.hh"
+#include "../cross_platform.h"
 
 #endif // !__DTY_COMMON_NATIVE_TEST_FRAME_COMMON_H__

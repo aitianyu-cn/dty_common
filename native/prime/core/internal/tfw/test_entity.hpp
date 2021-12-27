@@ -119,7 +119,8 @@ namespace dty::test
             const ::string __VARIABLE__  entityName,
             TestEntity     __REFERENCE__ pentity,
             FILE           __POINTER__   file,
-            int32          __VARIABLE__  level
+            int32          __VARIABLE__  level,
+            bool           __VARIABLE__  console_print
         );
         __PUB__         __construction__ TestEntity
         (
@@ -478,9 +479,9 @@ template<typename T> bool TEST_OBJECT_DEF::LT(T val1, T val2) noexcept
 
 #define TEST_ENTITY_DEF dty::test::TestEntity
 
-TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level) :
+TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
     dty::TianyuObject(),
-    _ConsolePrint(false),
+    _ConsolePrint(console_print),
     _LogFile(::null),
     _LogStream(file),
     _LogOwner(false),
@@ -557,7 +558,11 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
         }
     }
 
+#ifdef __DTY_WIN
+    fopen_s(__VAR_TO_PTR__ this->_LogStream, file, "at+");
+#else
     this->_LogStream = fopen(file, "at+");
+#endif // __DTY_WIN
     if (::null == this->_LogStream)
         throw dty::test::_dty_test_entity_fail_file_open;
 
@@ -615,7 +620,7 @@ TEST_ENTITY_DEF::~TestEntity()
     if (::null != this->_LogFile)
         delete [](this->_LogFile);
 
-    if (::null != this->_LogStream)
+    if (this->_LogOwner && ::null != this->_LogStream)
         fclose(this->_LogStream);
 }
 
@@ -631,7 +636,7 @@ void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDe
 
 void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec, bool ignoreException)
 {
-    TEST_ENTITY_DEF subEntity(entityName, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1);
+    TEST_ENTITY_DEF subEntity(entityName, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1, this->_ConsolePrint);
 
     try
     {
@@ -661,6 +666,12 @@ void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_desc
         tobj.Set();
     }
 
+    dty::test::TestState state = tobj.GetState();
+    if (dty::test::TestState::Success == state)
+        ++this->_SuccessCount;
+    else
+        ++this->_FailureCount;
+
     this->NotifyState(tobj.GetState());
     this->Record(test_name, test_description, tobj.GetState());
 }
@@ -679,22 +690,23 @@ void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_desc
             tobj.Set();
     }
 
-    this->NotifyState(tobj.GetState());
-    this->Record(test_name, test_description, tobj.GetState());
+    dty::test::TestState state = tobj.GetState();
+    if (dty::test::TestState::Success == state)
+        ++this->_SuccessCount;
+    else
+        ++this->_FailureCount;
+
+    this->NotifyState(state);
+    this->Record(test_name, test_description, state);
 }
 
 void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
 {
     if (dty::test::TestState::Success == this->_State)
         this->_State = state;
-
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
-    else
-        ++this->_FailureCount;
 }
 
-void TEST_ENTITY_DEF::Record(int32 level = 0)
+void TEST_ENTITY_DEF::Record(int32 level)
 {
     fputc('\n', this->_LogStream);
     for (int32 i = 0; i < level; ++i)
@@ -703,6 +715,15 @@ void TEST_ENTITY_DEF::Record(int32 level = 0)
     fputs(this->_EntityName, this->_LogStream);
 
     fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        putchar('\n');
+        for (int32 i = 0; i < level; ++i)
+            printf("  ");
+
+        printf("%s", this->_EntityName);
+    }
 }
 
 void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dty::test::TestState state)
@@ -722,6 +743,18 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
     fputs(description, this->_LogStream);
 
     fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        putchar('\n');
+        for (int32 i = 0; i < this->_Level; ++i)
+            printf("  ");
+
+        if (dty::test::TestState::Success == state)
+            printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m", name, description);
+        else
+            printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m", name, description);
+    }
 }
 
 void TEST_ENTITY_DEF::EndRecord()
@@ -730,9 +763,20 @@ void TEST_ENTITY_DEF::EndRecord()
     for (int32 i = 0; i < this->_Level; ++i)
         fputs("  ", this->_LogStream);
 
-    fprintf(this->_LogStream, "[Success: %d] [Failed: %d]", this->_SuccessCount, this->_FailureCount);
+    fprintf(this->_LogStream, "Total: Success(%d)  Failed(%d)", this->_SuccessCount, this->_FailureCount);
 
     fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        putchar('\n');
+        for (int32 i = 0; i < this->_Level; ++i)
+            printf("  ");
+
+        printf("Total: \033[1;32;40mSuccess(%d) \033[0m \033[1;31;40mFailed(%d)\033[0m", this->_SuccessCount, this->_FailureCount);
+    }
 }
+
+#undef TEST_ENTITY_DEF
 
 #endif // !__DTY_COMMON_NATIVE_TEST_FRAME_TEST_ENTITY_H_PLUS_PLUS__
