@@ -718,11 +718,10 @@ void TEST_ENTITY_DEF::Record(int32 level)
 
     if (this->_ConsolePrint)
     {
-        putchar('\n');
         for (int32 i = 0; i < level; ++i)
             printf("  ");
 
-        printf("%s", this->_EntityName);
+        printf("%s\n", this->_EntityName);
     }
 }
 
@@ -746,14 +745,13 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
 
     if (this->_ConsolePrint)
     {
-        putchar('\n');
         for (int32 i = 0; i < this->_Level; ++i)
             printf("  ");
 
         if (dty::test::TestState::Success == state)
-            printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m", name, description);
+            printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m\n", name, description);
         else
-            printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m", name, description);
+            printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m\n", name, description);
     }
 }
 
@@ -769,11 +767,10 @@ void TEST_ENTITY_DEF::EndRecord()
 
     if (this->_ConsolePrint)
     {
-        putchar('\n');
         for (int32 i = 0; i < this->_Level; ++i)
             printf("  ");
 
-        printf("Total: \033[1;32;40mSuccess(%d) \033[0m \033[1;31;40mFailed(%d)\033[0m", this->_SuccessCount, this->_FailureCount);
+        printf("Total: \033[1;32;40mSuccess(%d) \033[0m \033[1;31;40mFailed(%d)\033[0m\n", this->_SuccessCount, this->_FailureCount);
     }
 }
 
