@@ -18,7 +18,6 @@
 
  // includes which are only dependent on core.hxx
 #include "./prime/async.hpp"
-#include "./prime/iterator.hpp"
 #include "./prime/math.hpp"
 #include "./prime/object.hpp"
 #include "./prime/random.hpp"

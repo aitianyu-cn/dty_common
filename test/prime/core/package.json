@@ -1,0 +1,31 @@
+{
+    "spec": "dty.common.native.test.prime.core",
+    "param": {
+        "version": {
+            "cpp": 17,
+            "c": 14
+        }
+    },
+    "cases": {
+        "property": {
+            "output": "property",
+            "main": "property.cpp",
+            "dep": [],
+            "src": []
+        },
+        "pointer": {
+            "output": "pointer",
+            "main": "pointer.cpp",
+            "dep": [],
+            "src": []
+        },
+        "iterator": {
+            "output": "iterator",
+            "main": "iterator.cpp",
+            "dep": [
+                ""
+            ],
+            "src": []
+        }
+    }
+}
