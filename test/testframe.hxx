@@ -14,6 +14,6 @@
 
 #define __DTEST_CORE__
 
-#include "../native/prime/core/internal.h"
+#include "../native/dty-core.hxx"
 
 #endif // !__DTY_COMMON_NATIVE_TEST_FRAME_H_PLUS_PLUS__

@@ -15,18 +15,9 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
 #define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
 
-#include "./internal/cross_platform.h"
-#include "./internal/utilize.h"
-
 #ifdef __cplusplus
 
-#include "./internal/utilize.hh"
-
-#ifdef __DTEST_CORE__
-
-#include "./internal/tfw.hpp"
-
-#endif // !__DTEST_CORE__
+#include "../../dty-core.hxx"
 
 namespace dty
 {

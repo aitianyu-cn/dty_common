@@ -14,7 +14,7 @@
 #define __DTY_COMMON_NATIVE_PRIME_STACK_H_PLUS_PLUS__
 
 #include "./core.hxx"
-#include "./icollections.hpp"
+#include "./core/icollections.hpp"
 
 namespace dty::collection
 {
