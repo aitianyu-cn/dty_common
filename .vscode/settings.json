@@ -129,5 +129,10 @@
     "vsicons.associations.files": [],
     "vsicons.associations.folders": [],
     "json.format.enable": false,
-    "prettier.configPath": "config/.prettierrc"
+    "prettier.configPath": "config/.prettierrc",
+    "java.autobuild.enabled": false,
+    "java.format.enabled": true,
+    "java.format.settings.url": "config/eclipse-formatter.xml",
+    "java.project.sourcePaths": ["tools/java/"],
+    "java.project.outputPath": "./tools/bin/"
 }
