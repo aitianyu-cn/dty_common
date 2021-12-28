@@ -20,7 +20,7 @@
 
 #define TestEntityCreator(entityName, entityDes) dty::test::TestEntity entityName(entityDes, argc, argv)
 
-#define Test_Main_Return(testEntity) return (int32)(testEntity ##.GetState())
+#define Test_Main_Return(testEntity) return (int32)(testEntity .GetState())
 
 #define RUNTEST(testName, testDes)                                                                      \
     void TestEntry_TestRunner(dty::test::TestEntity&);                                                  \

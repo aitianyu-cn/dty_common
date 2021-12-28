@@ -201,21 +201,21 @@ namespace dty
 
     // Internal Implementation for Tianyu Null Object
     // this is a sealed class and only provides null object replacement
-    class TianyuEmptyObject final : public virtual dty::TianyuObject
-    {
-        __PUB__         __construction__ TianyuEmptyObject();
-        __PUB__ virtual __destruction__  ~TianyuEmptyObject() __override_func;
+    // class TianyuEmptyObject final : public virtual dty::TianyuObject
+    // {
+    //     __PUB__         __construction__ TianyuEmptyObject();
+    //     __PUB__ virtual __destruction__  ~TianyuEmptyObject() __override_func;
 
-        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
-        __PUB__ virtual bool     __VARIABLE__ IsNull()      __override_func;
-    };
+    //     __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+    //     __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+    //     __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+    //     __PUB__ virtual bool     __VARIABLE__ IsNull()      __override_func;
+    // };
 
-    // null value of Tianyu Object
-    // should be used by adding namespace dty (dty::null)
-    // if not, some unexpected error could be happended.
-    extern const TianyuObject __REFERENCE__ null;
+    // // null value of Tianyu Object
+    // // should be used by adding namespace dty (dty::null)
+    // // if not, some unexpected error could be happended.
+    // extern const TianyuObject __REFERENCE__ null;
 }
 
 // internal macro definition for tianyu class type
