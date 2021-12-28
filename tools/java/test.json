@@ -1,0 +1,13 @@
+{
+    "workspace": "test",
+    "target": "test/bin",
+    "build": {
+        "default": "g++",
+        "builder": [
+            {
+                "compiler": "g++",
+                "params": {}
+            }
+        ]
+    }
+}

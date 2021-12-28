@@ -1,0 +1,147 @@
+Date : 2021-12-23 01:35:43
+Directory : /Users/senyunyao/Dev Local/tianyu-native
+Total : 96 files,  5151 codes, 848 comments, 1235 blanks, all 7234 lines
+
+Languages
++--------------+------------+------------+------------+------------+------------+
+| language     | files      | code       | comment    | blank      | total      |
++--------------+------------+------------+------------+------------+------------+
+| C++          |         80 |      5,030 |        833 |      1,221 |      7,084 |
+| JSON         |         10 |        120 |          0 |         10 |        130 |
+| Markdown     |          1 |          1 |          0 |          0 |          1 |
+| Java         |          1 |          0 |          0 |          1 |          1 |
+| PowerShell   |          1 |          0 |          0 |          1 |          1 |
+| Shell Script |          1 |          0 |          0 |          1 |          1 |
+| Batch        |          1 |          0 |          0 |          1 |          1 |
+| C            |          1 |          0 |         15 |          0 |         15 |
++--------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                  |         96 |      5,151 |        848 |      1,235 |      7,234 |
+| build                                                                                              |          6 |         27 |          0 |          6 |         33 |
+| build/com                                                                                          |          1 |          0 |          0 |          1 |          1 |
+| build/com/builder                                                                                  |          1 |          0 |          0 |          1 |          1 |
+| config                                                                                             |          1 |         18 |          0 |          1 |         19 |
+| native                                                                                             |         81 |      5,034 |        848 |      1,201 |      7,083 |
+| native/io                                                                                          |          2 |         19 |          0 |          2 |         21 |
+| native/model                                                                                       |          6 |         24 |          0 |          6 |         30 |
+| native/prime                                                                                       |         64 |      4,861 |        800 |      1,150 |      6,811 |
+| native/prime/core                                                                                  |         31 |      1,689 |        627 |        448 |      2,764 |
+| native/prime/core/internal                                                                         |          8 |        410 |        258 |        129 |        797 |
+| native/prime/core/internal/res                                                                     |          2 |        104 |         20 |         25 |        149 |
+| native/prime/core/internal/src                                                                     |          3 |         91 |          0 |         40 |        131 |
+| native/prime/core/res                                                                              |          9 |        296 |         61 |         74 |        431 |
+| native/prime/core/src                                                                              |          6 |        236 |         31 |         51 |        318 |
+| native/prime/src                                                                                   |          9 |      1,606 |         22 |        390 |      2,018 |
+| native/text                                                                                        |          6 |         19 |         15 |          5 |         39 |
+| native/text/src                                                                                    |          1 |          0 |         15 |          0 |         15 |
+| test                                                                                               |          7 |         71 |          0 |         27 |         98 |
+| test/prime                                                                                         |          6 |         71 |          0 |         26 |         97 |
+| test/prime/core                                                                                    |          3 |         59 |          0 |         22 |         81 |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| filename                                                                                           | language     | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| /Users/senyunyao/Dev Local/tianyu-native/README.md                                                 | Markdown     |          1 |          0 |          0 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/build.bat                                           | Batch        |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/build.json                                          | JSON         |         14 |          0 |          1 |         15 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/build.ps1                                           | PowerShell   |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/build.sh                                            | Shell Script |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/com/builder/builder.java                            | Java         |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/build/test.json                                           | JSON         |         13 |          0 |          1 |         14 |
+| /Users/senyunyao/Dev Local/tianyu-native/config/.prettierrc                                        | JSON         |         18 |          0 |          1 |         19 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/console.hpp                                        | C++          |         20 |         11 |         10 |         41 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/io/iobase.hpp                                      | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/io/package.json                                    | JSON         |         19 |          0 |          1 |         20 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/dataSet.hpp                                  | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/dataTable.hpp                                | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/dataView.hpp                                 | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/dom.hpp                                      | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/dombase.hpp                                  | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/model/package.json                                 | JSON         |         24 |          0 |          1 |         25 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime.hxx                                          | C++          |         28 |         11 |         12 |         51 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/array.hpp                                    | C++          |         87 |         13 |         16 |        116 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/async.hpp                                    | C++          |        160 |         10 |         31 |        201 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/concurrentBag.hpp                            | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/concurrentBiosphere.hpp                      | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/concurrentDictionary.hpp                     | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/concurrentQueue.hpp                          | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/concurrentStack.hpp                          | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/console.hpp                                  | C++          |          7 |         10 |          5 |         22 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core.hxx                                     | C++          |         11 |         12 |          6 |         29 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/error.hpp                               | C++          |        128 |         10 |         41 |        179 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/event.hpp                               | C++          |         45 |         10 |         18 |         73 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/icollections.hpp                        | C++          |         16 |         11 |          7 |         34 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal.h                              | C++          |         64 |         13 |         15 |         92 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/cross_platform.h               | C++          |         48 |         85 |          9 |        142 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/res/dty_get_type.cc            | C++          |         67 |         10 |         13 |         90 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/res/dty_type.cc                | C++          |         37 |         10 |         12 |         59 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/src/c_string_apis.cpp          | C++          |         41 |          0 |         25 |         66 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/src/empty_object.cpp           | C++          |         19 |          0 |          6 |         25 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/src/object.cpp                 | C++          |         31 |          0 |          9 |         40 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/utilize.h                      | C++          |         71 |         60 |         19 |        150 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/internal/utilize.hh                     | C++          |         96 |         93 |         36 |        225 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/iterator.hpp                            | C++          |        105 |         10 |         33 |        148 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/pointer.hpp                             | C++          |        238 |        176 |         38 |        452 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/property.hpp                            | C++          |         64 |         37 |         21 |        122 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_collection_filter_result.cc     | C++          |         60 |         10 |         15 |         85 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_collection_i_collections.cc     | C++          |          7 |         10 |          3 |         20 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_collection_i_iterator_entity.cc | C++          |         15 |         10 |          4 |         29 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_collection_iterator.cc          | C++          |         82 |         11 |         20 |        113 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_collection_iterator_entity.cc   | C++          |          1 |         10 |          1 |         12 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_event_handler.cc                | C++          |        102 |          0 |         21 |        123 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_key_value_pair.cc               | C++          |         29 |         10 |          8 |         47 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_property.cc                     | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/res/dty_smart_pointer.cc                | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/error.cpp                           | C++          |        218 |         30 |         42 |        290 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/event_args.cpp                      | C++          |         15 |          0 |          5 |         20 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/mutex.cpp                           | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/thread.cpp                          | C++          |          3 |          1 |          1 |          5 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/thread_pool.cpp                     | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/src/timer.cpp                           | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/core/thread.hpp                              | C++          |         87 |         10 |         21 |        118 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/dictionary.hpp                               | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/guid.hpp                                     | C++          |         68 |         10 |         13 |         91 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/iterator_old.hpp                             | C++          |        216 |         12 |         49 |        277 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/list.hpp                                     | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/math.hpp                                     | C++          |        116 |         11 |         19 |        146 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/object.hpp                                   | C++          |        438 |         10 |         68 |        516 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/package.json                                 | JSON         |         13 |          0 |          1 |         14 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/queue.hpp                                    | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/random.hpp                                   | C++          |         23 |         10 |          8 |         41 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/set.hpp                                      | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/console.cpp                              | C++          |        177 |         15 |         51 |        243 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/datetime.cpp                             | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/guid.cpp                                 | C++          |        208 |          0 |         27 |        235 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/math.cpp                                 | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/mathf.cpp                                | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/string.cpp                               | C++          |        996 |          7 |        267 |      1,270 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/system.cpp                               | C++          |          1 |          0 |          2 |          3 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/timespan.cpp                             | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/src/version.cpp                              | C++          |        224 |          0 |         39 |        263 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/stack.hpp                                    | C++          |         15 |         11 |          4 |         30 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/string.hpp                                   | C++          |        136 |         10 |         25 |        171 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/system.hpp                                   | C++          |         26 |         11 |          9 |         46 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/times.hpp                                    | C++          |        198 |         11 |         35 |        244 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/prime/version.hpp                                  | C++          |         52 |         10 |         14 |         76 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/stdin.hpp                                          | C++          |         63 |         11 |         16 |         90 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/encoding.hpp                                  | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/package.json                                  | JSON         |         19 |          0 |          1 |         20 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/src/text.c                                    | C            |          0 |         15 |          0 |         15 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/stringBuilder.hpp                             | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/textbase.hpp                                  | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/native/text/wstring.hpp                                   | C++          |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/package.json                                         | JSON         |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/all_compiler_test.cpp                          | C++          |          6 |          0 |          1 |          7 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/core/event.cpp                                 | C++          |         41 |          0 |         14 |         55 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/core/package.json                              | JSON         |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/core/prop.cpp                                  | C++          |         18 |          0 |          7 |         25 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/package.json                                   | JSON         |          0 |          0 |          1 |          1 |
+| /Users/senyunyao/Dev Local/tianyu-native/test/prime/version.cpp                                    | C++          |          6 |          0 |          2 |          8 |
+| Total                                                                                              |              |      5,151 |        848 |      1,235 |      7,234 |
++----------------------------------------------------------------------------------------------------+--------------+------------+------------+------------+------------+
