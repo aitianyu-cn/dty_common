@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DTY.Dotnet.Tools.Common.Param
 {
@@ -12,7 +13,7 @@ namespace DTY.Dotnet.Tools.Common.Param
         MORE
     }
 
-    public delegate void ParameterHandler(ICollection<string> collection);
+    public delegate void ParameterHandlerDelegate(ICollection<string> collection);
 
     public class ComparisonKey
     {
@@ -34,9 +35,9 @@ namespace DTY.Dotnet.Tools.Common.Param
         {
             return this.FullName.GetHashCode() ^ this.SingleName.GetHashCode();
         }
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return obj is ComparisonItem @item && (item.FullName == this.FullName || item.SingleName == this.SingleName);
+            return obj is not null && obj is ComparisonItem @item && (item.FullName == this.FullName || item.SingleName == this.SingleName);
         }
         public override string ToString()
         {
@@ -48,9 +49,9 @@ namespace DTY.Dotnet.Tools.Common.Param
     {
         public int Code { get; private set; }
         public ParamAdditionState AdditionState { get; private set; }
-        public ParameterHandler Handler { get; private set; }
+        public ParameterHandlerDelegate Handler { get; private set; }
 
-        public ComparisonItem(int code, ComparisonKey key, ParamAdditionState astate, ParameterHandler handle) : base(key)
+        public ComparisonItem(int code, ComparisonKey key, ParamAdditionState astate, ParameterHandlerDelegate handle) : base(key)
         {
             this.Code = code;
             this.AdditionState = astate;
@@ -60,16 +61,32 @@ namespace DTY.Dotnet.Tools.Common.Param
 
     public class ComparisonCollection
     {
+        private class ComparisonComparer : IEqualityComparer<ComparisonKey>
+        {
+            public bool Equals(ComparisonKey? x, ComparisonKey? y)
+            {
+                if (x is null && y is null)
+                    return true;
+
+                return x?.FullName == y?.FullName || x?.SingleName == y?.SingleName;
+            }
+
+            public int GetHashCode([DisallowNull] ComparisonKey obj)
+            {
+                return 0;
+            }
+        }
+
         public int Count => _Comparisons.Count;
 
-        private Dictionary<ComparisonItem, ComparisonItem> _Comparisons;
+        private readonly Dictionary<ComparisonKey, ComparisonItem> _Comparisons;
 
         public ComparisonCollection()
         {
-            _Comparisons = new Dictionary<ComparisonItem, ComparisonItem>();
+            _Comparisons = new Dictionary<ComparisonKey, ComparisonItem>(new ComparisonComparer());
         }
 
-        public void AddItem(string fname, char sname, ParamAdditionState astate, int code, ParameterHandler handle)
+        public void AddItem(string fname, char sname, ParamAdditionState astate, int code, ParameterHandlerDelegate handle)
         {
             // return directly if fname is null or empty(including all chars is white-space)
             if (fname is null)
@@ -79,27 +96,27 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (0 == fname.Length)
                 return;
 
-            ComparisonKey key = new ComparisonKey(fname, sname);
-            ComparisonItem newItem = new ComparisonItem(code, key, astate, handle);
+            ComparisonKey key = new(fname, sname);
+            ComparisonItem newItem = new(code, key, astate, handle);
             // if no item which is equals to current one has not been saved, save it.
             if (!this._Comparisons.ContainsKey(key))
                 this._Comparisons.Add(key, newItem);
         }
 
-        public bool GetItem(string fname, out ComparisonItem item)
+        public bool GetItem(string fname, out ComparisonItem? item)
         {
-            ComparisonKey key = new ComparisonKey(fname, '\0');
+            ComparisonKey key = new(fname, '\0');
             return this._Comparisons.TryGetValue(key, out item);
         }
 
-        public bool GetItem(char sname, out ComparisonItem item)
+        public bool GetItem(char sname, out ComparisonItem? item)
         {
             item = null;
 
             if ('\0' == sname)
                 return false;
 
-            ComparisonKey key = new ComparisonKey("", sname);
+            ComparisonKey key = new("", sname);
             return this._Comparisons.TryGetValue(key, out item);
         }
     }

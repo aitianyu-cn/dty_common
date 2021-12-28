@@ -1,6 +1,6 @@
-package build;
+package Tools.Start;
 
-public class Builder
+public class Start
 {
     public static void main(String[] args)
     {

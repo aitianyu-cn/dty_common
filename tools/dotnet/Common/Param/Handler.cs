@@ -22,7 +22,7 @@ namespace DTY.Dotnet.Tools.Common.Param
                 return;
 
             int index = 0;
-            while (index < args)
+            while (index < args.Length)
             {
                 string source = args[index++];
                 bool isControl = this.IsControl(source, out string control);
@@ -41,17 +41,22 @@ namespace DTY.Dotnet.Tools.Common.Param
             return this._Parameters;
         }
 
+        public ICollection<string> GetMessage()
+        {
+            return this._MessageCollection.ToArray();
+        }
+
         private bool IsControl(string source, out string control)
         {
-            control = null;
+            control = "";
             bool isControl = false;
 
-            if (this.IsSingle(source, out char single))
+            if (IsSingle(source, out char single))
             {
                 isControl = true;
                 control = this.ExpandSingle(single);
             }
-            else if (this.IsFull(source, out string control_internal))
+            else if (IsFull(source, out string control_internal))
             {
                 isControl = true;
                 control = control_internal;
@@ -59,7 +64,7 @@ namespace DTY.Dotnet.Tools.Common.Param
 
             return isControl;
         }
-        private bool IsSingle(string str, out char single)
+        private static bool IsSingle(string str, out char single)
         {
             single = '\0';
 
@@ -68,15 +73,15 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (2 != str.Length)
                 return false;
 
-            if ('-' != str[0] || !this.IsCharVaild(str[1]))
+            if ('-' != str[0] || !IsCharVaild(str[1]))
                 return false;
 
             single = str[1];
             return true;
         }
-        private bool IsFull(string str, out string full)
+        private static bool IsFull(string str, out string full)
         {
-            full = null;
+            full = "";
 
             if (2 >= str.Length)
                 return false;
@@ -84,13 +89,13 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (!str.StartsWith("--"))
                 return false;
 
-            if (!this.IsCharVaild(str[2]))
+            if (!IsCharVaild(str[2]))
                 return false;
 
             full = str.TrimStart('-');
             return true;
         }
-        private bool IsCharVaild(char ch)
+        private static bool IsCharVaild(char ch)
         {
             if ((int)ch > 0x4E00 && (int)ch < 0x9FA5)
                 return true;
@@ -105,16 +110,21 @@ namespace DTY.Dotnet.Tools.Common.Param
         }
         private string ExpandSingle(char str)
         {
-            return this._Comparison.GetItem(str, out ComparisonItem item) ? item.FullName : null;
+            return this._Comparison.GetItem(str, out ComparisonItem? item)
+                ? item is not null
+                ? item.FullName ?? "" : ""
+                : "";
         }
         private void Process(string control, string[] args, ref int index)
         {
-            ComparisonItem compar;
-            if (!this._Comparison.GetItem(control, out compar))
+            if (!this._Comparison.GetItem(control, out ComparisonItem? compar))
             {
                 this._MessageCollection.Push(string.Format("无法识别的参数: {0} 控制符无效", args[index - 1]));
                 return;
             }
+
+            if (compar is null)
+                return;
 
             switch (compar.AdditionState)
             {
@@ -172,16 +182,18 @@ namespace DTY.Dotnet.Tools.Common.Param
             this._Comparisons = new ComparisonCollection();
         }
 
-        public void AddComparison(string fname, char sname, ParamAdditionState astate, int code, ParameterHandler handle)
+        public void AddComparison(string fname, char sname, ParamAdditionState astate, int code, ParameterHandlerDelegate handle)
         {
             this._Comparisons.AddItem(fname, sname, astate, code, handle);
         }
 
-        public Parameters ProcessParameter(string[] args)
+        public Parameters ProcessParameter(string[] args, out ICollection<string> message)
         {
-            ParameterProcessor processor = new ParameterProcessor(this._Comparisons);
+            ParameterProcessor processor = new(this._Comparisons);
 
             processor.Process(args);
+
+            message = processor.GetMessage();
 
             return processor.GetParameters();
         }

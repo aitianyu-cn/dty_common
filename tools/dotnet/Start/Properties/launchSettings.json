@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Start": {
+      "commandName": "Project",
+      "commandLineArgs": "-h --param1 o1 --param1 o2 -b b1 b2 -b b3 -c -d -c base -d more lite"
+    }
+  }
+}

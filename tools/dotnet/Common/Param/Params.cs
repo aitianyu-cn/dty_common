@@ -5,15 +5,15 @@ namespace DTY.Dotnet.Tools.Common.Param
 {
     public class ParametersItem
     {
-        private readonly ParameterHandler _Handler;
+        private readonly ParameterHandlerDelegate? _Handler;
         private readonly List<string> _Additional;
 
         public ParametersItem()
         {
             this._Handler = null;
-            this._Additional = new SortedList<string>();
+            this._Additional = new List<string>();
         }
-        public ParametersItem(ParameterHandler handler)
+        public ParametersItem(ParameterHandlerDelegate handler)
         {
             this._Handler = handler;
             this._Additional = new List<string>();
@@ -45,14 +45,14 @@ namespace DTY.Dotnet.Tools.Common.Param
 
     public class Parameters
     {
-        private Dictionary<string, ParametersItem> _Params;
+        private readonly Dictionary<string, ParametersItem> _Params;
 
         public Parameters()
         {
             this._Params = new Dictionary<string, ParametersItem>();
         }
 
-        public void AddParam(string pname, ParameterHandler handler)
+        public void AddParam(string pname, ParameterHandlerDelegate handler)
         {
             if (pname is null)
                 return;
@@ -76,7 +76,7 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (0 == pname.Length)
                 return;
 
-            if (this._Params.TryGetValue(pname, out ParametersItem value))
+            if (this._Params.TryGetValue(pname, out ParametersItem? value))
                 value.AddAddition(addition);
         }
 
@@ -94,7 +94,7 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (0 == this._Params.Count)
                 return;
 
-            if (this._Params.TryGetValue(pname, out ParametersItem item))
+            if (this._Params.TryGetValue(pname, out ParametersItem? item))
                 item.Handle();
         }
     }
