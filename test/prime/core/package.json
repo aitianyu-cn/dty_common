@@ -4,6 +4,12 @@
         "version": {
             "cpp": 17,
             "c": 14
+        },
+        "global": {
+            "src": [
+                "native/dty-core.cpp",
+                "native/dty-test-core.cpp"
+            ]
         }
     },
     "cases": {
@@ -13,18 +19,22 @@
             "dep": [],
             "src": []
         },
+        "event": {
+            "output": "event.test",
+            "main": "event.cpp",
+            "dep": [],
+            "src": []
+        },
         "pointer": {
-            "output": "pointer",
+            "output": "pointer.test",
             "main": "pointer.cpp",
             "dep": [],
             "src": []
         },
         "iterator": {
-            "output": "iterator",
+            "output": "iterator.test",
             "main": "iterator.cpp",
-            "dep": [
-                ""
-            ],
+            "dep": [],
             "src": []
         }
     }

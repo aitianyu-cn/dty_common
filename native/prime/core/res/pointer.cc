@@ -51,12 +51,14 @@ __TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer() :
     dty::TianyuObject(),
     _SmartPointerType(__DTY_SPTR_DEF__::SPType::STRONG),
     _Pointer(::null),
-    _Size(0)
+    _Size(0),
+    Size(_Size)
 { }
 
 __TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer) :
     dty::TianyuObject(),
-    _Size()
+    _Size(),
+    Size(_Size)
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
@@ -69,7 +71,8 @@ __TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer) :
 
 __TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size) :
     dty::TianyuObject(),
-    _Size()
+    _Size(),
+    Size(_Size)
 {
     if (::null == pointer)
         throw dty::except::NullPointerException();
@@ -105,14 +108,16 @@ __TEMPLATE_DEF__ __cp_construct__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPT
 #if defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
     _SmartPointerType(__DTY_SPTR_DEF__::SPType::WEAK),
     _Pointer(sp._Pointer),
-    _Size(sp._Size)
+    _Size(sp._Size),
+    Size(_Size)
 { }
 #else
 
     // safe copy constructor mode is move pointer owner
     _SmartPointerType(sp._SmartPointerType),
     _Pointer(sp._Pointer),
-    _Size(sp._Size)
+    _Size(sp._Size),
+    Size(_Size)
 {
     // move pointer from source pointer only when it is strong pointer
     // weak pointer just to copy

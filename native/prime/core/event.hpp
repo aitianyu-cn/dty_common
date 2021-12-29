@@ -47,10 +47,10 @@ namespace dty
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
-        __PUB__ const IPropertyGetter<int32> __REFERENCE__ Count = this->_Count;
-
         __PRI__ Property<int32>              __VARIABLE__ _Count;
         __PRI__ EventHandlerItem<TEventArgs> __POINTER__  _Handlers;
+
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Count;
 
         __PUB__         EventHandler();
         __PUB__ virtual ~EventHandler() __override_func;

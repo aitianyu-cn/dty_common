@@ -53,16 +53,16 @@ namespace dty
         __PRI__ bool __VARIABLE__ IsSame(SmartPointer<T> __REFERENCE__ sp);
 #pragma endregion
 
+        __PRI__ T               __POINTER__  _Pointer;
+        __PRI__ Property<int64> __VARIABLE__ _Size;
+
         /**
          * @brief 获取一个值指示当前指针实例的大小
          * @brief Get a int64 indicates the current pointer size
          *
          * @return {int64} return pointer size
          */
-        __PUB__ const IPropertyGetter<int64> __REFERENCE__ Size = this->_Size;
-
-        __PRI__ T               __POINTER__  _Pointer;
-        __PRI__ Property<int64> __VARIABLE__ _Size;
+        __PUB__ IPropertyGetter<int64> __REFERENCE__ Size;
 
         /**
          * @brief 创建一个空指针对象

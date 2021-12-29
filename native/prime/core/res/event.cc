@@ -20,7 +20,8 @@
 __TEMPLATE_DEF__ __construction__ __EVENT_HD_DEF__::EventHandler() :
     dty::TianyuObject(),
     _Count(0),
-    _Handlers(new dty::EventHandlerItem<T>())
+    _Handlers(new dty::EventHandlerItem<T>()),
+    Count(_Count)
 {
     static_assert(std::is_base_of<dty::EventArgs, T>::value, "expect dty::EventArgs or its child class");
 
