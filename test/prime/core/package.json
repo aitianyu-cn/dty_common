@@ -22,7 +22,9 @@
         "event": {
             "output": "event.test",
             "main": "event.cpp",
-            "dep": [],
+            "dep": [
+                "native/prime/core/src/event.cpp"
+            ],
             "src": []
         },
         "pointer": {

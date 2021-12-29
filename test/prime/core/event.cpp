@@ -16,14 +16,14 @@ dty::EventHandler<CustomEventArgs>* customHandler;
 int32 defaultHandlerValue;
 int32 customHandlerValue;
 
-RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
+TEST_MAIN("dty.Event Unit Test")
 {
-    PropTest.StartSpec((const ::string)"default Event Arg", [](dty::test::TestEntity& entity) -> void
+    TEST_SPEC("default Event Arg",
         {
             defaultHandler = ::null;
             defaultHandlerValue = -1;
 
-            entity.RunTest((const ::string)"Spec Init", (const ::string)"prepare the test obj", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Spec Init", "prepare the test obj",
                 {
                     defaultHandler = new dty::EventHandler<dty::EventArgs>();
 
@@ -32,7 +32,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"AddHandler", (const ::string)"add handles into Handler object", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("AddHandler", "add handles into Handler object",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -48,7 +48,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"AddHandler (Duplicate)", (const ::string)"add handles into Handler object", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("AddHandler (Duplicate)", "add handles into Handler object",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -64,7 +64,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke", (const ::string)"invoke handles", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke", "invoke handles",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -76,7 +76,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"RemoveHandler", (const ::string)"remove handle from handler", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("RemoveHandler", "remove handle from handler",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -87,7 +87,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke(Duplicate)", (const ::string)"invoke handles after removing a handle", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke(Duplicate)", "invoke handles after removing a handle",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -99,7 +99,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Clear", (const ::string)"clear handles from handler", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Clear", "clear handles from handler",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -109,7 +109,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke(Duplicate)", (const ::string)"invoke handles after clear handler", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke(Duplicate)", "invoke handles after clear handler",
                 {
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
@@ -126,12 +126,12 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
         }
     );
 
-    PropTest.StartSpec((const ::string)"Customized Event Arg", [](dty::test::TestEntity& entity) -> void
+    TEST_SPEC("Customized Event Arg",
         {
             customHandler = ::null;
             customHandlerValue = -1;
 
-            entity.RunTest((const ::string)"Spec Init", (const ::string)"prepare the test obj", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Spec Init", "prepare the test obj",
                 {
                     customHandler = new dty::EventHandler<CustomEventArgs>();
 
@@ -140,7 +140,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"AddHandler", (const ::string)"add handles into Handler object", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("AddHandler", "add handles into Handler object",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -156,7 +156,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"AddHandler (Duplicate)", (const ::string)"add handles into Handler object", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("AddHandler (Duplicate)", "add handles into Handler object",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -172,7 +172,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke", (const ::string)"invoke handles with param = 1", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke", "invoke handles with param = 1",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -184,7 +184,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"RemoveHandler", (const ::string)"remove handle from handler", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("RemoveHandler", "remove handle from handler",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -195,7 +195,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke(Duplicate)", (const ::string)"invoke handles after removing a handle with param = 2", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke(Duplicate)", "invoke handles after removing a handle with param = 2",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -207,7 +207,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Clear", (const ::string)"clear handles from handler", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Clear", "clear handles from handler",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;
@@ -217,7 +217,7 @@ RUNTEST(PropTest, (const ::string)"dty.Event Unit Test")
                 }
             );
 
-            entity.RunTest((const ::string)"Invoke(Duplicate)", (const ::string)"invoke handles after clear handler with param = 4", [](dty::test::TestObject& tobj) -> void
+            TEST_ITEM("Invoke(Duplicate)", "invoke handles after clear handler with param = 4",
                 {
                     if (!tobj.IsNotNull(customHandler))
                         return;

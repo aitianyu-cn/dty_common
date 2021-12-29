@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Builder\Builder.csproj" />
+    <ProjectReference Include="..\Build\Build.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Auto\Auto.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -10,6 +11,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>DTY.Dotnet.Tools.Start</RootNamespace>
   </PropertyGroup>
 
 </Project>

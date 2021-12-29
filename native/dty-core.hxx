@@ -888,9 +888,20 @@ namespace dty::test
     }                                                                                                   \
     void TestEntry_TestRunner(dty::test::TestEntity& testName)
 
-#define TEST_SPEC(specName) [](dty::test::TestEntity& specName) -> void
+#define TEST_MAIN(des) RUNTEST(entity, (const ::string)des)
 
-#define TEST_ITEM(itemName) [](dty::test::TestObject& itemName) -> void
+#define TEST_SPEC(specName, statements)                                                  \
+    entity.StartSpec((const ::string)specName, [](dty::test::TestEntity& entity) -> void \
+        statements                                                                       \
+    )
+
+#define TEST_ITEM(itemName, itemDes, statements)    \
+    entity.RunTest(                                 \
+        (const ::string)itemName,                   \
+        (const ::string)itemDes,                    \
+        [](dty::test::TestObject& tobj) -> void     \
+        statements                                  \
+    )
 
 #endif // !__cplusplus
 #endif // !__DTEST_CORE__
