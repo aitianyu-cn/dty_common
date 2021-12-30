@@ -201,18 +201,18 @@ namespace dty
          * @brief
          * @brief
          *
-         * @param {SmartPointer<T>&} other
+         * @param {T} other
          * @return {bool}
          */
-        __PUB__ bool __VARIABLE__ operator ==(SmartPointer<T> __VARIABLE__ other);
+        __PUB__ bool __VARIABLE__ operator ==(T __VARIABLE__ other);
         /**
          * @brief
          * @brief
          *
-         * @param {SmartPointer<T>&} other
+         * @param {T} other
          * @return {bool}
          */
-        __PUB__ bool __VARIABLE__ operator !=(SmartPointer<T> __VARIABLE__ other);
+        __PUB__ bool __VARIABLE__ operator !=(T __VARIABLE__ other);
 
         __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;

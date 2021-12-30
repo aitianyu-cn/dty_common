@@ -833,6 +833,12 @@ namespace dty::test
             TestDelegate   __VARIABLE__ test_item,
             bool           __VARIABLE__ ignore_exception
         );
+        __PUB__ void       __VARIABLE__ RunExceptionTest
+        (
+            const ::string __VARIABLE__ test_name,
+            const ::string __VARIABLE__ test_description,
+            TestDelegate   __VARIABLE__ test_item
+        );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -844,6 +850,14 @@ namespace dty::test
     constexpr int32 _dty_test_entity_fail_param_pre_more = -2;
     constexpr int32 _dty_test_entity_fail_file_open = -3;
 }
+
+using TO = dty::test::TestObject;
+using TD = dty::test::TestDelegate;
+using TSD = dty::test::TestSpecDelegate;
+using TE = dty::test::TestEntity;
+using TS = dty::test::TestState;
+using TT = dty::test::TestType;
+using N = const ::string;
 
 #define TestsEntry_Main() \
     int32 __VARIABLE__ main(int32 __VARIABLE__ argc,char __POINTER__ argv __ARRAY__)

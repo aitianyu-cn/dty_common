@@ -511,6 +511,31 @@ void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_desc
     this->Record(test_name, test_description, state);
 }
 
+void TEST_ENTITY_DEF::RunExceptionTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item)
+{
+    dty::test::TestObject tobj;
+
+    // set the default state is Failed
+    tobj.Set();
+    try
+    {
+        test_item(tobj);
+    }
+    catch (...)
+    {
+        tobj.Unset();
+    }
+
+    dty::test::TestState state = tobj.GetState();
+    if (dty::test::TestState::Success == state)
+        ++this->_SuccessCount;
+    else
+        ++this->_FailureCount;
+
+    this->NotifyState(state);
+    this->Record(test_name, test_description, state);
+}
+
 void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
 {
     if (dty::test::TestState::Success == this->_State)
