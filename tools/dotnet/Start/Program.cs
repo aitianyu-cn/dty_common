@@ -1,24 +1,58 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DTY.Dotnet.Tools.Common.IO;
 using DTY.Dotnet.Tools.Common.Param;
+using DTY.Dotnet.Tools.Common.Process;
 
 Console.WriteLine("Hello, World!");
 
-ILog logger = IOHelper.CreateLogger("test.log", ".\\", "");
+ConsoleExecutor executor = new ConsoleExecutor(@"C:\TianyuDevelop\Project1\x64\Debug\Project1.exe")
+{
+    IsBackground = true,
+    Parameter = "test.log -c",
+    DataReceivedEvent = new System.Diagnostics.DataReceivedEventHandler((object sender, System.Diagnostics.DataReceivedEventArgs e) =>
+      {
+          if (string.IsNullOrEmpty(e.Data) || string.IsNullOrWhiteSpace(e.Data))
+              return;
 
-logger.IsDebugMode = true;
-logger.IsConsoleOutput = true;
+          Console.WriteLine(string.Format("[{0}] {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Data));
+      }),
+    ExitEvent = new EventHandler<IProcess>((object? sender, IProcess e) =>
+      {
+          Console.WriteLine(e.Id);
+          Console.WriteLine(e.ExitCode);
+          Console.WriteLine("exit......");
+      }),
+    ErrorReceivedEvent = new System.Diagnostics.DataReceivedEventHandler((object sender, System.Diagnostics.DataReceivedEventArgs e) =>
+    {
+        if (string.IsNullOrEmpty(e.Data) || string.IsNullOrWhiteSpace(e.Data))
+            return;
 
-Console.WriteLine(logger.Path);
+        Console.WriteLine(string.Format("[{0}] {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), e.Data));
+    })
+};
 
-logger.StartLog(true);
+executor.Start();
 
-logger.Logging(LogLevel.INFO, "this is a INFO");
-logger.Logging(LogLevel.WARN, "this is a WARN!");
-logger.Logging(LogLevel.ERROR, "!this is a ERROR");
-logger.Logging(LogLevel.FATAL, "!!!this is a FATAL");
+Console.WriteLine(executor.Id);
+Console.WriteLine(executor.Name);
 
-logger.EndLog();
+executor.WaitForExit();
+
+//ILog logger = IOHelper.CreateLogger("test.log", ".\\", "");
+
+//logger.IsDebugMode = true;
+//logger.IsConsoleOutput = true;
+
+//Console.WriteLine(logger.Path);
+
+//logger.StartLog(true);
+
+//logger.Logging(LogLevel.INFO, "this is a INFO");
+//logger.Logging(LogLevel.WARN, "this is a WARN!");
+//logger.Logging(LogLevel.ERROR, "!this is a ERROR");
+//logger.Logging(LogLevel.FATAL, "!!!this is a FATAL");
+
+//logger.EndLog();
 
 //ParameterHandler parameterHandler = new();
 

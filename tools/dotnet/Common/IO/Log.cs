@@ -42,13 +42,13 @@ namespace DTY.Dotnet.Tools.Common.IO
 
         private StreamWriter? _Writer;
 
-        private Log(string name, DirectoryInfo path, string des = "")
+        private Log(string name, FileInfo path, string des = "")
         {
             IsConsoleOutput = false;
 
             Id = Guid.NewGuid().ToString();
             Name = name;
-            Path = path.FullName + (path.FullName.EndsWith('\\') ? Name : ("\\" + Name));
+            Path = path.FullName;
             Description = des;
 
             _Writer = null;
@@ -145,7 +145,7 @@ namespace DTY.Dotnet.Tools.Common.IO
             if (name.Trim().Length == 0)
                 throw new ArgumentException(nameof(name));
 
-            DirectoryInfo info = new(path);
+            FileInfo info = new(path);
 
             return new Log(name, info, des);
         }
