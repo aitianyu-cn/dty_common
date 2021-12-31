@@ -214,6 +214,20 @@ namespace dty
          */
         __PUB__ bool __VARIABLE__ operator !=(T __VARIABLE__ other);
 
+        __PUB__ template<class NT> operator NT __REFERENCE__()
+        {
+            // set a assert to make sure the converted type is correct
+            static_assert(
+                std::is_base_of<NT, T>::value || std::is_base_of<T, NT>::value,
+                "convert type should be child or parent of current type"
+                );
+
+            if (::null == this->_Pointer)
+                throw dty::except::NullPointerException();
+
+            return dynamic_cast<NT __REFERENCE__>(__PTR_TO_REF__(this->_Pointer));
+        }
+
         __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;

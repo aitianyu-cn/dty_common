@@ -33,6 +33,30 @@ class EQTestClass
     }
 };
 
+class F
+{
+    __PUB__ virtual ~F() { }
+
+    __PUB__ virtual int32 GetValue()
+    {
+        return 1;
+    }
+};
+
+class C : public F
+{
+    __PUB__ int32 Value;
+
+    __PUB__ C() : F(), Value() { }
+    __PUB__ C(int32 value) : F(), Value(value) { }
+    __PUB__ virtual ~C() override { }
+
+    __PUB__ virtual int32 GetValue() override
+    {
+        return this->Value;
+    }
+};
+
 dty::SmartPointer<TestClass>* sp;
 
 RUNTEST(entity, "dty.SmartPointer Unit Test")
@@ -422,8 +446,8 @@ RUNTEST(entity, "dty.SmartPointer Unit Test")
                         delete sp;
                 },
                 false,
-                true
-            );
+                    true
+                    );
         }
     );
 
@@ -708,6 +732,28 @@ RUNTEST(entity, "dty.SmartPointer Unit Test")
                                     delete tp;
                                 }
                             );
+                        }
+                    );
+                }
+            );
+
+            entity.StartSpec("operator T", [](TE& entity) -> void
+                {
+                    entity.RunExceptionTest("operator T", "expect an exception if try to convert a null pointer", [](TO& t) -> void
+                        {
+                            dty::SmartPointer<F> p;
+
+                            C& cr = p;
+                        }
+                    );
+
+                    entity.RunTest("operator T", "convert value should success", [](TO& t) -> void
+                        {
+                            dty::SmartPointer<F> p(new C(100));
+                            t.EQ(p->GetValue(), 100);
+
+                            C& cr = p;
+                            t.EQ(cr.GetValue(), 100);
                         }
                     );
                 }
