@@ -385,18 +385,14 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            if (TS::Success == entity.GetState())
-                entity.RunTest((N)"GetWeak (Strong)", (N)"get a weak object from sp", [](TO& t) -> void
-                    {
-                        int32 pre_counter = TestClass::Counter;
-                        dty::SmartPointer<TestClass> wsp = sp->GetWeak();
+            entity.RunTest((N)"GetWeak (Strong)", (N)"get a weak object from sp", [](TO& t) -> void
+                {
+                    int32 pre_counter = TestClass::Counter;
+                    dty::SmartPointer<TestClass> wsp = sp->GetWeak();
 
-                        t.EQ(TestClass::Counter, pre_counter);
-                    }
+                    t.EQ(TestClass::Counter, pre_counter);
+                }
             );
-            else
-                entity.RunTest((N)"GetWeak (Strong)", (N)"get a weak object from sp", [](TO& t) -> void { t.Set(); });
-
 
             if (!sp->IsNull())
                 delete sp;

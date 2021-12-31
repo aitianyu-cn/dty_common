@@ -38,7 +38,7 @@ namespace dty::threading
         WaitSleepJoin = 32,
         Suspended = 64,
         AbortRequested = 128,
-        Aborted = 256,
+        Skipped = 256,
     };
 
     typedef void __VARIABLE__(__POINTER__ ParameterizedThreadStart)(dty::TianyuObject __REFERENCE__ obj);

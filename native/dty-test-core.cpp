@@ -41,6 +41,11 @@ void TEST_OBJECT_DEF::Set()
     this->_State = dty::test::TestState::Failed;
 }
 
+void TEST_OBJECT_DEF::Skip()
+{
+    this->_State = dty::test::TestState::Skipped;
+}
+
 void TEST_OBJECT_DEF::Unset()
 {
     this->_State = dty::test::TestState::Success;
@@ -300,6 +305,7 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity,
     _Asserted(false),
     _Level(level),
     _SuccessCount(0),
+    _SkippedCount(0),
     _FailureCount(0)
 {
     // process entity name
@@ -325,12 +331,15 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
     _Asserted(false),
     _Level(0),
     _SuccessCount(0),
+    _SkippedCount(0),
     _FailureCount(0)
 {
     if (2 > argc)
         throw dty::test::_dty_test_entity_fail_param_too_few;
 
     ::string file = argv[1];
+
+    bool is_log_overwrite = false;
 
     for (int32 i = 2; i < argc; ++i)
     {
@@ -364,16 +373,32 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
         case 'C':
             this->_ConsolePrint = true;
             break;
+        case 'o':
+        case 'O':
+            is_log_overwrite = true;
+            break;
         default:
             break;
         }
     }
 
+    if (is_log_overwrite)
+    {
 #ifdef __DTY_WIN
-    fopen_s(__VAR_TO_PTR__ this->_LogStream, file, "at+");
+        fopen_s(__VAR_TO_PTR__ this->_LogStream, file, "w+");
 #else
-    this->_LogStream = fopen(file, "at+");
+        this->_LogStream = fopen(file, "w+");
 #endif // __DTY_WIN
+    }
+    else
+    {
+#ifdef __DTY_WIN
+        fopen_s(__VAR_TO_PTR__ this->_LogStream, file, "at+");
+#else
+        this->_LogStream = fopen(file, "at+");
+#endif // __DTY_WIN
+    }
+
     if (::null == this->_LogStream)
         throw dty::test::_dty_test_entity_fail_file_open;
 
@@ -410,6 +435,7 @@ TEST_ENTITY_DEF::TestEntity(const TEST_ENTITY_DEF& entity) :
     _Asserted(entity._Asserted),
     _Level(entity._Level),
     _SuccessCount(entity._SuccessCount),
+    _SkippedCount(entity._SkippedCount),
     _FailureCount(entity._FailureCount)
 {
     TEST_ENTITY_DEF& dynamic_obj = const_cast<TEST_ENTITY_DEF&>(entity);
@@ -448,6 +474,7 @@ void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDe
 void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec, bool ignoreException)
 {
     TEST_ENTITY_DEF subEntity(entityName, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1, this->_ConsolePrint);
+    subEntity._Asserted = this->_Asserted;
 
     try
     {
@@ -460,6 +487,7 @@ void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDe
     }
 
     this->_SuccessCount += subEntity._SuccessCount;
+    this->_SkippedCount += subEntity._SkippedCount;
     this->_FailureCount += subEntity._FailureCount;
     this->NotifyState(subEntity.GetState());
 }
@@ -468,20 +496,28 @@ void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_desc
 {
     dty::test::TestObject tobj;
 
-    try
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
     {
-        test_item(tobj);
+        tobj.Skip();
+        ++this->_SkippedCount;
     }
-    catch (...)
-    {
-        tobj.Set();
-    }
-
-    dty::test::TestState state = tobj.GetState();
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
     else
-        ++this->_FailureCount;
+    {
+        try
+        {
+            test_item(tobj);
+        }
+        catch (...)
+        {
+            tobj.Set();
+        }
+
+        dty::test::TestState state = tobj.GetState();
+        if (dty::test::TestState::Success == state)
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
 
     this->NotifyState(tobj.GetState());
     this->Record(test_name, test_description, tobj.GetState());
@@ -491,49 +527,63 @@ void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_desc
 {
     dty::test::TestObject tobj;
 
-    try
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
     {
-        test_item(tobj);
+        tobj.Skip();
+        ++this->_SkippedCount;
     }
-    catch (...)
-    {
-        if (!ignore_exception)
-            tobj.Set();
-    }
-
-    dty::test::TestState state = tobj.GetState();
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
     else
-        ++this->_FailureCount;
+    {
+        try
+        {
+            test_item(tobj);
+        }
+        catch (...)
+        {
+            if (!ignore_exception)
+                tobj.Set();
+        }
 
-    this->NotifyState(state);
-    this->Record(test_name, test_description, state);
+        if (dty::test::TestState::Success == tobj.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
+
+    this->NotifyState(tobj.GetState());
+    this->Record(test_name, test_description, tobj.GetState());
 }
 
 void TEST_ENTITY_DEF::RunExceptionTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item)
 {
     dty::test::TestObject tobj;
 
-    // set the default state is Failed
-    tobj.Set();
-    try
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
     {
-        test_item(tobj);
+        tobj.Skip();
+        ++this->_SkippedCount;
     }
-    catch (...)
-    {
-        tobj.Unset();
-    }
-
-    dty::test::TestState state = tobj.GetState();
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
     else
-        ++this->_FailureCount;
+    {
+        // set the default state is Failed
+        tobj.Set();
+        try
+        {
+            test_item(tobj);
+        }
+        catch (...)
+        {
+            tobj.Unset();
+        }
 
-    this->NotifyState(state);
-    this->Record(test_name, test_description, state);
+        if (dty::test::TestState::Success == tobj.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
+
+    this->NotifyState(tobj.GetState());
+    this->Record(test_name, test_description, tobj.GetState());
 }
 
 void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
@@ -558,6 +608,8 @@ void TEST_ENTITY_DEF::Record(int32 level)
             printf("  ");
 
         printf("%s\n", this->_EntityName);
+
+        fflush(stdin);
     }
 }
 
@@ -569,12 +621,14 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
 
     if (dty::test::TestState::Success == state)
         fputs("[SUCCESS] ", this->_LogStream);
+    else if (dty::test::TestState::Skipped == state)
+        fputs("[SKIPPED] ", this->_LogStream);
     else
         fputs("[FAILED ] ", this->_LogStream);
 
-    fputs("[", this->_LogStream);
+    // fputs("[", this->_LogStream);
     fputs(name, this->_LogStream);
-    fputs("]: ", this->_LogStream);
+    fputs(" - ", this->_LogStream);
     fputs(description, this->_LogStream);
 
     fflush(this->_LogStream);
@@ -586,8 +640,12 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
 
         if (dty::test::TestState::Success == state)
             printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m\n", name, description);
+        else if (dty::test::TestState::Skipped == state)
+            printf("[SKIPPED] %s (%s) \n", name, description);
         else
             printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m\n", name, description);
+
+        fflush(stdin);
     }
 }
 
@@ -606,7 +664,9 @@ void TEST_ENTITY_DEF::EndRecord()
         for (int32 i = 0; i < this->_Level; ++i)
             printf("  ");
 
-        printf("Total: \033[1;32;40mSuccess(%d) \033[0m \033[1;31;40mFailed(%d)\033[0m\n", this->_SuccessCount, this->_FailureCount);
+        printf("Total: \033[1;32;40mSuccess(%d)\033[0m \033[1;31;40mFailed(%d)\033[0m Skipped(%d)\n", this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
+
+        fflush(stdin);
     }
 }
 

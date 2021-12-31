@@ -670,7 +670,7 @@ namespace dty::test
     {
         Success = 0,
         Failed = -1,
-        Aborted = -2
+        Skipped = -2
     };
 
     _enum TestType : int32
@@ -701,6 +701,7 @@ namespace dty::test
         // ##############################################################################################################
 
         __PUB__ void __VARIABLE__ Set();
+        __PUB__ void __VARIABLE__ Skip();
         __PUB__ void __VARIABLE__ Unset();
 
         __PUB__ bool __VARIABLE__ IsNull(object __VARIABLE__ obj);
@@ -793,6 +794,7 @@ namespace dty::test
         __PRI__ bool       __VARIABLE__  _Asserted;
         __PRI__ int32      __VARIABLE__  _Level;
         __PRI__ int32      __VARIABLE__  _SuccessCount;
+        __PRI__ int32      __VARIABLE__  _SkippedCount;
         __PRI__ int32      __VARIABLE__  _FailureCount;
 
         __PRI__         __construction__ TestEntity
