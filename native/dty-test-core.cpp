@@ -323,6 +323,14 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity,
     this->Record(level - 1);
 }
 
+TEST_ENTITY_DEF::TestEntity(const char* entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
+    dty::test::TestEntity((const ::string)entityName, pentity, file, level, console_print)
+{ }
+
+TEST_ENTITY_DEF::TestEntity(const char* entityName, int32 argc, char* argv []) :
+    dty::test::TestEntity((const ::string)entityName, argc, argv)
+{ }
+
 TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []) :
     dty::TianyuObject(),
     _ConsolePrint(false),
@@ -473,8 +481,17 @@ void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDe
 
 void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec, bool ignoreException)
 {
+    this->StartSpec(entityName, spec, ignoreException, false);
+}
+
+void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec, bool ignoreException, bool depPreState)
+{
     TEST_ENTITY_DEF subEntity(entityName, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1, this->_ConsolePrint);
     subEntity._Asserted = this->_Asserted;
+
+    // should respect the father state
+    if (depPreState)
+        subEntity._State = this->_State;
 
     try
     {
@@ -492,35 +509,26 @@ void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDe
     this->NotifyState(subEntity.GetState());
 }
 
+
+void TEST_ENTITY_DEF::StartSpec(const char* entityName, dty::test::TestSpecDelegate spec)
+{
+    this->StartSpec((const ::string)entityName, spec, false);
+}
+
+void TEST_ENTITY_DEF::StartSpec(const char* entityName, dty::test::TestSpecDelegate spec, bool ignoreException)
+{
+    this->StartSpec((const ::string)entityName, spec, ignoreException, false);
+}
+
+void TEST_ENTITY_DEF::StartSpec(const char* entityName, dty::test::TestSpecDelegate spec, bool ignoreException, bool depPreState)
+{
+    this->StartSpec((const ::string)entityName, spec, ignoreException, depPreState);
+}
+
+
 void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item)
 {
-    dty::test::TestObject tobj;
-
-    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
-    {
-        tobj.Skip();
-        ++this->_SkippedCount;
-    }
-    else
-    {
-        try
-        {
-            test_item(tobj);
-        }
-        catch (...)
-        {
-            tobj.Set();
-        }
-
-        dty::test::TestState state = tobj.GetState();
-        if (dty::test::TestState::Success == state)
-            ++this->_SuccessCount;
-        else
-            ++this->_FailureCount;
-    }
-
-    this->NotifyState(tobj.GetState());
-    this->Record(test_name, test_description, tobj.GetState());
+    this->RunTest(test_name, test_description, test_item, false);
 }
 
 void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item, bool ignore_exception)
@@ -586,6 +594,23 @@ void TEST_ENTITY_DEF::RunExceptionTest(const ::string test_name, const ::string 
     this->Record(test_name, test_description, tobj.GetState());
 }
 
+
+void TEST_ENTITY_DEF::RunTest(const char* test_name, const char* test_description, dty::test::TestDelegate test_item)
+{
+    this->RunTest((const ::string)test_name, (const ::string)test_description, test_item, false);
+}
+
+void TEST_ENTITY_DEF::RunTest(const char* test_name, const char* test_description, dty::test::TestDelegate test_item, bool ignore_exception)
+{
+    this->RunTest((const ::string)test_name, (const ::string)test_description, test_item, ignore_exception);
+}
+
+void TEST_ENTITY_DEF::RunExceptionTest(const char* test_name, const char* test_description, dty::test::TestDelegate test_item)
+{
+    this->RunExceptionTest((const ::string)test_name, (const ::string)test_description, test_item);
+}
+
+
 void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
 {
     if (dty::test::TestState::Success == this->_State)
@@ -639,11 +664,11 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
             printf("  ");
 
         if (dty::test::TestState::Success == state)
-            printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m\n", name, description);
+            printf("\033[1;32;40m[SUCCESS] %s - %s \033[0m\n", name, description);
         else if (dty::test::TestState::Skipped == state)
-            printf("[SKIPPED] %s (%s) \n", name, description);
+            printf("[SKIPPED] %s - %s \n", name, description);
         else
-            printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m\n", name, description);
+            printf("\033[1;31;40m[FAILED ] %s - %s \033[0m\n", name, description);
 
         fflush(stdin);
     }

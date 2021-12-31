@@ -35,13 +35,13 @@ class EQTestClass
 
 dty::SmartPointer<TestClass>* sp;
 
-RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
+RUNTEST(entity, "dty.SmartPointer Unit Test")
 {
     sp = ::null;
 
-    entity.StartSpec((N)"constructor", [](TE& entity) -> void
+    entity.StartSpec("constructor", [](TE& entity) -> void
         {
-            entity.RunTest((N)"constructor", (N)"default", [](TO& t) -> void
+            entity.RunTest("constructor", "default", [](TO& t) -> void
                 {
                     int32 pre_counter = TestClass::Counter;
                     sp = new dty::SmartPointer<TestClass>();
@@ -53,15 +53,15 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                     t.EQ(TestClass::Counter, pre_counter);
 
                     // pointer size should be empty
-                    int32 size = sp->Size;
-                    t.EQ(size, 0);
+                    int64 size = sp->Size;
+                    t.EQ(size, 0LL);
 
                     delete sp;
                     sp = ::null;
                 }
             );
 
-            entity.RunTest((N)"constructor", (N)"create from a pointer, size = 1", [](TO& t) -> void
+            entity.RunTest("constructor", "create from a pointer, size = 1", [](TO& t) -> void
                 {
                     TestClass* test_p = new TestClass();
                     if (!t.IsNotNull(test_p))
@@ -79,8 +79,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                     t.EQ(TestClass::Counter, pre_counter);
 
                     // pointer size should be equal 1
-                    int32 size = sp->Size;
-                    t.EQ(size, 1);
+                    int64 size = sp->Size;
+                    t.EQ(size, 1LL);
 
                     delete sp;
                     sp = ::null;
@@ -90,7 +90,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.RunTest((N)"constructor", (N)"create from a pointer, size = 2", [](TO& t) -> void
+            entity.RunTest("constructor", "create from a pointer, size = 2", [](TO& t) -> void
                 {
                     TestClass* test_p = new TestClass[2];
                     if (!t.IsNotNull(test_p))
@@ -108,8 +108,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                     t.EQ(TestClass::Counter, pre_counter);
 
                     // pointer size should be equal 1
-                    int32 size = sp->Size;
-                    t.EQ(size, 2);
+                    int64 size = sp->Size;
+                    t.EQ(size, 2LL);
 
                     delete sp;
                     sp = ::null;
@@ -119,9 +119,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"constructor (weak mode)", [](TE& entity) -> void
+            entity.StartSpec("constructor (weak mode)", [](TE& entity) -> void
                 {
-                    entity.RunTest((N)"constructor (weak mode)", (N)"create from a pointer, size = 1, weak mode = false", [](TO& t) -> void
+                    entity.RunTest("constructor (weak mode)", "create from a pointer, size = 1, weak mode = false", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
@@ -139,8 +139,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(TestClass::Counter, pre_counter);
 
                             // pointer size should be equal 1
-                            int32 size = sp->Size;
-                            t.EQ(size, 1);
+                            int64 size = sp->Size;
+                            t.EQ(size, 1LL);
 
                             delete sp;
                             sp = ::null;
@@ -150,7 +150,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"constructor (weak mode)", (N)"create from a pointer, size = 1, weak mode = true", [](TO& t) -> void
+                    entity.RunTest("constructor (weak mode)", "create from a pointer, size = 1, weak mode = true", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
@@ -168,8 +168,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(TestClass::Counter, pre_counter);
 
                             // pointer size should be equal 1
-                            int32 size = sp->Size;
-                            t.EQ(size, 1);
+                            int64 size = sp->Size;
+                            t.EQ(size, 1LL);
 
                             delete sp;
                             sp = ::null;
@@ -179,7 +179,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"constructor (weak mode)", (N)"create from a pointer, size = 2, weak mode = false", [](TO& t) -> void
+                    entity.RunTest("constructor (weak mode)", "create from a pointer, size = 2, weak mode = false", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass[2];
                             if (!t.IsNotNull(test_p))
@@ -197,8 +197,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(TestClass::Counter, pre_counter);
 
                             // pointer size should be equal 1
-                            int32 size = sp->Size;
-                            t.EQ(size, 2);
+                            int64 size = sp->Size;
+                            t.EQ(size, 2LL);
 
                             delete sp;
                             sp = ::null;
@@ -208,7 +208,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"constructor (weak mode)", (N)"create from a pointer, size = 2, weak mode = true", [](TO& t) -> void
+                    entity.RunTest("constructor (weak mode)", "create from a pointer, size = 2, weak mode = true", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass[2];
                             if (!t.IsNotNull(test_p))
@@ -226,8 +226,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(TestClass::Counter, pre_counter);
 
                             // pointer size should be equal 1
-                            int32 size = sp->Size;
-                            t.EQ(size, 2);
+                            int64 size = sp->Size;
+                            t.EQ(size, 2LL);
 
                             delete sp;
                             sp = ::null;
@@ -239,9 +239,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"copy constructor", [](TE& entity) -> void
+            entity.StartSpec("copy constructor", [](TE& entity) -> void
                 {
-                    entity.RunTest((N)"copy constructor", (N)"copy from a strong pointer", [](TO& t) -> void
+                    entity.RunTest("copy constructor", "copy from a strong pointer", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
@@ -284,7 +284,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"copy constructor", (N)"copy from a weak pointer", [](TO& t) -> void
+                    entity.RunTest("copy constructor", "copy from a weak pointer", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
@@ -329,32 +329,32 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"constructor (exception handler)", [](TE& entity) -> void
+            entity.StartSpec("constructor (exception handler)", [](TE& entity) -> void
                 {
-                    entity.RunExceptionTest((N)"single", (N)"create from a pointer", [](TO& t) -> void
+                    entity.RunExceptionTest("single", "create from a pointer", [](TO& t) -> void
                         {
                             // create a sp from a null object
                             sp = new dty::SmartPointer<TestClass>(::null);
                         }
                     );
 
-                    entity.StartSpec((N)"p & size", [](TE& entity) -> void
+                    entity.StartSpec("p & size", [](TE& entity) -> void
                         {
-                            entity.RunExceptionTest((N)"p & size (null)", (N)"create from a null pointer", [](TO& t) -> void
+                            entity.RunExceptionTest("p & size (null)", "create from a null pointer", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
                                     sp = new dty::SmartPointer<TestClass>(::null, (int64)1);
                                 }
                             );
 
-                            entity.RunExceptionTest((N)"p & size (size = 0)", (N)"create from a size equals 0", [](TO& t) -> void
+                            entity.RunExceptionTest("p & size (size = 0)", "create from a size equals 0", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
                                     sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)0);
                                 }
                             );
 
-                            entity.RunExceptionTest((N)"p & size (size = 0)", (N)"create from a size less than 0", [](TO& t) -> void
+                            entity.RunExceptionTest("p & size (size = 0)", "create from a size less than 0", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
                                     sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)-1);
@@ -367,9 +367,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
         }
     );
 
-    entity.StartSpec((N)"GetWeak", [](TE& entity) -> void
+    entity.StartSpec("GetWeak", [](TE& entity) -> void
         {
-            entity.RunTest((N)"GetWeak (Strong)", (N)"Before Test", [](TO& t) -> void
+            entity.RunTest("GetWeak (Strong)", "Before Test", [](TO& t) -> void
                 {
                     TestClass* test_p = new TestClass();
                     if (!t.IsNotNull(test_p))
@@ -385,7 +385,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.RunTest((N)"GetWeak (Strong)", (N)"get a weak object from sp", [](TO& t) -> void
+            entity.RunTest("GetWeak (Strong)", "get a weak object from sp", [](TO& t) -> void
                 {
                     int32 pre_counter = TestClass::Counter;
                     dty::SmartPointer<TestClass> wsp = sp->GetWeak();
@@ -398,42 +398,38 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 delete sp;
 
             // ########################################################################################################################
-            if (TS::Success == entity.GetState())
-                entity.StartSpec((N)"GetWeak (from Weak)", [](TE& entity) -> void
-                    {
-                        TestClass* test_p = new TestClass();
-                        sp = new dty::SmartPointer<TestClass>(test_p, true);
+            entity.StartSpec("GetWeak (from Weak)", [](TE& entity) -> void
+                {
+                    TestClass* test_p = new TestClass();
+                    sp = new dty::SmartPointer<TestClass>(test_p, true);
 
-                        entity.RunTest((N)"GetWeak (from Weak)", (N)"Before Test", [](TO& t) -> void
-                            {
-                                t.IsNotNull(sp);
-                            }
-                        );
+                    entity.RunTest("GetWeak (from Weak)", "Before Test", [](TO& t) -> void
+                        {
+                            t.IsNotNull(sp);
+                        }
+                    );
 
-                        if (TS::Success == entity.GetState())
-                            entity.RunTest((N)"GetWeak (from Weak)", (N)"get a weak object from sp", [](TO& t) -> void
-                                {
-                                    int32 pre_counter = TestClass::Counter;
-                                    dty::SmartPointer<TestClass> wsp = sp->GetWeak();
+                    entity.RunTest("GetWeak (from Weak)", "get a weak object from sp", [](TO& t) -> void
+                        {
+                            int32 pre_counter = TestClass::Counter;
+                            dty::SmartPointer<TestClass> wsp = sp->GetWeak();
 
-                                    t.EQ(TestClass::Counter, pre_counter);
-                                }
-                        );
-                        else
-                            entity.RunTest((N)"GetWeak (from Weak)", (N)"get a weak object from sp", [](TO& t) -> void { t.Set(); });
+                            t.EQ(TestClass::Counter, pre_counter);
+                        }
+                    );
 
-                        if (!sp->IsNull())
-                            delete sp;
-                    }
+                    if (!sp->IsNull())
+                        delete sp;
+                },
+                false,
+                true
             );
-            else
-                entity.RunTest((N)"GetWeak (from Weak)", (N)"get a weak object from sp", [](TO& t) -> void { t.Set(); });
         }
     );
 
-    entity.StartSpec((N)"Move", [](TE& entity) -> void
+    entity.StartSpec("Move", [](TE& entity) -> void
         {
-            entity.RunTest((N)"Move", (N)"move from weak pointer should return false", [](TO& t) -> void
+            entity.RunTest("Move", "move from weak pointer should return false", [](TO& t) -> void
                 {
                     // create a weak pointer
                     TestClass* test_p = new TestClass();
@@ -447,7 +443,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.RunTest((N)"Move", (N)"move equals pointer should return false", [](TO& t) -> void
+            entity.RunTest("Move", "move equals pointer should return false", [](TO& t) -> void
                 {
                     // create a weak pointer
                     TestClass* test_p = new TestClass();
@@ -460,7 +456,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.RunTest((N)"Move", (N)"move pointer succcess should return true", [](TO& t) -> void
+            entity.RunTest("Move", "move pointer succcess should return true", [](TO& t) -> void
                 {
                     // create a weak pointer
                     TestClass* test_p1 = new TestClass();
@@ -480,18 +476,18 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
         }
     );
 
-    entity.StartSpec((N)"operator", [](TE& entity) -> void
+    entity.StartSpec("operator", [](TE& entity) -> void
         {
-            entity.StartSpec((N)"operator &", [](TE& entity) -> void
+            entity.StartSpec("operator &", [](TE& entity) -> void
                 {
-                    entity.RunTest((N)"operator &", (N)"null object should return 0", [](TO& t) -> void
+                    entity.RunTest("operator &", "null object should return 0", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p;
 
                             t.EQ(0ULL, &p);
                         }
                     );
-                    entity.RunTest((N)"operator &", (N)"not null object should return address", [](TO& t) -> void
+                    entity.RunTest("operator &", "not null object should return address", [](TO& t) -> void
                         {
                             int32* ip = new int32(0);
                             dty::SmartPointer<int32> p(ip);
@@ -502,9 +498,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"operator *", [](TE& entity) -> void
+            entity.StartSpec("operator *", [](TE& entity) -> void
                 {
-                    entity.RunTest((N)"operator *", (N)"return real value", [](TO& t) -> void
+                    entity.RunTest("operator *", "return real value", [](TO& t) -> void
                         {
                             int32* ip = new int32(1);
                             dty::SmartPointer<int32> p(ip);
@@ -514,7 +510,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"operator *", (N)"should return a reference, should be set value", [](TO& t) -> void
+                    entity.RunTest("operator *", "should return a reference, should be set value", [](TO& t) -> void
                         {
                             int32* ip = new int32(1);
                             dty::SmartPointer<int32> p(ip);
@@ -524,7 +520,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunExceptionTest((N)"operator *", (N)"throw an exception if try to require from null object", [](TO& t) -> void
+                    entity.RunExceptionTest("operator *", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p;
 
@@ -534,9 +530,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"operator ->", [](TE& entity) -> void
+            entity.StartSpec("operator ->", [](TE& entity) -> void
                 {
-                    entity.RunTest((N)"operator ->", (N)"should access successful", [](TO& t) -> void
+                    entity.RunTest("operator ->", "should access successful", [](TO& t) -> void
                         {
                             dty::SmartPointer<TestClass> p(new TestClass());
 
@@ -544,7 +540,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(p->GetValue(), counter);
                         }
                     );
-                    entity.RunExceptionTest((N)"operator ->", (N)"throw an exception if try to require from null object", [](TO& t) -> void
+                    entity.RunExceptionTest("operator ->", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
                             dty::SmartPointer<TestClass> p;
 
@@ -554,9 +550,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"operator []", [](TE& entity) -> void
+            entity.StartSpec("operator []", [](TE& entity) -> void
                 {
-                    entity.RunExceptionTest((N)"operator []", (N)"throw an exception if try to require from null object", [](TO& t) -> void
+                    entity.RunExceptionTest("operator []", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p;
 
@@ -564,7 +560,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunExceptionTest((N)"operator []", (N)"throw an exception if index less than 0", [](TO& t) -> void
+                    entity.RunExceptionTest("operator []", "throw an exception if index less than 0", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p(new int32[2], 2LL);
 
@@ -572,7 +568,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunExceptionTest((N)"operator []", (N)"throw an exception if index out of range", [](TO& t) -> void
+                    entity.RunExceptionTest("operator []", "throw an exception if index out of range", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p(new int32[2], 2LL);
 
@@ -580,7 +576,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"operator []", (N)"return the value", [](TO& t) -> void
+                    entity.RunTest("operator []", "return the value", [](TO& t) -> void
                         {
                             dty::SmartPointer<int32> p(new int32[2]{ 1,2 }, 2LL);
 
@@ -589,7 +585,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"operator []", (N)"value can be set through reference", [](TO& t) -> void
+                    entity.RunTest("operator []", "value can be set through reference", [](TO& t) -> void
                         {
                             int32* ip = new int32[2]{ 1,2 };
                             dty::SmartPointer<int32> p(ip, 2LL);
@@ -607,11 +603,11 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"operator ==", [](TE& entity) -> void
+            entity.StartSpec("operator ==", [](TE& entity) -> void
                 {
-                    entity.StartSpec((N)"valueable", [](TE& entity) -> void
+                    entity.StartSpec("valueable", [](TE& entity) -> void
                         {
-                            entity.RunTest((N)"valueable", (N)"should return true if equals", [](TO& t) -> void
+                            entity.RunTest("valueable", "should return true if equals", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<int32> p(new int32(0));
 
@@ -619,7 +615,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"valueable", (N)"should return false if address is not equal", [](TO& t) -> void
+                            entity.RunTest("valueable", "should return false if address is not equal", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<EQTestClass> p(new EQTestClass());
                                     EQTestClass tc;
@@ -630,9 +626,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.StartSpec((N)"reference", [](TE& entity) -> void
+                    entity.StartSpec("reference", [](TE& entity) -> void
                         {
-                            entity.RunTest((N)"reference", (N)"should return true if address is equal", [](TO& t) -> void
+                            entity.RunTest("reference", "should return true if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass* tp = new EQTestClass();
                                     dty::SmartPointer<EQTestClass> p(tp, true);
@@ -644,7 +640,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"reference", (N)"should return false if address is not equal", [](TO& t) -> void
+                            entity.RunTest("reference", "should return false if address is not equal", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<EQTestClass> p1(new EQTestClass());
                                     dty::SmartPointer<EQTestClass> p2(new EQTestClass());
@@ -657,11 +653,11 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                 }
             );
 
-            entity.StartSpec((N)"operator !=", [](TE& entity) -> void
+            entity.StartSpec("operator !=", [](TE& entity) -> void
                 {
-                    entity.StartSpec((N)"valueable", [](TE& entity) -> void
+                    entity.StartSpec("valueable", [](TE& entity) -> void
                         {
-                            entity.RunTest((N)"valueable", (N)"should return true if not equals", [](TO& t) -> void
+                            entity.RunTest("valueable", "should return true if not equals", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<int32> p(new int32(0));
 
@@ -669,7 +665,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"valueable", (N)"should return true if address is not equal", [](TO& t) -> void
+                            entity.RunTest("valueable", "should return true if address is not equal", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<EQTestClass> p1(new EQTestClass());
                                     dty::SmartPointer<EQTestClass> p2(new EQTestClass());
@@ -678,7 +674,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"valueable", (N)"should return false if address is equal", [](TO& t) -> void
+                            entity.RunTest("valueable", "should return false if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass tc;
                                     dty::SmartPointer<EQTestClass> p1(&tc, true);
@@ -690,9 +686,9 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.StartSpec((N)"reference", [](TE& entity) -> void
+                    entity.StartSpec("reference", [](TE& entity) -> void
                         {
-                            entity.RunTest((N)"reference", (N)"should return true if address is not equal", [](TO& t) -> void
+                            entity.RunTest("reference", "should return true if address is not equal", [](TO& t) -> void
                                 {
                                     dty::SmartPointer<EQTestClass> p1(new EQTestClass());
                                     dty::SmartPointer<EQTestClass> p2(new EQTestClass());
@@ -701,7 +697,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"reference", (N)"should return false if address is equal", [](TO& t) -> void
+                            entity.RunTest("reference", "should return false if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass* tp = new EQTestClass();
                                     dty::SmartPointer<EQTestClass> p1(tp, true);

@@ -30,7 +30,7 @@ namespace dty
         // Strong Pointers have the actual use of object Pointers, while weak Pointers 
         // are only copies of object Pointers and do not guarantee access reliability。
         //
-        __PRO__ enum SPType : int32
+        __PRO__ enum class SPType : int32
         {
             STRONG = 0,
             WEAK = 1

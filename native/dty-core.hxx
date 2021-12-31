@@ -822,6 +822,13 @@ namespace dty::test
             TestSpecDelegate __VARIABLE__ spec,
             bool             __VARIABLE__ ignoreException
         );
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const ::string   __VARIABLE__ entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException,
+            bool             __VARIABLE__ depPreState
+        );
         __PUB__ void       __VARIABLE__ RunTest
         (
             const ::string __VARIABLE__ test_name,
@@ -840,6 +847,54 @@ namespace dty::test
             const ::string __VARIABLE__ test_name,
             const ::string __VARIABLE__ test_description,
             TestDelegate   __VARIABLE__ test_item
+        );
+
+        // ###################################################################################################################
+        // const char* define
+        // ###################################################################################################################
+
+        __PRI__         __construction__ TestEntity
+        (
+            const char __POINTER__   entityName,
+            TestEntity __REFERENCE__ pentity,
+            FILE       __POINTER__   file,
+            int32      __VARIABLE__  level,
+            bool       __VARIABLE__  console_print
+        );
+        __PUB__         __construction__ TestEntity(const char __POINTER__ entityName, int32 __VARIABLE__ argc, char __POINTER__ argv __ARRAY__);
+
+        __PUB__ void       __VARIABLE__ StartSpec(const char __POINTER__ entityName, TestSpecDelegate __VARIABLE__ spec);
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const char       __POINTER__ entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException
+        );
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const char       __POINTER__  entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException,
+            bool             __VARIABLE__ depPreState
+        );
+        __PUB__ void       __VARIABLE__ RunTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item
+        );
+        __PUB__ void       __VARIABLE__ RunTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item,
+            bool         __VARIABLE__ ignore_exception
+        );
+        __PUB__ void       __VARIABLE__ RunExceptionTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item
         );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
