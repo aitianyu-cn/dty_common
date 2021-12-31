@@ -209,7 +209,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(__DTY_SPTR_DEF__& other)
     {
         return (__PTR_TO_REF__ this->_Pointer) == (__PTR_TO_REF__ other._Pointer);
     }
-    catch (std::exception)
+    catch (...)
     {
         return this->_Pointer == other._Pointer;
     }
@@ -222,7 +222,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(__DTY_SPTR_DEF__& other)
     {
         return (__PTR_TO_REF__ this->_Pointer) != (__PTR_TO_REF__ other._Pointer);
     }
-    catch (std::exception)
+    catch (...)
     {
         return this->_Pointer != other._Pointer;
     }
@@ -235,7 +235,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(T other)
     {
         return (__PTR_TO_REF__ this->_Pointer) == other;
     }
-    catch (std::exception)
+    catch (...)
     {
         return this->_Pointer == &other;
     }
@@ -248,7 +248,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(T other)
     {
         return (__PTR_TO_REF__ this->_Pointer) != other;
     }
-    catch (std::exception)
+    catch (...)
     {
         return this->_Pointer != &other;
     }

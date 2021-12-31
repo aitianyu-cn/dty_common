@@ -100,7 +100,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                     sp = new dty::SmartPointer<TestClass>(test_p, (int64)2);
                     if (!t.IsNotNull(sp))
                     {
-                        delete test_p;
+                        delete [] test_p;
                         return;
                     }
                     // check the new SP is created and the test class object is still single
@@ -189,7 +189,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             sp = new dty::SmartPointer<TestClass>(test_p, (int64)2, false);
                             if (!t.IsNotNull(sp))
                             {
-                                delete test_p;
+                                delete [] test_p;
                                 return;
                             }
                             // check the new SP is created and the test class object is still single
@@ -215,10 +215,10 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 return;
 
                             int32 pre_counter = TestClass::Counter;
-                            sp = new dty::SmartPointer<TestClass>(test_p, (int64)2, false);
+                            sp = new dty::SmartPointer<TestClass>(test_p, (int64)2, true);
                             if (!t.IsNotNull(sp))
                             {
-                                delete test_p;
+                                delete [] test_p;
                                 return;
                             }
                             // check the new SP is created and the test class object is still single
@@ -284,7 +284,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                         }
                     );
 
-                    entity.RunTest((N)"copy constructor", (N)"copy from a strong pointer", [](TO& t) -> void
+                    entity.RunTest((N)"copy constructor", (N)"copy from a weak pointer", [](TO& t) -> void
                         {
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
@@ -312,8 +312,8 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                             t.EQ(TestClass::Counter, pre_counter);
                             t.ToBeFalse(csp->IsNull());
                             t.EQ((int64)(csp->Size), (int64)1);
-                            t.ToBeTrue(sp->IsNull());
-                            t.EQ((int64)(sp->Size), (int64)0);
+                            t.ToBeFalse(sp->IsNull());
+                            t.EQ((int64)(sp->Size), (int64)1);
 
                             // delete sp
                             delete sp;
@@ -347,10 +347,17 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunExceptionTest((N)"p & size (size = 0)", (N)"create from a size not over 0", [](TO& t) -> void
+                            entity.RunExceptionTest((N)"p & size (size = 0)", (N)"create from a size equals 0", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
-                                    sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)1);
+                                    sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)0);
+                                }
+                            );
+
+                            entity.RunExceptionTest((N)"p & size (size = 0)", (N)"create from a size less than 0", [](TO& t) -> void
+                                {
+                                    // create a sp from a null object
+                                    sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)-1);
                                 }
                             );
                         }
@@ -439,7 +446,7 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
 
                     t.ToBeFalse(p1.IsNull());
 
-                    if (t.ToBeFalse(p1.Move(p2)))
+                    if (t.ToBeFalse(p2.Move(p1)))
                         delete test_p;
                 }
             );
@@ -666,12 +673,22 @@ RUNTEST(entity, (N)"dty.SmartPointer Unit Test")
                                 }
                             );
 
-                            entity.RunTest((N)"valueable", (N)"should return false if address is not equal", [](TO& t) -> void
+                            entity.RunTest((N)"valueable", (N)"should return true if address is not equal", [](TO& t) -> void
+                                {
+                                    dty::SmartPointer<EQTestClass> p1(new EQTestClass());
+                                    dty::SmartPointer<EQTestClass> p2(new EQTestClass());
+
+                                    t.ToBeTrue(p1 != p2);
+                                }
+                            );
+
+                            entity.RunTest((N)"valueable", (N)"should return false if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass tc;
-                                    dty::SmartPointer<EQTestClass> p(&tc, true);
+                                    dty::SmartPointer<EQTestClass> p1(&tc, true);
+                                    dty::SmartPointer<EQTestClass> p2(&tc, true);
 
-                                    t.ToBeFalse(p != tc);
+                                    t.ToBeFalse(p1 != p2);
                                 }
                             );
                         }

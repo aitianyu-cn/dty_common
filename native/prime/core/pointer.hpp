@@ -119,7 +119,7 @@ namespace dty
          *
          * @return {bool} return true if current pointer is ::null, other wise is false
          */
-        __PUB__ bool __VARIABLE__ IsNull();
+        __PUB__ virtual bool __VARIABLE__ IsNull() override;
         /**
          * @brief
          * @brief
