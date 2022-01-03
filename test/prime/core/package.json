@@ -39,7 +39,11 @@
             "output": "iterator.test",
             "main": "iterator.cpp",
             "dep": [],
-            "src": []
+            "src": [
+                "filter_result.cpp",
+                "iterator_object.cpp",
+                "iterator_entity.cpp"
+            ]
         }
     }
 }

@@ -43,6 +43,8 @@ namespace dty
         ExtendValue = 0b00000010
     };
 
+    __PREDEFINE__ class ArgumentHelper;
+
     _interface IArgValue : public virtual dty::TianyuObject
     {
         __PRI__ Property<ArgumentValueType> __VARIABLE__ _ArgType;
@@ -52,36 +54,80 @@ namespace dty
         __PRO__         IArgValue(ArgumentValueType __VARIABLE__ arg_type);
         __PUB__ virtual ~IArgValue() override;
 
-        __PUB__ virtual const ::string __VARIABLE__ Key()   __pure_virtual_fun;
-        __PUB__ virtual const ::string __VARIABLE__ Value() __pure_virtual_fun;
+        __PUB__ virtual string_sp __VARIABLE__ Key()   __pure_virtual_fun;
+        __PUB__ virtual string_sp __VARIABLE__ Value() __pure_virtual_fun;
 
-        __PUB__ virtual ::string       __VARIABLE__ ToString() noexcept override;
-        __PUB__ virtual ::string       __VARIABLE__ ToString(char __VARIABLE__ link) noexcept;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual ::string __VARIABLE__ ToString(char __VARIABLE__ link) noexcept;
+
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ obj) override;
+        __PUB__ virtual bool     __VARIABLE__ operator==(dty::TianyuObject __REFERENCE__ obj) override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
     };
 
-    class SingleArgValue final : public virtual dty::TianyuObject, public virtual IArgValue
+    _interface IArgKey : public virtual dty::TianyuObject
     {
-        __PUB__         SingleArgValue();
-        __PUB__ virtual ~SingleArgValue() override;
+        __PRI__ Property<ArgumentKeyType> __VARIABLE__ _ArgType;
+        __PRI__ int32                     __VARIABLE__ _ValueState;
+        __PRI__ string_sp                 __VARIABLE__ _Key;
 
-        __PUB__ virtual const ::string __VARIABLE__ Key() override;
-        __PUB__ virtual const ::string __VARIABLE__ Value() override;
-    };
+        __PUB__ IPropertyGetter<ArgumentKeyType> __REFERENCE__ ArgType;
 
-    class ExtendArgValue final : public virtual dty::TianyuObject, public virtual IArgValue
-    {
-        __PUB__         ExtendArgValue();
-        __PUB__ virtual ~ExtendArgValue() override;
+        __PRO__         IArgKey(ArgumentKeyType __VARIABLE__ arg_type, ::string __VARIABLE__ key, int32 __VARIABLE__ ksize);
+        __PUB__ virtual ~IArgKey() override;
 
-        __PUB__ virtual const ::string __VARIABLE__ Key() override;
-        __PUB__ virtual const ::string __VARIABLE__ Value() override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+
+        __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ obj) override;
+        __PUB__ virtual bool     __VARIABLE__ operator==(dty::TianyuObject __REFERENCE__ obj) override;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
+
+        __PUB__ string_sp __VARIABLE__ Key();
+        __PUB__ bool      __VARIABLE__ IsNoneValue();
+        __PUB__ bool      __VARIABLE__ IsSingleValue();
+        __PUB__ bool      __VARIABLE__ IsMultiValue();
+
+        __PRO__ void      __VARIABLE__ setValueState(ArgumentValueState state);
+
+        friend class ArgumentHelper;
     };
 
     static class ArgumentHelper
     {
         __PUB__ static SmartPointer<IArgValue> __VARIABLE__ CreateSingleValue(const ::string __VARIABLE__ value);
         __PUB__ static SmartPointer<IArgValue> __VARIABLE__ CreateExtendValue(const ::string __VARIABLE__ key, const ::string __VARIABLE__ value);
+
+        __PUB__ static SmartPointer<IArgKey>   __VARIABLE__ CreateKey(const ::string __VARIABLE__ key, ArgumentKeyType type);
+        __PUB__ static void                    __VARIABLE__ SetValueType(SmartPointer<IArgKey> __REFERENCE__ key);
     };
+
+    class SingleArgValue final : public virtual dty::TianyuObject, public virtual IArgValue
+    {
+        __PRI__ string_sp __VARIABLE__ _Value;
+
+        __PRO__         SingleArgValue(::string __VARIABLE__ value, int32 __VARIABLE__ size);
+        __PUB__ virtual ~SingleArgValue() override;
+
+        __PUB__ virtual string_sp __VARIABLE__ Key() override;
+        __PUB__ virtual string_sp __VARIABLE__ Value() override;
+
+        friend class ArgumentHelper;
+    };
+
+    class ExtendArgValue final : public virtual dty::TianyuObject, public virtual IArgValue
+    {
+        __PRI__ string_sp __VARIABLE__ _Value;
+        __PRI__ string_sp __VARIABLE__ _Key;
+
+        __PRO__         ExtendArgValue(::string __VARIABLE__ key, int32 __VARIABLE__ ksize, ::string __VARIABLE__ value, int32 __VARIABLE__ vsize);
+        __PUB__ virtual ~ExtendArgValue() override;
+
+        __PUB__ virtual string_sp __VARIABLE__ Key() override;
+        __PUB__ virtual string_sp __VARIABLE__ Value() override;
+
+        friend class ArgumentHelper;
+    };
+
 }
 
 #endif // !__cplusplus
