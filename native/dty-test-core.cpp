@@ -474,6 +474,16 @@ dty::test::TestState TEST_ENTITY_DEF::GetState()
     return this->_State;
 }
 
+void TEST_ENTITY_DEF::SetAssert()
+{
+    this->_Asserted = true;
+}
+
+void TEST_ENTITY_DEF::CancelAssert()
+{
+    this->_Asserted = false;
+}
+
 void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec)
 {
     this->StartSpec(entityName, spec, false);

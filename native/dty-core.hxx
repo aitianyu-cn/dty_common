@@ -815,6 +815,9 @@ namespace dty::test
         __PUB__ virtual __destruction__  ~TestEntity() __override_func;
 
         __PUB__ TestState  __VARIABLE__ GetState();
+        __PUB__ void       __VARIABLE__ SetAssert();
+        __PUB__ void       __VARIABLE__ CancelAssert();
+
         __PUB__ void       __VARIABLE__ StartSpec(const ::string __VARIABLE__ entityName, TestSpecDelegate __VARIABLE__ spec);
         __PUB__ void       __VARIABLE__ StartSpec
         (
