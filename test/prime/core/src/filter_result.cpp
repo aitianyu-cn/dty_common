@@ -1,29 +1,29 @@
 #include "../../../testframe.hxx"
 #include "../../../../native/prime/core/iterator.hpp"
 
-class TestClass
+class TestClass_Filter
 {
 public:
-    TestClass()
+    TestClass_Filter()
     {
-        ++TestClass::Counter;
+        ++TestClass_Filter::Counter;
     }
-    ~TestClass()
+    ~TestClass_Filter()
     {
-        --TestClass::Counter;
+        --TestClass_Filter::Counter;
     }
 
 public:
     object operator new[](size_t size)
     {
-        ++TestClass::NewCounter;
+        ++TestClass_Filter::NewCounter;
         return ::operator new [](size);
     }
 
 public:
     void operator delete[](object obj)
     {
-        --TestClass::NewCounter;
+        --TestClass_Filter::NewCounter;
         ::operator delete [](obj);
     }
 
@@ -33,11 +33,11 @@ public:
     static int32 NewCounter;
 };
 
-int32 TestClass::Counter = 0;
-int32 TestClass::NewCounter = 0;
+int32 TestClass_Filter::Counter = 0;
+int32 TestClass_Filter::NewCounter = 0;
 
 using FR = dty::collection::FilterResult<int32>;
-using FRC = dty::collection::FilterResult<TestClass>;
+using FRC = dty::collection::FilterResult<TestClass_Filter>;
 
 FR* pFilter;
 
@@ -118,29 +118,29 @@ void test_spec_filter_result(dty::test::TestEntity& entity)
                 {
                     entity.RunTest("destructor", "not need free", [](TO& t) -> void
                         {
-                            TestClass* p = new TestClass[1];
-                            int32 pre_counter = TestClass::Counter;
+                            TestClass_Filter* p = new TestClass_Filter[1];
+                            int32 pre_counter = TestClass_Filter::Counter;
 
                             FRC* filter = new FRC(p, 1, false);
-                            t.EQ(pre_counter, TestClass::Counter);
+                            t.EQ(pre_counter, TestClass_Filter::Counter);
 
                             delete filter;
-                            t.EQ(pre_counter, TestClass::Counter);
+                            t.EQ(pre_counter, TestClass_Filter::Counter);
 
-                            delete[] p;
+                            delete [] p;
                         }
                     );
 
                     entity.RunTest("destructor", "need free", [](TO& t) -> void
                         {
-                            TestClass* p = new TestClass[3];
-                            int32 pre_counter = TestClass::NewCounter;
+                            TestClass_Filter* p = new TestClass_Filter[3];
+                            int32 pre_counter = TestClass_Filter::NewCounter;
 
                             FRC* filter = new FRC(p, 3);
-                            t.EQ(pre_counter, TestClass::NewCounter);
+                            t.EQ(pre_counter, TestClass_Filter::NewCounter);
 
                             delete filter;
-                            if (!t.NE(pre_counter, TestClass::NewCounter))
+                            if (!t.NE(pre_counter, TestClass_Filter::NewCounter))
                                 delete [] p;
                         }
                     );

@@ -1,29 +1,29 @@
 #include "../../../testframe.hxx"
 #include "../../../../native/prime/core/iterator.hpp"
 
-class TestClass
+class TestClass_Entity
 {
 public:
-    TestClass()
+    TestClass_Entity()
     {
-        ++TestClass::Counter;
+        ++TestClass_Entity::Counter;
     }
-    ~TestClass()
+    ~TestClass_Entity()
     {
-        --TestClass::Counter;
+        --TestClass_Entity::Counter;
     }
 
 public:
     object operator new[](size_t size)
     {
-        ++TestClass::NewCounter;
+        ++TestClass_Entity::NewCounter;
         return ::operator new [](size);
     }
 
 public:
     void operator delete[](object obj)
     {
-        --TestClass::NewCounter;
+        --TestClass_Entity::NewCounter;
         ::operator delete [](obj);
     }
 
@@ -33,11 +33,11 @@ public:
     static int32 NewCounter;
 };
 
-int32 TestClass::Counter = 0;
-int32 TestClass::NewCounter = 0;
+int32 TestClass_Entity::Counter = 0;
+int32 TestClass_Entity::NewCounter = 0;
 
 using IE = dty::collection::IteratorEntity<int32>;
-using IEC = dty::collection::IteratorEntity<TestClass>;
+using IEC = dty::collection::IteratorEntity<TestClass_Entity>;
 
 IE* pIterator = ::null;
 int32 EnumCounter = 0;
@@ -100,13 +100,13 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
                 {
                     entity.RunTest("destructor", "nothing needs to do if does not need to free", [](TO& t) -> void
                         {
-                            TestClass* p = new TestClass[10];
+                            TestClass_Entity* p = new TestClass_Entity[10];
                             IEC* e = new IEC(p, 10, false);
 
-                            int32 pre_counter = TestClass::NewCounter;
+                            int32 pre_counter = TestClass_Entity::NewCounter;
 
                             delete e;
-                            if (t.EQ(pre_counter, TestClass::NewCounter))
+                            if (t.EQ(pre_counter, TestClass_Entity::NewCounter))
                                 delete [] p;
                         }
                     );
@@ -121,15 +121,17 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("destructor", "release pointer only when the pointer is not used", [](TO& t) -> void
                         {
-                            TestClass* p = new TestClass[10];
+                            TestClass_Entity* p = new TestClass_Entity[10];
                             IEC* e1 = new IEC(p, 10, true);
                             IEC* e2 = new IEC(*e1);
 
-                            int32 pre_counter = TestClass::NewCounter;
+                            int32 pre_counter = TestClass_Entity::NewCounter;
 
                             delete e1;
-                            t.EQ(pre_counter, TestClass::NewCounter);
-                            if (!t.NE(pre_counter, TestClass::NewCounter))
+                            t.EQ(pre_counter, TestClass_Entity::NewCounter);
+
+                            delete e2;
+                            if (!t.NE(pre_counter, TestClass_Entity::NewCounter))
                                 delete [] p;
                         }
                     );
@@ -353,7 +355,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Never", "return empty FilterResult object if all element mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
+                            dty::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
                                 {
                                     return value < 10;
                                 }
@@ -366,7 +368,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Never", "get a not empty FilterResult if at least one element not mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
+                            dty::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
                                 {
                                     return value != 9;
                                 }
@@ -419,7 +421,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
                                 }
                             );
 
-                            t.EQ(5, res);
+                            t.EQ(6, res);
                         }
                     );
 
@@ -443,6 +445,40 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
         {
             if (::null != pIterator)
                 delete pIterator;
+        }
+    );
+
+    entity.RunFlow("Flow Test", [](TF& flow) -> void
+        {
+            flow.Item("Flow 1", [](TO& t) -> void
+                {
+                    t.EQ(0, 0);
+                }
+            );
+
+            flow.Item("Flow 1", [](TO& t) -> void
+                {
+                    t.EQ(0, 0);
+                }
+            );
+
+            flow.Item("Flow 2", [](TO& t) -> void
+                {
+                    t.EQ(0, 0);
+                }
+            );
+
+            flow.Item("Flow 3", [](TO& t) -> void
+                {
+                    t.EQ(0, 1);
+                }
+            );
+
+            flow.Item("Flow 4", [](TO& t) -> void
+                {
+                    t.EQ(0, 0);
+                }
+            );
         }
     );
 }

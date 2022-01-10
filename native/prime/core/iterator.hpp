@@ -59,7 +59,7 @@ namespace dty::collection
         __PUB__ IPropertyGetter<int32> __REFERENCE__ Size;
 
         __PUB__         IIteratorEntity(int32 __VARIABLE__ size);
-        __PUB__         IIteratorEntity(IIteratorEntity __REFERENCE__ ite);
+        __PUB__         IIteratorEntity(const IIteratorEntity __REFERENCE__ ite);
         __PUB__ virtual ~IIteratorEntity();
 
         __PUB__ virtual T_SP __VARIABLE__ Get(int32 __VARIABLE__ index) __pure_virtual_fun;
