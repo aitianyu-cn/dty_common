@@ -143,6 +143,17 @@ namespace dty
 }
 #endif // !__cplusplus
 
+//
+// language mode check macro-definition
+//
+#ifdef __EN_MODE
+// set dty-core language mode is English mode
+#define __DTY_CORE_LANG__ 1
+#else
+// set dty-core language mode is Chinese mode
+#define __DTY_CORE_LANG__ 0
+#endif // !__US_MODE
+
 #pragma endregion
 
 // ################################################################################################
@@ -679,6 +690,14 @@ namespace dty::test
         Expect = 1,
         Assert = 2
     };
+
+    namespace core
+    {
+        class TestObject : public virtual dty::TianyuObject
+        {
+
+        };
+    }
 
     // Test Object
     // test object to provide the basic APIs for test result exporter and some expect/assert
