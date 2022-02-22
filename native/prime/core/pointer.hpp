@@ -30,7 +30,7 @@ namespace dty
         // Strong Pointers have the actual use of object Pointers, while weak Pointers 
         // are only copies of object Pointers and do not guarantee access reliability。
         //
-        __PRO__ enum SPType : int32
+        __PRO__ enum class SPType : int32
         {
             STRONG = 0,
             WEAK = 1
@@ -53,16 +53,16 @@ namespace dty
         __PRI__ bool __VARIABLE__ IsSame(SmartPointer<T> __REFERENCE__ sp);
 #pragma endregion
 
+        __PRI__ T               __POINTER__  _Pointer;
+        __PRI__ Property<int64> __VARIABLE__ _Size;
+
         /**
          * @brief 获取一个值指示当前指针实例的大小
          * @brief Get a int64 indicates the current pointer size
          *
          * @return {int64} return pointer size
          */
-        __PUB__ const IPropertyGetter<int64> __REFERENCE__ Size = this->_Size;
-
-        __PRI__ T               __POINTER__  _Pointer;
-        __PRI__ Property<int64> __VARIABLE__ _Size;
+        __PUB__ IPropertyGetter<int64> __REFERENCE__ Size;
 
         /**
          * @brief 创建一个空指针对象
@@ -119,7 +119,7 @@ namespace dty
          *
          * @return {bool} return true if current pointer is ::null, other wise is false
          */
-        __PUB__ bool __VARIABLE__ IsNull();
+        __PUB__ virtual bool __VARIABLE__ IsNull() override;
         /**
          * @brief
          * @brief
@@ -201,18 +201,32 @@ namespace dty
          * @brief
          * @brief
          *
-         * @param {SmartPointer<T>&} other
+         * @param {T} other
          * @return {bool}
          */
-        __PUB__ bool __VARIABLE__ operator ==(SmartPointer<T> __VARIABLE__ other);
+        __PUB__ bool __VARIABLE__ operator ==(T __VARIABLE__ other);
         /**
          * @brief
          * @brief
          *
-         * @param {SmartPointer<T>&} other
+         * @param {T} other
          * @return {bool}
          */
-        __PUB__ bool __VARIABLE__ operator !=(SmartPointer<T> __VARIABLE__ other);
+        __PUB__ bool __VARIABLE__ operator !=(T __VARIABLE__ other);
+
+        __PUB__ template<class NT> operator NT __REFERENCE__()
+        {
+            // set a assert to make sure the converted type is correct
+            static_assert(
+                std::is_base_of<NT, T>::value || std::is_base_of<T, NT>::value,
+                "convert type should be child or parent of current type"
+                );
+
+            if (::null == this->_Pointer)
+                throw dty::except::NullPointerException();
+
+            return dynamic_cast<NT __REFERENCE__>(__PTR_TO_REF__(this->_Pointer));
+        }
 
         __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
