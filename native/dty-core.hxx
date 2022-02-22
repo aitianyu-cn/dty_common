@@ -806,11 +806,69 @@ namespace dty::test
 
     // test function
     // use a test function delegate to import a test item
-    using TestDelegate = void __VARIABLE__(__POINTER__)(TestObject __REFERENCE__ tobj);
+    using TestDelegate = std::function<void __VARIABLE__(TestObject __REFERENCE__ tobj)>;
 
     __PREDEFINE__ class TestEntity;
 
-    using TestSpecDelegate = void __VARIABLE__(__POINTER__)(TestEntity __REFERENCE__ entity);
+    class TestFlow final : public virtual dty::TianyuObject
+    {
+        __PRI__ bool       __VARIABLE__  _ConsolePrint;
+        __PRI__::string    __VARIABLE__  _FlowName;
+        __PRI__ TestState  __VARIABLE__  _State;
+        __PRI__ FILE       __POINTER__   _LogStream;
+        __PRI__ int32      __VARIABLE__  _Level;
+
+        __PUB__         TestFlow
+        (
+            const ::string __VARIABLE__  flowName,
+            TestEntity     __REFERENCE__ pentity,
+            FILE           __POINTER__   file,
+            int32          __VARIABLE__  level,
+            bool           __VARIABLE__  console_print
+        );
+        __PUB__         TestFlow(const TestFlow __REFERENCE__ tf);
+        __PUB__ virtual ~TestFlow() __override_func;
+
+        __PUB__ TestState  __VARIABLE__ GetState();
+        __PUB__ void       __VARIABLE__ Skip();
+        __PUB__ void       __VARIABLE__ Set();
+
+        __PUB__ void       __VARIABLE__ Item
+        (
+            const ::string __VARIABLE__ item_name,
+            TestDelegate   __VARIABLE__ item_delegate,
+            bool           __VARIABLE__ expect_exception = false
+        );
+        __PUB__ void       __VARIABLE__ ItemException
+        (
+            const ::string __VARIABLE__ item_name,
+            TestDelegate   __VARIABLE__ item_delegate
+        );
+
+        __PUB__ void       __VARIABLE__ Item
+        (
+            const char   __POINTER__  item_name,
+            TestDelegate __VARIABLE__ item_delegate,
+            bool         __VARIABLE__ expect_exception = false
+        );
+        __PUB__ void       __VARIABLE__ ItemException
+        (
+            const char   __POINTER__  item_name,
+            TestDelegate __VARIABLE__ item_delegate
+        );
+
+        __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
+        __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, TestState __VARIABLE__ state);
+        __PRI__ void       __VARIABLE__ EndRecord();
+    };
+
+    // flow test function
+    // use a flow test function delegate to import a group of tests which are need to run
+    // one by one and not assert any error.
+    // if any error happened, the next tests of this flow will be skipped.
+    using FlowDelegate = std::function<void __VARIABLE__(TestFlow __REFERENCE__ tobj)>;
+
+    using TestSpecDelegate = std::function<void __VARIABLE__(TestEntity __REFERENCE__ entity)>;
 
     // test entity
     // as its name showing, each test should start a test entity to process the actual tests.
@@ -885,6 +943,12 @@ namespace dty::test
             TestDelegate   __VARIABLE__ test_item
         );
 
+        __PUB__ void       __VARIABLE__ RunFlow
+        (
+            const ::string __VARIABLE__ flow_name,
+            FlowDelegate   __VARIABLE__ test_flow
+        );
+
         // ###################################################################################################################
         // const char* define
         // ###################################################################################################################
@@ -913,6 +977,7 @@ namespace dty::test
             bool             __VARIABLE__ ignoreException,
             bool             __VARIABLE__ depPreState
         );
+
         __PUB__ void       __VARIABLE__ RunTest
         (
             const char   __POINTER__  test_name,
@@ -933,6 +998,12 @@ namespace dty::test
             TestDelegate __VARIABLE__ test_item
         );
 
+        __PUB__ void       __VARIABLE__ RunFlow
+        (
+            const char   __POINTER__  flow_name,
+            FlowDelegate __VARIABLE__ test_flow
+        );
+
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
         __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, const ::string __VARIABLE__ description, TestState __VARIABLE__ state);
@@ -947,7 +1018,9 @@ namespace dty::test
 using TO = dty::test::TestObject;
 using TD = dty::test::TestDelegate;
 using TSD = dty::test::TestSpecDelegate;
+using TFD = dty::test::FlowDelegate;
 using TE = dty::test::TestEntity;
+using TF = dty::test::TestFlow;
 using TS = dty::test::TestState;
 using TT = dty::test::TestType;
 using N = const ::string;

@@ -12,6 +12,7 @@
 // ##################################################################################################
 
 // TestObject part
+#pragma region TestObject Part
 
 #define TEST_OBJECT_DEF dty::test::TestObject
 
@@ -291,7 +292,10 @@ bool TEST_OBJECT_DEF::LT(dty::TianyuObject& val1, dty::TianyuObject& val2)
 
 #undef TEST_OBJECT_DEF
 
+#pragma endregion
+
 // TestEntity part
+#pragma region TestEntity Part
 
 #define TEST_ENTITY_DEF dty::test::TestEntity
 
@@ -604,6 +608,34 @@ void TEST_ENTITY_DEF::RunExceptionTest(const ::string test_name, const ::string 
     this->Record(test_name, test_description, tobj.GetState());
 }
 
+void TEST_ENTITY_DEF::RunFlow(const ::string flow_name, dty::test::FlowDelegate test_flow)
+{
+    dty::test::TestFlow tflow(flow_name, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1, this->_ConsolePrint);
+
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
+    {
+        tflow.Skip();
+        ++this->_SkippedCount;
+    }
+    else
+    {
+        try
+        {
+            test_flow(tflow);
+        }
+        catch (...)
+        {
+            tflow.Set();
+        }
+
+        if (dty::test::TestState::Success == tflow.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
+
+    this->NotifyState(tflow.GetState());
+}
 
 void TEST_ENTITY_DEF::RunTest(const char* test_name, const char* test_description, dty::test::TestDelegate test_item)
 {
@@ -620,6 +652,10 @@ void TEST_ENTITY_DEF::RunExceptionTest(const char* test_name, const char* test_d
     this->RunExceptionTest((const ::string)test_name, (const ::string)test_description, test_item);
 }
 
+void TEST_ENTITY_DEF::RunFlow(const char* flow_name, dty::test::FlowDelegate test_flow)
+{
+    this->RunFlow((const ::string)flow_name, test_flow);
+}
 
 void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
 {
@@ -690,7 +726,7 @@ void TEST_ENTITY_DEF::EndRecord()
     for (int32 i = 0; i < this->_Level; ++i)
         fputs("  ", this->_LogStream);
 
-    fprintf(this->_LogStream, "Total: Success(%d)  Failed(%d)", this->_SuccessCount, this->_FailureCount);
+    fprintf(this->_LogStream, "Total: Success(%d)  Failed(%d)  Skipped(%d)", this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
 
     fflush(this->_LogStream);
 
@@ -706,3 +742,257 @@ void TEST_ENTITY_DEF::EndRecord()
 }
 
 #undef TEST_ENTITY_DEF
+
+#pragma endregion
+
+// TestFlow part
+#pragma region TestFlow Part
+
+#define TEST_FLOW_DEF dty::test::TestFlow
+
+TEST_FLOW_DEF::TestFlow
+(
+    const ::string flowName,
+    dty::test::TestEntity& pentity,
+    FILE* file,
+    int32 level,
+    bool console_printf
+) :
+    dty::TianyuObject(),
+    _ConsolePrint(console_printf),
+    _FlowName(::null),
+    _State(dty::test::TestState::Success),
+    _LogStream(file),
+    _Level(level)
+{
+    if (::null == flowName)
+        this->_FlowName = new char[1]{ '\0' };
+    else
+    {
+        int32 name_len = ::strlen(flowName);
+        this->_FlowName = new char[name_len + 1];
+        for (int32 i = 0; i < name_len; ++i)
+            this->_FlowName[i] = flowName[i];
+        this->_FlowName[name_len] = '\0';
+    }
+
+    this->Record(this->_Level - 1);
+}
+
+TEST_FLOW_DEF::TestFlow(const TEST_FLOW_DEF& tf) :
+    dty::TianyuObject(),
+    _ConsolePrint(tf._ConsolePrint),
+    _FlowName(tf._FlowName),
+    _State(tf._State),
+    _LogStream(tf._LogStream),
+    _Level(tf._Level)
+{
+    TEST_FLOW_DEF& dynamic_flow = const_cast<TEST_FLOW_DEF&>(tf);
+
+    dynamic_flow._FlowName = ::null;
+    dynamic_flow._LogStream = ::null;
+}
+
+TEST_FLOW_DEF::~TestFlow()
+{
+    this->EndRecord();
+
+    delete [] this->_FlowName;
+}
+
+dty::test::TestState TEST_FLOW_DEF::GetState()
+{
+    return this->_State;
+}
+
+void TEST_FLOW_DEF::Skip()
+{
+    this->_State = dty::test::TestState::Skipped;
+}
+
+void TEST_FLOW_DEF::Set()
+{
+    this->_State = dty::test::TestState::Failed;
+}
+
+void TEST_FLOW_DEF::Item(const ::string item_name, dty::test::TestDelegate item_delegate, bool ignore_exception)
+{
+    dty::test::TestObject tobj;
+
+    if (this->GetState() != dty::test::TestState::Success)
+        tobj.Skip();
+    else
+    {
+        try
+        {
+            item_delegate(tobj);
+        }
+        catch (...)
+        {
+            if (!ignore_exception)
+                tobj.Set();
+        }
+
+        this->_State = tobj.GetState();
+    }
+
+    this->Record(item_name, tobj.GetState());
+}
+
+void TEST_FLOW_DEF::ItemException(const ::string item_name, dty::test::TestDelegate item_delegate)
+{
+    dty::test::TestObject tobj;
+
+    if (this->GetState() != dty::test::TestState::Success)
+        tobj.Skip();
+    else
+    {
+        tobj.Set();
+        try
+        {
+            item_delegate(tobj);
+        }
+        catch (...)
+        {
+            tobj.Unset();
+        }
+
+        this->_State = tobj.GetState();
+    }
+
+    this->Record(item_name, tobj.GetState());
+}
+
+void TEST_FLOW_DEF::Item(const char* item_name, dty::test::TestDelegate item_delegate, bool ignore_exception)
+{
+    this->Item((const ::string)item_name, item_delegate, ignore_exception);
+}
+
+void TEST_FLOW_DEF::ItemException(const char* item_name, dty::test::TestDelegate item_delegate)
+{
+    this->ItemException((const ::string)item_name, item_delegate);
+}
+
+void TEST_FLOW_DEF::Record(int32 level)
+{
+    fputc('\n', this->_LogStream);
+    for (int32 i = 0; i < level; ++i)
+        fputs("  ", this->_LogStream);
+
+    fputs("[-------] Flow Start", this->_LogStream);
+
+    fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        for (int32 i = 0; i < level; ++i)
+            printf("  ");
+
+        printf("[-------] Flow Start\n");
+
+        fflush(stdin);
+    }
+}
+
+void TEST_FLOW_DEF::Record(const ::string name, dty::test::TestState state)
+{
+    fputc('\n', this->_LogStream);
+    for (int32 i = 0; i < this->_Level; ++i)
+        fputs("  ", this->_LogStream);
+
+    if (dty::test::TestState::Success == state)
+        fputs("√ ", this->_LogStream);
+    else if (dty::test::TestState::Skipped == state)
+        fputs("  ", this->_LogStream);
+    else
+        fputs("× ", this->_LogStream);
+
+    fputs(name, this->_LogStream);
+
+    fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        for (int32 i = 0; i < this->_Level; ++i)
+            printf("  ");
+
+        if (dty::test::TestState::Success == state)
+            printf("\033[1;32;40m√ %s \033[0m\n", name);
+        else if (dty::test::TestState::Skipped == state)
+            printf("  %s \n", name);
+        else
+            printf("\033[1;31;40m× %s \033[0m\n", name);
+
+        fflush(stdin);
+    }
+}
+
+void TEST_FLOW_DEF::EndRecord()
+{
+    putc('\n', this->_LogStream);
+    for (int32 i = 0; i < this->_Level - 1; ++i)
+        fputs("  ", this->_LogStream);
+
+    if (dty::test::TestState::Success == this->_State)
+        fputs("[SUCCESS] ", this->_LogStream);
+    else if (dty::test::TestState::Skipped == this->_State)
+        fputs("[SKIPPED] ", this->_LogStream);
+    else
+        fputs("[FAILED ] ", this->_LogStream);
+
+    fputs("Flow End: ", this->_LogStream);
+    fputs(this->_FlowName, this->_LogStream);
+
+    fflush(this->_LogStream);
+
+    if (this->_ConsolePrint)
+    {
+        for (int32 i = 0; i < this->_Level - 1; ++i)
+            printf("  ");
+
+        if (dty::test::TestState::Success == this->_State)
+            printf("\033[1;32;40m[SUCCESS] Flow End: %s \033[0m\n", this->_FlowName);
+        else if (dty::test::TestState::Skipped == this->_State)
+            printf("[SKIPPED] Flow End: %s \n", this->_FlowName);
+        else
+            printf("\033[1;31;40m[FAILED ] Flow End: %s \033[0m\n", this->_FlowName);
+
+        fflush(stdin);
+    }
+}
+// {
+//     fputc('\n', this->_LogStream);
+//     for (int32 i = 0; i < this->_Level - 1; ++i)
+//         fputs("  ", this->_LogStream);
+
+//     fprintf
+//     (
+//         this->_LogStream,
+//         "[------ Flow End: %s ------]",
+//         dty::test::TestState::Success == this->_State ?
+//         "Success" : dty::test::TestState::Failed == this->_State ?
+//         "Failed" : "Skipped"
+//     );
+
+//     fflush(this->_LogStream);
+
+//     if (this->_ConsolePrint)
+//     {
+//         for (int32 i = 0; i < this->_Level - 1; ++i)
+//             printf("  ");
+
+//         printf
+//         (
+//             "[------ Flow End: %s ------]\n",
+//             dty::test::TestState::Success == this->_State ?
+//             "Success" : dty::test::TestState::Failed == this->_State ?
+//             "Failed" : "Skipped"
+//         );
+
+//         fflush(stdin);
+//     }
+// }
+
+#undef TEST_FLOW_DEF
+
+#pragma endregion

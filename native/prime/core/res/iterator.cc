@@ -119,7 +119,7 @@ __TEMPLATE_DEF__ __construction__ __II_ENTIT_DEF__::IIteratorEntity(int32 size) 
     Size(_Size)
 { }
 
-__TEMPLATE_DEF__ __cp_construct__ __II_ENTIT_DEF__::IIteratorEntity(__II_ENTIT_DEF__& ite) :
+__TEMPLATE_DEF__ __cp_construct__ __II_ENTIT_DEF__::IIteratorEntity(const __II_ENTIT_DEF__& ite) :
     dty::TianyuObject(),
     _Size(ite._Size),
     Size(_Size)
@@ -136,6 +136,11 @@ __TEMPLATE_DEF__::string __II_ENTIT_DEF__::ToString() noexcept
 __TEMPLATE_DEF__ uint64 __II_ENTIT_DEF__::GetTypeId()
 {
     return dty::GetType(__PTR_TO_REF__ this).Id();
+}
+
+__TEMPLATE_DEF__ uint64 __II_ENTIT_DEF__::GetHashCode()
+{
+    throw dty::except::NotImplementationException();
 }
 
 //##########################################################################
@@ -252,7 +257,9 @@ __TEMPLATE_DEF__ __cp_construct__ __IT_ENTIT_DEF__::IteratorEntity(const __IT_EN
     _NeedFree(it._NeedFree),
     _Reference(it._Reference)
 {
-    if (this->_NeedFree && 0 < it._Size)
+    __IT_ENTIT_DEF__& cast_obj = const_cast<__IT_ENTIT_DEF__&>(it);
+
+    if (this->_NeedFree && 0 < cast_obj._Size)
         (__PTR_TO_VAR__(this->_Reference)) += 1;
 }
 
@@ -293,7 +300,7 @@ __TEMPLATE_DEF__ dty::SmartPointer<T> __IT_ENTIT_DEF__::End()
 
 __TEMPLATE_DEF__ void __IT_ENTIT_DEF__::ForEach(__IT_ENTIT_DEF__::ItemMapDelegate delegate)
 {
-    if (0 == this->Size())
+    if (0 == this->_Size)
         return;
 
     for (int32 i = 0; i < this->_Size; ++i)
@@ -311,7 +318,7 @@ __TEMPLATE_DEF__ T* __IT_ENTIT_DEF__::Some(__IT_ENTIT_DEF__::ItemChkDelegate del
 
 __TEMPLATE_DEF__ __F_RESULT_DEF__ __IT_ENTIT_DEF__::Filter(__IT_ENTIT_DEF__::ItemChkDelegate delegate)
 {
-    if (0 == this->Size())
+    if (0 == this->_Size)
         return __F_RESULT_DEF__();
 
     int32* filters = new int32[this->_Size];
@@ -329,7 +336,7 @@ __TEMPLATE_DEF__ __F_RESULT_DEF__ __IT_ENTIT_DEF__::Filter(__IT_ENTIT_DEF__::Ite
 
     T* results = new T[filterCount];
     for (int32 i = 0; i < filterCount; ++i)
-        T[i] = this->_Pointer[filters[i]];
+        results[i] = this->_Pointer[filters[i]];
 
     delete []filters;
     return __F_RESULT_DEF__(results, filterCount);
@@ -337,7 +344,7 @@ __TEMPLATE_DEF__ __F_RESULT_DEF__ __IT_ENTIT_DEF__::Filter(__IT_ENTIT_DEF__::Ite
 
 __TEMPLATE_DEF__ __F_RESULT_DEF__ __IT_ENTIT_DEF__::Never(__IT_ENTIT_DEF__::ItemChkDelegate delegate)
 {
-    if (0 == this->Size())
+    if (0 == this->_Size)
         return __F_RESULT_DEF__();
 
     int32* filters = new int32[this->_Size];
@@ -355,7 +362,7 @@ __TEMPLATE_DEF__ __F_RESULT_DEF__ __IT_ENTIT_DEF__::Never(__IT_ENTIT_DEF__::Item
 
     T* results = new T[filterCount];
     for (int32 i = 0; i < filterCount; ++i)
-        T[i] = this->_Pointer[filters[i]];
+        results[i] = this->_Pointer[filters[i]];
 
     delete []filters;
     return __F_RESULT_DEF__(results, filterCount);
