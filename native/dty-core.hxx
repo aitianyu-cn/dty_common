@@ -143,6 +143,31 @@ namespace dty
 }
 #endif // !__cplusplus
 
+//
+// language mode check macro-definition
+// in order to support const languages translation for tianyu native
+// should use the specified compiler tools to create the corresponding
+// language file
+//
+#if defined(__EN_MODE)
+// set dty-core language mode is English mode
+#define __DTY_CORE_LANG__ 1
+#elif defined(__CH_MODE)
+// set dty-core language mode is Chinese mode
+#define __DTY_CORE_LANG__ 0
+#endif // !language mode selection
+
+//
+// to check macro-definition __DTY_CORE_LANG__
+// if the label is defined, to input the specified message from language file
+// if the label is not defined, to return a default message
+//
+#ifdef __DTY_CORE_LANG__
+#define __DTY_CORE_MSG_CONVERT(msg) #msg
+#else
+#define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
+#endif // !__DTY_CORE_LANG__
+
 #pragma endregion
 
 // ################################################################################################
@@ -679,6 +704,14 @@ namespace dty::test
         Expect = 1,
         Assert = 2
     };
+
+    namespace core
+    {
+        class TestObject : public virtual dty::TianyuObject
+        {
+
+        };
+    }
 
     // Test Object
     // test object to provide the basic APIs for test result exporter and some expect/assert
