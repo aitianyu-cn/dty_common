@@ -9,6 +9,28 @@
                 "compiler": "g++",
                 "params": {}
             }
-        ]
+        ],
+        "macro": {
+            "macro_name": "value"
+        }
+    },
+    "pre-build": {
+        "automation": {
+            "tool name": {
+                "path": "",
+                "workflow": [
+                    {
+                        "source": "",
+                        "output": "",
+                        "params": {
+                            "lang": "zh-cn",
+                            "macro": {
+                                "macro_name": "value"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
     }
 }
