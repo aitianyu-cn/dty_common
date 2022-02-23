@@ -144,25 +144,12 @@ namespace dty
 #endif // !__cplusplus
 
 //
-// language mode check macro-definition
-// in order to support const languages translation for tianyu native
-// should use the specified compiler tools to create the corresponding
-// language file
-//
-#if defined(__EN_MODE)
-// set dty-core language mode is English mode
-#define __DTY_CORE_LANG__ 1
-#elif defined(__CH_MODE)
-// set dty-core language mode is Chinese mode
-#define __DTY_CORE_LANG__ 0
-#endif // !language mode selection
-
-//
 // to check macro-definition __DTY_CORE_LANG__
 // if the label is defined, to input the specified message from language file
 // if the label is not defined, to return a default message
 //
 #ifdef __DTY_CORE_LANG__
+#include "./res/i18n/language.h"
 #define __DTY_CORE_MSG_CONVERT(msg) #msg
 #else
 #define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
@@ -339,7 +326,7 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
 #if __cplusplus < 201700
-#error library needs C++17 or later
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_VERSION_LOW__)
 #endif
 #endif // !__DTY_DEV_MODE__
 

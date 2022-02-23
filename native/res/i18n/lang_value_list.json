@@ -1,0 +1,7 @@
+{
+    "__ERROR_CPP_VERSION_LOW__": {
+        "ch": "天宇库需要基于C++17或以上版本",
+        "en": "library needs C++17 or later",
+        "default": "天宇库需要基于C++17或以上版本"
+    }
+}

@@ -14,7 +14,7 @@
     },
     "cases": {
         "property": {
-            "output": "property",
+            "output": "property.test",
             "main": "property.cpp",
             "dep": [],
             "src": []
