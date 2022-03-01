@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start", "Start\Start.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{E4B18B8F-5063-449F-B1AF-0409BC0F0184}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auto", "Auto\Auto.csproj", "{1B1546B1-48EF-45CC-BB54-3CA4483D27E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auto", "Auto\Auto.csproj", "{1B1546B1-48EF-45CC-BB54-3CA4483D27E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maker", "Maker\Maker.csproj", "{3798E0FC-BF3A-43A3-9A8C-AF4AC503BC13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1B1546B1-48EF-45CC-BB54-3CA4483D27E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B1546B1-48EF-45CC-BB54-3CA4483D27E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B1546B1-48EF-45CC-BB54-3CA4483D27E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3798E0FC-BF3A-43A3-9A8C-AF4AC503BC13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3798E0FC-BF3A-43A3-9A8C-AF4AC503BC13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3798E0FC-BF3A-43A3-9A8C-AF4AC503BC13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3798E0FC-BF3A-43A3-9A8C-AF4AC503BC13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

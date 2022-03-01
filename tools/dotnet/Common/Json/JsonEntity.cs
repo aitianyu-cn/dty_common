@@ -1,7 +1,7 @@
 
 namespace DTY.Dotnet.Tools.Common.Json
 {
-    public class JsonEntity
+    internal class JsonEntity : IJsonEntity
     {
 
     }
