@@ -129,18 +129,84 @@ namespace DTY.Dotnet.Tools.Common.Json
         public IJsonValue this[string key] { get; }
     }
 
-    /// <summary>
-    /// a json unit that contains a key and its value
-    /// </summary>
-    public interface IJsonUnit
-    {
-
-    }
-
     public interface IJsonEntity
     {
-        // IO part
+        #region Fields
+        /// <summary>
+        /// get a string that indicates the file path of current json entity
+        /// 
+        /// null value will be returned if the json entity is not created by reading file
+        /// </summary>
+        public string FilePath { get; }
+        #endregion
 
-        // operate part
+        #region IO part
+        /// <summary>
+        /// write current json entity to file
+        /// </summary>
+        /// <returns>return false if writing has error or true is success</returns>
+        /// <exception cref="FileNotFoundException">
+        /// an excetion thrown if the json entity is not created by reading file
+        /// </exception>
+        public bool WriteToFile();
+        /// <summary>
+        /// write current json entity to file
+        /// 
+        /// if the file path of current json entity is null, the file path will be updated by what indicates in params.
+        /// </summary>
+        /// <param name="filePath">a new file path which need to write</param>
+        /// <returns>return false if writing has error or true is success</returns>
+        /// <exception cref="IOException">
+        /// an excetion thrown if any error happens when writing
+        /// </exception>
+        public bool WriteToFile(string filePath);
+        /// <summary>
+        /// write current json entity to file with writing parameters
+        /// 
+        /// if the file path of current json entity is null, the file path will be updated by what indicates in params.
+        /// </summary>
+        /// <param name="filePath">a new file path which need to write</param>
+        /// <param name="parameters">parameters of file writing</param>
+        /// <returns>return false if writing has error or true is success</returns>
+        /// <exception cref="IOException">
+        /// an excetion thrown if any error happens when writing
+        /// </exception>
+        public bool WriteToFile(string filePath, IDictionary<string, object> parameters);
+        #endregion
+
+        #region operate part
+        /// <summary>
+        /// get a json object from json entity.
+        /// </summary>
+        /// <returns>return a json object or return an empty json object if this is a initial entity</returns>
+        public IJsonObject GetObject();
+        /// <summary>
+        /// set a json object to current entity. this operation will overwrite current json object.
+        /// </summary>
+        /// <param name="jsonObject">a new json object</param>
+        public void SetObject(IJsonObject jsonObject);
+        /// <summary>
+        /// delete current json object and set an empty one.
+        /// </summary>
+        public void Clean();
+        /// <summary>
+        /// get a boolean value that indicates current json entity is empty or not
+        /// </summary>
+        /// <returns>empty json object will return true, else return false</returns>
+        public bool HasObject();
+        /// <summary>
+        /// merge other json objects to current entity, same fields would be ignored.
+        /// </summary>
+        /// <param name="jsonObject">other json objects</param>
+        /// <returns>return true if merge successful, else return false</returns>
+        public bool Merge(params IJsonObject[] jsonObject);
+        /// <summary>
+        /// merge other json objects to current entity, same fields would be ignored or overwrite.
+        /// </summary>
+        /// <param name="jsonObject">other json objects</param>
+        /// <param name="updateExist">a flag indicates the same fields should be updated or keep the first one. if the true value is set, last field will win.</param>
+        /// <returns>return true if merge successful, else return false</returns>
+        public bool Merge(bool updateExist, params IJsonObject[] jsonObject);
+        #endregion
     }
 }
