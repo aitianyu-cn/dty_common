@@ -131,8 +131,13 @@ namespace DTY.Dotnet.Tools.Common.Param
                 case ParamAdditionState.ONCE:
                     if (index < args.Length && !this.IsControl(args[index], out _))
                     {
-                        this._Parameters.AddParam(compar.FullName, compar.Handler);
+                        if (this._Parameters.AddParam(compar.FullName, compar.Handler))
                         this._Parameters.AddAddition(compar.FullName, args[index++]);
+                        else
+                        {
+                            ++index;
+                            this._MessageCollection.Push(string.Format("错误: 无法添加参数{0}({1})", compar.FullName, compar.SingleName));
+                        }
                     }
                     else
                         this._MessageCollection.Push(string.Format("控制符: --{0}(-{1}) 需要一个参数", compar.FullName, compar.SingleName));
@@ -140,34 +145,52 @@ namespace DTY.Dotnet.Tools.Common.Param
                 case ParamAdditionState.TWICE:
                     if (index + 1 < args.Length && !this.IsControl(args[index], out _) && !this.IsControl(args[index + 1], out _))
                     {
-                        this._Parameters.AddParam(compar.FullName, compar.Handler);
-                        this._Parameters.AddAddition(compar.FullName, args[index++]);
-                        this._Parameters.AddAddition(compar.FullName, args[index++]);
+                        if (this._Parameters.AddParam(compar.FullName, compar.Handler))
+                        {
+                            this._Parameters.AddAddition(compar.FullName, args[index++]);
+                            this._Parameters.AddAddition(compar.FullName, args[index++]);
+                        }
+                        else
+                        {
+                            index += 2;
+                            this._MessageCollection.Push(string.Format("错误: 无法添加参数{0}({1})", compar.FullName, compar.SingleName));
+                        }
                     }
                     else
                         this._MessageCollection.Push(string.Format("控制符: --{0}(-{1}) 需要两个参数", compar.FullName, compar.SingleName));
                     break;
                 case ParamAdditionState.SELECTABLE:
-                    this._Parameters.AddParam(compar.FullName, compar.Handler);
-                    while (index < args.Length && !this.IsControl(args[index], out _))
-                        this._Parameters.AddAddition(compar.FullName, args[index++]);
+                    {
+                        bool isParamAdded = this._Parameters.AddParam(compar.FullName, compar.Handler);
+                        while (index < args.Length && !this.IsControl(args[index], out _))
+                            if (isParamAdded)
+                                this._Parameters.AddAddition(compar.FullName, args[index++]);
+
+                        if (!isParamAdded)
+                            this._MessageCollection.Push(string.Format("错误: 无法添加参数{0}({1})", compar.FullName, compar.SingleName));
+                    }
                     break;
                 case ParamAdditionState.MORE:
                     if (index < args.Length && !this.IsControl(args[index], out _))
                     {
+                        bool isParamAdded = this._Parameters.AddParam(compar.FullName, compar.Handler);
                         do
                         {
-                            this._Parameters.AddParam(compar.FullName, compar.Handler);
-                            this._Parameters.AddAddition(compar.FullName, args[index++]);
+                            if (isParamAdded)
+                                this._Parameters.AddAddition(compar.FullName, args[index++]);
                         }
                         while (index < args.Length && !this.IsControl(args[index], out _));
+
+                        if (!isParamAdded)
+                            this._MessageCollection.Push(string.Format("错误: 无法添加参数{0}({1})", compar.FullName, compar.SingleName));
                     }
                     else
                         this._MessageCollection.Push(string.Format("控制符: --{0}(-{1}) 需要至少一个参数", compar.FullName, compar.SingleName));
                     break;
                 case ParamAdditionState.NONE:
                 default:
-                    this._Parameters.AddParam(compar.FullName, compar.Handler);
+                    if (!this._Parameters.AddParam(compar.FullName, compar.Handler))
+                        this._MessageCollection.Push(string.Format("错误: 无法添加参数{0}({1})", compar.FullName, compar.SingleName));
                     break;
             }
         }

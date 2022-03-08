@@ -6,17 +6,24 @@ namespace DTY.Dotnet.Tools.Common.Param
     public class ParametersItem
     {
         private readonly ParameterHandlerDelegate? _Handler;
-        private readonly List<string> _Additional;
+        private readonly List<List<string>> _Additional;
+
+        public int AdditionCount => this._Additional.Count;
 
         public ParametersItem()
         {
             this._Handler = null;
-            this._Additional = new List<string>();
+            this._Additional = new List<List<string>>();
         }
         public ParametersItem(ParameterHandlerDelegate handler)
         {
             this._Handler = handler;
-            this._Additional = new List<string>();
+            this._Additional = new List<List<string>>();
+        }
+
+        public void NewParameter()
+        {
+            this._Additional.Add(new List<string>());
         }
 
         public void AddAddition(string addition)
@@ -28,18 +35,29 @@ namespace DTY.Dotnet.Tools.Common.Param
             if (0 == addition.Length)
                 return;
 
-            if (this._Additional.Contains(addition))
+            if (0 == this._Additional.Count)
                 return;
 
-            this._Additional.Add(addition);
+            this._Additional[this._Additional.Count - 1].Add(addition);
         }
 
-        public void Handle()
+        public void HandleOne(int index)
         {
             if (this._Handler is null)
                 return;
 
-            this._Handler(this._Additional);
+            if (0 > index || this._Additional.Count <= index)
+                return;
+
+            this._Handler(this._Additional[index]);
+        }
+        public void HandleAll()
+        {
+            if (this._Handler is null)
+                return;
+
+            foreach (List<string> list in this._Additional)
+                this._Handler(list);
         }
     }
 
@@ -52,19 +70,25 @@ namespace DTY.Dotnet.Tools.Common.Param
             this._Params = new Dictionary<string, ParametersItem>();
         }
 
-        public void AddParam(string pname, ParameterHandlerDelegate handler)
+        public bool AddParam(string pname, ParameterHandlerDelegate handler)
         {
             if (pname is null)
-                return;
+                return false;
 
             pname = pname.Trim();
             if (0 == pname.Length)
-                return;
+                return false;
 
-            if (this._Params.ContainsKey(pname))
-                return;
+            if (!this._Params.ContainsKey(pname))
+                this._Params.Add(pname, new ParametersItem(handler));
 
-            this._Params.Add(pname, new ParametersItem(handler));
+            if (this._Params.TryGetValue(pname, out ParametersItem item))
+            {
+                item.NewParameter();
+                return true;
+            }
+
+            return false;
         }
 
         public void AddAddition(string pname, string addition)
@@ -80,13 +104,28 @@ namespace DTY.Dotnet.Tools.Common.Param
                 value.AddAddition(addition);
         }
 
+        public int ParameterAdditionCount(string name)
+        {
+            if (name is null)
+                return -1;
+
+            name = name.Trim();
+            if (0 == name.Length)
+                return -1;
+
+            if (this._Params.TryGetValue(name, out ParametersItem? value))
+                return value?.AdditionCount ?? -1;
+
+            return -1;
+        }
+
         public void HandleAll()
         {
             if (0 == this._Params.Count)
                 return;
 
             foreach (ParametersItem item in this._Params.Values)
-                item.Handle();
+                item.HandleAll();
         }
 
         public void HandleOne(string pname)
@@ -95,7 +134,16 @@ namespace DTY.Dotnet.Tools.Common.Param
                 return;
 
             if (this._Params.TryGetValue(pname, out ParametersItem? item))
-                item.Handle();
+                item.HandleAll();
+        }
+
+        public void HandleOne(string pname, int index)
+        {
+            if (0 == this._Params.Count)
+                return;
+
+            if (this._Params.TryGetValue(pname, out ParametersItem? item))
+                item.HandleOne(index);
         }
     }
 }

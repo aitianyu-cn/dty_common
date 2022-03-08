@@ -102,6 +102,20 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// throw an exception when the index is not in the valid index range
         /// </exception>
         public IJsonValue this[int index] { get; }
+
+        /// <summary>
+        /// write current json value into file
+        /// </summary>
+        /// <param name="fileStream">the opened file stream</param>
+        /// <returns>return true if write successfully, else false</returns>
+        internal bool WriteToFile(FileStream fileStream);
+        /// <summary>
+        /// write current json value into file with the customized style.
+        /// </summary>
+        /// <param name="fileStream">the opened file stream</param>
+        /// <param name="writingParams">the json style of writing file</param>
+        /// <returns>return true if write successfully, else false</returns>
+        internal bool WriteToFileWithStructure(FileStream fileStream, JsonWritingParams writingParams);
     }
 
     public interface IJsonObject : IJsonValue
