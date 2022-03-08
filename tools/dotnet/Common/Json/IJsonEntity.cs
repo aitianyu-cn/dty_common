@@ -46,7 +46,7 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// string  - 0
         /// integer - actual value
         /// boolean - true->1 | false->0
-        /// object  - null->0 | not null->the keys count of object
+        /// object  - null->-1 | not null->the keys count of object
         /// array   - length of the array
         /// </summary>
         public int ToInt { get; }
@@ -88,7 +88,7 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// <exception cref="System.InvalidCastException">
         /// an exception is triggered if the value type is not array type or object type.
         /// </exception>
-        public IJsonValue ToArray { get; }
+        public IEnumerator<IJsonValue> ToArray { get; }
 
         /// <summary>
         /// get a json value by count index.
@@ -97,6 +97,9 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// <returns>return a json value</returns>
         /// <exception cref="System.NotSupportedException">
         /// an exception is triggered if this indexer is not invokered in object or array type
+        /// </exception>
+        /// <exception cref="System.IndexOutOfRangeException">
+        /// throw an exception when the index is not in the valid index range
         /// </exception>
         public IJsonValue this[int index] { get; }
     }
@@ -125,6 +128,9 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// <returns>return a json value</returns>
         /// <exception cref="System.MissingMemberException">
         /// an exception is triggered if the key is not found in current object
+        /// </exception>
+        /// <exception cref="NullReferenceException">
+        /// throw an exception when the object is null
         /// </exception>
         public IJsonValue this[string key] { get; }
     }
@@ -184,6 +190,13 @@ namespace DTY.Dotnet.Tools.Common.Json
         /// set a json object to current entity. this operation will overwrite current json object.
         /// </summary>
         /// <param name="jsonObject">a new json object</param>
+        /// <exception cref="ArgumentNullException">
+        /// throw an exception when the new json object is null.
+        /// </exception>
+        /// <exception cref="InvalidCastException">
+        /// throw an exception when the new json object interface can not cast to json object
+        /// (this exception should not be thrown in any time)
+        /// </exception>
         public void SetObject(IJsonObject jsonObject);
         /// <summary>
         /// delete current json object and set an empty one.

@@ -675,6 +675,7 @@ __TEMPLATE_DEF__ uint64 __DTY_TYPE_DEF__::InstanceHashCode()
 // import the core definition of Tianyu Native
 #include "stdio.h"
 #include <iostream>
+#include <functional> 
 
 namespace dty::test
 {
@@ -694,7 +695,7 @@ namespace dty::test
 
     namespace core
     {
-        class TestObject : public virtual dty::TianyuObject
+        class TestObjectBase : public virtual dty::TianyuObject
         {
 
         };
