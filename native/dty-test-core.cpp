@@ -11,6 +11,31 @@
 // class methods implementation
 // ##################################################################################################
 
+// TestObjectBase part
+#pragma region TestObjectBase Part
+
+#define TEST_OBJ_BASE_DEF dty::test::core::TestObjectBase
+
+TEST_OBJ_BASE_DEF::TestObjectBase(bool consolePrint, dty::test::TestState state, FILE* file, int32 level)
+    : dty::TianyuObject(),
+    _ConsolePrint(consolePrint),
+    _ObjectName(::null),
+    _State(state),
+    _LogStream(file),
+    _Level(level)
+{ }
+
+TEST_OBJ_BASE_DEF::~TestObjectBase() { }
+
+dty::test::TestState TEST_OBJ_BASE_DEF::GetState()
+{
+    return this->_State;
+}
+
+#undef TEST_OBJ_BASE_DEF
+
+#pragma endregion
+
 // TestObject part
 #pragma region TestObject Part
 
@@ -301,27 +326,24 @@ bool TEST_OBJECT_DEF::LT(dty::TianyuObject& val1, dty::TianyuObject& val2)
 
 TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
     dty::TianyuObject(),
-    _ConsolePrint(console_print),
+    dty::test::core::TestObjectBase(console_print, dty::test::TestState::Success, file, level),
     _LogFile(::null),
-    _LogStream(file),
     _LogOwner(false),
-    _State(dty::test::TestState::Success),
     _Asserted(false),
-    _Level(level),
     _SuccessCount(0),
     _SkippedCount(0),
     _FailureCount(0)
 {
     // process entity name
     if (::null == entityName)
-        this->_EntityName = new char[1]{ '\0' };
+        this->_ObjectName = new char[1]{ '\0' };
     else
     {
         int32 ename_len = ::strlen(entityName);
-        this->_EntityName = new char[ename_len + 1];
+        this->_ObjectName = new char[ename_len + 1];
         for (int32 i = 0; i < ename_len; ++i)
-            this->_EntityName[i] = entityName[i];
-        this->_EntityName[ename_len] = '\0';
+            this->_ObjectName[i] = entityName[i];
+        this->_ObjectName[ename_len] = '\0';
     }
 
     this->Record(level - 1);
@@ -337,11 +359,9 @@ TEST_ENTITY_DEF::TestEntity(const char* entityName, int32 argc, char* argv []) :
 
 TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []) :
     dty::TianyuObject(),
-    _ConsolePrint(false),
+    dty::test::core::TestObjectBase(false, dty::test::TestState::Success, ::null, 0),
     _LogOwner(true),
-    _State(dty::test::TestState::Success),
     _Asserted(false),
-    _Level(0),
     _SuccessCount(0),
     _SkippedCount(0),
     _FailureCount(0)
@@ -416,14 +436,14 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
 
     // process entity name
     if (::null == entityName)
-        this->_EntityName = new char[1]{ '\0' };
+        this->_ObjectName = new char[1]{ '\0' };
     else
     {
         int32 ename_len = ::strlen(entityName);
-        this->_EntityName = new char[ename_len + 1];
+        this->_ObjectName = new char[ename_len + 1];
         for (int32 i = 0; i < ename_len; ++i)
-            this->_EntityName[i] = entityName[i];
-        this->_EntityName[ename_len] = '\0';
+            this->_ObjectName[i] = entityName[i];
+        this->_ObjectName[ename_len] = '\0';
     }
 
     // process file name
@@ -438,23 +458,22 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
 
 TEST_ENTITY_DEF::TestEntity(const TEST_ENTITY_DEF& entity) :
     dty::TianyuObject(),
-    _ConsolePrint(entity._ConsolePrint),
-    _EntityName(entity._EntityName),
+    dty::test::core::TestObjectBase(entity._ConsolePrint, entity._State, entity._LogStream, entity._Level),
     _LogFile(entity._LogFile),
-    _LogStream(entity._LogStream),
     _LogOwner(entity._LogOwner),
-    _State(entity._State),
     _Asserted(entity._Asserted),
-    _Level(entity._Level),
     _SuccessCount(entity._SuccessCount),
     _SkippedCount(entity._SkippedCount),
     _FailureCount(entity._FailureCount)
 {
     TEST_ENTITY_DEF& dynamic_obj = const_cast<TEST_ENTITY_DEF&>(entity);
 
+    // move entity name
+    this->_ObjectName = entity._ObjectName;
+
     // copy means move
     // clean the pre object data
-    dynamic_obj._EntityName = ::null;
+    dynamic_obj._ObjectName = ::null;
     dynamic_obj._LogFile = ::null;
     dynamic_obj._LogStream = ::null;
 }
@@ -463,19 +482,14 @@ TEST_ENTITY_DEF::~TestEntity()
 {
     this->EndRecord();
 
-    if (::null != this->_EntityName)
-        delete [](this->_EntityName);
+    if (::null != this->_ObjectName)
+        delete [](this->_ObjectName);
 
     if (::null != this->_LogFile)
         delete [](this->_LogFile);
 
     if (this->_LogOwner && ::null != this->_LogStream)
         fclose(this->_LogStream);
-}
-
-dty::test::TestState TEST_ENTITY_DEF::GetState()
-{
-    return this->_State;
 }
 
 void TEST_ENTITY_DEF::SetAssert()
@@ -669,7 +683,7 @@ void TEST_ENTITY_DEF::Record(int32 level)
     for (int32 i = 0; i < level; ++i)
         fputs("  ", this->_LogStream);
 
-    fputs(this->_EntityName, this->_LogStream);
+    fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);
 
@@ -678,7 +692,7 @@ void TEST_ENTITY_DEF::Record(int32 level)
         for (int32 i = 0; i < level; ++i)
             printf("  ");
 
-        printf("%s\n", this->_EntityName);
+        printf("%s\n", this->_ObjectName);
 
         fflush(stdin);
     }
@@ -759,21 +773,17 @@ TEST_FLOW_DEF::TestFlow
     bool console_printf
 ) :
     dty::TianyuObject(),
-    _ConsolePrint(console_printf),
-    _FlowName(::null),
-    _State(dty::test::TestState::Success),
-    _LogStream(file),
-    _Level(level)
+    dty::test::core::TestObjectBase(console_printf, dty::test::TestState::Success, file, level)
 {
     if (::null == flowName)
-        this->_FlowName = new char[1]{ '\0' };
+        this->_ObjectName = new char[1]{ '\0' };
     else
     {
         int32 name_len = ::strlen(flowName);
-        this->_FlowName = new char[name_len + 1];
+        this->_ObjectName = new char[name_len + 1];
         for (int32 i = 0; i < name_len; ++i)
-            this->_FlowName[i] = flowName[i];
-        this->_FlowName[name_len] = '\0';
+            this->_ObjectName[i] = flowName[i];
+        this->_ObjectName[name_len] = '\0';
     }
 
     this->Record(this->_Level - 1);
@@ -781,15 +791,13 @@ TEST_FLOW_DEF::TestFlow
 
 TEST_FLOW_DEF::TestFlow(const TEST_FLOW_DEF& tf) :
     dty::TianyuObject(),
-    _ConsolePrint(tf._ConsolePrint),
-    _FlowName(tf._FlowName),
-    _State(tf._State),
-    _LogStream(tf._LogStream),
-    _Level(tf._Level)
+    dty::test::core::TestObjectBase(tf._ConsolePrint, tf._State, tf._LogStream, tf._Level)
 {
     TEST_FLOW_DEF& dynamic_flow = const_cast<TEST_FLOW_DEF&>(tf);
 
-    dynamic_flow._FlowName = ::null;
+    this->_ObjectName = dynamic_flow._ObjectName;
+
+    dynamic_flow._ObjectName = ::null;
     dynamic_flow._LogStream = ::null;
 }
 
@@ -797,12 +805,7 @@ TEST_FLOW_DEF::~TestFlow()
 {
     this->EndRecord();
 
-    delete [] this->_FlowName;
-}
-
-dty::test::TestState TEST_FLOW_DEF::GetState()
-{
-    return this->_State;
+    delete [] this->_ObjectName;
 }
 
 void TEST_FLOW_DEF::Skip()
@@ -941,7 +944,7 @@ void TEST_FLOW_DEF::EndRecord()
         fputs("[FAILED ] ", this->_LogStream);
 
     fputs("Flow End: ", this->_LogStream);
-    fputs(this->_FlowName, this->_LogStream);
+    fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);
 
@@ -951,47 +954,15 @@ void TEST_FLOW_DEF::EndRecord()
             printf("  ");
 
         if (dty::test::TestState::Success == this->_State)
-            printf("\033[1;32;40m[SUCCESS] Flow End: %s \033[0m\n", this->_FlowName);
+            printf("\033[1;32;40m[SUCCESS] Flow End: %s \033[0m\n", this->_ObjectName);
         else if (dty::test::TestState::Skipped == this->_State)
-            printf("[SKIPPED] Flow End: %s \n", this->_FlowName);
+            printf("[SKIPPED] Flow End: %s \n", this->_ObjectName);
         else
-            printf("\033[1;31;40m[FAILED ] Flow End: %s \033[0m\n", this->_FlowName);
+            printf("\033[1;31;40m[FAILED ] Flow End: %s \033[0m\n", this->_ObjectName);
 
         fflush(stdin);
     }
 }
-// {
-//     fputc('\n', this->_LogStream);
-//     for (int32 i = 0; i < this->_Level - 1; ++i)
-//         fputs("  ", this->_LogStream);
-
-//     fprintf
-//     (
-//         this->_LogStream,
-//         "[------ Flow End: %s ------]",
-//         dty::test::TestState::Success == this->_State ?
-//         "Success" : dty::test::TestState::Failed == this->_State ?
-//         "Failed" : "Skipped"
-//     );
-
-//     fflush(this->_LogStream);
-
-//     if (this->_ConsolePrint)
-//     {
-//         for (int32 i = 0; i < this->_Level - 1; ++i)
-//             printf("  ");
-
-//         printf
-//         (
-//             "[------ Flow End: %s ------]\n",
-//             dty::test::TestState::Success == this->_State ?
-//             "Success" : dty::test::TestState::Failed == this->_State ?
-//             "Failed" : "Skipped"
-//         );
-
-//         fflush(stdin);
-//     }
-// }
 
 #undef TEST_FLOW_DEF
 
