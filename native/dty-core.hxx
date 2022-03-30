@@ -371,6 +371,8 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 #define abstract
 // define interface that is an abstract class
 #define _interface abstract class
+// define the export lable in internal code
+#define _internal_export
 
 // null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
@@ -383,25 +385,65 @@ constexpr auto null = nullptr;
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // formatter string type
 // 1. single char format
-//    - b: convert the value to binary value
-//    - B: 
+//    - a:
+//    - A:
+//    - b: convert the value to binary value (0,1) (without "0b" pre-fix)
+//    - B: convert the value to binary value (0,1) (with "0b" pre-fix)
 //    - c: convert the value to be char value(use ascii)
 //    - C:
-//    - d:
-//    - D:
-//    - x:
-//    - X:
-//    - o:
-//    - O:
-//    - 
-//    - 
-//    - 
+//    - d: convert the value to be decimin value (0-9)
+//    - D: to indicate the number of digits of an integer (to count the count of char 'D')
+//    - e:
+//    - E:
+//    - f: float value counter char (the count of char 'f' means the number count of float after point)
+//    - F:
+//    - g:
+//    - G:
+//    - h:
+//    - H:
+//    - i:
+//    - I:
+//    - j:
+//    - J:
+//    - k:
+//    - K:
+//    - l:
+//    - L:
+//    - m:
+//    - M:
+//    - N:
+//    - o: convert the value to be oct value (0-7) (without '\0' pre-fix)
+//    - O: convert the value to be oct value (0-7) (with '\0' pre-fix)
+//    - p: to indicate the pre-fix should not be added (the highest priority)
+//    - P: to indicate the pre-fix should be added (the highest priority)
+//    - q:
+//    - Q:
+//    - R:
+//    - s:
+//    - S:
+//    - t:
+//    - T:
+//    - u:
+//    - U:
+//    - v:
+//    - V:
+//    - w:
+//    - W:
+//    - x: convert the value to be HEX (lower case) (0-9, a-f)
+//    - X: convert the value to be HEX (upper case) (0-9, A-F)
+//    - y:
+//    - Y:
+//    - z:
+//    - Z:
 // 
-// 2. complex format
+// 2. complex format (char or integer below)
+//    - n: to indicate the total digits of result 
+//    - r: to indicate a char that is used to fill result if the result length is less than indicated
 // 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma region c_string basic APIs
+
 int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
 
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
@@ -429,6 +471,7 @@ int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
 ::string __VARIABLE__ ul2str_f(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
 ::string __VARIABLE__ f2str_f(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
 ::string __VARIABLE__ d2str_f(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+
 #pragma endregion
 
 // #################################################################################################
@@ -525,6 +568,26 @@ namespace dty
 
         __PUB__ static  bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj);
     };
+
+    constexpr int32 ValueAlignBaseDefault = 2;
+    constexpr int32 ValueAlignPowerDefault = 2;
+
+    /**
+     * @brief align value to be a new value that is integer multiple of base
+     *
+     * @param value {int32} source value
+     * @param base {int32} the base value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlign(int32 __VARIABLE__ value, int32 __VARIABLE__ base = ValueAlignBaseDefault);
+    /**
+     * @brief align value to be a new value that is integer multiple of 2^n
+     *
+     * @param value {int32} source value
+     * @param power {int32} the pow value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlignByPow(int32 __VARIABLE__ value, int32 __VARIABLE__ power = ValueAlignPowerDefault);
 }
 
 // internal macro definition for tianyu class type
