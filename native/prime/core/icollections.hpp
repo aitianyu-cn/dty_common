@@ -10,8 +10,8 @@
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.icollection?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__
 
 #include "./iterator.hpp"
 
@@ -31,4 +31,4 @@ namespace dty::collection
 
 #include "./res/icollections.cc"
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__

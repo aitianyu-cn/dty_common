@@ -705,11 +705,11 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
         fputs("  ", this->_LogStream);
 
     if (dty::test::TestState::Success == state)
-        fputs("[SUCCESS] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SUCCESS_OUTPUT__), this->_LogStream);
     else if (dty::test::TestState::Skipped == state)
-        fputs("[SKIPPED] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SKIPPED_OUTPUT__), this->_LogStream);
     else
-        fputs("[FAILED ] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
     // fputs("[", this->_LogStream);
     fputs(name, this->_LogStream);
@@ -724,11 +724,11 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
             printf("  ");
 
         if (dty::test::TestState::Success == state)
-            printf("\033[1;32;40m[SUCCESS] %s - %s \033[0m\n", name, description);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SUCCESS_CONSOLE_OUTPUT__), name, description);
         else if (dty::test::TestState::Skipped == state)
-            printf("[SKIPPED] %s - %s \n", name, description);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SKIPPED_CONSOLE_OUTPUT__), name, description);
         else
-            printf("\033[1;31;40m[FAILED ] %s - %s \033[0m\n", name, description);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_CONSOLE_OUTPUT__), name, description);
 
         fflush(stdin);
     }
@@ -740,7 +740,7 @@ void TEST_ENTITY_DEF::EndRecord()
     for (int32 i = 0; i < this->_Level; ++i)
         fputs("  ", this->_LogStream);
 
-    fprintf(this->_LogStream, "Total: Success(%d)  Failed(%d)  Skipped(%d)", this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
+    fprintf(this->_LogStream, __DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_TOTAL_COLLECTION__), this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
 
     fflush(this->_LogStream);
 
@@ -749,7 +749,7 @@ void TEST_ENTITY_DEF::EndRecord()
         for (int32 i = 0; i < this->_Level; ++i)
             printf("  ");
 
-        printf("Total: \033[1;32;40mSuccess(%d)\033[0m \033[1;31;40mFailed(%d)\033[0m Skipped(%d)\n", this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
+        printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_CONSOLE_TOTAL_COLLECTION__), this->_SuccessCount, this->_FailureCount, this->_SkippedCount);
 
         fflush(stdin);
     }
@@ -882,7 +882,7 @@ void TEST_FLOW_DEF::Record(int32 level)
     for (int32 i = 0; i < level; ++i)
         fputs("  ", this->_LogStream);
 
-    fputs("[-------] Flow Start", this->_LogStream);
+    fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_START__), this->_LogStream);
 
     fflush(this->_LogStream);
 
@@ -891,7 +891,7 @@ void TEST_FLOW_DEF::Record(int32 level)
         for (int32 i = 0; i < level; ++i)
             printf("  ");
 
-        printf("[-------] Flow Start\n");
+        printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_CONSOLE_FLOW_START__));
 
         fflush(stdin);
     }
@@ -920,11 +920,11 @@ void TEST_FLOW_DEF::Record(const ::string name, dty::test::TestState state)
             printf("  ");
 
         if (dty::test::TestState::Success == state)
-            printf("\033[1;32;40m√ %s \033[0m\n", name);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_SUCCESS_CONSOLE_OUTPUT__), name);
         else if (dty::test::TestState::Skipped == state)
-            printf("  %s \n", name);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_SKIPPED_CONSOLE_OUTPUT__), name);
         else
-            printf("\033[1;31;40m× %s \033[0m\n", name);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_FAILED_CONSOLE_OUTPUT__), name);
 
         fflush(stdin);
     }
@@ -937,13 +937,13 @@ void TEST_FLOW_DEF::EndRecord()
         fputs("  ", this->_LogStream);
 
     if (dty::test::TestState::Success == this->_State)
-        fputs("[SUCCESS] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SUCCESS_OUTPUT__), this->_LogStream);
     else if (dty::test::TestState::Skipped == this->_State)
-        fputs("[SKIPPED] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_SKIPPED_OUTPUT__), this->_LogStream);
     else
-        fputs("[FAILED ] ", this->_LogStream);
+        fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
-    fputs("Flow End: ", this->_LogStream);
+    fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END__), this->_LogStream);
     fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);
@@ -954,11 +954,11 @@ void TEST_FLOW_DEF::EndRecord()
             printf("  ");
 
         if (dty::test::TestState::Success == this->_State)
-            printf("\033[1;32;40m[SUCCESS] Flow End: %s \033[0m\n", this->_ObjectName);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END_CONSOLE_SUCCESS__), this->_ObjectName);
         else if (dty::test::TestState::Skipped == this->_State)
-            printf("[SKIPPED] Flow End: %s \n", this->_ObjectName);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END_CONSOLE_SKIPPED__), this->_ObjectName);
         else
-            printf("\033[1;31;40m[FAILED ] Flow End: %s \033[0m\n", this->_ObjectName);
+            printf(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END_CONSOLE_FAILED__), this->_ObjectName);
 
         fflush(stdin);
     }

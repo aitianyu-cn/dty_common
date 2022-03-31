@@ -21,8 +21,8 @@
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.boolean?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_BASETYPE_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_BASETYPE_H_PLUS_PLUS__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__
 
 #ifdef __cplusplus
 
@@ -342,4 +342,4 @@ namespace dty
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_BASETYPE_H_PLUS_PLUS__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__

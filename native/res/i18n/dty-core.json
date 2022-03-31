@@ -1,0 +1,42 @@
+{
+    "__ERROR_CPP_UNKNOWN_ERROR__": {
+        "ch": "未知的错误",
+        "en": "Unknown Error",
+        "default": "未知的错误"
+    },
+    "__ERROR_CPP_UNKNOWN_APPLE_PLATFORM__": {
+        "ch": "",
+        "en": "Unknown Apple Platform",
+        "default": ""
+    },
+    "__ERROR_CPP_TIANYU_PLATFORM_REQUIRE_64__": {
+        "ch": "",
+        "en": "Tianyu Platform requires 64bit OS",
+        "default": ""
+    },
+    "__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__": {
+        "ch": "",
+        "en": "Unknown OS is not supported for Tianyu Platform",
+        "default": ""
+    },
+    "__ERROR_CPP_VERSION_LOW__": {
+        "ch": "天宇库需要基于C++17或以上版本",
+        "en": "library needs C++17 or later",
+        "default": "天宇库需要基于C++17或以上版本"
+    },
+    "__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__": {
+        "ch": "天宇测试程序需要至少 1 个参数用于启动",
+        "en": "Test Program needs at least 1 parameter.",
+        "default": "天宇测试程序需要至少 1 个参数用于启动"
+    },
+    "__ERROR_CPP_DTEST_WRONG_PARAM_PRE___": {
+        "ch": "",
+        "en": "Program parameter error with wrong pre '-' character.",
+        "default": ""
+    },
+    "__ERROR_CPP_DTEST_FILE_OPEN_FAILED__": {
+        "ch": "",
+        "en": "Output file open failed!",
+        "default": ""
+    }
+}

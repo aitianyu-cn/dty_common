@@ -16,6 +16,18 @@
 #define __DTY_COMMON_NATIVE_DTY_CORE_H_XX__
 
  //
+ // to check macro-definition __DTY_CORE_LANG__
+ // if the label is defined, to input the specified message from language file
+ // if the label is not defined, to return a default message
+ //
+#ifdef __DTY_CORE_LANG__
+#include "./res/i18n/language.h"
+#define __DTY_CORE_MSG_CONVERT(msg) #msg
+#else
+#define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
+#endif // !__DTY_CORE_LANG__
+
+ //
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
@@ -86,7 +98,7 @@
     * @brief 未知的Apple系统平台
     * @brief Throw error for Unknown Apple Platform
     */
-#error Unknown Apple Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_APPLE_PLATFORM__)
 #endif
 #endif // !defined(__APPLE__) || defined(__MACH__)
 
@@ -115,7 +127,7 @@
        * @brief Check state of 64bit OS
        */
 #ifdef __DTY_ERR_64
-#error Tianyu Platform require 64bit OS
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_REQUIRE_64__)
 #endif // !__DTY_ERR_64
 
        /**
@@ -123,7 +135,7 @@
         * @brief Check OS supportable state
         */
 #if !defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
-#error Unknown OS is not supported for Tianyu Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__)
 #endif // !!defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
 
 #ifdef __cplusplus
@@ -142,18 +154,6 @@ namespace dty
     };
 }
 #endif // !__cplusplus
-
-//
-// to check macro-definition __DTY_CORE_LANG__
-// if the label is defined, to input the specified message from language file
-// if the label is not defined, to return a default message
-//
-#ifdef __DTY_CORE_LANG__
-#include "./res/i18n/language.h"
-#define __DTY_CORE_MSG_CONVERT(msg) #msg
-#else
-#define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
-#endif // !__DTY_CORE_LANG__
 
 #pragma endregion
 
@@ -1141,22 +1141,25 @@ using N = const ::string;
             switch (err)                                                                                \
             {                                                                                           \
                 case dty::test::_dty_test_entity_fail_param_too_few:                                    \
-                    std::cout << "Test Program need at least 1 parameter." << std::endl;                \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__)         \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_param_pre_more:                                   \
-                    std::cout << "Program parameter error with wrong pre '-' character." << std::endl;  \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_WRONG_PARAM_PRE___)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_file_open:                                        \
-                    std::cout << "Output file open failed!" << std::endl;                               \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_FILE_OPEN_FAILED__)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 default:                                                                                \
-                    std::cout << "Unknown Error" << std::endl;                                          \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;      \
                     break;                                                                              \
             }                                                                                           \
         }                                                                                               \
         catch(...)                                                                                      \
         {                                                                                               \
-            std::cout << "Unknown Error" << std::endl;                                                  \
+            std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;              \
         }                                                                                               \
         return -1;                                                                                      \
     }                                                                                                   \

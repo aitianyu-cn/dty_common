@@ -1,0 +1,87 @@
+{
+    "__DTY_TEST_CORE_SUCCESS_OUTPUT__": {
+        "ch": "",
+        "en": "[SUCCESS] ",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_SKIPPED_OUTPUT__": {
+        "ch": "",
+        "en": "[SKIPPED] ",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FAILED_OUTPUT__": {
+        "ch": "",
+        "en": "[FAILED ] ",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_SUCCESS_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "\\033[1;32;40m[SUCCESS] %s - %s \\033[0m\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_SKIPPED_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "[SKIPPED] %s - %s \\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FAILED_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "\\033[1;31;40m[FAILED ] %s - %s \\033[0m\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_TOTAL_COLLECTION__": {
+        "ch": "",
+        "en": "Total: Success(%d)  Failed(%d)  Skipped(%d)",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_CONSOLE_TOTAL_COLLECTION__": {
+        "ch": "",
+        "en": "Total: \\033[1;32;40mSuccess(%d)\\033[0m \\033[1;31;40mFailed(%d)\\033[0m Skipped(%d)\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_START__": {
+        "ch": "",
+        "en": "[-------] Flow Start",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_CONSOLE_FLOW_START__": {
+        "ch": "",
+        "en": "[-------] Flow Start\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_SUCCESS_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "\\033[1;32;40m√ %s \\033[0m\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_SKIPPED_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "  %s \\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_FAILED_CONSOLE_OUTPUT__": {
+        "ch": "",
+        "en": "\\033[1;31;40m× %s \\033[0m\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_END__": {
+        "ch": "",
+        "en": "Flow End: ",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_SUCCESS__": {
+        "ch": "",
+        "en": "\\033[1;32;40m[SUCCESS] Flow End: %s \\033[0m\\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_SKIPPED__": {
+        "ch": "",
+        "en": "[SKIPPED] Flow End: %s \\n",
+        "default": ""
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_FAILED__": {
+        "ch": "",
+        "en": "\\033[1;31;40m[FAILED ] Flow End: %s \\033[0m\\n",
+        "default": ""
+    }
+}

@@ -10,8 +10,8 @@
  */
 
 #pragma once
-#ifndef __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_ITERATOR_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_ITERATOR_H_PLUS_PLUS__
 
 #include "./internal.h"
 #include "./property.hpp"
@@ -150,4 +150,4 @@ namespace dty::collection
 
 #include "./res/iterator.cc"
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_ITERATOR_H_PLUS_PLUS__
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_ITERATOR_H_PLUS_PLUS__
