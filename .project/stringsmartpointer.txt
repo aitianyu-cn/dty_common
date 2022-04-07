@@ -1,0 +1,106 @@
+class StringSmartPointer : public virtual TianyuObject, public virtual SmartPointer<char>
+    {
+        __PUB__ explicit StringSmartPointer();
+        __PUB__ explicit StringSmartPointer(::string __VARIABLE__ strptr);
+        __PUB__ explicit StringSmartPointer(::string __VARIABLE__ strptr, int32 __VARIABLE__ length);
+        __PUB__ explicit StringSmartPointer(const::string __VARIABLE__ strptr);
+        __PUB__ explicit StringSmartPointer(const::string __VARIABLE__ strptr, int32 __VARIABLE__ length);
+
+        __PUB__ explicit StringSmartPointer(const StringSmartPointer __REFERENCE__ str_copy);
+        __PUB__ virtual  ~StringSmartPointer();
+
+        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
+    };
+
+    using string_sp = StringSmartPointer;
+
+
+    #include "../pointer.hpp"
+
+dty::StringSmartPointer::StringSmartPointer()
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>()
+{ }
+
+dty::StringSmartPointer::StringSmartPointer(::string strptr)
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>()
+{
+    if (::null == strptr)
+        throw dty::except::NullPointerException();
+
+    int32 length = ::strlen(strptr);
+
+    this->_Size = length + 1;
+    this->_Pointer = strptr;
+}
+
+dty::StringSmartPointer::StringSmartPointer(::string strptr, int32 length)
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>()
+{
+    if (::null == strptr)
+        throw dty::except::NullPointerException();
+
+    if (0 >= length)
+        throw dty::except::IndexOutOfRangeException();
+
+    this->_Size = length;
+    this->_Pointer = strptr;
+}
+
+dty::StringSmartPointer::StringSmartPointer(const::string strptr)
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>()
+{
+    if (::null == strptr)
+        throw dty::except::NullPointerException();
+
+    int32 length = ::strlen(strptr);
+
+    this->_Size = length + 1;
+    this->_Pointer = new char[this->_Size];
+    for (int32 i = 0; i < length; ++i)
+        this->_Pointer[i] = strptr[i];
+    this->_Pointer[length] = '\0';
+}
+
+dty::StringSmartPointer::StringSmartPointer(const::string strptr, int32 length)
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>()
+{
+    if (::null == strptr)
+        throw dty::except::NullPointerException();
+
+    if (0 >= length)
+        throw dty::except::IndexOutOfRangeException();
+
+    int32 calcLength = ::strlen(strptr);
+    int32 actulLength = calcLength > length ? length : calcLength;
+
+    this->_Size = actulLength + 1;
+    this->_Pointer = new char[this->_Size];
+    for (int32 i = 0; i < actulLength; ++i)
+        this->_Pointer[i] = strptr[i];
+    this->_Pointer[actulLength] = '\0';
+}
+
+
+dty::StringSmartPointer::StringSmartPointer(const dty::StringSmartPointer& ptr)
+    :dty::TianyuObject(),
+    dty::SmartPointer<char>(ptr)
+{ }
+
+dty::StringSmartPointer::~StringSmartPointer()
+{ }
+
+::string dty::StringSmartPointer::ToString() noexcept
+{
+    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+}
+
+uint64 dty::StringSmartPointer::GetTypeId()
+{
+    return dty::GetType(__PTR_TO_REF__ this).Id();
+}

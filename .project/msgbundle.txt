@@ -1,0 +1,110 @@
+/**
+ * @file msgbundle.hpp(prime/core)
+ * @author senyun.yao
+ * @brief
+ * @version 0.1
+ * @date 2022-03-31
+ *
+ * @copyright aitianyu.cn Copyright (c) 2022
+ *
+ */
+
+#pragma once
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_MSG_BUNDLE_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_MSG_BUNDLE_H_PLUS_PLUS__
+
+#include "./internal.h"
+#include "./pointer.hpp"
+
+namespace dty
+{
+    namespace text
+    {
+        _enum MessageType
+        {
+            String,
+            Integer,
+            Boolean,
+            Double
+        };
+
+        abstract class MessageBundleBase : dty::TianyuObject
+        {
+            __PUB__         MessageBundleBase();
+            __PUB__         MessageBundleBase(dty::i18n::LanguageArea __VARIABLE__ language, dty::i18n::Location __VARIABLE__ location);
+            __PUB__ virtual ~MessageBundleBase() __override_func;
+
+            __PUB__ virtual bool        __VARIABLE__ Contains(string_sp __REFERENCE__ key) = 0;
+            __PUB__ virtual MessageType __VARIABLE__ GetValueType(string_sp __REFERENCE__ key) = 0;
+
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, string_sp __REFERENCE__ outValue) = 0;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, int32 __REFERENCE__ outValue) = 0;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, bool __REFERENCE__ outValue) = 0;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, double __REFERENCE__ outValue) = 0;
+
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, string_sp __REFERENCE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, int32 __VARIABLE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, bool __VARIABLE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, double __VARIABLE__ value) = 0;
+
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, string_sp __REFERENCE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, int32 __VARIABLE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, bool __VARIABLE__ value) = 0;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, double __VARIABLE__ value) = 0;
+
+            __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetTypeId() __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        };
+    }
+
+    namespace Memory
+    {
+        class MemoryMessageBundle : dty::text::MessageBundleBase
+        {
+            __PUB__         MemoryMessageBundle();
+            __PUB__ virtual ~MemoryMessageBundle() __override_func;
+
+            __PUB__ virtual dty::text::MessageType __VARIABLE__ GetValueType(string_sp __REFERENCE__ key) __override_func;
+
+            __PUB__ virtual bool        __VARIABLE__ Contains(string_sp __REFERENCE__ key) __override_func;
+
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, string_sp __REFERENCE__ outValue) __override_func;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, int32 __REFERENCE__ outValue) __override_func;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, bool __REFERENCE__ outValue) __override_func;
+            __PUB__ virtual bool __VARIABLE__ TryGetValue(string_sp __REFERENCE__ key, double __REFERENCE__ outValue) __override_func;
+
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, string_sp __REFERENCE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, int32 __VARIABLE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, bool __VARIABLE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetMessage(string_sp __REFERENCE__ key, double __VARIABLE__ value) __override_func;
+
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, string_sp __REFERENCE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, int32 __VARIABLE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, bool __VARIABLE__ value) __override_func;
+            __PUB__ virtual void __VARIABLE__ SetOrUpdateMessage(string_sp __REFERENCE__ key, double __VARIABLE__ value) __override_func;
+
+            __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetTypeId() __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        };
+
+        class MemoryMessageBundlePool final : dty::TianyuObject
+        {
+            __PUB__         MemoryMessageBundlePool();
+            __PUB__ virtual ~MemoryMessageBundlePool() __override_func;
+
+            __PUB__ bool __VARIABLE__ AddMessageBundle(dty::i18n::LanguageArea __VARIABLE__ language, dty::i18n::Location __VARIABLE__ location);
+            __PUB__ bool __VARIABLE__ RemoveMessageBundle(dty::i18n::LanguageArea __VARIABLE__ language, dty::i18n::Location __VARIABLE__ location);
+            __PUB__ bool __VARIABLE__ Contains(dty::i18n::LanguageArea __VARIABLE__ language, dty::i18n::Location __VARIABLE__ location);
+
+            __PUB__ MemoryMessageBundle __REFERENCE__ GetMessageBundle(dty::i18n::LanguageArea __VARIABLE__ language, dty::i18n::Location __VARIABLE__ location);
+
+            __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetTypeId() __override_func;
+            __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
+        };
+    }
+}
+
+#endif // __DTY_COMMON_NATIVE_PRIME_CORE_MSG_BUNDLE_H_PLUS_PLUS__

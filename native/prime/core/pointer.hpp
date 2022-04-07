@@ -53,8 +53,8 @@ namespace dty
         __PRI__ bool __VARIABLE__ IsSame(SmartPointer<T> __REFERENCE__ sp);
 #pragma endregion
 
-        __PRI__ T               __POINTER__  _Pointer;
-        __PRI__ Property<int64> __VARIABLE__ _Size;
+        __PRO__ T               __POINTER__  _Pointer;
+        __PRO__ Property<int64> __VARIABLE__ _Size;
 
         /**
          * @brief 获取一个值指示当前指针实例的大小
@@ -135,6 +135,13 @@ namespace dty
          * @return {bool}
          */
         __PUB__ bool   __VARIABLE__ Move(SmartPointer<T> __REFERENCE__ sp);
+        /**
+         * @brief
+         *
+         * @param {const SmartPointer<T>&} sp
+         * @return {void}
+         */
+        __PUB__ void   __VARIABLE__ Copy(const SmartPointer<T> __REFERENCE__ sp);
         /**
          * @brief 运算符 & 重载：获取当前指针的绝对地址
          * @brief __override_func operator &: Get the absoult address of current pointer.

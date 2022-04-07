@@ -88,6 +88,19 @@ namespace dty
             __PUB__ virtual bool __VARIABLE__ operator >=(Elem __REFERENCE__ other) __pure_virtual_fun;
         };
     }
+
+    namespace i18n
+    {
+        _enum LanguageArea : int32
+        {
+
+        };
+
+        _enum Location : int32
+        {
+
+        };
+    }
 }
 
 #include "./res/internal.cc"

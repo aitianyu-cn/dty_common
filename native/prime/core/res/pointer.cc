@@ -260,6 +260,24 @@ __TEMPLATE_DEF__ __DTY_SPTR_DEF__ __DTY_SPTR_DEF__::GetWeak()
     return SmartPointer<T>(this->_Pointer, this->_Size, true);
 }
 
+__TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Copy(const __DTY_SPTR_DEF__& sp)
+{
+    if (this->_Pointer == sp._Pointer)
+        return;
+
+    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
+    {
+        if (1 < this->_Size)
+            delete [] this->_Pointer;
+        else
+            delete this->_Pointer;
+    }
+
+    this->_SmartPointerType = sp._SmartPointerType;
+    this->_Pointer = sp._Pointer;
+    this->_Size = sp._Size;
+}
+
 __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::Move(__DTY_SPTR_DEF__& sp)
 {
     if (__DTY_SPTR_DEF__::SPType::STRONG != sp._SmartPointerType)

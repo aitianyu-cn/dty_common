@@ -284,7 +284,7 @@ uint64   dty::TianyuObject::GetHashCode()
 
 bool dty::TianyuObject::IsNull(dty::TianyuObject& obj)
 {
-    return 0ULL == obj.GetHashCode();
+    return obj.IsNull();
 }
 
 
