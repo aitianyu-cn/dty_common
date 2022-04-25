@@ -12,7 +12,7 @@
 #ifndef __DTY_COMMON_NATIVE_MATH_MATHEMATIC_BIGNUMBER_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_MATH_MATHEMATIC_BIGNUMBER_H_PLUS_PLUS__
 
-#include "./common.hpp"、、
+#include "./common.hpp"
 
 namespace dty::math
 {
