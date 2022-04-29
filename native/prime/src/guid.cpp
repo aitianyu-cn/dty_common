@@ -232,3 +232,12 @@ dty::Guid dty::Guid::NewGuid()
 
     return guid;
 }
+
+void _dty_native_cpp_guid_parse(dty::String g, ::byte* b)
+{
+    throw dty::except::NotImplementationException();
+}
+void _dty_native_cpp_guid_parse(const ::string g, ::byte* b)
+{
+    throw dty::except::NotImplementationException();
+}

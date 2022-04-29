@@ -14,8 +14,6 @@
 
 #include "./core.hxx"
 #include "./array.hpp"
-#include<string>
-#include<ostream>
 #if __cplusplus >= 201103
 #include<initializer_list>
 #endif // !__cplusplus >= 201103
@@ -161,11 +159,7 @@ namespace dty
 
         __PRI__ void __VARIABLE__ Release();
         __PRI__ void __VARIABLE__ UpdateSource(int32 __VARIABLE__ length, string __VARIABLE__ str);
-
-        friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, const String __REFERENCE__ str);
     };
-
-    std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, const String __REFERENCE__ str);
 }
 
 #endif // !__DTY_NATIVE_UTILS_STRING_H_PLUS_PLUS__

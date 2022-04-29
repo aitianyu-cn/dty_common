@@ -976,6 +976,20 @@ namespace dty::test
             TestDelegate __VARIABLE__ item_delegate
         );
 
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const char   __POINTER__  item_name,
+                TestDelegate __VARIABLE__ item_delegate
+            );
+
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const ::string __VARIABLE__ item_name,
+                TestDelegate   __VARIABLE__ item_delegate
+            );
+
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
         __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ EndRecord();
@@ -1055,12 +1069,18 @@ namespace dty::test
             const ::string __VARIABLE__ test_description,
             TestDelegate   __VARIABLE__ test_item
         );
-
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const ::string __VARIABLE__ flow_name,
             FlowDelegate   __VARIABLE__ test_flow
         );
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ RunExceptionTest
+            (
+                const ::string __VARIABLE__ item_name,
+                const ::string __VARIABLE__ test_description,
+                TestDelegate   __VARIABLE__ item_delegate
+            );
 
         // ###################################################################################################################
         // const char* define
@@ -1110,12 +1130,18 @@ namespace dty::test
             const char   __POINTER__  test_description,
             TestDelegate __VARIABLE__ test_item
         );
-
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const char   __POINTER__  flow_name,
             FlowDelegate __VARIABLE__ test_flow
         );
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ RunExceptionTest
+            (
+                const char   __POINTER__  item_name,
+                const char   __POINTER__  test_description,
+                TestDelegate __VARIABLE__ item_delegate
+            );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -1127,6 +1153,100 @@ namespace dty::test
     constexpr int32 _dty_test_entity_fail_param_pre_more = -2;
     constexpr int32 _dty_test_entity_fail_file_open = -3;
 }
+
+#pragma region template function implementation
+
+// Test Flow Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const ::string __VARIABLE__ item_name,
+    TestDelegate   __VARIABLE__ item_delegate
+)
+{
+    dty::test::TestObject tobj;
+
+    if (this->GetState() != dty::test::TestState::Success)
+        tobj.Skip();
+    else
+    {
+        tobj.Set();
+        try
+        {
+            item_delegate(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        this->_State = tobj.GetState();
+    }
+
+    this->Record(item_name, tobj.GetState());
+}
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const char   __POINTER__  item_name,
+    TestDelegate __VARIABLE__ item_delegate
+)
+{
+    this->ItemException<exception_type>((const ::string)item_name, item_delegate);
+}
+
+
+// Test Entity Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const ::string __VARIABLE__ test_name,
+    const ::string __VARIABLE__ test_description,
+    TestDelegate   __VARIABLE__ test_item
+)
+{
+    dty::test::TestObject tobj;
+
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
+    {
+        tobj.Skip();
+        ++this->_SkippedCount;
+    }
+    else
+    {
+        // set the default state is Failed
+        tobj.Set();
+        try
+        {
+            test_item(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        if (dty::test::TestState::Success == tobj.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
+
+    this->NotifyState(tobj.GetState());
+    this->Record(test_name, test_description, tobj.GetState());
+}
+
+
+#pragma endregion
 
 using TO = dty::test::TestObject;
 using TD = dty::test::TestDelegate;

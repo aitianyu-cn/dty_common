@@ -18,8 +18,8 @@ dty::String::String(dty::string_sp item)
     if (item.IsNull())
         throw dty::except::ArgumentNullException();
 
-    this->_StringValue = new char[item.Size() + 1];
-    this->_StringLength = item.Size();
+    this->_StringValue = new char[item.Size + 1];
+    this->_StringLength = item.Size;
     this->_Reference = new int32(1);
 
     for (int i = 0; i < this->_StringLength; ++i)
@@ -1229,12 +1229,6 @@ dty::String dty::String::GetString(const ::string source, int32 sourceLen, bool 
         throw dty::except::ArgumentNullException();
 
     return dty::String(source, sourceLen, !needCopy);
-}
-
-std::ostream& dty::operator<<(std::ostream& os, const dty::String& str)
-{
-    os << const_cast<dty::Property<string> __REFERENCE__>(str._StringValue);
-    return os;
 }
 
 ::string dty::String::ToString() noexcept
