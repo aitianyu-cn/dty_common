@@ -329,7 +329,7 @@ int32 dty_core_cpp_imp_str_cmp(::string str1, ::string str2)
         ? dty_core_cpp_imp_str_cmp_lt : dty_core_cpp_imp_str_cmp_gt;
 }
 
-const ::string dty_core_to_string_no_formatter = "";
+const ::string dty_core_to_string_no_formatter = (const ::string)"";
 
 // integer part
 ::string dty_core_cpp_imp_num2str_formatter_combiner
@@ -707,110 +707,108 @@ const ::string dty_core_to_string_no_formatter = "";
     return ::null;
 }
 
-__CMODE__
+
+int32 strlen(const string str)
 {
-    int32 strlen(const string str)
-    {
-        return ::dty_core_cpp_imp_str_len(str);
-    }
+    return ::dty_core_cpp_imp_str_len(str);
+}
 
-    ::string uc2str(uchar ch)
-    {
-        return ::dty_core_cpp_imp_c2str(ch, dty_core_to_string_no_formatter);
-    }
-    ::string uc2str(uchar ch)
-    {
-        return ::dty_core_cpp_imp_uc2str(ch, dty_core_to_string_no_formatter);
-    }
-    ::string sb2str(sbyte sb)
-    {
-        return ::dty_core_cpp_imp_sb2str(sb, dty_core_to_string_no_formatter);
-    }
-    ::string b2str(::byte b)
-    {
-        return ::dty_core_cpp_imp_sb2str(b, dty_core_to_string_no_formatter);
-    }
-    ::string s2str(int16 s)
-    {
-        return ::dty_core_cpp_imp_sb2str(s, dty_core_to_string_no_formatter);
-    }
-    ::string us2str(uint16 us)
-    {
-        return ::dty_core_cpp_imp_sb2str(us, dty_core_to_string_no_formatter);
-    }
-    ::string i2str(int32 i)
-    {
-        return ::dty_core_cpp_imp_sb2str(i, dty_core_to_string_no_formatter);
-    }
-    ::string ui2str(uint32 ui)
-    {
-        return ::dty_core_cpp_imp_sb2str(ui, dty_core_to_string_no_formatter);
-    }
-    ::string l2str(int64 l)
-    {
-        return ::dty_core_cpp_imp_sb2str(l, dty_core_to_string_no_formatter);
-    }
-    ::string ul2str(uint64 ul)
-    {
-        return ::dty_core_cpp_imp_sb2str(ul, dty_core_to_string_no_formatter);
-    }
-    ::string f2str(float f)
-    {
-        return ::dty_core_cpp_imp_sb2str(f, dty_core_to_string_no_formatter);
-    }
-    ::string d2str(double d)
-    {
-        return ::dty_core_cpp_imp_sb2str(d, dty_core_to_string_no_formatter);
-    }
+::string c2str(char ch)
+{
+    return ::dty_core_cpp_imp_c2str(ch, dty_core_to_string_no_formatter);
+}
+::string uc2str(uchar ch)
+{
+    return ::dty_core_cpp_imp_uc2str(ch, dty_core_to_string_no_formatter);
+}
+::string sb2str(sbyte sb)
+{
+    return ::dty_core_cpp_imp_sb2str(sb, dty_core_to_string_no_formatter);
+}
+::string b2str(::byte b)
+{
+    return ::dty_core_cpp_imp_sb2str(b, dty_core_to_string_no_formatter);
+}
+::string s2str(int16 s)
+{
+    return ::dty_core_cpp_imp_sb2str(s, dty_core_to_string_no_formatter);
+}
+::string us2str(uint16 us)
+{
+    return ::dty_core_cpp_imp_sb2str(us, dty_core_to_string_no_formatter);
+}
+::string i2str(int32 i)
+{
+    return ::dty_core_cpp_imp_sb2str(i, dty_core_to_string_no_formatter);
+}
+::string ui2str(uint32 ui)
+{
+    return ::dty_core_cpp_imp_sb2str(ui, dty_core_to_string_no_formatter);
+}
+::string l2str(int64 l)
+{
+    return ::dty_core_cpp_imp_sb2str(l, dty_core_to_string_no_formatter);
+}
+::string ul2str(uint64 ul)
+{
+    return ::dty_core_cpp_imp_sb2str(ul, dty_core_to_string_no_formatter);
+}
+::string f2str(float f)
+{
+    return ::dty_core_cpp_imp_sb2str(f, dty_core_to_string_no_formatter);
+}
+::string d2str(double d)
+{
+    return ::dty_core_cpp_imp_sb2str(d, dty_core_to_string_no_formatter);
+}
 
-    ::string c2str_f(char ch, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_c2str(ch, formatter);
-    }
-    ::string uc2str_f(sbyte sb, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_uc2str(sb, formatter);
-    }
-    ::string sb2str_f(sbyte sb, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_sb2str(sb, formatter);
-    }
-    ::string b2str_f(::byte b, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_b2str(b, formatter);
-    }
-    ::string s2str_f(int16 s, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_s2str(s, formatter);
-    }
-    ::string us2str_f(uint16 us, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_us2str(us, formatter);
-    }
-    ::string i2str_f(int32 i, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_i2str(i, formatter);
-    }
-    ::string ui2str_f(uint32 ui, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_ui2str(ui, formatter);
-    }
-    ::string l2str_f(int64 l, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_l2str(l, formatter);
-    }
-    ::string ul2str_f(uint64 ul, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_ul2str(ul, formatter);
-    }
-    ::string f2str_f(float f, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_f2str(f, formatter);
-    }
-    ::string d2str_f(double d, const ::string formatter)
-    {
-        return ::dty_core_cpp_imp_d2str(d, formatter);
-    }
+::string c2str_f(char ch, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_c2str(ch, formatter);
+}
+::string uc2str_f(sbyte sb, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_uc2str(sb, formatter);
+}
+::string sb2str_f(sbyte sb, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_sb2str(sb, formatter);
+}
+::string b2str_f(::byte b, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_b2str(b, formatter);
+}
+::string s2str_f(int16 s, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_s2str(s, formatter);
+}
+::string us2str_f(uint16 us, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_us2str(us, formatter);
+}
+::string i2str_f(int32 i, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_i2str(i, formatter);
+}
+::string ui2str_f(uint32 ui, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_ui2str(ui, formatter);
+}
+::string l2str_f(int64 l, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_l2str(l, formatter);
+}
+::string ul2str_f(uint64 ul, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_ul2str(ul, formatter);
+}
+::string f2str_f(float f, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_f2str(f, formatter);
+}
+::string d2str_f(double d, const ::string formatter)
+{
+    return ::dty_core_cpp_imp_d2str(d, formatter);
 }
 
 // #################################################################################################
@@ -881,7 +879,7 @@ int32 __VARIABLE__ dty::ValueAlign(int32 __VARIABLE__ value, int32 __VARIABLE__ 
     int32 integerMultiple = value / base;
     bool isMoreThanBase = value % base != 0;
 
-    return integerMultiple * base + isMoreThanBase ? base : 0;
+    return integerMultiple * base + (isMoreThanBase ? base : 0);
 }
 int32 __VARIABLE__ dty::ValueAlignByPow(int32 __VARIABLE__ value, int32 __VARIABLE__ power)
 {
@@ -897,5 +895,5 @@ int32 __VARIABLE__ dty::ValueAlignByPow(int32 __VARIABLE__ value, int32 __VARIAB
     int32 base = 0b1 << power;
     int32 andBase = base - 1;
 
-    return value & andBase == 0 ? value : (value & (~andBase)) + base;
+    return (value & andBase) == 0 ? value : (value & (~andBase)) + base;
 }

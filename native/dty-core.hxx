@@ -454,42 +454,33 @@ constexpr auto null = nullptr;
 
 #pragma region c_string basic APIs
 
-#ifdef __cplusplus
-__CMODE__
-{
-#endif // !__cplusplus
+int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
 
-    int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+::string __VARIABLE__ c2str(char __VARIABLE__ ch);
+::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
+::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
+::string __VARIABLE__ b2str(::byte __VARIABLE__ b);
+::string __VARIABLE__ s2str(int16 __VARIABLE__ s);
+::string __VARIABLE__ us2str(uint16 __VARIABLE__ us);
+::string __VARIABLE__ i2str(int32 __VARIABLE__ i);
+::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui);
+::string __VARIABLE__ l2str(int64 __VARIABLE__ l);
+::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul);
+::string __VARIABLE__ f2str(float __VARIABLE__ f);
+::string __VARIABLE__ d2str(double __VARIABLE__ d);
 
-    ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
-    ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
-    ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
-    ::string __VARIABLE__ b2str(::byte __VARIABLE__ b);
-    ::string __VARIABLE__ s2str(int16 __VARIABLE__ s);
-    ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us);
-    ::string __VARIABLE__ i2str(int32 __VARIABLE__ i);
-    ::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui);
-    ::string __VARIABLE__ l2str(int64 __VARIABLE__ l);
-    ::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul);
-    ::string __VARIABLE__ f2str(float __VARIABLE__ f);
-    ::string __VARIABLE__ d2str(double __VARIABLE__ d);
-
-    ::string __VARIABLE__ c2str_f(char __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ uc2str_f(uchar __VARIABLE__ uc, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ sb2str_f(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ b2str_f(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ s2str_f(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ us2str_f(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ i2str_f(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ ui2str_f(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ l2str_f(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ ul2str_f(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ f2str_f(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
-    ::string __VARIABLE__ d2str_f(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
-
-#ifdef __cplusplus
-}
-#endif // !__cplusplus
+::string __VARIABLE__ c2str_f(char __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ uc2str_f(uchar __VARIABLE__ uc, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ sb2str_f(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str_f(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ s2str_f(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ us2str_f(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ i2str_f(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ui2str_f(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ l2str_f(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ul2str_f(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ f2str_f(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ d2str_f(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
 
 #pragma endregion
 
