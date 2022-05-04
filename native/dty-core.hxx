@@ -20,14 +20,14 @@
  // if the label is defined, to input the specified message from language file
  // if the label is not defined, to return a default message
  //
-#define __DTY_CORE_LANG__ 1
+// #define __DTY_CORE_LANG__ 1
 
-#ifdef __DTY_CORE_LANG__
+// #ifdef __DTY_CORE_LANG__
 #include "./res/i18n/language.h"
 #define __DTY_CORE_MSG_CONVERT(msg) msg
-#else
-#define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
-#endif // !__DTY_CORE_LANG__
+// #else
+// #define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
+// #endif // !__DTY_CORE_LANG__
 
  //
 // ################################################################################################
