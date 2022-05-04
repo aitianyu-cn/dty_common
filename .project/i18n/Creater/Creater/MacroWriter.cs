@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace DTY.Native.Tools.I18N.Creater
 {
     internal class MacroWriter
     {
-        public const string LanguageFile = @"..\i18n\language.h";
+        public static string LanguageFile
+        {
+            get
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    return @"..\i18n\language.h";
+                else
+                    return @"../i18n/language.h";
+            }
+        }
         public const string ItemFormatter = "#define {0} \"{1}\"";
         public const string MacroFormatter = "__DTY_COMMON_NATIVE_RES_I18N_{0}_H__";
 

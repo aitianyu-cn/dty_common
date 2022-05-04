@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace DTY.Native.Tools.I18N.Creater
 {
@@ -16,7 +17,11 @@ namespace DTY.Native.Tools.I18N.Creater
 
         public CreaterHelper(LanguageArea area)
         {
-            DirectoryInfo directory = new(@"..\i18n");
+            DirectoryInfo directory;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                directory = new(@"..\i18n");
+            else
+                directory = new(@"../i18n");
             //DirectoryInfo directory = new(@"C:\Dev\tianyu-native\native\res\i18n");
             if (directory.Exists)
             {
