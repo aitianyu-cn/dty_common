@@ -1,5 +1,5 @@
 /**
- * @file consolebase.hpp(prime/core)
+ * @file consolebase.hpp(io/base_stream)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -12,7 +12,7 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_CORE_CONSOLE_BASE_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_CORE_CONSOLE_BASE_H_PLUS_PLUS__
 
-#include "./internal.h"
+#include "../../prime/core.hxx"
 
 namespace dty
 {

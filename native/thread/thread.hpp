@@ -1,5 +1,5 @@
 /**
- * @file thread.hpp
+ * @file thread.hpp(thread)
  * @author senyun.yao
  * @brief
  * @version 0.1
@@ -12,9 +12,7 @@
 #ifndef __DTY_COMMON_NATIVE_PRIME_CORE_THREAD_H_PLUS_PLUS__
 #define __DTY_COMMON_NATIVE_PRIME_CORE_THREAD_H_PLUS_PLUS__
 
-#include "./internal.h"
-#include "./property.hpp"
-#include "./error.hpp"
+#include "../prime/core.hxx"
 
 namespace dty::threading
 {

@@ -31,7 +31,6 @@
 #include "./prime/version.hpp"
 
 #include "./prime/system.hpp"
-#include "./prime/console.hpp"
 
 #include "./prime/list.hpp"
 #include "./prime/queue.hpp"

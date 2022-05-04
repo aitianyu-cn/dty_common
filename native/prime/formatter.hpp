@@ -1,6 +1,6 @@
 /**
  * @file formatter.hpp
- * @author your name (you@domain.com)
+ * @author ysydty
  * @brief
  * @version 0.1
  * @date 2021-12-23
@@ -14,8 +14,7 @@
 
 #ifdef __cplusplus
 
-#include "./internal.h"
-#include "./property.hpp"
+#include "./core.hxx"
 
 namespace dty
 {
