@@ -29,6 +29,21 @@ namespace dty::collection
     };
 }
 
-#include "./res/icollections.cc"
+#pragma region template realization
+
+// ##########################################################
+// ICollections Implementation
+// ##########################################################
+
+template<typename T>
+__construction__ dty::collection::ICollections<T>::ICollections(dty::IPropertyGetter<int32>& count) :
+    dty::TianyuObject(),
+    Count(count)
+{ }
+
+template<typename T>
+__destruction__  dty::collection::ICollections<T>::~ICollections() { }
+
+#pragma endregion
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__

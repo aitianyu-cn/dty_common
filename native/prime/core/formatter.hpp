@@ -14,7 +14,7 @@
 
 #ifdef __cplusplus
 
-#include "../core.hxx"
+#include "./internal.h"
 
 namespace dty
 {
