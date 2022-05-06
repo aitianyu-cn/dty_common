@@ -59,6 +59,8 @@ goto finish
     set lang=%par1:~3%
     if /i "%lang%"=="zh_CN" (
         set language="zh_CN"
+    ) else if /i "%lang%"=="cn" (
+        set language="zh_CN"
     ) else if /i "%lang%"=="zh" (
         set language="zh_CN"
     ) else if /i "%lang%"=="en_us" (
