@@ -348,7 +348,8 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
     int32 resultLength =
         (formatter.HasPrefix() ? 2 : 0)
         + (formatter.HasDigitLimit() && formatter.GetValueDigits() > valueLength ? formatter.GetValueDigits() : valueLength)
-        + (formatter.IsForceSymbol() || negative ? 1 : 0);
+        + (formatter.IsForceSymbol() || negative ? 1 : 0)
+        + 1;
 
     // create the result string and set the result ending. 
     ::string result = new char[resultLength + 1];
@@ -397,7 +398,7 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
             result[resultIndex] = fillChar;
 
         // copy value
-        for (int32 i = 0; i < valueLength; ++i, ++resultIndex)
+        for (int32 i = 0; i < valueLength && resultIndex < resultLength; ++i, ++resultIndex)
             result[resultIndex] = value[i];
     }
 }

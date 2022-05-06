@@ -1,5 +1,5 @@
 /**
- * @file text.c(text/src)
+ * @file text.cpp(text/src)
  * @author senyun.yao
  * @brief 提供用于Tianyu平台最底层的字符串适配
  *        Tianyu平台默认使用UTF-8进行数据传递，针对不同平台使用此处的方法进行本地化的转换

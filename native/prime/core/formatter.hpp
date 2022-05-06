@@ -15,55 +15,15 @@
 #ifdef __cplusplus
 
 #include "./internal.h"
+#include "./error.hpp"
 
 namespace dty
 {
     _interface IFormatter : public virtual dty::TianyuObject
     {
-        __PUB__ virtual ~IFormatter() { }
+        __PUB__ virtual ~IFormatter() __override_func;
 
         __PUB__ virtual ::string __VARIABLE__ ToString(const ::string __VARIABLE__ formatter) __pure_virtual_fun;
-    };
-
-    _enum NumberSystem : int32
-    {
-        BIN,
-        OCT,
-        DEC,
-        HEX
-    };
-
-    class Formatter final : public virtual dty::TianyuObject
-    {
-        __PUB__ Property<bool>         __VARIABLE__ ExplicitSign;
-        __PUB__ Property<int32>        __VARIABLE__ FullLength;
-        __PUB__ Property<int32>        __VARIABLE__ IntegerLength;
-        __PUB__ Property<int32>        __VARIABLE__ DecimalsLength;
-        __PUB__ Property<NumberSystem> __VARIABLE__ NumberConvert;
-        __PUB__ Property<bool>         __VARIABLE__ Percentage;
-
-        __PUB__         Formatter();
-        __PUB__         Formatter(const ::string __VARIABLE__ formatter);
-        __PUB__ virtual ~Formatter() __override_func;
-
-        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
-    };
-
-    // format handler class
-    // get an object to indicate the formatter parameters
-    // provide a decoder for formatter string
-    class FormatHandler final : public virtual dty::TianyuObject
-    {
-
-    };
-
-    // format processor class
-    // provide static methods to process base type
-    class FormatProcessor final : public virtual dty::TianyuObject
-    {
-
     };
 
     class FormatHelper final : public virtual dty::TianyuObject
@@ -80,10 +40,7 @@ namespace dty
         __PUB__ static ::string __VARIABLE__ Format(double __VARIABLE__ value, const ::string __VARIABLE__ formatter);
         __PUB__ static ::string __VARIABLE__ Format(bool __VARIABLE__ value, const ::string __VARIABLE__ formatter);
 
-        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter)
-        {
-            return ::null;
-        }
+        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter);
     };
 
     class ParseHelper final : public virtual dty::TianyuObject
@@ -106,6 +63,22 @@ namespace dty
         }
     };
 }
+
+#pragma region template realization
+
+template<typename T>
+::string dty::FormatHelper::Format<T>(T value, const ::string formatter)
+{
+    return ::null;
+}
+
+template<typename T>
+void dty::ParseHelper::Parse<T>(const ::string s, T& result)
+{
+    throw dty::except::OperationNotSupportException();
+}
+
+#pragma endregion
 
 #endif // !__cplusplus
 

@@ -461,6 +461,11 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 ##
+## CMake
+##
+build
+
+##
 ## DTY Define
 ##
 native/res/i18n/language.h
