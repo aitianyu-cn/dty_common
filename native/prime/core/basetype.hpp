@@ -341,13 +341,13 @@ namespace dty
 #define __STATIC_ASSERT_DEF__                       \
     static_assert(                                  \
         std::is_base_of<char, TB>::value            \
-        || std::is_base_of<uchar, T>::value         \
-        || std::is_base_of<int16, T>::value         \
-        || std::is_base_of<uint16, T>::value        \
-        || std::is_base_of<int32, T>::value         \
-        || std::is_base_of<uint32, T>::value        \
-        || std::is_base_of<int64, T>::value         \
-        || std::is_base_of<uint64, T>::value,       \
+        || std::is_base_of<uchar, TB>::value        \
+        || std::is_base_of<int16, TB>::value        \
+        || std::is_base_of<uint16, TB>::value       \
+        || std::is_base_of<int32, TB>::value        \
+        || std::is_base_of<uint32, TB>::value       \
+        || std::is_base_of<int64, TB>::value        \
+        || std::is_base_of<uint64, TB>::value,      \
         "only basic value data type is supported"   \
     )
 
@@ -357,16 +357,6 @@ __TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase() :
     dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
     dty::IFormatter(),
     _Value()
-{
-    __STATIC_ASSERT_DEF__;
-}
-
-__TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase(TB value) :
-    dty::TianyuObject(),
-    dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(),
-    _Value(value)
 {
     __STATIC_ASSERT_DEF__;
 }

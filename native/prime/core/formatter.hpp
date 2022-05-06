@@ -57,23 +57,18 @@ namespace dty
         __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ double __REFERENCE__ result);
         __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ bool __REFERENCE__ result);
 
-        __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result)
-        {
-            // Todo: keep none operation
-        }
+        __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result);
     };
 }
 
 #pragma region template realization
 
-template<typename T>
-::string dty::FormatHelper::Format<T>(T value, const ::string formatter)
+template<typename T> ::string dty::FormatHelper::Format(T value, const ::string formatter)
 {
     return ::null;
 }
 
-template<typename T>
-void dty::ParseHelper::Parse<T>(const ::string s, T& result)
+template<typename T> void dty::ParseHelper::Parse(const ::string s, T& result)
 {
     throw dty::except::OperationNotSupportException();
 }
