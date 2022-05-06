@@ -4,12 +4,17 @@ message("            构建: " ${DTY_NATIVE_TEST_PRIME_CORE_NAME})
 
 # 构建测试 - dty.common.native.test.prime.core.event
 message("                执行: " ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.event)
-add_executable(${DTY_NATIVE_TEST_PRIME_CORE_NAME}.event event.cpp)
+add_executable(
+    ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.event
+    
+    event.cpp
+    
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/event.cpp
+)
 target_link_libraries(
     ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.event 
 
     ${DTY_NATIVE_TEST_NAME}.core
-    dty-core
 )
 
 # 构建测试 - dty.common.native.test.prime.core.iterator
@@ -26,7 +31,6 @@ target_link_libraries(
     ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.iterator 
 
     ${DTY_NATIVE_TEST_NAME}.core
-    dty-core
 )
 
 # 构建测试 - dty.common.native.test.prime.core.property
@@ -36,7 +40,6 @@ target_link_libraries(
     ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.property 
 
     ${DTY_NATIVE_TEST_NAME}.core
-    dty-core
 )
 
 # 构建测试 - dty.common.native.test.prime.core.pointer
@@ -46,7 +49,6 @@ target_link_libraries(
     ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.pointer 
 
     ${DTY_NATIVE_TEST_NAME}.core
-    dty-core
 )
 
 message("            构建-完成")
