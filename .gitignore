@@ -464,6 +464,7 @@ $RECYCLE.BIN/
 ## CMake
 ##
 build
+target
 
 ##
 ## DTY Define

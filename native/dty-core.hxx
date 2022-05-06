@@ -169,7 +169,7 @@ namespace dty
 #pragma region pure c mode definition
 
 // 天宇开发模式标志
-#define __DTY_DEV_MODE__    1
+// #define __DTY_DEV_MODE__    1
 
 
  // 字符类型有符号数最小值
