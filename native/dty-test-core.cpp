@@ -409,6 +409,10 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
         case 'O':
             is_log_overwrite = true;
             break;
+        case 'l':
+        case 'L':
+            // Todo: to change the log type
+            break;
         default:
             break;
         }
@@ -904,11 +908,11 @@ void TEST_FLOW_DEF::Record(const ::string name, dty::test::TestState state)
         fputs("  ", this->_LogStream);
 
     if (dty::test::TestState::Success == state)
-        fputs("√ ", this->_LogStream);
+        fputs("V ", this->_LogStream);
     else if (dty::test::TestState::Skipped == state)
         fputs("  ", this->_LogStream);
     else
-        fputs("× ", this->_LogStream);
+        fputs("X ", this->_LogStream);
 
     fputs(name, this->_LogStream);
 

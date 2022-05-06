@@ -304,8 +304,8 @@ namespace DTY.Native.Tools.I18N.Creater
             return value.ToLower() switch
             {
                 "zh" or "zh_cn" => LanguageArea.zh_CN,
-                "en" or "en_US" => LanguageArea.en_US,
-                "en_UK" => LanguageArea.en_UK,
+                "en" or "en_us" => LanguageArea.en_US,
+                "en_uk" => LanguageArea.en_UK,
                 _ => LanguageArea.zh_CN,
             };
         }

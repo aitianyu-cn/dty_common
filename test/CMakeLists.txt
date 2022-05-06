@@ -11,7 +11,7 @@ add_library(${DTY_NATIVE_TEST_NAME}.core STATIC
     ${PROJECT_SOURCE_DIR}/native/dty-core.cpp
 
     # 天宇异常处理结构
-    ${PROJECT_SOURCE_DIR}/native/prime/core/src/event.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/error.cpp
 )
 
 # 导入测试程序

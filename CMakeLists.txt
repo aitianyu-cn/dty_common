@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.18)
 set(PROJECT_NAME "Tianyu Development library")
 # 版本号
 set(PROJECT_VERSION "0.0.1")
-# 定义项目：使用C++
+# 定义项目: 使用C++
 project(${PROJECT_NAME} LANGUAGES "CXX" VERSION ${PROJECT_VERSION})
 
 ###################################################################
@@ -42,12 +42,12 @@ endif ()
 ###################################################################
 # 进入项目构建流程
 ###################################################################
-message("天宇开发者库")
-message("项目：" ${PROJECT_NAME})
-message("版本：" ${PROJECT_VERSION})
+message("天宇开发者库(Tianyu Developing Library)")
+message("项目(Project): " ${PROJECT_NAME})
+message("版本(Version): " ${PROJECT_VERSION})
 message("")
 
-message("开始构建 - 天宇开发者库")
+message("开始构建 - 天宇开发者库(Start Build - DTY Library)")
 
 # 添加本地源代码库
 add_subdirectory(native)
@@ -59,4 +59,4 @@ if (DEFINED DTEST AND ${DTEST})
     add_subdirectory(test)
 endif ()
 
-message("构建结束 - 天宇开发者库")
+message("构建结束 - 天宇开发者库(Build End - DTY Library)")
