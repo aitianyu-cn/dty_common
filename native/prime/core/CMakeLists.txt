@@ -1,4 +1,4 @@
-message("            构建: 天宇本地源代码 - 基础 - 核心库")
+message("            构建: 天宇库源代码 - 基础 - 核心库")
 
 add_library(dty-core STATIC
 

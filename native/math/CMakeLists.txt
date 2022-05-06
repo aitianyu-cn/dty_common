@@ -1,4 +1,4 @@
-message("            构建: 天宇本地源代码 - 运算库")
+message("            构建: 天宇库源代码 - 数学库")
 
 add_library(dty-math STATIC
 

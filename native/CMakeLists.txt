@@ -1,4 +1,4 @@
-message("    构建: 天宇本地源代码")
+message("    构建: 天宇库源代码")
 
 add_subdirectory(prime/core ./lib/core)
 add_subdirectory(prime ./lib/prime)

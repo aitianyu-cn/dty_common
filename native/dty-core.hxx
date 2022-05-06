@@ -336,7 +336,7 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
  // #define __DTY_DEEP_LEARNING_MODE__
  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
-#if __cplusplus < 201700
+#if __cplusplus < 201700L
 #error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_VERSION_LOW__)
 #endif
 #endif // !__DTY_DEV_MODE__

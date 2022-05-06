@@ -1,4 +1,4 @@
-message("            构建: 天宇本地源代码 - 输入输出库")
+message("            构建: 天宇库源代码 - 输入输出库")
 
 add_library(dty-io STATIC
 
