@@ -15,7 +15,7 @@ add_library(${DTY_NATIVE_TEST_NAME}.core STATIC
 )
 
 # 导入测试程序
-add_subdirectory(dty-core ./bin/dty-core)
-add_subdirectory(prime ./bin/prime)
+add_subdirectory(dty-core ./dty-core)
+add_subdirectory(prime ./prime)
 
 message("    构建-完成")
