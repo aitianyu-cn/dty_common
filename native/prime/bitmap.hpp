@@ -38,8 +38,8 @@ namespace dty::collection
         __PUB__ byte __POINTER__  ToBytes(int64 __REFERENCE__ arrayLength, bool __VARIABLE__ copy = false);
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId();
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode();
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() __override_func;
+        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
     };
 }
 

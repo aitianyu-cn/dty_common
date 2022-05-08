@@ -308,7 +308,7 @@ void dty::ParseHelper::Parse(const ::string s, bool& result)
         return;
     }
 
-    int32 strCompare = ::strcmp(s, "false", true);
+    int32 strCompare = ::strcmp(s, (const ::string)"false", true);
     if (0 == strCompare)
         return; // result should be false if the source string is "false" (no matter the case)
 

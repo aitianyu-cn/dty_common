@@ -60,7 +60,7 @@ namespace dty
         __PRI__ Property<uint32> __VARIABLE__ _TimeSenonds;
         __PRI__ Property<uint32> __VARIABLE__ _TimeMilliseconds;
 
-        __PUB__ Property<bool>          __VARIABLE__ IsNegative;
+        __PUB__ Property<bool>          __VARIABLE__  IsNegative;
         __PUB__ IPropertyGetter<uint64> __REFERENCE__ Ticks;
         __PUB__ IPropertyGetter<uint32> __REFERENCE__ Days;
         __PUB__ IPropertyGetter<uint32> __REFERENCE__ Hours;

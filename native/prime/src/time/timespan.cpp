@@ -122,7 +122,7 @@ __DTY_TIMESPAN_DEF__::TimeSpan(int32 days, int32 hours, int32 minutes, int32 sec
     _TimeMinutes(minutes),
     _TimeSenonds(seconds),
     _TimeMilliseconds(milliseconds),
-    IsNegative(IsNegative),
+    IsNegative(false),
     Ticks(_TimeTicks),
     Days(_TimeDays),
     Hours(_TimeHours),
