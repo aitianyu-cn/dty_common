@@ -8,8 +8,11 @@ dty::Guid::Guid()
     : dty::TianyuObject(),
     dty::collection::IEquatable<dty::Guid>(),
     dty::collection::ICompareable<dty::Guid>(),
-    _Guid({ 0x00 })
-{ }
+    _Guid()
+{
+    for (int32 i = 0; i < ::dty_native_id_default_size; ++i)
+        this->_Guid[i] = (byte)0x00;
+}
 dty::Guid::Guid(::byte b[::dty_native_id_default_size])
     : dty::TianyuObject(),
     dty::collection::IEquatable<dty::Guid>(),
@@ -90,7 +93,7 @@ dty::collection::ByteArray dty::Guid::ToByteArray()
     return dty::collection::ByteArray(this->_Guid, ::dty_native_id_default_size, false);
 }
 
-::string dty::Guid::ToString()
+::string dty::Guid::ToString() noexcept
 {
     return _dty_native_cpp_guid_toString(::null);
 }

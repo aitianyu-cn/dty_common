@@ -506,11 +506,11 @@ namespace dty
             return (int32)_Size;
         }
     };
-
-    using Byte = Object<1>;
-    using Int16 = Object<2>;
-    using Int32 = Object<4>;
-    using Int64 = Object<8>;
 }
+
+using Byte = dty::Object<1>;
+using Int16 = dty::Object<2>;
+using Int32 = dty::Object<4>;
+using Int64 = dty::Object<8>;
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_OBJECT_H_PLUS_PLUS__

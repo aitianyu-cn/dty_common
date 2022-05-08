@@ -3,7 +3,6 @@ message("            构建: 天宇库源代码 - 基础库")
 add_library(dty-prime STATIC
 
     ${CMAKE_CURRENT_LIST_DIR}/src/bitmap.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/console.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/guid.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/math.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/mathf.cpp

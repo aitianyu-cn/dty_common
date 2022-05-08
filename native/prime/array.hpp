@@ -79,7 +79,8 @@ namespace dty::collection
         }
         __PUB__ virtual Iterator<Elem> __VARIABLE__   GetIterator() override
         {
-            return Iterator<Elem>(this->_Array, this->_Count);
+            throw dty::except::NotImplementationException();
+            // return Iterator<Elem>(IteratorEntity<Elem>(this->_Array, this->_Count));
         }
 
 #ifdef __DTY_UNSAFE_MODE__

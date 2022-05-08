@@ -31,12 +31,12 @@ namespace dty
         __PRI__ Property<int32>  __VARIABLE__ _StringLength;
         __PRI__ int32            __POINTER__  _Reference;
 
-        __PUB__ String();
-        __PUB__ String(string_sp    __VARIABLE__ item);
-        __PUB__ String(const char   __VARIABLE__ item, int32 __VARIABLE__ repeat);
-        __PUB__ String(const string __VARIABLE__ str, int32 __VARIABLE__ length);
-        __PRI__ String(const string __VARIABLE__ str, int32 __VARIABLE__ length, bool __VARIABLE__ notCopy);
-        __PUB__ String(const string __VARIABLE__ str, int32 __VARIABLE__ startIndex, int32 __VARIABLE__ endIndex);
+        __PUB__ explicit String();
+        __PUB__ explicit String(string_sp    __VARIABLE__ item);
+        __PUB__ explicit String(const char   __VARIABLE__ item, int32 __VARIABLE__ repeat);
+        __PUB__ explicit String(const string __VARIABLE__ str, int32 __VARIABLE__ length);
+        __PRI__ explicit String(const string __VARIABLE__ str, int32 __VARIABLE__ length, bool __VARIABLE__ notCopy);
+        __PUB__ explicit String(const string __VARIABLE__ str, int32 __VARIABLE__ startIndex, int32 __VARIABLE__ endIndex);
 
         __PUB__ String(const String __REFERENCE__ str);
         __PUB__ String(const string __VARIABLE__ str);

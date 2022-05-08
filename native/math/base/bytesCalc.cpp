@@ -193,7 +193,7 @@ MetaData _internal_get_value_like(MetaData& likeOn)
     newData._Value = new byte[newData._PhySize];
     return newData;
 }
-MetaData _internal_create_results(MetaData& op1, MetaData& op2, const char growth = '\0')
+MetaData _internal_create_results(MetaData& op1, MetaData& op2, const char growth)
 {
     MetaData data;
     data._Value = ::null;

@@ -325,12 +325,6 @@ void dty::ParseHelper::Parse(const ::string s, bool& result)
 // Internal API Implementation
 // ######################################################
 
-bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative)
-{
+bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative);
 
-}
-
-bool _dty_core_parse_base(const ::string s, double& value)
-{
-
-}
+bool _dty_core_parse_base(const ::string s, double& value);

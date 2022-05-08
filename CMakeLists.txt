@@ -19,7 +19,8 @@ set(CMAKE_CXX_STANDARD 17)
 # 为Microsoft Visual Studio设置编译选项
 if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CXX_STANDARD_REQUIRED ON)
-    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} " /Zc:__cplusplus")
+    message(${CMAKE_CXX_FLAGS})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus")
 endif()
 
 set(DTY_PROJECT_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/target)

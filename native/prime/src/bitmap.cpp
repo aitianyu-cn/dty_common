@@ -40,7 +40,7 @@ dty::collection::Bitmap::Bitmap(int64 bitsCount, bool fillState)
         this->_Map[i] = fillValue;
 }
 
-dty::collection::Bitmap::Bitmap(byte* bits, int32 length, int32 bitsCount = -1, bool copyBits)
+dty::collection::Bitmap::Bitmap(byte* bits, int32 length, int32 bitsCount, bool copyBits)
     : dty::TianyuObject(),
     _ArraySize(length),
     _Map(bits),
@@ -115,7 +115,7 @@ bool dty::collection::Bitmap::Test(int64 bitIndex)
     return 0 != ((this->_Map[mapIndex]) & bitOffset);
 }
 
-byte* dty::collection::Bitmap::ToBytes(int64& arrayLength, bool copy = false)
+byte* dty::collection::Bitmap::ToBytes(int64& arrayLength, bool copy)
 {
     arrayLength = this->_ArraySize;
 

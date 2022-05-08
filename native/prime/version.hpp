@@ -24,12 +24,12 @@ namespace dty
         using Int32Property = dty::Property<int32>;
         using Int16Property = dty::Property<int16>;
 
-        __PUB__ IPropertyGetter<int32> __REFERENCE__ Major = this->_Major;
-        __PUB__ IPropertyGetter<int32> __REFERENCE__ Minor = this->_Minor;
-        __PUB__ IPropertyGetter<int32> __REFERENCE__ Build = this->_Build;
-        __PUB__ IPropertyGetter<int32> __REFERENCE__ Revision = this->_Revision;
-        __PUB__ IPropertyGetter<int16> __REFERENCE__ MajorRevision = this->_MajorRevision;
-        __PUB__ IPropertyGetter<int16> __REFERENCE__ MinorRevision = this->_MinorRevision;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Major;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Minor;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Build;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Revision;
+        __PUB__ IPropertyGetter<int16> __REFERENCE__ MajorRevision;
+        __PUB__ IPropertyGetter<int16> __REFERENCE__ MinorRevision;
 
         __PRI__ Int32Property __VARIABLE__ _Major;
         __PRI__ Int32Property __VARIABLE__ _Minor;
@@ -53,7 +53,9 @@ namespace dty
         __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other) override;
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
-        __PUB__ dty::String __VARIABLE__ ToString(const string __VARIABLE__ formatter);
+        __PUB__ dty::String __VARIABLE__  ToString(const string __VARIABLE__ formatter);
+
+        __PUB__ Version     __REFERENCE__ operator =(const Version __REFERENCE__ version);
 
         __PUB__ static bool __VARIABLE__ TryParse(dty::String __VARIABLE__ version, Version __REFERENCE__ result);
         __PUB__ static bool __VARIABLE__ TryParse(const string __VARIABLE__ version, Version __REFERENCE__ result);

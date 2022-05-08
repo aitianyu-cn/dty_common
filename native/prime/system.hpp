@@ -20,12 +20,12 @@ namespace dty
 {
     class OperationSystem final : dty::TianyuObject
     {
-        __PUB__ IPropertyGetter<dty::PlatformID> __REFERENCE__ Platform = this->_Platform;
-        __PUB__ IPropertyGetter<dty::String>     __REFERENCE__ ServicePack = this->_ServicePack;
-        __PUB__ IPropertyGetter<dty::Version>    __REFERENCE__ Version = this->_Version;
+        __PUB__ IPropertyGetter<dty::PlatformID> __REFERENCE__ Platform;
+        __PUB__ IPropertyGetter<::string>        __REFERENCE__ ServicePack;
+        __PUB__ IPropertyGetter<dty::Version>    __REFERENCE__ Version;
 
         __PRI__ Property<dty::PlatformID> __VARIABLE__ _Platform;
-        __PRI__ Property<dty::String>     __VARIABLE__ _ServicePack;
+        __PRI__ Property<::string>        __VARIABLE__ _ServicePack;
         __PRI__ Property<dty::Version>    __VARIABLE__ _Version;
 
         __PUB__ OperationSystem(dty::PlatformID __VARIABLE__ platform, dty::Version __VARIABLE__ version);
