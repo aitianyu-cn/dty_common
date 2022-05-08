@@ -401,6 +401,8 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
         for (int32 i = 0; i < valueLength && resultIndex < resultLength; ++i, ++resultIndex)
             result[resultIndex] = value[i];
     }
+
+    return result;
 }
 ::string dty_core_cpp_imp_num2str_bin_formatter
 (
@@ -712,6 +714,50 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
 int32 strlen(const string str)
 {
     return ::dty_core_cpp_imp_str_len(str);
+}
+
+int32 strcmp(const ::string s1, const ::string s2, bool ignoreCase)
+{
+    if (::null == s1 && ::null == s2)
+        return 0;
+    if (::null != s1 && ::null == s2)
+        return 1;
+    if (::null == s1 && ::null != s2)
+        return -1;
+
+    int32 s1L = ::dty_core_cpp_imp_str_len(s1);
+    int32 s2L = ::dty_core_cpp_imp_str_len(s2);
+    int32 s1I = 0;
+    int32 s2I = 0;
+
+    int32 result = 0;
+    for (; s1I < s1L && s2I < s2L && 0 == result; ++s1I, ++s2I)
+    {
+        if (s1[s1I] == s2[s2I])
+            continue;
+
+        if (ignoreCase)
+        {
+            bool isEnglishChar =
+                ('a' <= s1[s1I] && 'z' >= s1[s1I] || 'A' <= s1[s1I] && 'Z' >= s1[s1I])
+                && ('a' <= s2[s2I] && 'z' >= s2[s2I] || 'A' <= s2[s2I] && 'Z' >= s2[s2I]);
+
+            if (isEnglishChar)
+            {
+                bool isEqual = (s1[s1I] - 32) == s2[s2I] || (s1[s1I] + 32) == s2[s2I];
+                if (isEqual)
+                    continue;
+            }
+        }
+
+        result = s1[s1I] - s2[s2I];
+    }
+
+    if (0 != result)
+        return result; // if result is not equal, return the result directly.
+
+    // if the result is equal, needs to check the length
+    return s1L - s2L;
 }
 
 ::string c2str(char ch)

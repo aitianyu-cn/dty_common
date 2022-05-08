@@ -457,6 +457,7 @@ constexpr auto null = nullptr;
 #pragma region c_string basic APIs
 
 int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase);
 
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);

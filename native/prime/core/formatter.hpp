@@ -59,6 +59,35 @@ namespace dty
 
         __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result);
     };
+
+    namespace except
+    {
+        class ParseException
+            : public virtual dty::TianyuObject,
+            public virtual dty::except::Exception
+        {
+            __PUB__         ParseException();
+            __PUB__ virtual ~ParseException() __override_func;
+
+#pragma region Tianyu Exception Base Function
+            __PUB__ virtual uint64 __VARIABLE__ GetExceptionId() __override_func;
+            __PUB__ virtual uint64 __VARIABLE__ GetTypeId()      __override_func;
+#pragma endregion
+        };
+
+        class ParseStringEmptyException
+            : public virtual dty::TianyuObject,
+            public virtual dty::except::ParseException
+        {
+            __PUB__         ParseStringEmptyException();
+            __PUB__ virtual ~ParseStringEmptyException() __override_func;
+
+#pragma region Tianyu Exception Base Function
+            __PUB__ virtual uint64 __VARIABLE__ GetExceptionId() __override_func;
+            __PUB__ virtual uint64 __VARIABLE__ GetTypeId()      __override_func;
+#pragma endregion
+        };
+    }
 }
 
 #pragma region template realization

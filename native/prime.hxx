@@ -38,12 +38,6 @@
 #include "./prime/stack.hpp"
 #include "./prime/dictionary.hpp"
 
-#include "./prime/concurrentBag.hpp"
-#include "./prime/concurrentBiosphere.hpp"
-#include "./prime/concurrentQueue.hpp"
-#include "./prime/concurrentStack.hpp"
-#include "./prime/concurrentDictionary.hpp"
-
 #endif // !__cplusplus
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_H_PLUS_PLUS__
