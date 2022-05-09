@@ -1,0 +1,21 @@
+{
+    "target": {
+        "base": "..",
+        "folder": "target"
+    },
+    "package": "header",
+    "headers": [],
+    "excludes": [],
+    "subdir": ["io", "math", "model", "prime", "text", "thread"],
+    "resources": [
+        {
+            "dir": "res",
+            "files": [],
+            "subdir": {
+                "dir": "i18n",
+                "files": ["language.h"],
+                "subdir": null
+            }
+        }
+    ]
+}

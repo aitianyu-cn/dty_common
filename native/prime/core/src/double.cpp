@@ -122,11 +122,6 @@ bool dty::Double::operator==(dty::Double& other)
     return this->Equals(other);
 }
 
-bool dty::Double::operator==(dty::Double& other)
-{
-    return !(this->Equals(other));
-}
-
 bool dty::Double::operator<(dty::Double& other)
 {
     return !(*this >= other);

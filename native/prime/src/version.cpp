@@ -19,7 +19,13 @@ dty::Version::Version()
     _Build(_dty_native_version_build),
     _Revision(_dty_native_version_revision),
     _MajorRevision(_dty_native_version_major_revision),
-    _MinorRevision(_dty_native_version_minor_revision)
+    _MinorRevision(_dty_native_version_minor_revision),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 { }
 
 dty::Version::Version(const dty::Version& other)
@@ -31,15 +37,31 @@ dty::Version::Version(const dty::Version& other)
     _Build(other._Build),
     _Revision(other._Revision),
     _MajorRevision(other._MajorRevision),
-    _MinorRevision(other._MinorRevision)
+    _MinorRevision(other._MinorRevision),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 { }
 
 dty::Version::Version(dty::String version)
     : dty::TianyuObject(),
     dty::collection::IEquatable<dty::Version>(),
     dty::collection::ICompareable<dty::Version>(),
-    _Major(), _Minor(), _Build(), _Revision(),
-    _MajorRevision(), _MinorRevision()
+    _Major(),
+    _Minor(),
+    _Build(),
+    _Revision(),
+    _MajorRevision(),
+    _MinorRevision(),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 {
     int32 major = _dty_native_version_major;
     int32 minor = _dty_native_version_minor;
@@ -62,8 +84,18 @@ dty::Version::Version(const ::string version)
     : dty::TianyuObject(),
     dty::collection::IEquatable<dty::Version>(),
     dty::collection::ICompareable<dty::Version>(),
-    _Major(), _Minor(), _Build(), _Revision(),
-    _MajorRevision(), _MinorRevision()
+    _Major(),
+    _Minor(),
+    _Build(),
+    _Revision(),
+    _MajorRevision(),
+    _MinorRevision(),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 {
     int32 major = _dty_native_version_major;
     int32 minor = _dty_native_version_minor;
@@ -89,7 +121,13 @@ dty::Version::Version(int32 major, int32 minor)
     _Build(_dty_native_version_build),
     _Revision(_dty_native_version_revision),
     _MajorRevision(_dty_native_version_major_revision),
-    _MinorRevision(_dty_native_version_minor_revision)
+    _MinorRevision(_dty_native_version_minor_revision),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 { }
 
 dty::Version::Version(int32 major, int32 minor, int32 build)
@@ -99,7 +137,13 @@ dty::Version::Version(int32 major, int32 minor, int32 build)
     _Major(major), _Minor(minor), _Build(build),
     _Revision(_dty_native_version_revision),
     _MajorRevision(_dty_native_version_major_revision),
-    _MinorRevision(_dty_native_version_minor_revision)
+    _MinorRevision(_dty_native_version_minor_revision),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 { }
 
 dty::Version::Version(int32 major, int32 minor, int32 build, int32 revision)
@@ -108,7 +152,13 @@ dty::Version::Version(int32 major, int32 minor, int32 build, int32 revision)
     dty::collection::ICompareable<dty::Version>(),
     _Major(major), _Minor(minor), _Build(build), _Revision(revision),
     _MajorRevision((int16)((revision >> 16) & 0xFF)),
-    _MinorRevision((int16)(revision & 0xFF))
+    _MinorRevision((int16)(revision & 0xFF)),
+    Major(_Major),
+    Minor(_Minor),
+    Build(_Build),
+    Revision(_Revision),
+    MajorRevision(_MajorRevision),
+    MinorRevision(_MinorRevision)
 { }
 
 uint64 dty::Version::GetTypeId()
@@ -128,6 +178,22 @@ dty::String dty::Version::ToString(const ::string formatter)
 
     ::string str = _dty_native_version_toString(__PTR_TO_REF__ this, formatter);
     return dty::String::GetString(str, false);
+}
+
+dty::Version& dty::Version::operator=(const dty::Version& version)
+{
+    dty::Version& cast_version = const_cast<dty::Version __REFERENCE__>(version);
+    if (this->GetHashCode() != cast_version.GetHashCode())
+    {
+        this->_Build = cast_version._Build;
+        this->_Major = cast_version._Major;
+        this->_Minor = cast_version._Minor;
+        this->_Revision = cast_version._Revision;
+        this->_MajorRevision = cast_version._MajorRevision;
+        this->_MinorRevision = cast_version._MinorRevision;
+    }
+
+    return __PTR_TO_REF__ this;
 }
 
 dty::collection::CompareResult dty::Version::CompareTo(dty::Version& other)
@@ -257,7 +323,4 @@ bool dty::Version::TryParse(const ::string version, dty::Version& result)
 
 
 void _dty_native_version_parse(const ::string version, const ::string formatter, int32& major, int32& minor, int32& build, int32& revision);
-::string _dty_native_version_toString(dty::Version& version, const ::string formatter)
-{
-
-}
+::string _dty_native_version_toString(dty::Version& version, const ::string formatter);

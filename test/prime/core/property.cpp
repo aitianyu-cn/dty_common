@@ -19,9 +19,9 @@ TestEnum LProp_2_Value;
 
 TEST_MAIN("dty.Property Unit Test")
 {
-    TEST_SPEC("Property Spec",
+    entity.StartSpec("Property Spec", [](dty::test::TestEntity& entity) -> void
         {
-            TEST_SPEC("integer 32bit",
+            entity.StartSpec("integer 32bit", [](dty::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for property class constructor",
                         {
@@ -62,7 +62,7 @@ TEST_MAIN("dty.Property Unit Test")
                     delete pProp_1;
                 }, true);
 
-            TEST_SPEC("enum type",
+            entity.StartSpec("enum type", [](dty::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for property class constructor",
                         {
@@ -102,10 +102,11 @@ TEST_MAIN("dty.Property Unit Test")
 
                     delete pProp_2;
                 }, true);
-        });
-    TEST_SPEC("Lambda Property Spec",
+        }
+    );
+    entity.StartSpec("Lambda Property Spec", [](dty::test::TestEntity& entity) -> void
         {
-            TEST_SPEC("integer 32bit",
+            entity.StartSpec("integer 32bit", [](dty::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for lambda property class constructor",
                         {
@@ -153,7 +154,7 @@ TEST_MAIN("dty.Property Unit Test")
                     delete pLProp_1;
                 }, true);
 
-            TEST_SPEC("enum type",
+            entity.StartSpec("enum type", [](dty::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for lambda property class constructor",
                         {
@@ -200,5 +201,6 @@ TEST_MAIN("dty.Property Unit Test")
 
                     delete pLProp_2;
                 }, true);
-        });
+        }
+    );
 }

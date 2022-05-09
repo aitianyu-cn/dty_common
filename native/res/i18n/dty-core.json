@@ -1,0 +1,42 @@
+{
+    "__ERROR_CPP_UNKNOWN_ERROR__": {
+        "ch": "未知的错误",
+        "en": "Unknown Error",
+        "default": "未知的错误"
+    },
+    "__ERROR_CPP_UNKNOWN_APPLE_PLATFORM__": {
+        "ch": "未知的Apple平台",
+        "en": "Unknown Apple Platform",
+        "default": "未知的Apple平台"
+    },
+    "__ERROR_CPP_TIANYU_PLATFORM_REQUIRE_64__": {
+        "ch": "天宇平台需要64位系统支持",
+        "en": "Tianyu Platform requires 64bit OS",
+        "default": "天宇平台需要64位系统支持"
+    },
+    "__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__": {
+        "ch": "天宇平台未能识别的的操作系统",
+        "en": "Unknown OS is not supported for Tianyu Platform",
+        "default": "天宇平台未能识别的的操作系统"
+    },
+    "__ERROR_CPP_VERSION_LOW__": {
+        "ch": "天宇库需要基于C++17或以上版本",
+        "en": "library needs C++17 or later",
+        "default": "天宇库需要基于C++17或以上版本"
+    },
+    "__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__": {
+        "ch": "天宇测试程序需要至少 1 个参数用于启动",
+        "en": "Test Program needs at least 1 parameter.",
+        "default": "天宇测试程序需要至少 1 个参数用于启动"
+    },
+    "__ERROR_CPP_DTEST_WRONG_PARAM_PRE___": {
+        "ch": "天宇测试程序错误（错误的前缀引导符‘-’）",
+        "en": "Program parameter error with wrong pre '-' character.",
+        "default": "天宇测试程序错误（错误的前缀引导符‘-’）"
+    },
+    "__ERROR_CPP_DTEST_FILE_OPEN_FAILED__": {
+        "ch": "输出文件打开失败",
+        "en": "Output file open failed!",
+        "default": "输出文件打开失败"
+    }
+}

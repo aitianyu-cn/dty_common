@@ -31,19 +31,12 @@
 #include "./prime/version.hpp"
 
 #include "./prime/system.hpp"
-#include "./prime/console.hpp"
 
 #include "./prime/list.hpp"
 #include "./prime/queue.hpp"
 #include "./prime/set.hpp"
 #include "./prime/stack.hpp"
 #include "./prime/dictionary.hpp"
-
-#include "./prime/concurrentBag.hpp"
-#include "./prime/concurrentBiosphere.hpp"
-#include "./prime/concurrentQueue.hpp"
-#include "./prime/concurrentStack.hpp"
-#include "./prime/concurrentDictionary.hpp"
 
 #endif // !__cplusplus
 

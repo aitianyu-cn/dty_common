@@ -118,7 +118,9 @@
         "xutility": "cpp",
         "fstream": "cpp",
         "deque": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "list": "cpp",
+        "xhash": "cpp"
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,

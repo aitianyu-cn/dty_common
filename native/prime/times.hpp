@@ -15,7 +15,6 @@
 
 #include "./core.hxx"
 #include "./string.hpp"
-#include <iostream>
 
 namespace dty
 {
@@ -53,6 +52,22 @@ namespace dty
         public virtual dty::collection::IEquatable<TimeSpan>,
         public virtual dty::collection::ICompareable<TimeSpan>
     {
+        __PRI__ Property<uint64> __VARIABLE__ _TimeTicks;
+
+        __PRI__ Property<uint32> __VARIABLE__ _TimeDays;
+        __PRI__ Property<uint32> __VARIABLE__ _TimeHours;
+        __PRI__ Property<uint32> __VARIABLE__ _TimeMinutes;
+        __PRI__ Property<uint32> __VARIABLE__ _TimeSenonds;
+        __PRI__ Property<uint32> __VARIABLE__ _TimeMilliseconds;
+
+        __PUB__ Property<bool>          __VARIABLE__  IsNegative;
+        __PUB__ IPropertyGetter<uint64> __REFERENCE__ Ticks;
+        __PUB__ IPropertyGetter<uint32> __REFERENCE__ Days;
+        __PUB__ IPropertyGetter<uint32> __REFERENCE__ Hours;
+        __PUB__ IPropertyGetter<uint32> __REFERENCE__ Minutes;
+        __PUB__ IPropertyGetter<uint32> __REFERENCE__ Seconds;
+        __PUB__ IPropertyGetter<uint32> __REFERENCE__ Milliseconds;
+
         __PUB__ TimeSpan();
         __PUB__ TimeSpan(uint64 __VARIABLE__ ticks);
         __PUB__ TimeSpan(const TimeSpan __REFERENCE__ span);
@@ -60,40 +75,33 @@ namespace dty
         __PUB__ TimeSpan(int32 __VARIABLE__ hours, int32 __VARIABLE__ minutes, int32 __VARIABLE__ seconds, int32 __VARIABLE__ milliseconds);
         __PUB__ TimeSpan(int32 __VARIABLE__ days, int32 __VARIABLE__ hours, int32 __VARIABLE__ minutes, int32 __VARIABLE__ seconds, int32 __VARIABLE__ milliseconds);
 
-        __PUB__ virtual ~TimeSpan() override;
+        __PUB__ virtual ~TimeSpan() __override_func;
 
-        __PUB__ uint64 __VARIABLE__ TotalTicks();
-
-        __PUB__ int32 __VARIABLE__ GetTotalDays();
-        __PUB__ int32 __VARIABLE__ GetTotalHours();
-        __PUB__ int32 __VARIABLE__ GetTotalMinutes();
-        __PUB__ int32 __VARIABLE__ GetTotalSeconds();
-        __PUB__ int32 __VARIABLE__ GetTotalMilliseconds();
-
-        __PUB__ int32 __VARIABLE__ Days();
-        __PUB__ int32 __VARIABLE__ Hours();
-        __PUB__ int32 __VARIABLE__ Minutes();
-        __PUB__ int32 __VARIABLE__ Seconds();
-        __PUB__ int32 __VARIABLE__ Milliseconds();
+        __PUB__ double __VARIABLE__ GetTotalDays();
+        __PUB__ double __VARIABLE__ GetTotalHours();
+        __PUB__ double __VARIABLE__ GetTotalMinutes();
+        __PUB__ double __VARIABLE__ GetTotalSeconds();
+        __PUB__ double __VARIABLE__ GetTotalMilliseconds();
 
         __PUB__ TimeSpan __REFERENCE__ AddTicks(uint64 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ AddDays(int32 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ AddHours(int32 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ AddMinutes(int32 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ AddSeconds(int32 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ AddMilliseconds(int32 __VARIABLE__ ticks);
+        __PUB__ TimeSpan __REFERENCE__ AddDays(int32 __VARIABLE__ days);
+        __PUB__ TimeSpan __REFERENCE__ AddHours(int32 __VARIABLE__ hours);
+        __PUB__ TimeSpan __REFERENCE__ AddMinutes(int32 __VARIABLE__ minutes);
+        __PUB__ TimeSpan __REFERENCE__ AddSeconds(int32 __VARIABLE__ seconds);
+        __PUB__ TimeSpan __REFERENCE__ AddMilliseconds(int32 __VARIABLE__ milliseconds);
         __PUB__ TimeSpan __REFERENCE__ AddSpan(TimeSpan __REFERENCE__ span);
 
-        __PUB__ TimeSpan __REFERENCE__ operator+(TimeSpan __REFERENCE__ span);
-        __PUB__ TimeSpan __REFERENCE__ operator+(uint64 __VARIABLE__ ticks);
-        __PUB__ TimeSpan __REFERENCE__ operator-(TimeSpan __REFERENCE__ span);
-        __PUB__ TimeSpan __REFERENCE__ operator-(uint64 __VARIABLE__ ticks);
+        __PUB__ TimeSpan __VARIABLE__  operator+(TimeSpan __REFERENCE__ span);
+        __PUB__ TimeSpan __VARIABLE__  operator+(uint64 __VARIABLE__ ticks);
+        __PUB__ TimeSpan __VARIABLE__  operator-(TimeSpan __REFERENCE__ span);
+        __PUB__ TimeSpan __VARIABLE__  operator-(uint64 __VARIABLE__ ticks);
 
-        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
+        __PUB__ virtual ::string __VARIABLE__ ToString() noexcept __override_func;
 
         __PUB__ dty::String      __VARIABLE__ ToString(const string __VARIABLE__ formatter);
         __PUB__ dty::String      __VARIABLE__ ToString(String __VARIABLE__ formatter);
 
+        __PRI__ void __VARIABLE__ _AlignToTicks();
 
         __PUB__ static TimeSpan __VARIABLE__ Parse(String __VARIABLE__ source);
         __PUB__ static TimeSpan __VARIABLE__ Parse(const string __VARIABLE__ source);
@@ -101,24 +109,47 @@ namespace dty
         __PUB__ static bool __VARIABLE__ TryParse(String __VARIABLE__ source, TimeSpan __REFERENCE__ outSpan);
         __PUB__ static bool __VARIABLE__ TryParse(const string __VARIABLE__ source, TimeSpan __REFERENCE__ outSpan);
 
-#pragma region collection::ICompareable & collection::IEquatable interfaces
-        __PUB__ virtual bool __VARIABLE__ Equals(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator ==(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator !=(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator <(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator >(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator <=(TimeSpan __REFERENCE__ other) override;
-        __PUB__ virtual bool __VARIABLE__ operator >=(TimeSpan __REFERENCE__ other) override;
+#pragma region collection::ICompareable & collection::IEquatable interfaces & TianyuObject
+        __PUB__ virtual uint64   __VARIABLE__ GetTypeId() __override_func;
+        __PUB__ virtual bool     __VARIABLE__ Equals(TianyuObject __REFERENCE__ obj) __override_func;
+        __PUB__ virtual bool     __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj) __override_func;
 
-        __PUB__ virtual collection::CompareResult __VARIABLE__ CompareTo(TimeSpan __REFERENCE__ other) override;
+        __PUB__ virtual bool __VARIABLE__ Equals(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator ==(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator !=(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator <(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator >(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator <=(TimeSpan __REFERENCE__ other) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator >=(TimeSpan __REFERENCE__ other) __override_func;
+
+        __PUB__ virtual collection::CompareResult __VARIABLE__ CompareTo(TimeSpan __REFERENCE__ other) __override_func;
 #pragma endregion
-
-        friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, TimeSpan __REFERENCE__ span);
     };
     class DateTime final : public virtual dty::TianyuObject,
         public virtual dty::collection::IEquatable<DateTime>,
         public virtual dty::collection::ICompareable<DateTime>
     {
+        __PRI__ Property<TimeKind> __VARIABLE__ _TimeKind;
+        __PRI__ Property<uint64>   __VARIABLE__ _TimeTicks;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeYear;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeMonth;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeDay;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeHour;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeMinute;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeSecond;
+        __PRI__ Property<uint32>   __VARIABLE__ _TimeMillisecond;
+
+        __PUB__ IPropertyGetter<TimeKind> __REFERENCE__ Kind;
+        __PUB__ IPropertyGetter<uint64>   __REFERENCE__ Ticks;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Year;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Month;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Day;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Hour;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Minute;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Second;
+        __PUB__ IPropertyGetter<uint32>   __REFERENCE__ Millisecond;
+
+        __PUB__ DateTime();
         __PUB__ DateTime(uint64 __VARIABLE__ ticks);
         __PUB__ DateTime(uint64 __VARIABLE__ ticks, TimeKind __VARIABLE__ kind);
         __PUB__ DateTime(int32 __VARIABLE__ year, int32 __VARIABLE__ month, int32 __VARIABLE__ day);
@@ -127,19 +158,9 @@ namespace dty
             int32 __VARIABLE__ year,
             int32 __VARIABLE__ month,
             int32 __VARIABLE__ day,
-            int32 __VARIABLE__ hours,
-            int32 __VARIABLE__ minutes,
-            int32 __VARIABLE__ seconds
-        );
-        __PUB__ DateTime
-        (
-            int32    __VARIABLE__ year,
-            int32    __VARIABLE__ month,
-            int32    __VARIABLE__ day,
-            int32    __VARIABLE__ hours,
-            int32    __VARIABLE__ minutes,
-            int32    __VARIABLE__ seconds,
-            TimeKind __VARIABLE__ kind
+            int32 __VARIABLE__ hour,
+            int32 __VARIABLE__ minute,
+            int32 __VARIABLE__ second
         );
         __PUB__ DateTime
         (
@@ -151,33 +172,11 @@ namespace dty
             int32    __VARIABLE__ seconds,
             int32    __VARIABLE__ milliseconds
         );
-        __PUB__ DateTime
-        (
-            int32    __VARIABLE__ year,
-            int32    __VARIABLE__ month,
-            int32    __VARIABLE__ day,
-            int32    __VARIABLE__ hours,
-            int32    __VARIABLE__ minutes,
-            int32    __VARIABLE__ seconds,
-            int32    __VARIABLE__ milliseconds,
-            TimeKind __VARIABLE__ kind
-        );
         __PUB__ DateTime(const DateTime __REFERENCE__ other);
         __PUB__ virtual ~DateTime() override;
 
         __PUB__ DateTime __VARIABLE__ Date();
         __PUB__ TimeSpan __VARIABLE__ TimeOfDay();
-
-        __PUB__ int32 __VARIABLE__ Year();
-        __PUB__ int32 __VARIABLE__ Month();
-        __PUB__ int32 __VARIABLE__ Day();
-        __PUB__ int32 __VARIABLE__ Hour();
-        __PUB__ int32 __VARIABLE__ Minute();
-        __PUB__ int32 __VARIABLE__ Second();
-        __PUB__ int32 __VARIABLE__ Millisecond();
-
-        __PUB__ uint64   __VARIABLE__ Ticks();
-        __PUB__ TimeKind __VARIABLE__ Kind();
 
         __PUB__ DateTime __VARIABLE__ Add(TimeSpan __REFERENCE__ span);
         __PUB__ DateTime __VARIABLE__ AddDays(double __VARIABLE__ days);
@@ -196,10 +195,15 @@ namespace dty
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId() override;
 
-        __PUB__ dty::String ToString(const ::string __VARIABLE__ formatter);
-        __PUB__ dty::String ToString(dty::String __VARIABLE__ formatter);
+        __PUB__ dty::String __VARIABLE__ ToString(const ::string __VARIABLE__ formatter);
+        __PUB__ dty::String __VARIABLE__ ToString(dty::String __VARIABLE__ formatter);
+
+        __PRI__ void __VARIABLE__ _AlignToTicks();
 
 #pragma region collection::ICompareable & collection::IEquatable interfaces
+        __PUB__ virtual bool __VARIABLE__ Equals(TianyuObject __REFERENCE__ obj) __override_func;
+        __PUB__ virtual bool __VARIABLE__ operator==(TianyuObject __REFERENCE__ obj) __override_func;
+
         __PUB__ virtual bool __VARIABLE__ Equals(DateTime __REFERENCE__ other) override;
         __PUB__ virtual bool __VARIABLE__ operator ==(DateTime __REFERENCE__ other) override;
         __PUB__ virtual bool __VARIABLE__ operator !=(DateTime __REFERENCE__ other) override;
@@ -233,12 +237,7 @@ namespace dty
 
         __PUB__ static dty::collection::CompareResult __VARIABLE__ Compare(DateTime __REFERENCE__ date1, DateTime __REFERENCE__ date2);
 #pragma endregion
-
-        friend std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, DateTime __REFERENCE__ date);
     };
-
-    std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, TimeSpan __REFERENCE__ span);
-    std::ostream __REFERENCE__ operator<<(std::ostream __REFERENCE__ os, DateTime __REFERENCE__ date);
 }
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_TIMES_H_PLUS_PLUS__

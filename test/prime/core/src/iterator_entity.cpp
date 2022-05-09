@@ -447,38 +447,4 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
                 delete pIterator;
         }
     );
-
-    entity.RunFlow("Flow Test", [](TF& flow) -> void
-        {
-            flow.Item("Flow 1", [](TO& t) -> void
-                {
-                    t.EQ(0, 0);
-                }
-            );
-
-            flow.Item("Flow 1", [](TO& t) -> void
-                {
-                    t.EQ(0, 0);
-                }
-            );
-
-            flow.Item("Flow 2", [](TO& t) -> void
-                {
-                    t.EQ(0, 0);
-                }
-            );
-
-            flow.Item("Flow 3", [](TO& t) -> void
-                {
-                    t.EQ(0, 1);
-                }
-            );
-
-            flow.Item("Flow 4", [](TO& t) -> void
-                {
-                    t.EQ(0, 0);
-                }
-            );
-        }
-    );
 }

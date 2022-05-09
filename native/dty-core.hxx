@@ -16,6 +16,20 @@
 #define __DTY_COMMON_NATIVE_DTY_CORE_H_XX__
 
  //
+ // to check macro-definition __DTY_CORE_LANG__
+ // if the label is defined, to input the specified message from language file
+ // if the label is not defined, to return a default message
+ //
+// #define __DTY_CORE_LANG__ 1
+
+// #ifdef __DTY_CORE_LANG__
+#include "./res/i18n/language.h"
+#define __DTY_CORE_MSG_CONVERT(msg) msg
+// #else
+// #define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
+// #endif // !__DTY_CORE_LANG__
+
+ //
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
@@ -86,7 +100,7 @@
     * @brief 未知的Apple系统平台
     * @brief Throw error for Unknown Apple Platform
     */
-#error Unknown Apple Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_APPLE_PLATFORM__)
 #endif
 #endif // !defined(__APPLE__) || defined(__MACH__)
 
@@ -115,7 +129,7 @@
        * @brief Check state of 64bit OS
        */
 #ifdef __DTY_ERR_64
-#error Tianyu Platform require 64bit OS
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_REQUIRE_64__)
 #endif // !__DTY_ERR_64
 
        /**
@@ -123,7 +137,7 @@
         * @brief Check OS supportable state
         */
 #if !defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
-#error Unknown OS is not supported for Tianyu Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__)
 #endif // !!defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
 
 #ifdef __cplusplus
@@ -143,31 +157,6 @@ namespace dty
 }
 #endif // !__cplusplus
 
-//
-// language mode check macro-definition
-// in order to support const languages translation for tianyu native
-// should use the specified compiler tools to create the corresponding
-// language file
-//
-#if defined(__EN_MODE)
-// set dty-core language mode is English mode
-#define __DTY_CORE_LANG__ 1
-#elif defined(__CH_MODE)
-// set dty-core language mode is Chinese mode
-#define __DTY_CORE_LANG__ 0
-#endif // !language mode selection
-
-//
-// to check macro-definition __DTY_CORE_LANG__
-// if the label is defined, to input the specified message from language file
-// if the label is not defined, to return a default message
-//
-#ifdef __DTY_CORE_LANG__
-#define __DTY_CORE_MSG_CONVERT(msg) #msg
-#else
-#define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
-#endif // !__DTY_CORE_LANG__
-
 #pragma endregion
 
 // ################################################################################################
@@ -180,7 +169,7 @@ namespace dty
 #pragma region pure c mode definition
 
 // 天宇开发模式标志
-#define __DTY_DEV_MODE__    1
+// #define __DTY_DEV_MODE__    1
 
 
  // 字符类型有符号数最小值
@@ -227,6 +216,15 @@ namespace dty
 #define __UNSIGNED_INT64_MIN__  0
 // 64位整数类型无符号数最大值
 #define __UNSIGNED_INT64_MAX__  0xFFFFFFFFFFFFFFFF
+
+#define __CHAR_TYPE_BINARY_LENGTH__     8
+#define __BYTE_TYPE_BINARY_LENGTH__     8
+#define __SHORT_TYPE_BINARY_LENGTH__    16
+#define __INT_TYPE_BINARY_LENGTH__      32
+#define __LONG_TYPE_BINARY_LENGTH__     64
+#define __FLOAT_TYPE_BINARY_LENGTH__    32
+#define __DOUBLE_TYPE_BINARY_LENGTH__   64
+#define __BOOLEAN_TYPE_BINARY_LENGTH__  8
 
 // 前向引用 标志 用于标识未定义实体的方法、结构体、类等元素
 #define __PREDEFINE__
@@ -338,8 +336,8 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
  // #define __DTY_DEEP_LEARNING_MODE__
  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
-#if __cplusplus < 201700
-#error library needs C++17 or later
+#if __cplusplus < 201700L
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_VERSION_LOW__)
 #endif
 #endif // !__DTY_DEV_MODE__
 
@@ -384,6 +382,8 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 #define abstract
 // define interface that is an abstract class
 #define _interface abstract class
+// define the export lable in internal code
+#define _internal_export
 
 // null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
@@ -393,20 +393,98 @@ constexpr auto null = nullptr;
 // String Base APIs: in order to do some string operations without including a huge header files
 // #################################################################################################
 
-#pragma region c_string basic APIs
-int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+// formatter string type
+// 1. single char format
+//    - a:
+//    - A:
+//    - b: convert the value to binary value (0,1) (without "0b" pre-fix)
+//    - B: convert the value to binary value (0,1) (with "0b" pre-fix)
+//    - c: convert the value to be char value(use ascii)
+//    - C:
+//    - d: convert the value to be decimin value (0-9)
+//    - D: to indicate the number of digits of an integer (to count the count of char 'D')
+//    - e:
+//    - E:
+//    - f: float value counter char (the count of char 'f' means the number count of float after point)
+//    - F:
+//    - g:
+//    - G:
+//    - h:
+//    - H:
+//    - i:
+//    - I:
+//    - j:
+//    - J:
+//    - k:
+//    - K:
+//    - l:
+//    - L: to indicate the formatted value is left align
+//         note: fill char will be ignored if the left align is indicated
+//    - m:
+//    - M:
+//    - N:
+//    - o: convert the value to be oct value (0-7) (without '\0' pre-fix)
+//    - O: convert the value to be oct value (0-7) (with '\0' pre-fix)
+//    - p: to indicate the pre-fix should not be added (the highest priority)
+//    - P: to indicate the pre-fix should be added (the highest priority)
+//    - q:
+//    - Q:
+//    - R: to indicate the formatted value is right align
+//    - s: to indicate to force the plus or minus symbol whether needs to be display
+//    - S:
+//    - t:
+//    - T:
+//    - u: to indicate the formatted value should use lower char (the highest priority)
+//    - U: to indicate the formatted value should use upper char (the highest priority)
+//    - v:
+//    - V:
+//    - w:
+//    - W:
+//    - x: convert the value to be HEX (lower case) (0-9, a-f)
+//    - X: convert the value to be HEX (upper case) (0-9, A-F)
+//    - y:
+//    - Y:
+//    - z:
+//    - Z:
+// 
+// 2. complex format (char or integer below)
+//    - n: to indicate the total digits of result 
+//    - r: to indicate a char that is used to fill result if the result length is less than indicated
+// 
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma region c_string basic APIs
+
+int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase);
+
+::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
-// ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ l2str(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ f2str(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ d2str(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
+::string __VARIABLE__ b2str(::byte __VARIABLE__ b);
+::string __VARIABLE__ s2str(int16 __VARIABLE__ s);
+::string __VARIABLE__ us2str(uint16 __VARIABLE__ us);
+::string __VARIABLE__ i2str(int32 __VARIABLE__ i);
+::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui);
+::string __VARIABLE__ l2str(int64 __VARIABLE__ l);
+::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul);
+::string __VARIABLE__ f2str(float __VARIABLE__ f);
+::string __VARIABLE__ d2str(double __VARIABLE__ d);
+
+::string __VARIABLE__ c2str_f(char __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ uc2str_f(uchar __VARIABLE__ uc, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ sb2str_f(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str_f(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ s2str_f(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ us2str_f(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ i2str_f(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ui2str_f(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ l2str_f(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ul2str_f(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ f2str_f(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ d2str_f(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+
 #pragma endregion
 
 // #################################################################################################
@@ -503,6 +581,26 @@ namespace dty
 
         __PUB__ static  bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj);
     };
+
+    constexpr int32 ValueAlignBaseDefault = 2;
+    constexpr int32 ValueAlignPowerDefault = 2;
+
+    /**
+     * @brief align value to be a new value that is integer multiple of base
+     *
+     * @param value {int32} source value
+     * @param base {int32} the base value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlign(int32 __VARIABLE__ value, int32 __VARIABLE__ base = ValueAlignBaseDefault);
+    /**
+     * @brief align value to be a new value that is integer multiple of 2^n
+     *
+     * @param value {int32} source value
+     * @param power {int32} the pow value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlignByPow(int32 __VARIABLE__ value, int32 __VARIABLE__ power = ValueAlignPowerDefault);
 }
 
 // internal macro definition for tianyu class type
@@ -688,6 +786,7 @@ __TEMPLATE_DEF__ uint64 __DTY_TYPE_DEF__::InstanceHashCode()
 // import the core definition of Tianyu Native
 #include "stdio.h"
 #include <iostream>
+#include <functional> 
 
 namespace dty::test
 {
@@ -705,11 +804,32 @@ namespace dty::test
         Assert = 2
     };
 
+    // ####################################################################################
+    // dty test core
+    // used to define base structures and functions
+    // ####################################################################################
     namespace core
     {
-        class TestObject : public virtual dty::TianyuObject
+        // Test Object Basic Class
+        // this class is a base class of TestEntity and TestFlow
+        class TestObjectBase : public virtual dty::TianyuObject
         {
+            __PRO__ bool       __VARIABLE__  _ConsolePrint;
+            __PRO__::string    __VARIABLE__  _ObjectName;
+            __PRO__ TestState  __VARIABLE__  _State;
+            __PRO__ FILE       __POINTER__   _LogStream;
+            __PRO__ int32      __VARIABLE__  _Level;
 
+            __PUB__         TestObjectBase
+            (
+                bool      __VARIABLE__ consolePrint,
+                TestState __VARIABLE__ state,
+                FILE      __POINTER__  logStream,
+                int32     __VARIABLE__ level
+            );
+            __PUB__ virtual ~TestObjectBase() __override_func;
+
+            __PUB__ TestState  __VARIABLE__ GetState();
         };
     }
 
@@ -810,14 +930,8 @@ namespace dty::test
 
     __PREDEFINE__ class TestEntity;
 
-    class TestFlow final : public virtual dty::TianyuObject
+    class TestFlow final : public virtual dty::TianyuObject, public virtual core::TestObjectBase
     {
-        __PRI__ bool       __VARIABLE__  _ConsolePrint;
-        __PRI__::string    __VARIABLE__  _FlowName;
-        __PRI__ TestState  __VARIABLE__  _State;
-        __PRI__ FILE       __POINTER__   _LogStream;
-        __PRI__ int32      __VARIABLE__  _Level;
-
         __PUB__         TestFlow
         (
             const ::string __VARIABLE__  flowName,
@@ -829,7 +943,6 @@ namespace dty::test
         __PUB__         TestFlow(const TestFlow __REFERENCE__ tf);
         __PUB__ virtual ~TestFlow() __override_func;
 
-        __PUB__ TestState  __VARIABLE__ GetState();
         __PUB__ void       __VARIABLE__ Skip();
         __PUB__ void       __VARIABLE__ Set();
 
@@ -857,6 +970,20 @@ namespace dty::test
             TestDelegate __VARIABLE__ item_delegate
         );
 
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const char   __POINTER__  item_name,
+                TestDelegate __VARIABLE__ item_delegate
+            );
+
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const ::string __VARIABLE__ item_name,
+                TestDelegate   __VARIABLE__ item_delegate
+            );
+
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
         __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ EndRecord();
@@ -874,16 +1001,11 @@ namespace dty::test
     // as its name showing, each test should start a test entity to process the actual tests.
     // for each test group, test entity could be created multiable times and there are not
     // dependent with each other.
-    class TestEntity final : public virtual dty::TianyuObject
+    class TestEntity final : public virtual dty::TianyuObject, public virtual core::TestObjectBase
     {
-        __PRI__ bool       __VARIABLE__  _ConsolePrint;
-        __PRI__::string    __VARIABLE__  _EntityName;
         __PRI__::string    __VARIABLE__  _LogFile;
-        __PRI__ FILE       __POINTER__   _LogStream;
         __PRI__ bool       __VARIABLE__  _LogOwner;
-        __PRI__ TestState  __VARIABLE__  _State;
         __PRI__ bool       __VARIABLE__  _Asserted;
-        __PRI__ int32      __VARIABLE__  _Level;
         __PRI__ int32      __VARIABLE__  _SuccessCount;
         __PRI__ int32      __VARIABLE__  _SkippedCount;
         __PRI__ int32      __VARIABLE__  _FailureCount;
@@ -905,7 +1027,6 @@ namespace dty::test
         __PUB__         __cp_construct__ TestEntity(const TestEntity __REFERENCE__ entity);
         __PUB__ virtual __destruction__  ~TestEntity() __override_func;
 
-        __PUB__ TestState  __VARIABLE__ GetState();
         __PUB__ void       __VARIABLE__ SetAssert();
         __PUB__ void       __VARIABLE__ CancelAssert();
 
@@ -942,12 +1063,18 @@ namespace dty::test
             const ::string __VARIABLE__ test_description,
             TestDelegate   __VARIABLE__ test_item
         );
-
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const ::string __VARIABLE__ flow_name,
             FlowDelegate   __VARIABLE__ test_flow
         );
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ RunExceptionTest
+            (
+                const ::string __VARIABLE__ item_name,
+                const ::string __VARIABLE__ test_description,
+                TestDelegate   __VARIABLE__ item_delegate
+            );
 
         // ###################################################################################################################
         // const char* define
@@ -997,12 +1124,18 @@ namespace dty::test
             const char   __POINTER__  test_description,
             TestDelegate __VARIABLE__ test_item
         );
-
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const char   __POINTER__  flow_name,
             FlowDelegate __VARIABLE__ test_flow
         );
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ RunExceptionTest
+            (
+                const char   __POINTER__  item_name,
+                const char   __POINTER__  test_description,
+                TestDelegate __VARIABLE__ item_delegate
+            );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -1014,6 +1147,100 @@ namespace dty::test
     constexpr int32 _dty_test_entity_fail_param_pre_more = -2;
     constexpr int32 _dty_test_entity_fail_file_open = -3;
 }
+
+#pragma region template function implementation
+
+// Test Flow Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const ::string __VARIABLE__ item_name,
+    TestDelegate   __VARIABLE__ item_delegate
+)
+{
+    dty::test::TestObject tobj;
+
+    if (this->GetState() != dty::test::TestState::Success)
+        tobj.Skip();
+    else
+    {
+        tobj.Set();
+        try
+        {
+            item_delegate(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        this->_State = tobj.GetState();
+    }
+
+    this->Record(item_name, tobj.GetState());
+}
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const char   __POINTER__  item_name,
+    TestDelegate __VARIABLE__ item_delegate
+)
+{
+    this->ItemException<exception_type>((const ::string)item_name, item_delegate);
+}
+
+
+// Test Entity Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const ::string __VARIABLE__ test_name,
+    const ::string __VARIABLE__ test_description,
+    TestDelegate   __VARIABLE__ test_item
+)
+{
+    dty::test::TestObject tobj;
+
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
+    {
+        tobj.Skip();
+        ++this->_SkippedCount;
+    }
+    else
+    {
+        // set the default state is Failed
+        tobj.Set();
+        try
+        {
+            test_item(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        if (dty::test::TestState::Success == tobj.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
+
+    this->NotifyState(tobj.GetState());
+    this->Record(test_name, test_description, tobj.GetState());
+}
+
+
+#pragma endregion
 
 using TO = dty::test::TestObject;
 using TD = dty::test::TestDelegate;
@@ -1047,22 +1274,25 @@ using N = const ::string;
             switch (err)                                                                                \
             {                                                                                           \
                 case dty::test::_dty_test_entity_fail_param_too_few:                                    \
-                    std::cout << "Test Program need at least 1 parameter." << std::endl;                \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__)         \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_param_pre_more:                                   \
-                    std::cout << "Program parameter error with wrong pre '-' character." << std::endl;  \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_WRONG_PARAM_PRE___)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_file_open:                                        \
-                    std::cout << "Output file open failed!" << std::endl;                               \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_FILE_OPEN_FAILED__)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 default:                                                                                \
-                    std::cout << "Unknown Error" << std::endl;                                          \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;      \
                     break;                                                                              \
             }                                                                                           \
         }                                                                                               \
         catch(...)                                                                                      \
         {                                                                                               \
-            std::cout << "Unknown Error" << std::endl;                                                  \
+            std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;              \
         }                                                                                               \
         return -1;                                                                                      \
     }                                                                                                   \

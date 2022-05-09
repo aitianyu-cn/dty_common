@@ -1,6 +1,6 @@
 /**
  * @file formatter.hpp
- * @author your name (you@domain.com)
+ * @author ysydty
  * @brief
  * @version 0.1
  * @date 2021-12-23
@@ -15,56 +15,15 @@
 #ifdef __cplusplus
 
 #include "./internal.h"
-#include "./property.hpp"
+#include "./error.hpp"
 
 namespace dty
 {
     _interface IFormatter : public virtual dty::TianyuObject
     {
-        __PUB__ virtual ~IFormatter() { }
+        __PUB__ virtual ~IFormatter() __override_func;
 
         __PUB__ virtual ::string __VARIABLE__ ToString(const ::string __VARIABLE__ formatter) __pure_virtual_fun;
-    };
-
-    _enum NumberSystem : int32
-    {
-        BIN,
-        OCT,
-        DEC,
-        HEX
-    };
-
-    class Formatter final : public virtual dty::TianyuObject
-    {
-        __PUB__ Property<bool>         __VARIABLE__ ExplicitSign;
-        __PUB__ Property<int32>        __VARIABLE__ FullLength;
-        __PUB__ Property<int32>        __VARIABLE__ IntegerLength;
-        __PUB__ Property<int32>        __VARIABLE__ DecimalsLength;
-        __PUB__ Property<NumberSystem> __VARIABLE__ NumberConvert;
-        __PUB__ Property<bool>         __VARIABLE__ Percentage;
-
-        __PUB__         Formatter();
-        __PUB__         Formatter(const ::string __VARIABLE__ formatter);
-        __PUB__ virtual ~Formatter() __override_func;
-
-        __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetHashCode() __override_func;
-        __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;
-    };
-
-    // format handler class
-    // get an object to indicate the formatter parameters
-    // provide a decoder for formatter string
-    class FormatHandler final : public virtual dty::TianyuObject
-    {
-
-    };
-
-    // format processor class
-    // provide static methods to process base type
-    class FormatProcessor final : public virtual dty::TianyuObject
-    {
-
     };
 
     class FormatHelper final : public virtual dty::TianyuObject
@@ -81,10 +40,7 @@ namespace dty
         __PUB__ static ::string __VARIABLE__ Format(double __VARIABLE__ value, const ::string __VARIABLE__ formatter);
         __PUB__ static ::string __VARIABLE__ Format(bool __VARIABLE__ value, const ::string __VARIABLE__ formatter);
 
-        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter)
-        {
-            return ::null;
-        }
+        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter);
     };
 
     class ParseHelper final : public virtual dty::TianyuObject
@@ -101,12 +57,52 @@ namespace dty
         __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ double __REFERENCE__ result);
         __PUB__ static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ bool __REFERENCE__ result);
 
-        __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result)
-        {
-            // Todo: keep none operation
-        }
+        __PUB__ template<typename T> static void __VARIABLE__ Parse(const ::string __VARIABLE__ s, __OTPUT__ T __REFERENCE__ result);
     };
+
+    namespace except
+    {
+        class ParseException
+            : public virtual dty::TianyuObject,
+            public virtual dty::except::Exception
+        {
+            __PUB__         ParseException();
+            __PUB__ virtual ~ParseException() __override_func;
+
+#pragma region Tianyu Exception Base Function
+            __PUB__ virtual uint64 __VARIABLE__ GetExceptionId() __override_func;
+            __PUB__ virtual uint64 __VARIABLE__ GetTypeId()      __override_func;
+#pragma endregion
+        };
+
+        class ParseStringEmptyException
+            : public virtual dty::TianyuObject,
+            public virtual dty::except::ParseException
+        {
+            __PUB__         ParseStringEmptyException();
+            __PUB__ virtual ~ParseStringEmptyException() __override_func;
+
+#pragma region Tianyu Exception Base Function
+            __PUB__ virtual uint64 __VARIABLE__ GetExceptionId() __override_func;
+            __PUB__ virtual uint64 __VARIABLE__ GetTypeId()      __override_func;
+#pragma endregion
+        };
+    }
 }
+
+#pragma region template realization
+
+template<typename T> ::string dty::FormatHelper::Format(T value, const ::string formatter)
+{
+    return ::null;
+}
+
+template<typename T> void dty::ParseHelper::Parse(const ::string s, T& result)
+{
+    throw dty::except::OperationNotSupportException();
+}
+
+#pragma endregion
 
 #endif // !__cplusplus
 

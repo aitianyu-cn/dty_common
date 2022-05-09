@@ -15,7 +15,7 @@
 
 #include "./core.hxx"
 
-namespace dty
+namespace dty::math
 {
     class Math final : public virtual TianyuObject
     {

@@ -18,14 +18,15 @@
 
 #ifdef __cplusplus
 
-#include "./core/property.hpp"
+#include "./core/arghelper.hpp"
+#include "./core/basetype.hpp"
 #include "./core/error.hpp"
-#include "./core/pointer.hpp"
 #include "./core/event.hpp"
-#include "./core/thread.hpp"
-#include "./core/iterator.hpp"
-#include "./core/icollections.hpp"
 #include "./core/formatter.hpp"
+#include "./core/icollections.hpp"
+#include "./core/iterator.hpp"
+#include "./core/pointer.hpp"
+#include "./core/property.hpp"
 
 #endif // !__cplusplus
 

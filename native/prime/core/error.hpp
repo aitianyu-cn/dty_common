@@ -19,22 +19,6 @@
 
 namespace dty::except
 {
-#pragma region Exception ID Macros
-    constexpr uint64 __VARIABLE__ DTY_Generic_Exception = 0x0000000000000001ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_NullPointerException = 0x0000000000000002ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_ArithmeticException = 0x0000000000000003ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_IndexOutOfRangeException = 0x0000000000000004ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_NotImplementationException = 0x0000000000000005ULL;
-
-    constexpr uint64 __VARIABLE__ DTY_Generic_ArgumentException = 0x1000000000000001ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_ArgumentNullException = 0x1000000000000002ULL;
-    constexpr uint64 __VARIABLE__ DTY_Generic_ArgumentOutOfRangeException = 0x1000000000000003ULL;
-
-    constexpr uint64 __VARIABLE__ DTY_Generic_OperationNotSupportException = 0x2000000000000001ULL;
-
-    constexpr uint64 __VARIABLE__ DTY_Generic_OperationFailedException = 0x3000000000000001ULL;
-#pragma endregion
-
     class Exception :
         public virtual dty::TianyuObject,
         public virtual std::exception,

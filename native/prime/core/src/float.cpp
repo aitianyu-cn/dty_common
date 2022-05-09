@@ -122,11 +122,6 @@ bool dty::Float::operator==(dty::Float& other)
     return this->Equals(other);
 }
 
-bool dty::Float::operator==(dty::Float& other)
-{
-    return !(this->Equals(other));
-}
-
 bool dty::Float::operator<(dty::Float& other)
 {
     return !(*this >= other);

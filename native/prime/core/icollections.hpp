@@ -10,8 +10,8 @@
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.icollection?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
+#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__
+#define __DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__
 
 #include "./iterator.hpp"
 
@@ -20,7 +20,7 @@ namespace dty::collection
     template<typename T>
     _interface ICollections : public virtual dty::TianyuObject
     {
-        __PUB__ const IPropertyGetter<int32> __REFERENCE__ Count;
+        __PUB__ IPropertyGetter<int32> __REFERENCE__ Count;
 
         __PUB__         ICollections(IPropertyGetter<int32> __REFERENCE__ _count);
         __PUB__ virtual ~ICollections() __override_func;
@@ -29,6 +29,21 @@ namespace dty::collection
     };
 }
 
-#include "./res/icollections.cc"
+#pragma region template realization
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_ICOLLECTION_H_PLUS_PLUS__
+// ##########################################################
+// ICollections Implementation
+// ##########################################################
+
+template<typename T>
+__construction__ dty::collection::ICollections<T>::ICollections(dty::IPropertyGetter<int32>& count) :
+    dty::TianyuObject(),
+    Count(count)
+{ }
+
+template<typename T>
+__destruction__  dty::collection::ICollections<T>::~ICollections() { }
+
+#pragma endregion
+
+#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_ICOLLECTION_H_PLUS_PLUS__
