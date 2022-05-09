@@ -105,10 +105,10 @@ dty::IFormatter::~IFormatter() { }
 // ######################################################
 
 // generic parse API for integer type
-bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative);
+extern bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative);
 // generic parse API for decimal type
 // float type should be converted from double
-bool _dty_core_parse_base(const ::string s, double& value);
+extern bool _dty_core_parse_base(const ::string s, double& value);
 
 void dty::ParseHelper::Parse(const ::string s, char& result)
 {
@@ -142,13 +142,6 @@ void dty::ParseHelper::Parse(const ::string s, int16& result)
 {
     result = 0;
 
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
-
     uint64 value = 0;
     bool negative = false;
     if (_dty_core_parse_base(s, value, negative))
@@ -160,13 +153,6 @@ void dty::ParseHelper::Parse(const ::string s, int16& result)
 void dty::ParseHelper::Parse(const ::string s, uint16& result)
 {
     result = 0;
-
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
 
     uint64 value = 0;
     bool negative = false;
@@ -180,13 +166,6 @@ void dty::ParseHelper::Parse(const ::string s, int32& result)
 {
     result = 0;
 
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
-
     uint64 value = 0;
     bool negative = false;
     if (_dty_core_parse_base(s, value, negative))
@@ -198,13 +177,6 @@ void dty::ParseHelper::Parse(const ::string s, int32& result)
 void dty::ParseHelper::Parse(const ::string s, uint32& result)
 {
     result = 0;
-
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
 
     uint64 value = 0;
     bool negative = false;
@@ -218,13 +190,6 @@ void dty::ParseHelper::Parse(const ::string s, int64& result)
 {
     result = 0;
 
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
-
     uint64 value = 0;
     bool negative = false;
     if (_dty_core_parse_base(s, value, negative))
@@ -237,31 +202,15 @@ void dty::ParseHelper::Parse(const ::string s, uint64& result)
 {
     result = 0;
 
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
-
-    uint64 value = 0;
     bool negative = false;
-    if (_dty_core_parse_base(s, value, negative))
-        result = (uint64)(0xFFFFFFFFFFFFFFFF & value);
-    else
+    if (!_dty_core_parse_base(s, result, negative))
         throw dty::except::ParseException();
+
 }
 
 void dty::ParseHelper::Parse(const ::string s, double& result)
 {
     result = 0;
-
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
 
     if (!_dty_core_parse_base(s, result))
         throw dty::except::ParseException();
@@ -270,13 +219,6 @@ void dty::ParseHelper::Parse(const ::string s, double& result)
 void dty::ParseHelper::Parse(const ::string s, float& result)
 {
     result = 0;
-
-    if (::null == s)
-        throw dty::except::ArgumentNullException();
-
-    int32 slen = ::strlen(s);
-    if (0 == slen)
-        return; // for integer and decimal value type, empty string equals to 0 value.
 
     double value = 0.0;
     if (_dty_core_parse_base(s, value))
@@ -319,12 +261,3 @@ void dty::ParseHelper::Parse(const ::string s, bool& result)
 
     result = 0 != value;
 }
-
-
-// ######################################################
-// Internal API Implementation
-// ######################################################
-
-bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative);
-
-bool _dty_core_parse_base(const ::string s, double& value);

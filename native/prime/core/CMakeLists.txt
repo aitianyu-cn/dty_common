@@ -11,6 +11,7 @@ add_library(dty-core STATIC
     ${CMAKE_CURRENT_LIST_DIR}/src/event.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/float.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/formatter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/parse.base.cpp
 )
 
 message("            构建-完成")

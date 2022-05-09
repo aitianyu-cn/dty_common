@@ -161,14 +161,12 @@ namespace dty
         __PUB__ float __VARIABLE__ operator -(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator *(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator /(Float __REFERENCE__ value);
-        __PUB__ float __VARIABLE__ operator %(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator =(Float __REFERENCE__ value);
 
         __PUB__ float __VARIABLE__ operator +=(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator -=(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator *=(Float __REFERENCE__ value);
         __PUB__ float __VARIABLE__ operator /=(Float __REFERENCE__ value);
-        __PUB__ float __VARIABLE__ operator %=(Float __REFERENCE__ value);
         // ###################################################################################
         // operators __override_func end
         // ###################################################################################
