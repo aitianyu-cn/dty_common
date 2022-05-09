@@ -1230,7 +1230,7 @@ dty::String dty::String::GetString(const ::string source, bool needCopy = true)
     if (::null == source)
         throw dty::except::ArgumentNullException();
 
-    return dty::String::GetString(source, ::strlen(source), needCopy);
+    return dty::String::GetString(source, dty::strlen(source), needCopy);
 }
 dty::String dty::String::GetString(const ::string source, int32 sourceLen, bool needCopy = true)
 {

@@ -17,7 +17,7 @@ dty::LProperty<TestEnum>* pLProp_2 = ::null;
 int32 LProp_1_Value;
 TestEnum LProp_2_Value;
 
-TEST_MAIN("dty.Property Unit Test")
+TEST_MAIN("dty.common.native.test.prime.core.property")
 {
     entity.StartSpec("Property Spec", [](dty::test::TestEntity& entity) -> void
         {

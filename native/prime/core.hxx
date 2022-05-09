@@ -18,7 +18,6 @@
 
 #ifdef __cplusplus
 
-#include "./core/arghelper.hpp"
 #include "./core/basetype.hpp"
 #include "./core/error.hpp"
 #include "./core/event.hpp"

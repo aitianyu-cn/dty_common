@@ -36,6 +36,8 @@ const int32 _ty_base_number_string_convertion_formatter_error_duplicate_count_t 
 const int32 _ty_base_number_string_convertion_formatter_error_duplicate_align = -6;
 const int32 _ty_base_number_string_convertion_formatter_error_duplicate_sym_force = -7;
 const int32 _ty_base_number_string_convertion_formatter_error_duplicate_char_case = -8;
+const int32 _ty_base_number_string_convertion_formatter_error_duplicate_fill_char = -9;
+const int32 _ty_base_number_string_convertion_formatter_error_fill_char_not_assign = -10;
 
 class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
 {
@@ -48,6 +50,7 @@ class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
     __PRI__ int32       __VARIABLE__ _FloatDigits;
     __PRI__ int32       __VARIABLE__ _TotalDigits;
     __PRI__ char        __VARIABLE__ _FillChar;
+    __PRI__ bool        __VARIABLE__ _FillCharSet;
     __PRI__ FormatAlign __VARIABLE__ _ValueAlign;
     __PRI__ bool        __VARIABLE__ _ForceSymbol;
 
@@ -62,13 +65,14 @@ class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
         _FloatDigits(-1),
         _TotalDigits(-1),
         _FillChar('0'),
+        _FillCharSet(false),
         _ForceSymbol(false),
         _ValueAlign(FormatAlign::Unassign)
     {
         if (::null == format_str)
             return;
 
-        int32 length = ::strlen(format_str);
+        int32 length = dty::strlen(format_str);
         if (0 == length)
             return;
 
@@ -83,103 +87,117 @@ class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
 
         this->_TrimSpace(format_str, length, index);
 
-        switch (format_str[index])
+        for (; index < length; ++index)
         {
-        case 'a': break;
-        case 'A': break;
-        case 'b': this->_SetScale(hasScaleSet, NumberScale::BIN, false); break;
-        case 'B': this->_SetScale(hasScaleSet, NumberScale::BIN, true); break;
-        case 'c': this->_SetScale(hasScaleSet, NumberScale::ASC, false); break;
-        case 'C': break;
-        case 'd':  this->_SetScale(hasScaleSet, NumberScale::DEC, false); break;
-        case 'D':
-            if (-1 != this->_IntegerDigits)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_count_i;
+            switch (format_str[index])
+            {
+            case 'a': break;
+            case 'A': break;
+            case 'b': this->_SetScale(hasScaleSet, NumberScale::BIN, false); break;
+            case 'B': this->_SetScale(hasScaleSet, NumberScale::BIN, true); break;
+            case 'c': this->_SetScale(hasScaleSet, NumberScale::ASC, false); break;
+            case 'C': break;
+            case 'd':  this->_SetScale(hasScaleSet, NumberScale::DEC, false); break;
+            case 'D':
+                if (-1 != this->_IntegerDigits)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_count_i;
 
-            this->_IntegerDigits = this->_CountChar(format_str, length, index, 'D');
-            break;
-        case 'e': break;
-        case 'E': break;
-        case 'f':
-            if (-1 != this->_FloatDigits)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_count_f;
+                this->_IntegerDigits = this->_CountChar(format_str, length, index, 'D');
+                break;
+            case 'e': break;
+            case 'E': break;
+            case 'f':
+                if (-1 != this->_FloatDigits)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_count_f;
 
-            this->_FloatDigits = this->_CountChar(format_str, length, index, 'f');
-            break;
-        case 'F': break;
-        case 'g': break;
-        case 'G': break;
-        case 'h': break;
-        case 'H': break;
-        case 'i': break;
-        case 'I': break;
-        case 'j': break;
-        case 'J': break;
-        case 'k': break;
-        case 'K': break;
-        case 'l': break;
-        case 'L':
-            if (FormatAlign::Unassign != this->_ValueAlign)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_align;
+                this->_FloatDigits = this->_CountChar(format_str, length, index, 'f');
+                break;
+            case 'F': break;
+            case 'g': break;
+            case 'G': break;
+            case 'h': break;
+            case 'H': break;
+            case 'i': break;
+            case 'I': break;
+            case 'j': break;
+            case 'J': break;
+            case 'k': break;
+            case 'K': break;
+            case 'l': break;
+            case 'L':
+                if (FormatAlign::Unassign != this->_ValueAlign)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_align;
 
-            this->_ValueAlign = FormatAlign::Left;
-            break;
-        case 'm': break;
-        case 'M': break;
-        case 'n': break;
-        case 'N': break;
-        case 'o': this->_SetScale(hasScaleSet, NumberScale::OCT, false); break;
-        case 'O': this->_SetScale(hasScaleSet, NumberScale::OCT, true); break;
-        case 'p': this->_SetForcePrefix(false); break;
-        case 'P': this->_SetForcePrefix(true); break;
-        case 'q': break;
-        case 'Q': break;
-        case 'r': break;
-        case 'R':
-            if (FormatAlign::Unassign != this->_ValueAlign)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_align;
+                this->_ValueAlign = FormatAlign::Left;
+                break;
+            case 'm': break;
+            case 'M': break;
+            case 'n': break;
+            case 'N': break;
+            case 'o': this->_SetScale(hasScaleSet, NumberScale::OCT, false); break;
+            case 'O': this->_SetScale(hasScaleSet, NumberScale::OCT, true); break;
+            case 'p': this->_SetForcePrefix(false); break;
+            case 'P': this->_SetForcePrefix(true); break;
+            case 'q': break;
+            case 'Q': break;
+            case 'r':
+                if (this->_FillCharSet)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_fill_char;
 
-            this->_ValueAlign = FormatAlign::Right;
-            break;
-        case 's':
-            if (this->_ForceSymbol)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_sym_force;
+                if (index + 1 < length)
+                {
+                    this->_FillChar = format_str[++index];
+                    this->_FillCharSet = true;
+                }
+                else
+                    throw _ty_base_number_string_convertion_formatter_error_fill_char_not_assign;
+                break;
+            case 'R':
+                if (FormatAlign::Unassign != this->_ValueAlign)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_align;
 
-            this->_ForceSymbol = true;
-            break;
-        case 'S': break;
-        case 't': break;
-        case 'T': break;
-        case 'u':
-            if (CharCase::Unassign != this->_CharCase)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_char_case;
+                this->_ValueAlign = FormatAlign::Right;
+                break;
+            case 's':
+                if (this->_ForceSymbol)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_sym_force;
 
-            this->_CharCase = CharCase::Lower;
-            break;
-        case 'U':
-            if (CharCase::Unassign != this->_CharCase)
-                throw _ty_base_number_string_convertion_formatter_error_duplicate_char_case;
+                this->_ForceSymbol = true;
+                break;
+            case 'S': break;
+            case 't': break;
+            case 'T': break;
+            case 'u':
+                if (CharCase::Unassign != this->_CharCase)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_char_case;
 
-            this->_CharCase = CharCase::Upper;
-            break;
-        case 'v': break;
-        case 'V': break;
-        case 'w': break;
-        case 'W': break;
-        case 'x':
-            this->_SetScale(hasScaleSet, NumberScale::HEX, true);
-            this->_CharCase_S = false;
-            break;
-        case 'X':
-            this->_SetScale(hasScaleSet, NumberScale::HEX, true);
-            this->_CharCase_S = true;
-            break;
-        case 'y': break;
-        case 'Y': break;
-        case 'z': break;
-        case 'Z': break;
+                this->_CharCase = CharCase::Lower;
+                break;
+            case 'U':
+                if (CharCase::Unassign != this->_CharCase)
+                    throw _ty_base_number_string_convertion_formatter_error_duplicate_char_case;
 
-        default: break;
+                this->_CharCase = CharCase::Upper;
+                break;
+            case 'v': break;
+            case 'V': break;
+            case 'w': break;
+            case 'W': break;
+            case 'x':
+                this->_SetScale(hasScaleSet, NumberScale::HEX, true);
+                this->_CharCase_S = false;
+                break;
+            case 'X':
+                this->_SetScale(hasScaleSet, NumberScale::HEX, true);
+                this->_CharCase_S = true;
+                break;
+            case 'y': break;
+            case 'Y': break;
+            case 'z': break;
+            case 'Z': break;
+
+            default: break;
+            }
         }
     }
     __PRI__ void _TrimSpace(const ::string __VARIABLE__ format_str, int32 __VARIABLE__ length, int32 __REFERENCE__ index)
@@ -213,11 +231,15 @@ class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
     {
         int count = 1;
 
-        for (; index < length - 1; ++index)
+        for (index = index + 1; index < length; ++index)
             if (countCh == format_str[index])
                 count += 1;
             else
+            {
+                // the current char is not matched, roll back the index
+                index -= 1;
                 break;
+            }
 
         return count;
     }
@@ -280,7 +302,7 @@ class TYBaseNumberStringConvertionFormatter : public virtual dty::TianyuObject
 // #################################################################################################
 // #################################################################################################
 
-int32 dty_core_cpp_imp_str_len(::string str)
+int32 dty_core_cpp_imp_str_len(const ::string str)
 {
     int32 length = 0;
     while ('\0' != str[length])
@@ -338,9 +360,8 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
     // 3. add 1, if force positive or negative symbol
     int32 resultLength =
         (formatter.HasPrefix() ? 2 : 0)
-        + (formatter.HasDigitLimit() && formatter.GetValueDigits() > valueLength ? formatter.GetValueDigits() : valueLength)
-        + (formatter.IsForceSymbol() || negative ? 1 : 0)
-        + 1;
+        + (formatter.HasDigitLimit() && formatter.GetValueDigits() > valueLength ? formatter.GetValueDigits() - (formatter.IsForceSymbol() || negative ? 1 : 0) : valueLength)
+        + (formatter.IsForceSymbol() || negative ? 1 : 0);
 
     // create the result string and set the result ending. 
     ::string result = new char[resultLength + 1];
@@ -363,7 +384,7 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
             result[resultIndex++] = '0';
             result[resultIndex++] = NumberScale::BIN == formatter.GetScale()
                 ? formatter.IsUpperCase() ? 'B' : 'b'
-                : formatter.IsUpperCase() ? 'X' : 'x';
+                : 'x';
         }
     }
 
@@ -390,7 +411,7 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
 
         // copy value
         for (int32 i = 0; i < valueLength && resultIndex < resultLength; ++i, ++resultIndex)
-            result[resultIndex] = value[i];
+            result[resultIndex] = value[valueLength - i - 1];
     }
 
     return result;
@@ -702,12 +723,15 @@ const ::string dty_core_to_string_no_formatter = (const ::string)"";
 }
 
 
-int32 strlen(const string str)
+int32 dty::strlen(const ::string str)
 {
+    if (::null == str)
+        return 0;
+
     return ::dty_core_cpp_imp_str_len(str);
 }
 
-int32 strcmp(const ::string s1, const ::string s2, bool ignoreCase)
+int32 dty::strcmp(const ::string s1, const ::string s2, bool ignoreCase)
 {
     if (::null == s1 && ::null == s2)
         return 0;
@@ -793,11 +817,11 @@ int32 strcmp(const ::string s1, const ::string s2, bool ignoreCase)
 }
 ::string f2str(float f)
 {
-    return ::dty_core_cpp_imp_sb2str(f, dty_core_to_string_no_formatter);
+    return ::dty_core_cpp_imp_f2str(f, dty_core_to_string_no_formatter);
 }
 ::string d2str(double d)
 {
-    return ::dty_core_cpp_imp_sb2str(d, dty_core_to_string_no_formatter);
+    return ::dty_core_cpp_imp_d2str(d, dty_core_to_string_no_formatter);
 }
 
 ::string c2str_f(char ch, const ::string formatter)

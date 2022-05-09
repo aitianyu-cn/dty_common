@@ -5,7 +5,7 @@ extern void test_spec_filter_result(dty::test::TestEntity& entity);
 extern void test_spec_iterator_entity(dty::test::TestEntity& entity);
 extern void test_spec_iterator_object(dty::test::TestEntity& entity);
 
-RUNTEST(entity, "dty.Iterator(&components) Unit Test")
+RUNTEST(entity, "dty.common.native.test.prime.core.iterator")
 {
     // test sub spec for FilterResult
     entity.StartSpec("FilterResult Class", test_spec_filter_result);

@@ -1,0 +1,161 @@
+Date : 2022-05-09 15:19:10
+Directory : c:\Dev\tianyu-native
+Total : 108 files,  13090 codes, 1685 comments, 2744 blanks, all 17519 lines
+
+Languages
++--------------+------------+------------+------------+------------+------------+
+| language     | files      | code       | comment    | blank      | total      |
++--------------+------------+------------+------------+------------+------------+
+| C++          |         87 |     12,314 |      1,682 |      2,701 |     16,697 |
+| XML          |          1 |        315 |          0 |          1 |        316 |
+| JSON         |         17 |        288 |          0 |         15 |        303 |
+| Shell Script |          1 |        107 |          3 |         15 |        125 |
+| Batch        |          1 |         65 |          0 |         12 |         77 |
+| Markdown     |          1 |          1 |          0 |          0 |          1 |
++--------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                  |        108 |     13,090 |      1,685 |      2,744 |     17,519 |
+| config                                                             |          2 |        333 |          0 |          2 |        335 |
+| native                                                             |         92 |     10,953 |      1,625 |      2,368 |     14,946 |
+| native\io                                                          |          6 |         57 |         30 |         18 |        105 |
+| native\io\base_stream                                              |          4 |         44 |         20 |         13 |         77 |
+| native\math                                                        |          7 |      1,061 |        196 |        216 |      1,473 |
+| native\math\base                                                   |          3 |        180 |         87 |         38 |        305 |
+| native\math\src                                                    |          1 |        540 |          6 |        111 |        657 |
+| native\model                                                       |          6 |          7 |          0 |          6 |         13 |
+| native\prime                                                       |         51 |      7,216 |        884 |      1,607 |      9,707 |
+| native\prime\core                                                  |         19 |      3,166 |        665 |        762 |      4,593 |
+| native\prime\core\src                                              |          8 |      1,221 |         62 |        243 |      1,526 |
+| native\prime\src                                                   |         14 |      2,687 |         79 |        583 |      3,349 |
+| native\prime\src\time                                              |          6 |        935 |         10 |        164 |      1,109 |
+| native\res                                                         |          4 |        176 |          0 |          2 |        178 |
+| native\res\creater                                                 |          2 |         53 |          0 |          0 |         53 |
+| native\res\i18n                                                    |          2 |        123 |          0 |          2 |        125 |
+| native\text                                                        |          6 |          7 |         15 |          5 |         27 |
+| native\text\src                                                    |          1 |          0 |         15 |          0 |         15 |
+| native\thread                                                      |          7 |         92 |         13 |         28 |        133 |
+| test                                                               |         11 |      1,631 |         57 |        347 |      2,035 |
+| test\dty-core                                                      |          1 |          4 |          0 |          1 |          5 |
+| test\prime                                                         |          9 |      1,622 |         47 |        342 |      2,011 |
+| test\prime\core                                                    |          8 |      1,618 |         47 |        341 |      2,006 |
+| test\prime\core\src                                                |          3 |        631 |          7 |        135 |        773 |
++--------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| filename                                                           | language     | code       | comment    | blank      | total      |
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+
+| c:\Dev\tianyu-native\README.md                                     | Markdown     |          1 |          0 |          0 |          1 |
+| c:\Dev\tianyu-native\config\.prettierrc                            | JSON         |         18 |          0 |          1 |         19 |
+| c:\Dev\tianyu-native\config\eclipse-formatter.xml                  | XML          |        315 |          0 |          1 |        316 |
+| c:\Dev\tianyu-native\init.bat                                      | Batch        |         65 |          0 |         12 |         77 |
+| c:\Dev\tianyu-native\init.sh                                       | Shell Script |        107 |          3 |         15 |        125 |
+| c:\Dev\tianyu-native\native\Export.json                            | JSON         |         21 |          0 |          1 |         22 |
+| c:\Dev\tianyu-native\native\dty-core.cpp                           | C++          |        752 |         69 |        116 |        937 |
+| c:\Dev\tianyu-native\native\dty-core.hxx                           | C++          |        780 |        382 |        173 |      1,335 |
+| c:\Dev\tianyu-native\native\dty-test-core.cpp                      | C++          |        763 |         25 |        185 |        973 |
+| c:\Dev\tianyu-native\native\io\Export.json                         | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\io\base_stream\Export.json             | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\io\base_stream\consolebase.hpp         | C++          |         10 |         10 |          5 |         25 |
+| c:\Dev\tianyu-native\native\io\base_stream\ostream.cpp             | C++          |         16 |          0 |          3 |         19 |
+| c:\Dev\tianyu-native\native\io\base_stream\ostream.hpp             | C++          |         11 |         10 |          4 |         25 |
+| c:\Dev\tianyu-native\native\io\iobase.hpp                          | C++          |          6 |         10 |          4 |         20 |
+| c:\Dev\tianyu-native\native\math\Export.json                       | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\math\base\baseValue.cpp                | C++          |         14 |         10 |          3 |         27 |
+| c:\Dev\tianyu-native\native\math\base\bytesCalc.cpp                | C++          |        166 |         77 |         34 |        277 |
+| c:\Dev\tianyu-native\native\math\base\decimalCalc.cpp              | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\math\bignumber.hpp                     | C++          |        314 |         73 |         61 |        448 |
+| c:\Dev\tianyu-native\native\math\common.hpp                        | C++          |         20 |         30 |          5 |         55 |
+| c:\Dev\tianyu-native\native\math\src\biginteger.cpp                | C++          |        540 |          6 |        111 |        657 |
+| c:\Dev\tianyu-native\native\model\Export.json                      | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\model\dataSet.hpp                      | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\model\dataTable.hpp                    | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\model\dataView.hpp                     | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\model\dom.hpp                          | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\model\dombase.hpp                      | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime.hxx                              | C++          |         21 |         11 |         11 |         43 |
+| c:\Dev\tianyu-native\native\prime\Export.json                      | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\prime\array.hpp                        | C++          |         87 |         14 |         16 |        117 |
+| c:\Dev\tianyu-native\native\prime\async.hpp                        | C++          |        160 |         10 |         31 |        201 |
+| c:\Dev\tianyu-native\native\prime\bitmap.hpp                       | C++          |         27 |         10 |          9 |         46 |
+| c:\Dev\tianyu-native\native\prime\core.hxx                         | C++          |         15 |         12 |          6 |         33 |
+| c:\Dev\tianyu-native\native\prime\core\Export.json                 | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\prime\core\arghelper.hpp               | C++          |         43 |        102 |         39 |        184 |
+| c:\Dev\tianyu-native\native\prime\core\basetype.hpp                | C++          |        405 |         71 |         98 |        574 |
+| c:\Dev\tianyu-native\native\prime\core\error.hpp                   | C++          |        116 |         10 |         27 |        153 |
+| c:\Dev\tianyu-native\native\prime\core\event.hpp                   | C++          |        145 |         14 |         43 |        202 |
+| c:\Dev\tianyu-native\native\prime\core\formatter.hpp               | C++          |         80 |         10 |         19 |        109 |
+| c:\Dev\tianyu-native\native\prime\core\icollections.hpp            | C++          |         24 |         14 |         11 |         49 |
+| c:\Dev\tianyu-native\native\prime\core\internal.h                  | C++          |        232 |        147 |         31 |        410 |
+| c:\Dev\tianyu-native\native\prime\core\iterator.hpp                | C++          |        412 |         28 |        121 |        561 |
+| c:\Dev\tianyu-native\native\prime\core\pointer.hpp                 | C++          |        313 |        187 |         78 |        578 |
+| c:\Dev\tianyu-native\native\prime\core\property.hpp                | C++          |        168 |         20 |         51 |        239 |
+| c:\Dev\tianyu-native\native\prime\core\src\arghelper.cpp           | C++          |          1 |          5 |          2 |          8 |
+| c:\Dev\tianyu-native\native\prime\core\src\boolean.cpp             | C++          |         97 |          0 |         21 |        118 |
+| c:\Dev\tianyu-native\native\prime\core\src\double.cpp              | C++          |        162 |          0 |         34 |        196 |
+| c:\Dev\tianyu-native\native\prime\core\src\error.cpp               | C++          |        230 |         30 |         57 |        317 |
+| c:\Dev\tianyu-native\native\prime\core\src\event.cpp               | C++          |         15 |          0 |          5 |         20 |
+| c:\Dev\tianyu-native\native\prime\core\src\float.cpp               | C++          |        162 |          0 |         34 |        196 |
+| c:\Dev\tianyu-native\native\prime\core\src\formatter.cpp           | C++          |        194 |         22 |         48 |        264 |
+| c:\Dev\tianyu-native\native\prime\core\src\parse.base.cpp          | C++          |        360 |          5 |         42 |        407 |
+| c:\Dev\tianyu-native\native\prime\dictionary.hpp                   | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\guid.hpp                         | C++          |         68 |         10 |         13 |         91 |
+| c:\Dev\tianyu-native\native\prime\list.hpp                         | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\math.hpp                         | C++          |        116 |         11 |         19 |        146 |
+| c:\Dev\tianyu-native\native\prime\object.hpp                       | C++          |        438 |         10 |         68 |        516 |
+| c:\Dev\tianyu-native\native\prime\queue.hpp                        | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\random.hpp                       | C++          |         23 |         10 |          8 |         41 |
+| c:\Dev\tianyu-native\native\prime\set.hpp                          | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\src\bitmap.cpp                   | C++          |        116 |          0 |         30 |        146 |
+| c:\Dev\tianyu-native\native\prime\src\console.cpp                  | C++          |        177 |         15 |         51 |        243 |
+| c:\Dev\tianyu-native\native\prime\src\guid.cpp                     | C++          |        219 |          0 |         28 |        247 |
+| c:\Dev\tianyu-native\native\prime\src\math.cpp                     | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\src\mathf.cpp                    | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\prime\src\string.cpp                   | C++          |        953 |         54 |        266 |      1,273 |
+| c:\Dev\tianyu-native\native\prime\src\system.cpp                   | C++          |          1 |          0 |          2 |          3 |
+| c:\Dev\tianyu-native\native\prime\src\time\datetime.cpp            | C++          |        491 |          0 |         82 |        573 |
+| c:\Dev\tianyu-native\native\prime\src\time\time.format.cpp         | C++          |         39 |         10 |          6 |         55 |
+| c:\Dev\tianyu-native\native\prime\src\time\time.now.cpp            | C++          |          2 |          0 |          1 |          3 |
+| c:\Dev\tianyu-native\native\prime\src\time\time.parse.cpp          | C++          |         17 |          0 |          4 |         21 |
+| c:\Dev\tianyu-native\native\prime\src\time\times.helper.cpp        | C++          |         53 |          0 |          7 |         60 |
+| c:\Dev\tianyu-native\native\prime\src\time\timespan.cpp            | C++          |        333 |          0 |         64 |        397 |
+| c:\Dev\tianyu-native\native\prime\src\version.cpp                  | C++          |        286 |          0 |         40 |        326 |
+| c:\Dev\tianyu-native\native\prime\stack.hpp                        | C++          |         15 |         11 |          4 |         30 |
+| c:\Dev\tianyu-native\native\prime\string.hpp                       | C++          |        132 |         10 |         23 |        165 |
+| c:\Dev\tianyu-native\native\prime\system.hpp                       | C++          |         26 |         11 |          9 |         46 |
+| c:\Dev\tianyu-native\native\prime\times.hpp                        | C++          |        196 |         11 |         36 |        243 |
+| c:\Dev\tianyu-native\native\prime\version.hpp                      | C++          |         53 |         10 |         15 |         78 |
+| c:\Dev\tianyu-native\native\res\creater\Creater.deps.json          | JSON         |         41 |          0 |          0 |         41 |
+| c:\Dev\tianyu-native\native\res\creater\Creater.runtimeconfig.json | JSON         |         12 |          0 |          0 |         12 |
+| c:\Dev\tianyu-native\native\res\i18n\dty-core.json                 | JSON         |         42 |          0 |          1 |         43 |
+| c:\Dev\tianyu-native\native\res\i18n\dty-test-core.json            | JSON         |         81 |          0 |          1 |         82 |
+| c:\Dev\tianyu-native\native\text\Export.json                       | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\text\encoding.hpp                      | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\text\src\text.cpp                      | C++          |          0 |         15 |          0 |         15 |
+| c:\Dev\tianyu-native\native\text\stringBuilder.hpp                 | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\text\textbase.hpp                      | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\text\wstring.hpp                       | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\Export.json                     | JSON         |          7 |          0 |          1 |          8 |
+| c:\Dev\tianyu-native\native\thread\concurrentBag.hpp               | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\concurrentBiosphere.hpp         | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\concurrentDictionary.hpp        | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\concurrentQueue.hpp             | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\concurrentStack.hpp             | C++          |          0 |          0 |          1 |          1 |
+| c:\Dev\tianyu-native\native\thread\thread.hpp                      | C++          |         85 |         13 |         22 |        120 |
+| c:\Dev\tianyu-native\test\dty-core\testspecs.json                  | JSON         |          4 |          0 |          1 |          5 |
+| c:\Dev\tianyu-native\test\prime\core\event.cpp                     | C++          |        184 |          0 |         52 |        236 |
+| c:\Dev\tianyu-native\test\prime\core\iterator.cpp                  | C++          |         11 |          3 |          4 |         18 |
+| c:\Dev\tianyu-native\test\prime\core\property.cpp                  | C++          |        181 |          0 |         25 |        206 |
+| c:\Dev\tianyu-native\test\prime\core\smartpointer.cpp              | C++          |        602 |         37 |        124 |        763 |
+| c:\Dev\tianyu-native\test\prime\core\src\filter_result.cpp         | C++          |        167 |          1 |         35 |        203 |
+| c:\Dev\tianyu-native\test\prime\core\src\iterator_entity.cpp       | C++          |        373 |          4 |         73 |        450 |
+| c:\Dev\tianyu-native\test\prime\core\src\iterator_object.cpp       | C++          |         91 |          2 |         27 |        120 |
+| c:\Dev\tianyu-native\test\prime\core\testspecs.json                | JSON         |          9 |          0 |          1 |         10 |
+| c:\Dev\tianyu-native\test\prime\testspecs.json                     | JSON         |          4 |          0 |          1 |          5 |
+| c:\Dev\tianyu-native\test\testframe.hxx                            | C++          |          5 |         10 |          4 |         19 |
+| Total                                                              |              |     13,090 |      1,685 |      2,744 |     17,519 |
++--------------------------------------------------------------------+--------------+------------+------------+------------+------------+

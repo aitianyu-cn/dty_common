@@ -16,7 +16,7 @@ dty::EventHandler<CustomEventArgs>* customHandler;
 int32 defaultHandlerValue;
 int32 customHandlerValue;
 
-TEST_MAIN("dty.Event Unit Test")
+TEST_MAIN("dty.common.native.test.prime.core.event")
 {
     TEST_SPEC("default Event Arg",
         {

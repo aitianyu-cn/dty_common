@@ -4,7 +4,6 @@ add_library(dty-core STATIC
 
     ${PROJECT_SOURCE_DIR}/native/dty-core.cpp
 
-    ${CMAKE_CURRENT_LIST_DIR}/src/arghelper.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/boolean.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/double.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/error.cpp

@@ -456,9 +456,11 @@ constexpr auto null = nullptr;
 
 #pragma region c_string basic APIs
 
-int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
-int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase);
-
+namespace dty
+{
+    int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+    int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase = false);
+}
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
 ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
@@ -670,14 +672,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];
@@ -699,14 +701,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];

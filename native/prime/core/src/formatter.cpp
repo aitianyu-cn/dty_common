@@ -117,7 +117,7 @@ void dty::ParseHelper::Parse(const ::string s, char& result)
     if (::null == s)
         throw dty::except::ArgumentNullException();
 
-    int32 slen = ::strlen(s);
+    int32 slen = dty::strlen(s);
     if (0 == slen)
         throw dty::except::ParseStringEmptyException();
 
@@ -131,7 +131,7 @@ void dty::ParseHelper::Parse(const ::string s, uchar& result)
     if (::null == s)
         throw dty::except::ArgumentNullException();
 
-    int32 slen = ::strlen(s);
+    int32 slen = dty::strlen(s);
     if (0 == slen)
         throw dty::except::ParseStringEmptyException();
 
@@ -234,7 +234,7 @@ void dty::ParseHelper::Parse(const ::string s, bool& result)
     if (::null == s)
         throw dty::except::ArgumentNullException();
 
-    int32 slen = ::strlen(s);
+    int32 slen = dty::strlen(s);
     if (0 == slen)
         return; // for bool value type, empty string equals to false.
 
@@ -250,7 +250,7 @@ void dty::ParseHelper::Parse(const ::string s, bool& result)
         return;
     }
 
-    int32 strCompare = ::strcmp(s, (const ::string)"false", true);
+    int32 strCompare = dty::strcmp(s, (const ::string)"false", true);
     if (0 == strCompare)
         return; // result should be false if the source string is "false" (no matter the case)
 
