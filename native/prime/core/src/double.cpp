@@ -45,7 +45,7 @@ dty::Double::~Double() { }
 
 ::string dty::Double::ToString() noexcept
 {
-    return this->ToString(::null);
+    return this->ToString((::string)"");
 }
 
 uint64 dty::Double::GetTypeId()
@@ -112,9 +112,20 @@ bool dty::Double::operator==(dty::TianyuObject& obj)
 
 bool dty::Double::Equals(dty::Double& other)
 {
+    if (this->GetHashCode() == other.GetHashCode())
+        return true;
+
     double sub = this->_Value - other._Value;
     sub = ::fabs(sub);
     return sub < this->Precision;
+}
+
+dty::collection::CompareResult dty::Double::CompareTo(dty::Double& other)
+{
+    if (this->Equals(other))
+        return dty::collection::CompareResult::EQUAL;
+
+    return (__PTR_TO_REF__ this) > other ? dty::collection::CompareResult::GREAT : dty::collection::CompareResult::LESS;
 }
 
 bool dty::Double::operator==(dty::Double& other)
@@ -122,19 +133,24 @@ bool dty::Double::operator==(dty::Double& other)
     return this->Equals(other);
 }
 
+bool dty::Double::operator!=(dty::Double& other)
+{
+    return !this->Equals(other);
+}
+
 bool dty::Double::operator<(dty::Double& other)
 {
-    return !(*this >= other);
+    return !(__PTR_TO_REF__ this >= other);
 }
 
 bool dty::Double::operator>(dty::Double& other)
 {
-    return !(*this <= other);
+    return !(__PTR_TO_REF__ this <= other);
 }
 
 bool dty::Double::operator<=(dty::Double& other)
 {
-    if (*this == other)
+    if (__PTR_TO_REF__ this == other)
         return true;
 
     return this->_Value < other._Value;
@@ -142,7 +158,7 @@ bool dty::Double::operator<=(dty::Double& other)
 
 bool dty::Double::operator>=(dty::Double& other)
 {
-    if (*this == other)
+    if (__PTR_TO_REF__ this == other)
         return true;
 
     return this->_Value > other._Value;

@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2021-12-23
  *
- * @copyright Copyright (c) 2021
+ * @copyright aitianyu.cn Copyright (c) 2021
  *
  */
 
@@ -16,6 +16,7 @@
 
 #include "./internal.h"
 #include "./error.hpp"
+#include <type_traits>
 
 namespace dty
 {
@@ -40,7 +41,9 @@ namespace dty
         __PUB__ static ::string __VARIABLE__ Format(double __VARIABLE__ value, const ::string __VARIABLE__ formatter);
         __PUB__ static ::string __VARIABLE__ Format(bool __VARIABLE__ value, const ::string __VARIABLE__ formatter);
 
-        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __VARIABLE__ value, const ::string __VARIABLE__ formatter);
+        __PUB__ static ::string __VARIABLE__ Format(dty::IToString __REFERENCE__ value);
+
+        __PUB__ template<typename T> static ::string __VARIABLE__ Format(T __REFERENCE__ value);
     };
 
     class ParseHelper final : public virtual dty::TianyuObject
@@ -92,9 +95,12 @@ namespace dty
 
 #pragma region template realization
 
-template<typename T> ::string dty::FormatHelper::Format(T value, const ::string formatter)
+template<typename T> ::string dty::FormatHelper::Format(T& value)
 {
-    return ::null;
+    if (std::is_base_of<dty::IToString, T>::value)
+        return dty::FormatHelper::Format((dty::IToString __REFERENCE__)value);
+
+    return dty::_dty_native_cpp_default_to_string(value);
 }
 
 template<typename T> void dty::ParseHelper::Parse(const ::string s, T& result)

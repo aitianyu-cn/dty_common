@@ -51,4 +51,41 @@ target_link_libraries(
     ${DTY_NATIVE_TEST_NAME}.core
 )
 
+# 构建测试 - dty.common.native.test.prime.core.formatter
+message("                执行: " ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.formatter)
+add_executable(
+    ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.formatter 
+    
+    formatter.cpp
+
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/formatter.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/parse.base.cpp
+)
+target_link_libraries(
+    ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.formatter 
+
+    ${DTY_NATIVE_TEST_NAME}.core
+)
+
+# 构建测试 - dty.common.native.test.prime.core.basetype
+message("                执行: " ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.basetype)
+add_executable(
+    ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.basetype 
+    
+    basetype.cpp
+    src/basetype_boolean.cpp
+    src/basetype_integer.cpp
+
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/boolean.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/double.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/float.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/formatter.cpp
+    ${PROJECT_SOURCE_DIR}/native/prime/core/src/parse.base.cpp
+)
+target_link_libraries(
+    ${DTY_NATIVE_TEST_PRIME_CORE_NAME}.basetype 
+
+    ${DTY_NATIVE_TEST_NAME}.core
+)
+
 message("            构建-完成")

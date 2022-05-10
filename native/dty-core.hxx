@@ -456,9 +456,11 @@ constexpr auto null = nullptr;
 
 #pragma region c_string basic APIs
 
-int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
-int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase);
-
+namespace dty
+{
+    int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+    int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase = false);
+}
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
 ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
@@ -620,6 +622,19 @@ namespace dty
 
 #pragma endregion
 
+#pragma region Public Define
+
+_enum NumberScale : byte
+{
+    ASC,
+    BIN,
+    OCT,
+    DEC,
+    HEX
+};
+
+#pragma endregion
+
 // #################################################################################################
 // #################################################################################################
 // #################################################################################################
@@ -657,14 +672,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];
@@ -686,14 +701,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];
@@ -1063,18 +1078,17 @@ namespace dty::test
             const ::string __VARIABLE__ test_description,
             TestDelegate   __VARIABLE__ test_item
         );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const ::string __VARIABLE__ item_name,
+            const ::string __VARIABLE__ test_description,
+            TestDelegate   __VARIABLE__ item_delegate
+        );
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const ::string __VARIABLE__ flow_name,
             FlowDelegate   __VARIABLE__ test_flow
         );
-        __PUB__ template<class exception_type>
-            void __VARIABLE__ RunExceptionTest
-            (
-                const ::string __VARIABLE__ item_name,
-                const ::string __VARIABLE__ test_description,
-                TestDelegate   __VARIABLE__ item_delegate
-            );
 
         // ###################################################################################################################
         // const char* define
@@ -1124,18 +1138,17 @@ namespace dty::test
             const char   __POINTER__  test_description,
             TestDelegate __VARIABLE__ test_item
         );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const char   __POINTER__  item_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ item_delegate
+        );
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const char   __POINTER__  flow_name,
             FlowDelegate __VARIABLE__ test_flow
         );
-        __PUB__ template<class exception_type>
-            void __VARIABLE__ RunExceptionTest
-            (
-                const char   __POINTER__  item_name,
-                const char   __POINTER__  test_description,
-                TestDelegate __VARIABLE__ item_delegate
-            );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -1239,6 +1252,20 @@ template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExcep
     this->Record(test_name, test_description, tobj.GetState());
 }
 
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const char   __POINTER__  item_name,
+    const char   __POINTER__  test_description,
+    TestDelegate __VARIABLE__ item_delegate
+)
+{
+    this->RunExceptionTest<exception_type>
+        (
+            (const ::string)item_name,
+            (const ::string)test_description,
+            item_delegate
+            );
+}
 
 #pragma endregion
 

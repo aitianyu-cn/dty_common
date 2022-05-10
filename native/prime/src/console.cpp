@@ -26,7 +26,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::b2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -40,7 +40,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::sb2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -54,7 +54,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::s2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -68,7 +68,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::us2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -82,7 +82,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::i2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -96,7 +96,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::ui2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -110,7 +110,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::l2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -124,7 +124,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::ul2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -138,7 +138,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::f2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -152,7 +152,7 @@ class ConsoleWriteHandler
         OutListItem __POINTER__ newItem = new OutListItem();
 
         newItem->_Str = ::d2str(param, ::null);
-        newItem->_StrLength = ::strlen(newItem->_Str);
+        newItem->_StrLength = dty::strlen(newItem->_Str);
 
         preItem->_Next = newItem;
         newItem->_Next = ::null;
@@ -179,7 +179,7 @@ class ConsoleWriteHandler
     {
         OutListItem __POINTER__ newItem = new OutListItem();
 
-        newItem->_StrLength = ::strlen(param);
+        newItem->_StrLength = dty::strlen(param);
         newItem->_Str = new char[newItem->_StrLength + 1];
         for (int32 i = 0; i < newItem->_StrLength; ++i)
             newItem->_Str[i] = param[i];

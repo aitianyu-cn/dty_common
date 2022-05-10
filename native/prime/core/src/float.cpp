@@ -112,9 +112,20 @@ bool dty::Float::operator==(dty::TianyuObject& obj)
 
 bool dty::Float::Equals(dty::Float& other)
 {
+    if (this->GetHashCode() == other.GetHashCode())
+        return true;
+
     float sub = this->_Value - other._Value;
     sub = ::fabs(sub);
     return sub < this->Precision;
+}
+
+dty::collection::CompareResult dty::Float::CompareTo(dty::Float& other)
+{
+    if (this->Equals(other))
+        return dty::collection::CompareResult::EQUAL;
+
+    return (__PTR_TO_REF__ this) > other ? dty::collection::CompareResult::GREAT : dty::collection::CompareResult::LESS;
 }
 
 bool dty::Float::operator==(dty::Float& other)
@@ -122,19 +133,24 @@ bool dty::Float::operator==(dty::Float& other)
     return this->Equals(other);
 }
 
+bool dty::Float::operator!=(dty::Float& other)
+{
+    return !this->Equals(other);
+}
+
 bool dty::Float::operator<(dty::Float& other)
 {
-    return !(*this >= other);
+    return !(__PTR_TO_REF__ this >= other);
 }
 
 bool dty::Float::operator>(dty::Float& other)
 {
-    return !(*this <= other);
+    return !(__PTR_TO_REF__ this <= other);
 }
 
 bool dty::Float::operator<=(dty::Float& other)
 {
-    if (*this == other)
+    if (__PTR_TO_REF__ this == other)
         return true;
 
     return this->_Value < other._Value;
@@ -142,7 +158,7 @@ bool dty::Float::operator<=(dty::Float& other)
 
 bool dty::Float::operator>=(dty::Float& other)
 {
-    if (*this == other)
+    if (__PTR_TO_REF__ this == other)
         return true;
 
     return this->_Value > other._Value;

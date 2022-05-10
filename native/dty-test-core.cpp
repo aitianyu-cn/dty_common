@@ -111,7 +111,7 @@ bool TEST_OBJECT_DEF::IsNotNull(dty::TianyuObject& obj)
 
 bool TEST_OBJECT_DEF::IsEmpty(const ::string str)
 {
-    bool result = ::null != str && ::strlen(str) == 0;
+    bool result = ::null != str && dty::strlen(str) == 0;
 
     this->SetState(result);
     return result;
@@ -119,7 +119,7 @@ bool TEST_OBJECT_DEF::IsEmpty(const ::string str)
 
 bool TEST_OBJECT_DEF::IsNotEmpty(const ::string str)
 {
-    bool result = ::null != str && ::strlen(str) > 0;
+    bool result = ::null != str && dty::strlen(str) > 0;
 
     this->SetState(result);
     return result;
@@ -146,8 +146,8 @@ bool TEST_OBJECT_DEF::EQ(const ::string str1, const ::string str2)
         result = false;
     else
     {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
+        int32 len1 = dty::strlen(str1);
+        int32 len2 = dty::strlen(str2);
 
         if (len1 != len2)
             result = false;
@@ -173,8 +173,8 @@ bool TEST_OBJECT_DEF::NE(const ::string str1, const ::string str2)
         result = true;
     else
     {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
+        int32 len1 = dty::strlen(str1);
+        int32 len2 = dty::strlen(str2);
 
         if (len1 != len2)
             result = true;
@@ -202,8 +202,8 @@ bool TEST_OBJECT_DEF::GT(const ::string str1, const ::string str2)
         result = false;
     else
     {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
+        int32 len1 = dty::strlen(str1);
+        int32 len2 = dty::strlen(str2);
 
         int32 i = 0, j = 0;
         result = true;
@@ -230,8 +230,8 @@ bool TEST_OBJECT_DEF::LT(const ::string str1, const ::string str2)
         result = true;
     else
     {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
+        int32 len1 = dty::strlen(str1);
+        int32 len2 = dty::strlen(str2);
 
         int32 i = 0, j = 0;
         result = true;
@@ -249,7 +249,7 @@ bool TEST_OBJECT_DEF::LT(const ::string str1, const ::string str2)
 
 bool TEST_OBJECT_DEF::StrLenIs(const ::string str, int32 len)
 {
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
+    int32 strlen = ::null == str ? 0 : dty::strlen(str);
 
     bool result = strlen == len;
 
@@ -259,7 +259,7 @@ bool TEST_OBJECT_DEF::StrLenIs(const ::string str, int32 len)
 
 bool TEST_OBJECT_DEF::StrLenIsNot(const ::string str, int32 len)
 {
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
+    int32 strlen = ::null == str ? 0 : dty::strlen(str);
 
     bool result = strlen != len;
 
@@ -269,7 +269,7 @@ bool TEST_OBJECT_DEF::StrLenIsNot(const ::string str, int32 len)
 
 bool TEST_OBJECT_DEF::StrLenGT(const ::string str, int32 len)
 {
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
+    int32 strlen = ::null == str ? 0 : dty::strlen(str);
 
     bool result = strlen > len;
 
@@ -279,7 +279,7 @@ bool TEST_OBJECT_DEF::StrLenGT(const ::string str, int32 len)
 
 bool TEST_OBJECT_DEF::StrLenLT(const ::string str, int32 len)
 {
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
+    int32 strlen = ::null == str ? 0 : dty::strlen(str);
 
     bool result = strlen < len;
 
@@ -339,14 +339,14 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity,
         this->_ObjectName = new char[1]{ '\0' };
     else
     {
-        int32 ename_len = ::strlen(entityName);
+        int32 ename_len = dty::strlen(entityName);
         this->_ObjectName = new char[ename_len + 1];
         for (int32 i = 0; i < ename_len; ++i)
             this->_ObjectName[i] = entityName[i];
         this->_ObjectName[ename_len] = '\0';
     }
 
-    this->Record(level - 1);
+    this->Record(level);
 }
 
 TEST_ENTITY_DEF::TestEntity(const char* entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
@@ -376,7 +376,7 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
     for (int32 i = 2; i < argc; ++i)
     {
         ::string param = argv[i];
-        int32 parlen = ::strlen(argv[i]);
+        int32 parlen = dty::strlen(argv[i]);
 
         if (0 == parlen)
             continue;
@@ -443,7 +443,7 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
         this->_ObjectName = new char[1]{ '\0' };
     else
     {
-        int32 ename_len = ::strlen(entityName);
+        int32 ename_len = dty::strlen(entityName);
         this->_ObjectName = new char[ename_len + 1];
         for (int32 i = 0; i < ename_len; ++i)
             this->_ObjectName[i] = entityName[i];
@@ -451,7 +451,7 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []
     }
 
     // process file name
-    int32 fname_len = ::strlen(file);
+    int32 fname_len = dty::strlen(file);
     this->_LogFile = new char[fname_len + 1];
     for (int32 i = 0; i < fname_len; ++i)
         this->_LogFile[i] = file[i];
@@ -705,7 +705,7 @@ void TEST_ENTITY_DEF::Record(int32 level)
 void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dty::test::TestState state)
 {
     fputc('\n', this->_LogStream);
-    for (int32 i = 0; i < this->_Level; ++i)
+    for (int32 i = 0; i <= this->_Level; ++i)
         fputs("  ", this->_LogStream);
 
     if (dty::test::TestState::Success == state)
@@ -715,7 +715,7 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
     else
         fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
-    // fputs("[", this->_LogStream);
+    fputs(" ", this->_LogStream);
     fputs(name, this->_LogStream);
     fputs(" - ", this->_LogStream);
     fputs(description, this->_LogStream);
@@ -724,7 +724,7 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
 
     if (this->_ConsolePrint)
     {
-        for (int32 i = 0; i < this->_Level; ++i)
+        for (int32 i = 0; i <= this->_Level; ++i)
             printf("  ");
 
         if (dty::test::TestState::Success == state)
@@ -783,7 +783,7 @@ TEST_FLOW_DEF::TestFlow
         this->_ObjectName = new char[1]{ '\0' };
     else
     {
-        int32 name_len = ::strlen(flowName);
+        int32 name_len = dty::strlen(flowName);
         this->_ObjectName = new char[name_len + 1];
         for (int32 i = 0; i < name_len; ++i)
             this->_ObjectName[i] = flowName[i];
@@ -887,6 +887,8 @@ void TEST_FLOW_DEF::Record(int32 level)
         fputs("  ", this->_LogStream);
 
     fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_START__), this->_LogStream);
+    fputs(" ", this->_LogStream);
+    fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);
 
@@ -948,6 +950,7 @@ void TEST_FLOW_DEF::EndRecord()
         fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
     fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END__), this->_LogStream);
+    fputs(" ", this->_LogStream);
     fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);

@@ -59,7 +59,7 @@ class C : public F
 
 dty::SmartPointer<TestClass>* sp;
 
-RUNTEST(entity, "dty.SmartPointer Unit Test")
+RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 {
     sp = ::null;
 
