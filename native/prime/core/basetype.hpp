@@ -326,26 +326,26 @@ namespace dty
 #define __OPERATOR_OVERRIDE_DEF__(ret, type)                                    \
     __TEMPLATE_DEF__ ret __TINTEGER_DEF__::operator type(__TINTEGER_DEF__& obj) \
     {                                                                           \
-        return this->_Value type obj->_Value;                                   \
+        return this->_Value type obj._Value;                                    \
     }
 
 #define __OPERATOR_EQ_OVERRIDE_DEF__(ret, type)                                 \
     __TEMPLATE_DEF__ ret __TINTEGER_DEF__::operator type(__TINTEGER_DEF__& obj) \
     {                                                                           \
-        this->_Value = this->_Value type obj->_Value;                           \
+        this->_Value = this->_Value type obj._Value;                            \
         return this->_Value;                                                    \
     }
 
 #define __STATIC_ASSERT_DEF__                       \
     static_assert(                                  \
-        std::is_base_of<char, TB>::value            \
+        !(std::is_base_of<char, TB>::value          \
         || std::is_base_of<uchar, TB>::value        \
         || std::is_base_of<int16, TB>::value        \
         || std::is_base_of<uint16, TB>::value       \
         || std::is_base_of<int32, TB>::value        \
         || std::is_base_of<uint32, TB>::value       \
         || std::is_base_of<int64, TB>::value        \
-        || std::is_base_of<uint64, TB>::value,      \
+        || std::is_base_of<uint64, TB>::value),     \
         "only basic value data type is supported"   \
     )
 
@@ -395,7 +395,17 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator==(dty::TianyuObject& obj)
 
 __TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(__TINTEGER_DEF__& obj)
 {
-    return this->_Value == obj->_Value;
+    return this->_Value == obj._Value;
+}
+
+__TEMPLATE_DEF__ dty::collection::CompareResult __TINTEGER_DEF__::CompareTo(__TINTEGER_DEF__& obj)
+{
+    if (this->_Value == obj._Value)
+        return dty::collection::CompareResult::EQUAL;
+
+    return this->_Value > obj._Value
+        ? dty::collection::CompareResult::GREAT
+        : dty::collection::CompareResult::LESS;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::operator TB()
@@ -447,8 +457,7 @@ __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator=(__TINTEGER_DEF__& obj)
 
 __TEMPLATE_DEF__::string __TINTEGER_DEF__::ToString() noexcept
 {
-    //return dty::FormatHelper::Format(this->_Value, ::null);
-    return this->ToString(::null);
+    return this->ToString("");
 }
 
 __TEMPLATE_DEF__ uint64 __TINTEGER_DEF__::GetTypeId()

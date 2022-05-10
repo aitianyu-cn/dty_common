@@ -346,7 +346,7 @@ TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity,
         this->_ObjectName[ename_len] = '\0';
     }
 
-    this->Record(level - 1);
+    this->Record(level);
 }
 
 TEST_ENTITY_DEF::TestEntity(const char* entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
@@ -705,7 +705,7 @@ void TEST_ENTITY_DEF::Record(int32 level)
 void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dty::test::TestState state)
 {
     fputc('\n', this->_LogStream);
-    for (int32 i = 0; i < this->_Level; ++i)
+    for (int32 i = 0; i <= this->_Level; ++i)
         fputs("  ", this->_LogStream);
 
     if (dty::test::TestState::Success == state)
@@ -715,7 +715,7 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
     else
         fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
-    // fputs("[", this->_LogStream);
+    fputs(" ", this->_LogStream);
     fputs(name, this->_LogStream);
     fputs(" - ", this->_LogStream);
     fputs(description, this->_LogStream);
@@ -724,7 +724,7 @@ void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dt
 
     if (this->_ConsolePrint)
     {
-        for (int32 i = 0; i < this->_Level; ++i)
+        for (int32 i = 0; i <= this->_Level; ++i)
             printf("  ");
 
         if (dty::test::TestState::Success == state)
@@ -887,6 +887,8 @@ void TEST_FLOW_DEF::Record(int32 level)
         fputs("  ", this->_LogStream);
 
     fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_START__), this->_LogStream);
+    fputs(" ", this->_LogStream);
+    fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);
 
@@ -948,6 +950,7 @@ void TEST_FLOW_DEF::EndRecord()
         fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FAILED_OUTPUT__), this->_LogStream);
 
     fputs(__DTY_CORE_MSG_CONVERT(__DTY_TEST_CORE_FLOW_END__), this->_LogStream);
+    fputs(" ", this->_LogStream);
     fputs(this->_ObjectName, this->_LogStream);
 
     fflush(this->_LogStream);

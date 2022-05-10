@@ -5,6 +5,7 @@
         "dty.common.native.test.prime.core.iterator": true,
         "dty.common.native.test.prime.core.property": true,
         "dty.common.native.test.prime.core.pointer": true,
-        "dty.common.native.test.prime.core.formatter": true
+        "dty.common.native.test.prime.core.formatter": true,
+        "dty.common.native.test.prime.core.basetype": true
     }
 }

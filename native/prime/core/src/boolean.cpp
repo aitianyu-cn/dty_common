@@ -59,7 +59,7 @@ bool dty::Boolean::operator!()
 
 ::string dty::Boolean::ToString() noexcept
 {
-    return this->ToString(::null);
+    return this->ToString((::string)"");
 }
 
 uint64 dty::Boolean::GetTypeId()
