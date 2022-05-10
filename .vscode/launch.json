@@ -1,0 +1,22 @@
+{
+    // 使用 IntelliSense 了解相关属性。
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "args": "-h --param1 o1 --param1 o2 -b b1 b2 -b b3 -c -d -c base -d more lite"
+        },
+        {
+            "type": "java",
+            "name": "Launch Start",
+            "request": "launch",
+            "mainClass": "Tools.Start.Start",
+            "projectName": "tianyu-native_c97bc283"
+        }
+    ]
+}

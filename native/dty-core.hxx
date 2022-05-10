@@ -16,6 +16,20 @@
 #define __DTY_COMMON_NATIVE_DTY_CORE_H_XX__
 
  //
+ // to check macro-definition __DTY_CORE_LANG__
+ // if the label is defined, to input the specified message from language file
+ // if the label is not defined, to return a default message
+ //
+// #define __DTY_CORE_LANG__ 1
+
+// #ifdef __DTY_CORE_LANG__
+#include "./res/i18n/language.h"
+#define __DTY_CORE_MSG_CONVERT(msg) msg
+// #else
+// #define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
+// #endif // !__DTY_CORE_LANG__
+
+ //
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
@@ -86,7 +100,7 @@
     * @brief 未知的Apple系统平台
     * @brief Throw error for Unknown Apple Platform
     */
-#error Unknown Apple Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_APPLE_PLATFORM__)
 #endif
 #endif // !defined(__APPLE__) || defined(__MACH__)
 
@@ -115,7 +129,7 @@
        * @brief Check state of 64bit OS
        */
 #ifdef __DTY_ERR_64
-#error Tianyu Platform require 64bit OS
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_REQUIRE_64__)
 #endif // !__DTY_ERR_64
 
        /**
@@ -123,7 +137,7 @@
         * @brief Check OS supportable state
         */
 #if !defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
-#error Unknown OS is not supported for Tianyu Platform
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__)
 #endif // !!defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
 
 #ifdef __cplusplus
@@ -155,7 +169,7 @@ namespace dty
 #pragma region pure c mode definition
 
 // 天宇开发模式标志
-#define __DTY_DEV_MODE__    1
+// #define __DTY_DEV_MODE__    1
 
 
  // 字符类型有符号数最小值
@@ -202,6 +216,15 @@ namespace dty
 #define __UNSIGNED_INT64_MIN__  0
 // 64位整数类型无符号数最大值
 #define __UNSIGNED_INT64_MAX__  0xFFFFFFFFFFFFFFFF
+
+#define __CHAR_TYPE_BINARY_LENGTH__     8
+#define __BYTE_TYPE_BINARY_LENGTH__     8
+#define __SHORT_TYPE_BINARY_LENGTH__    16
+#define __INT_TYPE_BINARY_LENGTH__      32
+#define __LONG_TYPE_BINARY_LENGTH__     64
+#define __FLOAT_TYPE_BINARY_LENGTH__    32
+#define __DOUBLE_TYPE_BINARY_LENGTH__   64
+#define __BOOLEAN_TYPE_BINARY_LENGTH__  8
 
 // 前向引用 标志 用于标识未定义实体的方法、结构体、类等元素
 #define __PREDEFINE__
@@ -313,8 +336,8 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
  // #define __DTY_DEEP_LEARNING_MODE__
  // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
 #else
-#if __cplusplus < 201700
-#error library needs C++17 or later
+#if __cplusplus < 201700L
+#error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_VERSION_LOW__)
 #endif
 #endif // !__DTY_DEV_MODE__
 
@@ -359,6 +382,8 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 #define abstract
 // define interface that is an abstract class
 #define _interface abstract class
+// define the export lable in internal code
+#define _internal_export
 
 // null value for pointer, must to be used by adding "::" ahead (::null)
 constexpr auto null = nullptr;
@@ -368,20 +393,100 @@ constexpr auto null = nullptr;
 // String Base APIs: in order to do some string operations without including a huge header files
 // #################################################################################################
 
-#pragma region c_string basic APIs
-int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+// formatter string type
+// 1. single char format
+//    - a:
+//    - A:
+//    - b: convert the value to binary value (0,1) (without "0b" pre-fix)
+//    - B: convert the value to binary value (0,1) (with "0b" pre-fix)
+//    - c: convert the value to be char value(use ascii)
+//    - C:
+//    - d: convert the value to be decimin value (0-9)
+//    - D: to indicate the number of digits of an integer (to count the count of char 'D')
+//    - e:
+//    - E:
+//    - f: float value counter char (the count of char 'f' means the number count of float after point)
+//    - F:
+//    - g:
+//    - G:
+//    - h:
+//    - H:
+//    - i:
+//    - I:
+//    - j:
+//    - J:
+//    - k:
+//    - K:
+//    - l:
+//    - L: to indicate the formatted value is left align
+//         note: fill char will be ignored if the left align is indicated
+//    - m:
+//    - M:
+//    - N:
+//    - o: convert the value to be oct value (0-7) (without '\0' pre-fix)
+//    - O: convert the value to be oct value (0-7) (with '\0' pre-fix)
+//    - p: to indicate the pre-fix should not be added (the highest priority)
+//    - P: to indicate the pre-fix should be added (the highest priority)
+//    - q:
+//    - Q:
+//    - R: to indicate the formatted value is right align
+//    - s: to indicate to force the plus or minus symbol whether needs to be display
+//    - S:
+//    - t:
+//    - T:
+//    - u: to indicate the formatted value should use lower char (the highest priority)
+//    - U: to indicate the formatted value should use upper char (the highest priority)
+//    - v:
+//    - V:
+//    - w:
+//    - W:
+//    - x: convert the value to be HEX (lower case) (0-9, a-f)
+//    - X: convert the value to be HEX (upper case) (0-9, A-F)
+//    - y:
+//    - Y:
+//    - z:
+//    - Z:
+// 
+// 2. complex format (char or integer below)
+//    - n: to indicate the total digits of result 
+//    - r: to indicate a char that is used to fill result if the result length is less than indicated
+// 
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma region c_string basic APIs
+
+namespace dty
+{
+    int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+    int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase = false);
+}
+::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
-// ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ b2str(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ s2str(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ i2str(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ l2str(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ f2str(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
-// ::string __VARIABLE__ d2str(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
+::string __VARIABLE__ b2str(::byte __VARIABLE__ b);
+::string __VARIABLE__ s2str(int16 __VARIABLE__ s);
+::string __VARIABLE__ us2str(uint16 __VARIABLE__ us);
+::string __VARIABLE__ i2str(int32 __VARIABLE__ i);
+::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui);
+::string __VARIABLE__ l2str(int64 __VARIABLE__ l);
+::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul);
+::string __VARIABLE__ f2str(float __VARIABLE__ f);
+::string __VARIABLE__ d2str(double __VARIABLE__ d);
+
+::string __VARIABLE__ c2str_f(char __VARIABLE__ ch, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ uc2str_f(uchar __VARIABLE__ uc, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ sb2str_f(sbyte __VARIABLE__ sb, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ b2str_f(::byte __VARIABLE__ b, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ s2str_f(int16 __VARIABLE__ s, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ us2str_f(uint16 __VARIABLE__ us, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ i2str_f(int32 __VARIABLE__ i, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ui2str_f(uint32 __VARIABLE__ ui, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ l2str_f(int64 __VARIABLE__ l, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ ul2str_f(uint64 __VARIABLE__ ul, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ f2str_f(float __VARIABLE__ f, const ::string __VARIABLE__ formatter);
+::string __VARIABLE__ d2str_f(double __VARIABLE__ d, const ::string __VARIABLE__ formatter);
+
 #pragma endregion
 
 // #################################################################################################
@@ -478,6 +583,26 @@ namespace dty
 
         __PUB__ static  bool __VARIABLE__ IsNull(TianyuObject __REFERENCE__ obj);
     };
+
+    constexpr int32 ValueAlignBaseDefault = 2;
+    constexpr int32 ValueAlignPowerDefault = 2;
+
+    /**
+     * @brief align value to be a new value that is integer multiple of base
+     *
+     * @param value {int32} source value
+     * @param base {int32} the base value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlign(int32 __VARIABLE__ value, int32 __VARIABLE__ base = ValueAlignBaseDefault);
+    /**
+     * @brief align value to be a new value that is integer multiple of 2^n
+     *
+     * @param value {int32} source value
+     * @param power {int32} the pow value
+     * @return int32 {int32} return the aligned value
+     */
+    int32 __VARIABLE__ ValueAlignByPow(int32 __VARIABLE__ value, int32 __VARIABLE__ power = ValueAlignPowerDefault);
 }
 
 // internal macro definition for tianyu class type
@@ -497,6 +622,19 @@ namespace dty
 
 #pragma endregion
 
+#pragma region Public Define
+
+_enum NumberScale : byte
+{
+    ASC,
+    BIN,
+    OCT,
+    DEC,
+    HEX
+};
+
+#pragma endregion
+
 // #################################################################################################
 // #################################################################################################
 // #################################################################################################
@@ -504,22 +642,8 @@ namespace dty
 // #################################################################################################
 // #################################################################################################
 // #################################################################################################
+
 #pragma region dty-core implementation
-
-int32 strlen(const string str)
-{
-    int32 length = 0;
-    while ('\0' != str[length])
-        ++length;
-
-    return length;
-}
-
-::string uc2str(uchar ch)
-{
-    return new char[1]{ (char)ch };
-}
-
 // #################################################################################################
 // #################################################################################################
 // Import all of the Template class implementation files
@@ -548,14 +672,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];
@@ -577,14 +701,14 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
     if (0 != status)
     {
-        int32 length = ::strlen(sourceName);
+        int32 length = dty::strlen(sourceName);
         demangled_name = new char[length + 1];
         for (int32 i = 0; i < length; ++i)
             demangled_name[i] = sourceName[i];
         demangled_name[length] = '\0';
     }
 #else // !__GNUC__
-    int32 length = ::strlen(sourceName);
+    int32 length = dty::strlen(sourceName);
     ::string demangled_name = new char[length + 1];
     for (int32 i = 0; i < length; ++i)
         demangled_name[i] = sourceName[i];
@@ -661,54 +785,6 @@ __TEMPLATE_DEF__ uint64 __DTY_TYPE_DEF__::InstanceHashCode()
 #undef __DTY_TYPE_DEF__
 #undef __GET_TYPE_DEF__
 
-// #################################################################################################
-// #################################################################################################
-// Tianyu Object Base (TianyuObject) Implementation
-// #################################################################################################
-// #################################################################################################
-
-__construction__ dty::TianyuObject::TianyuObject()
-    : dty::IToString()
-{ }
-
-__destruction__  dty::TianyuObject::~TianyuObject()
-{ }
-
-bool dty::TianyuObject::IsNull()
-{
-    return false;
-}
-
-bool dty::TianyuObject::Equals(dty::TianyuObject& obj)
-{
-    return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
-}
-
-bool dty::TianyuObject::operator==(dty::TianyuObject& obj)
-{
-    return this->GetTypeId() == obj.GetTypeId() && this->GetHashCode() == obj.GetHashCode();
-}
-
-::string dty::TianyuObject::ToString() noexcept
-{
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
-}
-
-uint64 dty::TianyuObject::GetTypeId()
-{
-    return dty::GetType(__PTR_TO_REF__ this).Id();
-}
-
-uint64   dty::TianyuObject::GetHashCode()
-{
-    return (uint64)(this);
-}
-
-bool dty::TianyuObject::IsNull(dty::TianyuObject& obj)
-{
-    return 0ULL == obj.GetHashCode();
-}
-
 #pragma endregion
 
 // #################################################################################################
@@ -725,6 +801,7 @@ bool dty::TianyuObject::IsNull(dty::TianyuObject& obj)
 // import the core definition of Tianyu Native
 #include "stdio.h"
 #include <iostream>
+#include <functional> 
 
 namespace dty::test
 {
@@ -732,7 +809,7 @@ namespace dty::test
     {
         Success = 0,
         Failed = -1,
-        Aborted = -2
+        Skipped = -2
     };
 
     _enum TestType : int32
@@ -741,6 +818,35 @@ namespace dty::test
         Expect = 1,
         Assert = 2
     };
+
+    // ####################################################################################
+    // dty test core
+    // used to define base structures and functions
+    // ####################################################################################
+    namespace core
+    {
+        // Test Object Basic Class
+        // this class is a base class of TestEntity and TestFlow
+        class TestObjectBase : public virtual dty::TianyuObject
+        {
+            __PRO__ bool       __VARIABLE__  _ConsolePrint;
+            __PRO__::string    __VARIABLE__  _ObjectName;
+            __PRO__ TestState  __VARIABLE__  _State;
+            __PRO__ FILE       __POINTER__   _LogStream;
+            __PRO__ int32      __VARIABLE__  _Level;
+
+            __PUB__         TestObjectBase
+            (
+                bool      __VARIABLE__ consolePrint,
+                TestState __VARIABLE__ state,
+                FILE      __POINTER__  logStream,
+                int32     __VARIABLE__ level
+            );
+            __PUB__ virtual ~TestObjectBase() __override_func;
+
+            __PUB__ TestState  __VARIABLE__ GetState();
+        };
+    }
 
     // Test Object
     // test object to provide the basic APIs for test result exporter and some expect/assert
@@ -763,6 +869,7 @@ namespace dty::test
         // ##############################################################################################################
 
         __PUB__ void __VARIABLE__ Set();
+        __PUB__ void __VARIABLE__ Skip();
         __PUB__ void __VARIABLE__ Unset();
 
         __PUB__ bool __VARIABLE__ IsNull(object __VARIABLE__ obj);
@@ -800,29 +907,122 @@ namespace dty::test
         __PUB__ template<typename T> bool __VARIABLE__ LT(T __VARIABLE__ val1, T __VARIABLE__ val2) noexcept;
     };
 
+    template<typename T> bool dty::test::TestObject::EQ(T val1, T val2) noexcept
+    {
+        bool result = val1 == val2;
+
+        this->SetState(result);
+        return result;
+    }
+
+    template<typename T> bool dty::test::TestObject::NE(T val1, T val2) noexcept
+    {
+        bool result = val1 != val2;
+
+        this->SetState(result);
+        return result;
+    }
+
+    template<typename T> bool dty::test::TestObject::GT(T val1, T val2) noexcept
+    {
+        bool result = val1 > val2;
+
+        this->SetState(result);
+        return result;
+    }
+
+    template<typename T> bool dty::test::TestObject::LT(T val1, T val2) noexcept
+    {
+        bool result = val1 < val2;
+
+        this->SetState(result);
+        return result;
+    }
+
     // test function
     // use a test function delegate to import a test item
-    using TestDelegate = void __VARIABLE__(__POINTER__)(TestObject __REFERENCE__ tobj);
+    using TestDelegate = std::function<void __VARIABLE__(TestObject __REFERENCE__ tobj)>;
 
     __PREDEFINE__ class TestEntity;
 
-    using TestSpecDelegate = void __VARIABLE__(__POINTER__)(TestEntity __REFERENCE__ entity);
+    class TestFlow final : public virtual dty::TianyuObject, public virtual core::TestObjectBase
+    {
+        __PUB__         TestFlow
+        (
+            const ::string __VARIABLE__  flowName,
+            TestEntity     __REFERENCE__ pentity,
+            FILE           __POINTER__   file,
+            int32          __VARIABLE__  level,
+            bool           __VARIABLE__  console_print
+        );
+        __PUB__         TestFlow(const TestFlow __REFERENCE__ tf);
+        __PUB__ virtual ~TestFlow() __override_func;
+
+        __PUB__ void       __VARIABLE__ Skip();
+        __PUB__ void       __VARIABLE__ Set();
+
+        __PUB__ void       __VARIABLE__ Item
+        (
+            const ::string __VARIABLE__ item_name,
+            TestDelegate   __VARIABLE__ item_delegate,
+            bool           __VARIABLE__ expect_exception = false
+        );
+        __PUB__ void       __VARIABLE__ ItemException
+        (
+            const ::string __VARIABLE__ item_name,
+            TestDelegate   __VARIABLE__ item_delegate
+        );
+
+        __PUB__ void       __VARIABLE__ Item
+        (
+            const char   __POINTER__  item_name,
+            TestDelegate __VARIABLE__ item_delegate,
+            bool         __VARIABLE__ expect_exception = false
+        );
+        __PUB__ void       __VARIABLE__ ItemException
+        (
+            const char   __POINTER__  item_name,
+            TestDelegate __VARIABLE__ item_delegate
+        );
+
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const char   __POINTER__  item_name,
+                TestDelegate __VARIABLE__ item_delegate
+            );
+
+        __PUB__ template<class exception_type>
+            void __VARIABLE__ ItemException
+            (
+                const ::string __VARIABLE__ item_name,
+                TestDelegate   __VARIABLE__ item_delegate
+            );
+
+        __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
+        __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, TestState __VARIABLE__ state);
+        __PRI__ void       __VARIABLE__ EndRecord();
+    };
+
+    // flow test function
+    // use a flow test function delegate to import a group of tests which are need to run
+    // one by one and not assert any error.
+    // if any error happened, the next tests of this flow will be skipped.
+    using FlowDelegate = std::function<void __VARIABLE__(TestFlow __REFERENCE__ tobj)>;
+
+    using TestSpecDelegate = std::function<void __VARIABLE__(TestEntity __REFERENCE__ entity)>;
 
     // test entity
     // as its name showing, each test should start a test entity to process the actual tests.
     // for each test group, test entity could be created multiable times and there are not
     // dependent with each other.
-    class TestEntity final : public virtual dty::TianyuObject
+    class TestEntity final : public virtual dty::TianyuObject, public virtual core::TestObjectBase
     {
-        __PRI__ bool       __VARIABLE__  _ConsolePrint;
-        __PRI__::string    __VARIABLE__  _EntityName;
         __PRI__::string    __VARIABLE__  _LogFile;
-        __PRI__ FILE       __POINTER__   _LogStream;
         __PRI__ bool       __VARIABLE__  _LogOwner;
-        __PRI__ TestState  __VARIABLE__  _State;
         __PRI__ bool       __VARIABLE__  _Asserted;
-        __PRI__ int32      __VARIABLE__  _Level;
         __PRI__ int32      __VARIABLE__  _SuccessCount;
+        __PRI__ int32      __VARIABLE__  _SkippedCount;
         __PRI__ int32      __VARIABLE__  _FailureCount;
 
         __PRI__         __construction__ TestEntity
@@ -842,13 +1042,22 @@ namespace dty::test
         __PUB__         __cp_construct__ TestEntity(const TestEntity __REFERENCE__ entity);
         __PUB__ virtual __destruction__  ~TestEntity() __override_func;
 
-        __PUB__ TestState  __VARIABLE__ GetState();
+        __PUB__ void       __VARIABLE__ SetAssert();
+        __PUB__ void       __VARIABLE__ CancelAssert();
+
         __PUB__ void       __VARIABLE__ StartSpec(const ::string __VARIABLE__ entityName, TestSpecDelegate __VARIABLE__ spec);
         __PUB__ void       __VARIABLE__ StartSpec
         (
             const ::string   __VARIABLE__ entityName,
             TestSpecDelegate __VARIABLE__ spec,
             bool             __VARIABLE__ ignoreException
+        );
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const ::string   __VARIABLE__ entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException,
+            bool             __VARIABLE__ depPreState
         );
         __PUB__ void       __VARIABLE__ RunTest
         (
@@ -863,6 +1072,83 @@ namespace dty::test
             TestDelegate   __VARIABLE__ test_item,
             bool           __VARIABLE__ ignore_exception
         );
+        __PUB__ void       __VARIABLE__ RunExceptionTest
+        (
+            const ::string __VARIABLE__ test_name,
+            const ::string __VARIABLE__ test_description,
+            TestDelegate   __VARIABLE__ test_item
+        );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const ::string __VARIABLE__ item_name,
+            const ::string __VARIABLE__ test_description,
+            TestDelegate   __VARIABLE__ item_delegate
+        );
+        __PUB__ void       __VARIABLE__ RunFlow
+        (
+            const ::string __VARIABLE__ flow_name,
+            FlowDelegate   __VARIABLE__ test_flow
+        );
+
+        // ###################################################################################################################
+        // const char* define
+        // ###################################################################################################################
+
+        __PRI__         __construction__ TestEntity
+        (
+            const char __POINTER__   entityName,
+            TestEntity __REFERENCE__ pentity,
+            FILE       __POINTER__   file,
+            int32      __VARIABLE__  level,
+            bool       __VARIABLE__  console_print
+        );
+        __PUB__         __construction__ TestEntity(const char __POINTER__ entityName, int32 __VARIABLE__ argc, char __POINTER__ argv __ARRAY__);
+
+        __PUB__ void       __VARIABLE__ StartSpec(const char __POINTER__ entityName, TestSpecDelegate __VARIABLE__ spec);
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const char       __POINTER__ entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException
+        );
+        __PUB__ void       __VARIABLE__ StartSpec
+        (
+            const char       __POINTER__  entityName,
+            TestSpecDelegate __VARIABLE__ spec,
+            bool             __VARIABLE__ ignoreException,
+            bool             __VARIABLE__ depPreState
+        );
+
+        __PUB__ void       __VARIABLE__ RunTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item
+        );
+        __PUB__ void       __VARIABLE__ RunTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item,
+            bool         __VARIABLE__ ignore_exception
+        );
+        __PUB__ void       __VARIABLE__ RunExceptionTest
+        (
+            const char   __POINTER__  test_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ test_item
+        );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const char   __POINTER__  item_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ item_delegate
+        );
+        __PUB__ void       __VARIABLE__ RunFlow
+        (
+            const char   __POINTER__  flow_name,
+            FlowDelegate __VARIABLE__ test_flow
+        );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -875,617 +1161,123 @@ namespace dty::test
     constexpr int32 _dty_test_entity_fail_file_open = -3;
 }
 
-// ##################################################################################################
-// class methods implementation
-// ##################################################################################################
-
-// TestObject part
-
-#define TEST_OBJECT_DEF dty::test::TestObject
-
-TEST_OBJECT_DEF::TestObject()
-    : dty::TianyuObject(),
-    _State(dty::test::TestState::Success)
-{ }
-
-TEST_OBJECT_DEF::~TestObject()
-{ }
-
-dty::test::TestState TEST_OBJECT_DEF::GetState()
-{
-    return this->_State;
-}
-
-void TEST_OBJECT_DEF::SetState(bool result)
-{
-    if (dty::test::TestState::Success == this->_State)
-        this->_State = result
-        ? dty::test::TestState::Success
-        : dty::test::TestState::Failed;
-}
-
-void TEST_OBJECT_DEF::Set()
-{
-    this->_State = dty::test::TestState::Failed;
-}
-
-void TEST_OBJECT_DEF::Unset()
-{
-    this->_State = dty::test::TestState::Success;
-}
-
-bool TEST_OBJECT_DEF::IsNull(object obj)
-{
-    bool result = ::null == obj;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::IsNull(dty::TianyuObject& obj)
-{
-    bool result = dty::TianyuObject::IsNull(obj);
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::IsNotNull(object obj)
-{
-    bool result = ::null != obj;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::IsNotNull(dty::TianyuObject& obj)
-{
-    bool result = !dty::TianyuObject::IsNull(obj);
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::IsEmpty(const ::string str)
-{
-    bool result = ::null != str && ::strlen(str) == 0;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::IsNotEmpty(const ::string str)
-{
-    bool result = ::null != str && ::strlen(str) > 0;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::ToBeTrue(bool value)
-{
-    this->SetState(value);
-    return value;
-}
-
-bool TEST_OBJECT_DEF::ToBeFalse(bool value)
-{
-    this->SetState(!value);
-    return !value;
-}
-
-bool TEST_OBJECT_DEF::EQ(const ::string str1, const ::string str2)
-{
-    bool result = false;
-    if (::null == str1 && ::null == str2)
-        result = true;
-    else if (::null == str1 || ::null == str2)
-        result = false;
-    else
-    {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
-
-        if (len1 != len2)
-            result = false;
-        else
-        {
-            result = true;
-            for (int32 i = 0; i < len1 && result; ++i)
-                if (str1[i] != str2[i])
-                    result = false;
-        }
-    }
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::NE(const ::string str1, const ::string str2)
-{
-    bool result = false;
-    if (::null == str1 && ::null == str2)
-        result = false;
-    else if (::null == str1 || ::null == str2)
-        result = true;
-    else
-    {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
-
-        if (len1 != len2)
-            result = true;
-        else
-        {
-            result = false;
-            for (int32 i = 0; i < len1 && !result; ++i)
-                if (str1[i] != str2[i])
-                    result = true;
-        }
-    }
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::GT(const ::string str1, const ::string str2)
-{
-    bool result = false;
-    if (::null == str1 && ::null == str2)
-        result = false;
-    else if (::null != str1 && ::null == str2)
-        result = true;
-    else if (::null == str1 && ::null != str2)
-        result = false;
-    else
-    {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
-
-        int32 i = 0, j = 0;
-        result = true;
-        for (; i < len1 && j < len2 && result;++i, ++j)
-            if (str1[i] <= str2[j])
-                result = false;
-
-        if (result && len1 != len2)
-            result = len1 > len2;
-    }
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::LT(const ::string str1, const ::string str2)
-{
-    bool result = false;
-    if (::null == str1 && ::null == str2)
-        result = false;
-    else if (::null != str1 && ::null == str2)
-        result = false;
-    else if (::null == str1 && ::null != str2)
-        result = true;
-    else
-    {
-        int32 len1 = ::strlen(str1);
-        int32 len2 = ::strlen(str2);
-
-        int32 i = 0, j = 0;
-        result = true;
-        for (; i < len1 && j < len2 && result;++i, ++j)
-            if (str1[i] >= str2[j])
-                result = false;
-
-        if (result && len1 != len2)
-            result = len1 < len2;
-    }
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::StrLenIs(const ::string str, int32 len)
-{
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
-
-    bool result = strlen == len;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::StrLenIsNot(const ::string str, int32 len)
-{
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
-
-    bool result = strlen != len;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::StrLenGT(const ::string str, int32 len)
-{
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
-
-    bool result = strlen > len;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::StrLenLT(const ::string str, int32 len)
-{
-    int32 strlen = ::null == str ? 0 : ::strlen(str);
-
-    bool result = strlen < len;
-
-    this->SetState(result);
-    return result;
-}
-
-bool TEST_OBJECT_DEF::EQ(dty::TianyuObject& val1, dty::TianyuObject& val2)
-{
-    ::string str1 = val1.ToString();
-    ::string str2 = val2.ToString();
-    return this->EQ(str1, str2);
-}
-
-bool TEST_OBJECT_DEF::NE(dty::TianyuObject& val1, dty::TianyuObject& val2)
-{
-    ::string str1 = val1.ToString();
-    ::string str2 = val2.ToString();
-    return this->NE(str1, str2);
-}
-
-bool TEST_OBJECT_DEF::GT(dty::TianyuObject& val1, dty::TianyuObject& val2)
-{
-    ::string str1 = val1.ToString();
-    ::string str2 = val2.ToString();
-    return this->GT(str1, str2);
-}
-
-bool TEST_OBJECT_DEF::LT(dty::TianyuObject& val1, dty::TianyuObject& val2)
-{
-    ::string str1 = val1.ToString();
-    ::string str2 = val2.ToString();
-    return this->LT(str1, str2);
-}
-
-template<typename T> bool TEST_OBJECT_DEF::EQ(T val1, T val2) noexcept
-{
-    bool result = val1 == val2;
-
-    this->SetState(result);
-    return result;
-}
-
-template<typename T> bool TEST_OBJECT_DEF::NE(T val1, T val2) noexcept
-{
-    bool result = val1 != val2;
-
-    this->SetState(result);
-    return result;
-}
-
-template<typename T> bool TEST_OBJECT_DEF::GT(T val1, T val2) noexcept
-{
-    bool result = val1 > val2;
-
-    this->SetState(result);
-    return result;
-}
-
-template<typename T> bool TEST_OBJECT_DEF::LT(T val1, T val2) noexcept
-{
-    bool result = val1 < val2;
-
-    this->SetState(result);
-    return result;
-}
-
-#undef TEST_OBJECT_DEF
-
-// TestEntity part
-
-#define TEST_ENTITY_DEF dty::test::TestEntity
-
-TEST_ENTITY_DEF::TestEntity(const ::string entityName, TEST_ENTITY_DEF& pentity, FILE* file, int32 level, bool console_print) :
-    dty::TianyuObject(),
-    _ConsolePrint(console_print),
-    _LogFile(::null),
-    _LogStream(file),
-    _LogOwner(false),
-    _State(dty::test::TestState::Success),
-    _Asserted(false),
-    _Level(level),
-    _SuccessCount(0),
-    _FailureCount(0)
-{
-    // process entity name
-    if (::null == entityName)
-        this->_EntityName = new char[1]{ '\0' };
-    else
-    {
-        int32 ename_len = ::strlen(entityName);
-        this->_EntityName = new char[ename_len + 1];
-        for (int32 i = 0; i < ename_len; ++i)
-            this->_EntityName[i] = entityName[i];
-        this->_EntityName[ename_len] = '\0';
-    }
-
-    this->Record(level - 1);
-}
-
-TEST_ENTITY_DEF::TestEntity(const ::string entityName, int32 argc, char* argv []) :
-    dty::TianyuObject(),
-    _ConsolePrint(false),
-    _LogOwner(true),
-    _State(dty::test::TestState::Success),
-    _Asserted(false),
-    _Level(0),
-    _SuccessCount(0),
-    _FailureCount(0)
-{
-    if (2 > argc)
-        throw dty::test::_dty_test_entity_fail_param_too_few;
-
-    ::string file = argv[1];
-
-    for (int32 i = 2; i < argc; ++i)
-    {
-        ::string param = argv[i];
-        int32 parlen = ::strlen(argv[i]);
-
-        if (0 == parlen)
-            continue;
-
-        int32 index = 0;
-        // remove pre-char
-        while ('-' == param[index])
-            ++index;
-        int32 preCh = index;
-        if (3 <= preCh)
-            throw dty::test::_dty_test_entity_fail_param_pre_more;
-
-        if (index == parlen)
-        {
-            // empty param
-            // todo: unassigned
-        }
-
-        switch (param[index])
-        {
-        case 'a':
-        case 'A':
-            this->_Asserted = true;
-            break;
-        case 'c':
-        case 'C':
-            this->_ConsolePrint = true;
-            break;
-        default:
-            break;
-        }
-    }
-
-#ifdef __DTY_WIN
-    fopen_s(__VAR_TO_PTR__ this->_LogStream, file, "at+");
-#else
-    this->_LogStream = fopen(file, "at+");
-#endif // __DTY_WIN
-    if (::null == this->_LogStream)
-        throw dty::test::_dty_test_entity_fail_file_open;
-
-    // process entity name
-    if (::null == entityName)
-        this->_EntityName = new char[1]{ '\0' };
-    else
-    {
-        int32 ename_len = ::strlen(entityName);
-        this->_EntityName = new char[ename_len + 1];
-        for (int32 i = 0; i < ename_len; ++i)
-            this->_EntityName[i] = entityName[i];
-        this->_EntityName[ename_len] = '\0';
-    }
-
-    // process file name
-    int32 fname_len = ::strlen(file);
-    this->_LogFile = new char[fname_len + 1];
-    for (int32 i = 0; i < fname_len; ++i)
-        this->_LogFile[i] = file[i];
-    this->_LogFile[fname_len] = '\0';
-
-    this->Record();
-}
-
-TEST_ENTITY_DEF::TestEntity(const TEST_ENTITY_DEF& entity) :
-    dty::TianyuObject(),
-    _ConsolePrint(entity._ConsolePrint),
-    _EntityName(entity._EntityName),
-    _LogFile(entity._LogFile),
-    _LogStream(entity._LogStream),
-    _LogOwner(entity._LogOwner),
-    _State(entity._State),
-    _Asserted(entity._Asserted),
-    _Level(entity._Level),
-    _SuccessCount(entity._SuccessCount),
-    _FailureCount(entity._FailureCount)
-{
-    TEST_ENTITY_DEF& dynamic_obj = const_cast<TEST_ENTITY_DEF&>(entity);
-
-    // copy means move
-    // clean the pre object data
-    dynamic_obj._EntityName = ::null;
-    dynamic_obj._LogFile = ::null;
-    dynamic_obj._LogStream = ::null;
-}
-
-TEST_ENTITY_DEF::~TestEntity()
-{
-    this->EndRecord();
-
-    if (::null != this->_EntityName)
-        delete [](this->_EntityName);
-
-    if (::null != this->_LogFile)
-        delete [](this->_LogFile);
-
-    if (this->_LogOwner && ::null != this->_LogStream)
-        fclose(this->_LogStream);
-}
-
-dty::test::TestState TEST_ENTITY_DEF::GetState()
-{
-    return this->_State;
-}
-
-void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec)
-{
-    this->StartSpec(entityName, spec, false);
-}
-
-void TEST_ENTITY_DEF::StartSpec(const ::string entityName, dty::test::TestSpecDelegate spec, bool ignoreException)
-{
-    TEST_ENTITY_DEF subEntity(entityName, __PTR_TO_REF__ this, this->_LogStream, this->_Level + 1, this->_ConsolePrint);
-
-    try
-    {
-        spec(subEntity);
-    }
-    catch (...)
-    {
-        if (!ignoreException)
-            subEntity._State = dty::test::TestState::Failed;
-    }
-
-    this->_SuccessCount += subEntity._SuccessCount;
-    this->_FailureCount += subEntity._FailureCount;
-    this->NotifyState(subEntity.GetState());
-}
-
-void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item)
+#pragma region template function implementation
+
+// Test Flow Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const ::string __VARIABLE__ item_name,
+    TestDelegate   __VARIABLE__ item_delegate
+)
 {
     dty::test::TestObject tobj;
 
-    try
-    {
-        test_item(tobj);
-    }
-    catch (...)
+    if (this->GetState() != dty::test::TestState::Success)
+        tobj.Skip();
+    else
     {
         tobj.Set();
+        try
+        {
+            item_delegate(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        this->_State = tobj.GetState();
     }
 
-    dty::test::TestState state = tobj.GetState();
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
+    this->Record(item_name, tobj.GetState());
+}
+
+template<class exception_type> void __VARIABLE__ dty::test::TestFlow::ItemException
+(
+    const char   __POINTER__  item_name,
+    TestDelegate __VARIABLE__ item_delegate
+)
+{
+    this->ItemException<exception_type>((const ::string)item_name, item_delegate);
+}
+
+
+// Test Entity Part
+
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const ::string __VARIABLE__ test_name,
+    const ::string __VARIABLE__ test_description,
+    TestDelegate   __VARIABLE__ test_item
+)
+{
+    dty::test::TestObject tobj;
+
+    if (this->_Asserted && this->GetState() != dty::test::TestState::Success)
+    {
+        tobj.Skip();
+        ++this->_SkippedCount;
+    }
     else
-        ++this->_FailureCount;
+    {
+        // set the default state is Failed
+        tobj.Set();
+        try
+        {
+            test_item(tobj);
+        }
+        catch (exception_type& e)
+        {
+            tobj.Unset();
+        }
+        catch (...)
+        {
+            // exception check failed
+            // not match the specified exception
+        }
+
+        if (dty::test::TestState::Success == tobj.GetState())
+            ++this->_SuccessCount;
+        else
+            ++this->_FailureCount;
+    }
 
     this->NotifyState(tobj.GetState());
     this->Record(test_name, test_description, tobj.GetState());
 }
 
-void TEST_ENTITY_DEF::RunTest(const ::string test_name, const ::string test_description, dty::test::TestDelegate test_item, bool ignore_exception)
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const char   __POINTER__  item_name,
+    const char   __POINTER__  test_description,
+    TestDelegate __VARIABLE__ item_delegate
+)
 {
-    dty::test::TestObject tobj;
-
-    try
-    {
-        test_item(tobj);
-    }
-    catch (...)
-    {
-        if (!ignore_exception)
-            tobj.Set();
-    }
-
-    dty::test::TestState state = tobj.GetState();
-    if (dty::test::TestState::Success == state)
-        ++this->_SuccessCount;
-    else
-        ++this->_FailureCount;
-
-    this->NotifyState(state);
-    this->Record(test_name, test_description, state);
+    this->RunExceptionTest<exception_type>
+        (
+            (const ::string)item_name,
+            (const ::string)test_description,
+            item_delegate
+            );
 }
 
-void TEST_ENTITY_DEF::NotifyState(dty::test::TestState state)
-{
-    if (dty::test::TestState::Success == this->_State)
-        this->_State = state;
-}
+#pragma endregion
 
-void TEST_ENTITY_DEF::Record(int32 level)
-{
-    fputc('\n', this->_LogStream);
-    for (int32 i = 0; i < level; ++i)
-        fputs("  ", this->_LogStream);
-
-    fputs(this->_EntityName, this->_LogStream);
-
-    fflush(this->_LogStream);
-
-    if (this->_ConsolePrint)
-    {
-        for (int32 i = 0; i < level; ++i)
-            printf("  ");
-
-        printf("%s\n", this->_EntityName);
-    }
-}
-
-void TEST_ENTITY_DEF::Record(const ::string name, const ::string description, dty::test::TestState state)
-{
-    fputc('\n', this->_LogStream);
-    for (int32 i = 0; i < this->_Level; ++i)
-        fputs("  ", this->_LogStream);
-
-    if (dty::test::TestState::Success == state)
-        fputs("[SUCCESS] ", this->_LogStream);
-    else
-        fputs("[FAILED ] ", this->_LogStream);
-
-    fputs("[", this->_LogStream);
-    fputs(name, this->_LogStream);
-    fputs("]: ", this->_LogStream);
-    fputs(description, this->_LogStream);
-
-    fflush(this->_LogStream);
-
-    if (this->_ConsolePrint)
-    {
-        for (int32 i = 0; i < this->_Level; ++i)
-            printf("  ");
-
-        if (dty::test::TestState::Success == state)
-            printf("\033[1;32;40m[SUCCESS] %s (%s) \033[0m\n", name, description);
-        else
-            printf("\033[1;31;40m[FAILED ] %s (%s) \033[0m\n", name, description);
-    }
-}
-
-void TEST_ENTITY_DEF::EndRecord()
-{
-    fputc('\n', this->_LogStream);
-    for (int32 i = 0; i < this->_Level; ++i)
-        fputs("  ", this->_LogStream);
-
-    fprintf(this->_LogStream, "Total: Success(%d)  Failed(%d)", this->_SuccessCount, this->_FailureCount);
-
-    fflush(this->_LogStream);
-
-    if (this->_ConsolePrint)
-    {
-        for (int32 i = 0; i < this->_Level; ++i)
-            printf("  ");
-
-        printf("Total: \033[1;32;40mSuccess(%d) \033[0m \033[1;31;40mFailed(%d)\033[0m\n", this->_SuccessCount, this->_FailureCount);
-    }
-}
-
-#undef TEST_ENTITY_DEF
+using TO = dty::test::TestObject;
+using TD = dty::test::TestDelegate;
+using TSD = dty::test::TestSpecDelegate;
+using TFD = dty::test::FlowDelegate;
+using TE = dty::test::TestEntity;
+using TF = dty::test::TestFlow;
+using TS = dty::test::TestState;
+using TT = dty::test::TestType;
+using N = const ::string;
 
 #define TestsEntry_Main() \
     int32 __VARIABLE__ main(int32 __VARIABLE__ argc,char __POINTER__ argv __ARRAY__)
@@ -1509,30 +1301,44 @@ void TEST_ENTITY_DEF::EndRecord()
             switch (err)                                                                                \
             {                                                                                           \
                 case dty::test::_dty_test_entity_fail_param_too_few:                                    \
-                    std::cout << "Test Program need at least 1 parameter." << std::endl;                \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__)         \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_param_pre_more:                                   \
-                    std::cout << "Program parameter error with wrong pre '-' character." << std::endl;  \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_WRONG_PARAM_PRE___)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 case dty::test::_dty_test_entity_fail_file_open:                                        \
-                    std::cout << "Output file open failed!" << std::endl;                               \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_FILE_OPEN_FAILED__)           \
+                              << std::endl;                                                             \
                     break;                                                                              \
                 default:                                                                                \
-                    std::cout << "Unknown Error" << std::endl;                                          \
+                    std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;      \
                     break;                                                                              \
             }                                                                                           \
         }                                                                                               \
         catch(...)                                                                                      \
         {                                                                                               \
-            std::cout << "Unknown Error" << std::endl;                                                  \
+            std::cout << __DTY_CORE_MSG_CONVERT(__ERROR_CPP_UNKNOWN_ERROR__) << std::endl;              \
         }                                                                                               \
         return -1;                                                                                      \
     }                                                                                                   \
     void TestEntry_TestRunner(dty::test::TestEntity& testName)
 
-#define TEST_SPEC(specName) [](dty::test::TestEntity& specName) -> void
+#define TEST_MAIN(des) RUNTEST(entity, (const ::string)des)
 
-#define TEST_ITEM(itemName) [](dty::test::TestObject& itemName) -> void
+#define TEST_SPEC(specName, statements)                                                  \
+    entity.StartSpec((const ::string)specName, [](dty::test::TestEntity& entity) -> void \
+        statements                                                                       \
+    )
+
+#define TEST_ITEM(itemName, itemDes, statements)    \
+    entity.RunTest(                                 \
+        (const ::string)itemName,                   \
+        (const ::string)itemDes,                    \
+        [](dty::test::TestObject& tobj) -> void     \
+        statements                                  \
+    )
 
 #endif // !__cplusplus
 #endif // !__DTEST_CORE__

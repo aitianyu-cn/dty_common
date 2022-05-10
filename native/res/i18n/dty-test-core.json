@@ -1,0 +1,81 @@
+{
+    "__DTY_TEST_CORE_SUCCESS_OUTPUT__": {
+        "ch": "[ 成功 ]",
+        "en": "[SUCCESS] ",
+        "default": "[ 成功 ]"
+    },
+    "__DTY_TEST_CORE_SKIPPED_OUTPUT__": {
+        "ch": "[ 跳过 ]",
+        "en": "[SKIPPED] ",
+        "default": "[ 跳过 ]"
+    },
+    "__DTY_TEST_CORE_FAILED_OUTPUT__": {
+        "ch": "[ 失败 ]",
+        "en": "[FAILED ] ",
+        "default": "[ 失败 ]"
+    },
+    "__DTY_TEST_CORE_SUCCESS_CONSOLE_OUTPUT__": {
+        "ch": "\\033[1;32;40m[成功] %s - %s \\033[0m\\n",
+        "en": "\\033[1;32;40m[SUCCESS] %s - %s \\033[0m\\n",
+        "default": "\\033[1;32;40m[成功] %s - %s \\033[0m\\n"
+    },
+    "__DTY_TEST_CORE_SKIPPED_CONSOLE_OUTPUT__": {
+        "ch": "[跳过] %s - %s \\n",
+        "en": "[SKIPPED] %s - %s \\n",
+        "default": "[跳过] %s - %s \\n"
+    },
+    "__DTY_TEST_CORE_FAILED_CONSOLE_OUTPUT__": {
+        "ch": "\\033[1;31;40m[失败] %s - %s \\033[0m\\n",
+        "en": "\\033[1;31;40m[FAILED ] %s - %s \\033[0m\\n",
+        "default": "\\033[1;31;40m[失败] %s - %s \\033[0m\\n"
+    },
+    "__DTY_TEST_CORE_TOTAL_COLLECTION__": {
+        "ch": "总计: 成功 (%d)  失败 (%d)  跳过 (%d)",
+        "en": "Total: Success(%d)  Failed(%d)  Skipped(%d)",
+        "default": "总计: 成功 (%d)  失败 (%d)  跳过 (%d)"
+    },
+    "__DTY_TEST_CORE_CONSOLE_TOTAL_COLLECTION__": {
+        "ch": "总计: \\033[1;32;40m成功(%d)\\033[0m \\033[1;31;40m失败(%d)\\033[0m 跳过(%d)\\n",
+        "en": "Total: \\033[1;32;40mSuccess(%d)\\033[0m \\033[1;31;40mFailed(%d)\\033[0m Skipped(%d)\\n",
+        "default": "总计: \\033[1;32;40m成功(%d)\\033[0m \\033[1;31;40m失败(%d)\\033[0m 跳过(%d)\\n"
+    },
+    "__DTY_TEST_CORE_FLOW_START__": {
+        "ch": "[-------] 流测试 - 开始",
+        "en": "[-------] Flow Start",
+        "default": "[-------] 流测试 - 开始"
+    },
+    "__DTY_TEST_CORE_CONSOLE_FLOW_START__": {
+        "ch": "[-------] 流测试 - 开始\\n",
+        "en": "[-------] Flow Start\\n",
+        "default": "[-------] 流测试 - 开始\\n"
+    },
+    "__DTY_TEST_CORE_FLOW_SUCCESS_CONSOLE_OUTPUT__": {
+        "default": "\\033[1;32;40m√ %s \\033[0m\\n"
+    },
+    "__DTY_TEST_CORE_FLOW_SKIPPED_CONSOLE_OUTPUT__": {
+        "default": "  %s \\n"
+    },
+    "__DTY_TEST_CORE_FLOW_FAILED_CONSOLE_OUTPUT__": {
+        "default": "\\033[1;31;40m× %s \\033[0m\\n"
+    },
+    "__DTY_TEST_CORE_FLOW_END__": {
+        "ch": "流测试 - 结束",
+        "en": "Flow End: ",
+        "default": "流测试 - 结束"
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_SUCCESS__": {
+        "ch": "\\033[1;32;40m[成功] 流测试 - 结束: %s \\033[0m\\n",
+        "en": "\\033[1;32;40m[SUCCESS] Flow End: %s \\033[0m\\n",
+        "default": "\\033[1;32;40m[成功] 流测试 - 结束: %s \\033[0m\\n"
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_SKIPPED__": {
+        "ch": "[跳过] 流测试 - 结束: %s \\n",
+        "en": "[SKIPPED] Flow End: %s \\n",
+        "default": "[跳过] 流测试 - 结束: %s \\n"
+    },
+    "__DTY_TEST_CORE_FLOW_END_CONSOLE_FAILED__": {
+        "ch": "\\033[1;31;40m[失败] 流测试 - 结束: %s \\033[0m\\n",
+        "en": "\\033[1;31;40m[FAILED ] Flow End: %s \\033[0m\\n",
+        "default": "\\033[1;31;40m[失败] 流测试 - 结束: %s \\033[0m\\n"
+    }
+}
