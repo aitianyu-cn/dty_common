@@ -186,12 +186,12 @@ TEST_MAIN("dty.common.native.test.prime.core.formatter")
                 });
             entity.RunTest("uint32", "format - empty & bin & oct & dec & hex", [](dty::test::TestObject& tobj) -> void
                 {
-                    ::string empty = dty::FormatHelper::Format((uint32)123, "");
-                    ::string bin = dty::FormatHelper::Format((uint32)123, "B");
-                    ::string oct = dty::FormatHelper::Format((uint32)123, "O");
-                    ::string dec = dty::FormatHelper::Format((uint32)123, "d");
-                    ::string hex = dty::FormatHelper::Format((uint32)123, "X");
-                    ::string ndec = dty::FormatHelper::Format((uint32)-123, "d");
+                    ::string empty = dty::FormatHelper::Format((uint32)123, (::string)"");
+                    ::string bin = dty::FormatHelper::Format((uint32)123, (::string)"B");
+                    ::string oct = dty::FormatHelper::Format((uint32)123, (::string)"O");
+                    ::string dec = dty::FormatHelper::Format((uint32)123, (::string)"d");
+                    ::string hex = dty::FormatHelper::Format((uint32)123, (::string)"X");
+                    ::string ndec = dty::FormatHelper::Format((uint32)-123, (::string)"d");
 
                     if (tobj.IsNotNull(empty))
                     {

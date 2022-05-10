@@ -388,7 +388,7 @@ void test_spec_basetype_integer(dty::test::TestEntity& entity)
                 {
                     dty::Long value(100LL);
 
-                    ::string format = value.ToString("DDDDDsr ");
+                    ::string format = value.ToString((::string)"DDDDDsr ");
 
                     if (tobj.IsNotNull(format))
                     {

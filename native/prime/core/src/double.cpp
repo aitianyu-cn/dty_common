@@ -45,7 +45,7 @@ dty::Double::~Double() { }
 
 ::string dty::Double::ToString() noexcept
 {
-    return this->ToString("");
+    return this->ToString((::string)"");
 }
 
 uint64 dty::Double::GetTypeId()

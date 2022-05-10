@@ -195,7 +195,7 @@ TEST_MAIN("dty.common.native.test.dty-core.value_to_string")
                                             result = ::l2str_f(123456LL, (::string)"B");
                                             if (tobj.IsNotNull(result))
                                             {
-                                                tobj.EQ(result, "0b11110001001000000");
+                                                tobj.EQ(result, (::string)"0b11110001001000000");
                                                 delete [] result;
                                             }
                                             result = ::l2str_f(-123456LL, (::string)"B");
@@ -246,7 +246,7 @@ TEST_MAIN("dty.common.native.test.dty-core.value_to_string")
                                             result = ::l2str_f(123456LL, (::string)"Bu");
                                             if (tobj.IsNotNull(result))
                                             {
-                                                tobj.EQ(result, "0b11110001001000000");
+                                                tobj.EQ(result, (::string)"0b11110001001000000");
                                                 delete [] result;
                                             }
 
@@ -774,7 +774,7 @@ TEST_MAIN("dty.common.native.test.dty-core.value_to_string")
                             ::string result = ::ul2str_f(123456ULL, (::string)"B");
                             if (tobj.IsNotNull(result))
                             {
-                                tobj.EQ(result, "0b11110001001000000");
+                                tobj.EQ(result, (::string)"0b11110001001000000");
                                 delete [] result;
                             }
                         });

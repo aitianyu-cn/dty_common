@@ -349,7 +349,7 @@ void test_spec_basetype_decimal_template(dty::test::TestEntity& entity)
                 {
                     T value;
 
-                    ::string format = value.ToString("ffff");
+                    ::string format = value.ToString((::string)"ffff");
 
                     if (!tobj.IsNull(format))
                         delete [] format;

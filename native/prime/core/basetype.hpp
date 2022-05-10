@@ -457,7 +457,7 @@ __TEMPLATE_DEF__ TB __TINTEGER_DEF__::operator=(__TINTEGER_DEF__& obj)
 
 __TEMPLATE_DEF__::string __TINTEGER_DEF__::ToString() noexcept
 {
-    return this->ToString("");
+    return this->ToString((::string)"");
 }
 
 __TEMPLATE_DEF__ uint64 __TINTEGER_DEF__::GetTypeId()

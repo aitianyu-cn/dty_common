@@ -204,7 +204,7 @@ void test_spec_basetype_boolean(dty::test::TestEntity& entity)
                 {
                     dty::Boolean other(true);
 
-                    tobj.EQ(other.ToString("xDD"), (::string)"0x01");
+                    tobj.EQ(other.ToString((::string)"xDD"), (::string)"0x01");
                 });
         });
 

@@ -96,9 +96,9 @@ dty::IFormatter::~IFormatter() { }
 }
 ::string dty::FormatHelper::Format(bool value, const ::string formatter)
 {
-    bool isDefault = 0 == dty::strcmp(formatter, "");
-    bool isLower = 0 == dty::strcmp(formatter, "u");
-    bool isUpper = 0 == dty::strcmp(formatter, "U");
+    bool isDefault = 0 == dty::strcmp(formatter, (::string)"");
+    bool isLower = 0 == dty::strcmp(formatter, (::string)"u");
+    bool isUpper = 0 == dty::strcmp(formatter, (::string)"U");
     if (isDefault || isLower || isUpper)
     {
         if (value)
