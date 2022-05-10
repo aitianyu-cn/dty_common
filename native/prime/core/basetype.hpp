@@ -1,11 +1,11 @@
 /**
  * @file basetype.hpp
- * @author your name (you@domain.com)
+ * @author ysydty
  * @brief
  * @version 0.1
  * @date 2021-12-23
  *
- * @copyright Copyright (c) 2021
+ * @copyright aitianyu.cn Copyright (c) 2021
  *
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.TB?view=net-6.0
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.byte?view=net-6.0

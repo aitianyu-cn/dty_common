@@ -109,18 +109,19 @@ class TYBaseNumberStringConvertionParser : public virtual dty::TianyuObject
     }
     __PRI__ void _Process_BX(bool isBin)
     {
-        if (!this->_ReadyForSubScale || !this->_IsFirstDefaultEntry)
-        {
+        if (!this->_IsFirstDefaultEntry)
+            this->_AddValue(11);
+        else if (!this->_ReadyForSubScale)
             this->_HasError = true;
-            return;
+        else
+        {
+            this->_ScaleSet = true;
+            this->_ReadyForSubScale = false;
+            this->_IsFirstDefaultEntry = false;
+
+            this->_Scale = isBin ? NumberScale::BIN : NumberScale::HEX;
+            this->_SetPosNegSym(PosNegSym::Position, true);
         }
-
-        this->_ScaleSet = true;
-        this->_ReadyForSubScale = false;
-        this->_IsFirstDefaultEntry = false;
-
-        this->_Scale = isBin ? NumberScale::BIN : NumberScale::HEX;
-        this->_SetPosNegSym(PosNegSym::Position, true);
     }
     __PRI__ void _Process_Others(char ch)
     {
@@ -160,16 +161,16 @@ class TYBaseNumberStringConvertionParser : public virtual dty::TianyuObject
             switch (this->_Scale)
             {
             case NumberScale::BIN:
-                this->_Result = (this->_Result < 1) + num;
+                this->_Result = (this->_Result << 1) + num;
                 break;
             case NumberScale::OCT:
-                this->_Result = (this->_Result < 3) + num;
+                this->_Result = (this->_Result << 3) + num;
                 break;
             case NumberScale::DEC:
                 this->_Result = (this->_Result * 10) + num;
                 break;
             case NumberScale::HEX:
-                this->_Result = (this->_Result < 4) + num;
+                this->_Result = (this->_Result << 4) + num;
                 break;
             default:
                 break;
@@ -356,7 +357,8 @@ class TYBaseDecimalStringConvertionParser : public virtual dty::TianyuObject
     }
     __PUB__ bool HasError()
     {
-        return this->_HasError;
+        return this->_HasError
+            || Switcher::Exp == this->_Switch && !this->_ExpHasValue;
     }
     __PUB__ bool Result(double __REFERENCE__ value)
     {
@@ -373,7 +375,12 @@ class TYBaseDecimalStringConvertionParser : public virtual dty::TianyuObject
 
         try
         {
-            value = pow(this->Exp(), this->Base());
+            double exp = pow(10, this->_ExpValue);
+
+            if (PosNegSym::Negative == this->_ExpSym)
+                value = this->Base() / exp;
+            else
+                value = this->Base() * exp;
 
             return true;
         }
@@ -395,7 +402,7 @@ bool _dty_core_parse_base(const ::string s, uint64& value, bool& negative)
     value = parser.Value();
     negative = parser.IsNegative();
 
-    return parser.HasError();
+    return !parser.HasError();
 }
 
 bool _dty_core_parse_base(const ::string s, double& value)

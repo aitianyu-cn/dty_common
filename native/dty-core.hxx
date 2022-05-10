@@ -1078,18 +1078,17 @@ namespace dty::test
             const ::string __VARIABLE__ test_description,
             TestDelegate   __VARIABLE__ test_item
         );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const ::string __VARIABLE__ item_name,
+            const ::string __VARIABLE__ test_description,
+            TestDelegate   __VARIABLE__ item_delegate
+        );
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const ::string __VARIABLE__ flow_name,
             FlowDelegate   __VARIABLE__ test_flow
         );
-        __PUB__ template<class exception_type>
-            void __VARIABLE__ RunExceptionTest
-            (
-                const ::string __VARIABLE__ item_name,
-                const ::string __VARIABLE__ test_description,
-                TestDelegate   __VARIABLE__ item_delegate
-            );
 
         // ###################################################################################################################
         // const char* define
@@ -1139,18 +1138,17 @@ namespace dty::test
             const char   __POINTER__  test_description,
             TestDelegate __VARIABLE__ test_item
         );
+        __PUB__ template<class exception_type> void __VARIABLE__ RunExceptionTest
+        (
+            const char   __POINTER__  item_name,
+            const char   __POINTER__  test_description,
+            TestDelegate __VARIABLE__ item_delegate
+        );
         __PUB__ void       __VARIABLE__ RunFlow
         (
             const char   __POINTER__  flow_name,
             FlowDelegate __VARIABLE__ test_flow
         );
-        __PUB__ template<class exception_type>
-            void __VARIABLE__ RunExceptionTest
-            (
-                const char   __POINTER__  item_name,
-                const char   __POINTER__  test_description,
-                TestDelegate __VARIABLE__ item_delegate
-            );
 
         __PRI__ void       __VARIABLE__ NotifyState(TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ Record(int32 __VARIABLE__ level = 0);
@@ -1254,6 +1252,20 @@ template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExcep
     this->Record(test_name, test_description, tobj.GetState());
 }
 
+template<class exception_type> void __VARIABLE__ dty::test::TestEntity::RunExceptionTest
+(
+    const char   __POINTER__  item_name,
+    const char   __POINTER__  test_description,
+    TestDelegate __VARIABLE__ item_delegate
+)
+{
+    this->RunExceptionTest<exception_type>
+        (
+            (const ::string)item_name,
+            (const ::string)test_description,
+            item_delegate
+            );
+}
 
 #pragma endregion
 

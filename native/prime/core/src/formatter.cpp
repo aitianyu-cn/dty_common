@@ -96,9 +96,43 @@ dty::IFormatter::~IFormatter() { }
 }
 ::string dty::FormatHelper::Format(bool value, const ::string formatter)
 {
+    bool isDefault = 0 == dty::strcmp(formatter, "");
+    bool isLower = 0 == dty::strcmp(formatter, "u");
+    bool isUpper = 0 == dty::strcmp(formatter, "U");
+    if (isDefault || isLower || isUpper)
+    {
+        if (value)
+        {
+            ::string result = new char[5];
+            result[0] = isUpper ? 'T' : 't';
+            result[1] = isUpper ? 'R' : 'r';
+            result[2] = isUpper ? 'U' : 'u';
+            result[3] = isUpper ? 'E' : 'e';
+            result[4] = '\0';
+
+            return result;
+        }
+        else
+        {
+            ::string result = new char[6];
+            result[0] = isUpper ? 'F' : 'f';
+            result[1] = isUpper ? 'A' : 'a';
+            result[2] = isUpper ? 'L' : 'l';
+            result[3] = isUpper ? 'S' : 's';
+            result[4] = isUpper ? 'E' : 'e';
+            result[5] = '\0';
+
+            return result;
+        }
+    }
+
     return ::b2str_f(value, formatter);
 }
 
+::string dty::FormatHelper::Format(dty::IToString& value)
+{
+    return value.ToString();
+}
 
 // ######################################################
 // Parse Helper
@@ -205,7 +239,6 @@ void dty::ParseHelper::Parse(const ::string s, uint64& result)
     bool negative = false;
     if (!_dty_core_parse_base(s, result, negative))
         throw dty::except::ParseException();
-
 }
 
 void dty::ParseHelper::Parse(const ::string s, double& result)

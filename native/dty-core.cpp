@@ -828,7 +828,7 @@ int32 dty::strcmp(const ::string s1, const ::string s2, bool ignoreCase)
 {
     return ::dty_core_cpp_imp_c2str(ch, formatter);
 }
-::string uc2str_f(sbyte sb, const ::string formatter)
+::string uc2str_f(uchar sb, const ::string formatter)
 {
     return ::dty_core_cpp_imp_uc2str(sb, formatter);
 }
