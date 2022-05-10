@@ -1,0 +1,7 @@
+{
+    "test": "dty.common.native.test.dty-core",
+    "specs": {
+        "dty.common.native.test.dty-core.core_api": true,
+        "dty.common.native.test.dty-core.value_to_string": true
+    }
+}
