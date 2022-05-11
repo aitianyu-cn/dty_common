@@ -16,6 +16,16 @@
 
 ### 更多咨询 (Require More)
 
-#### 邮箱 (Email)&nbsp;&nbsp;:&nbsp;[dev.aitianyu](dev.aitianyu.cn@outlook.com)
+#### 邮箱 (Email)&nbsp;&nbsp;:&nbsp;[dev.aitianyu.cn@outlook.com](dev.aitianyu.cn@outlook.com)
 
 <!-- #### 主页 (Home)&nbsp;:&nbsp;[aitianyu.cn](aitianyu.cn) (Currently Unavailable) -->
+
+&nbsp;
+
+# 开发文档 (DEVELOPMENT DOCUMENT)
+
+### [中文](/.project/docs/DEVELOP_DOC_ZH.md)
+
+### [English](/.project/docs/DEVELOP_DOC_EN.md)
+
+&nbsp;
