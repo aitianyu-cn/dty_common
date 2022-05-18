@@ -16,29 +16,23 @@
 #define __DTY_COMMON_NATIVE_DTY_CORE_H_XX__
 
  //
- // to check macro-definition __DTY_CORE_LANG__
- // if the label is defined, to input the specified message from language file
- // if the label is not defined, to return a default message
- //
-// #define __DTY_CORE_LANG__ 1
-
-// #ifdef __DTY_CORE_LANG__
+// 引用静态多语言文件
+// Includes static Multi-Language file
 #include "./res/i18n/language.h"
 #define __DTY_CORE_MSG_CONVERT(msg) msg
-// #else
-// #define __DTY_CORE_MSG_CONVERT(msg) "转换的消息："#msg
-// #endif // !__DTY_CORE_LANG__
 
  //
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
+// 跨平台定义部分
 // Cross Platform Definition
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
 #pragma region cross platform
  /**
+  * 环境信息来源:
   * Environment Defs:
   * https://sourceforge.net/p/predef/wiki/OperatingSystems/
   *
@@ -76,7 +70,9 @@
    * @brief Define __DTY_APF to describe current system is: Apple MacOS
    */
 #define __DTY_APF 1
-#include "TargetConditionals.h" // import mac infor header
+   // 导入MacOS信息头文件
+   // import mac infor header
+#include "TargetConditionals.h"
 #if TARGET_IPHONE_SIMULATOR
    /**
     * @brief 当前系统为Apple平台Iphone模拟器
@@ -162,15 +158,12 @@ namespace dty
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
+// 基础信息定义
 // Basic Definition in Pure C mode
 // ################################################################################################
 // ################################################################################################
 // ################################################################################################
 #pragma region pure c mode definition
-
-// 天宇开发模式标志
-// #define __DTY_DEV_MODE__    1
-
 
  // 字符类型有符号数最小值
 #define __SIGNED_CHAR_MIN__     (-128)
@@ -210,7 +203,7 @@ namespace dty
 
 // 64位整数类型有符号数最小值
 #define __SIGNED_INT64_MIN__    (-9223372036854775807 - 1)
-// 64位整数类型无符号数最小值
+// 64位整数类型有符号数最大值
 #define __SIGNED_INT64_MAX__    9223372036854775807
 // 64位整数类型无符号数最小值
 #define __UNSIGNED_INT64_MIN__  0
@@ -300,7 +293,7 @@ typedef               char __POINTER__  string;
 typedef      unsigned char __VARIABLE__ bool;
 
 #define TRUE ((bool)1)
-#define TRUE ((bool)0)
+#define FALSE ((bool)0)
 #endif // !__cplusplus }
 
 #pragma endregion
@@ -327,18 +320,11 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 // ################################################################################################
 #pragma region cpp definition
 
-#ifdef __DTY_DEV_MODE__
-/**
- * @brief 该标识指示当前天库是否可以支持不安全的内存操作 
- * @brief The flag that allow unsafe memory operations in Tianyu Library when it is defined
- */
- // #define __DTY_UNSAFE_MODE__ "Tianyu Library Unsafe Mode"
- // #define __DTY_DEEP_LEARNING_MODE__
- // #define __DTY_SMART_POINTER_COPY_WEAK_MODE__
-#else
+#ifndef __DTY_DEV_MODE__
 #if __cplusplus < 201700L
 #error __DTY_CORE_MSG_CONVERT(__ERROR_CPP_VERSION_LOW__)
 #endif
+
 #endif // !__DTY_DEV_MODE__
 
     // 公有访问权标志 指示修饰的函数与属性外部可访问
@@ -461,6 +447,7 @@ namespace dty
     int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
     int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase = false);
 }
+
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
 ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);

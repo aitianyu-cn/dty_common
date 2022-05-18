@@ -120,6 +120,7 @@ if [ [$par1] == "[help]" ];
     then
         printHelp
     else
+        cd ..
         processParams
         runFlow
 fi
