@@ -6,6 +6,21 @@
 
 &nbsp;
 
+# 自动化工具 (Automation Tools)
+
+所有自动化工具、脚本都保存在放置于 `${项目根目录}/tools` 内。  
+All automation tools and scripts are stored in `${project root}/tools`.
+
+- build.bat | build.sh  
+  用于自动化生成目标库文件与目标头文件。  
+  For automatic generation of target library files and target header files.
+
+- build-test.bat | build-test.sh  
+  用于自动化生成目标库文件与测试执行文件。  
+  For automated generation of object library files and test execution files.
+
+&nbsp;
+
 # 帮助文档 (HELP DOCUMENT)
 
 ### [中文帮助文档](/.project/docs/README_ZH.md)
@@ -22,10 +37,10 @@
 
 &nbsp;
 
-# 开发文档 (DEVELOPMENT DOCUMENT)
+<!-- # 开发文档 (DEVELOPMENT DOCUMENT)
 
 ### [中文](/.project/docs/DEVELOP_DOC_ZH.md)
 
 ### [English](/.project/docs/DEVELOP_DOC_EN.md)
 
-&nbsp;
+&nbsp; -->
