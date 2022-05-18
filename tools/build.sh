@@ -58,6 +58,7 @@ print "拷贝多语言头文件 (Copy i18n header file)"
 cp ./native/res/i18n/language.h ./target/header/res/i18n
 
 print "创建基础核心目录 (Create folder for prime/core)"
+mkdir ./target/header/prime
 mkdir ./target/header/prime/core
 
 print "创建基础核心 basetype.hpp (Copy basetype.hpp)"
