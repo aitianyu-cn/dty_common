@@ -31,7 +31,7 @@ namespace dty
         __PUB__ static EventArgs __VARIABLE__ Empty;
     };
 
-    template<class TEventArgs>
+    template<class TEventArgs = EventArgs>
     struct EventHandlerItem
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
@@ -42,7 +42,7 @@ namespace dty
         EventHandlerItem<TEventArgs> __POINTER__  _next;
     };
 
-    template<class TEventArgs>
+    template<class TEventArgs = EventArgs>
     class EventHandler : public virtual dty::TianyuObject
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);

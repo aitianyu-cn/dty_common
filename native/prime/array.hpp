@@ -22,11 +22,10 @@ namespace dty::collection
         __PRI__ Elem  __POINTER__  _Array;
         __PRI__ int32 __POINTER__  _Reference;
 
-        __PRI__ Property<int32> __VARIABLE__ _Count;
         __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
 
         __PUB__ Array(Elem __POINTER__ arraySrc, int32 __VARIABLE__ count, bool __VARIABLE__ needFree = true)
-            : TianyuObject(), ICollections<Elem>(_Count), _Reference(::null), _NeedFree(needFree)
+            : TianyuObject(), ICollections<Elem>(count), _Reference(::null), _NeedFree(needFree)
         {
             if (::null == arraySrc && 0 != count)
                 throw dty::except::ArgumentNullException();
@@ -35,15 +34,12 @@ namespace dty::collection
                 throw dty::except::ArgumentOutOfRangeException();
 
             this->_Array = arraySrc;
-            this->_Count = count;
 
             // record the instance reference
             // it works only when the lifecycle of current pointer is mananged by Array
             // other wise this is a counter only
             if (0 != count)
                 this->_Reference = new int32(1);
-
-            ICollections<Elem>::Count = this->_Count;
         }
         __PUB__ Array(const Array<Elem> __REFERENCE__ arr)
             : _Array(arr._Array), _Count(arr._Count), _Reference(arr._Reference), _NeedFree(arr._NeedFree)

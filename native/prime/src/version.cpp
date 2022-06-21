@@ -7,8 +7,8 @@ const int32 _dty_native_version_revision = 0;
 const int32 _dty_native_version_major_revision = 0;
 const int32 _dty_native_version_minor_revision = 0;
 
-void _dty_native_version_parse(const ::string version, const ::string formatter, int32& major, int32& minor, int32& build, int32& revision);
-::string _dty_native_version_toString(dty::Version& version, const ::string formatter);
+extern void _dty_native_version_parse(const ::string version, int32& major, int32& minor, int32& build, int32& revision);
+extern ::string _dty_native_version_toString(dty::Version& version);
 
 dty::Version::Version()
     : dty::TianyuObject(),
@@ -69,7 +69,7 @@ dty::Version::Version(dty::String version)
     int32 revision = _dty_native_version_revision;
 
     dty::string_sp version_str = version.ToSafeCStr();
-    _dty_native_version_parse(version_str, ::null, major, minor, build, revision);
+    _dty_native_version_parse(version_str, major, minor, build, revision);
 
     this->_Major = major;
     this->_Minor = minor;
@@ -102,7 +102,7 @@ dty::Version::Version(const ::string version)
     int32 build = _dty_native_version_build;
     int32 revision = _dty_native_version_revision;
 
-    _dty_native_version_parse(version, ::null, major, minor, build, revision);
+    _dty_native_version_parse(version, major, minor, build, revision);
 
     this->_Major = major;
     this->_Minor = minor;
@@ -168,16 +168,7 @@ uint64 dty::Version::GetTypeId()
 
 ::string dty::Version::ToString() noexcept
 {
-    return _dty_native_version_toString(__PTR_TO_REF__ this, ::null);
-}
-
-dty::String dty::Version::ToString(const ::string formatter)
-{
-    if (::null == formatter)
-        throw dty::except::ArgumentNullException();
-
-    ::string str = _dty_native_version_toString(__PTR_TO_REF__ this, formatter);
-    return dty::String::GetString(str, false);
+    return _dty_native_version_toString(__PTR_TO_REF__ this);
 }
 
 dty::Version& dty::Version::operator=(const dty::Version& version)
@@ -294,7 +285,7 @@ bool dty::Version::TryParse(dty::String version, dty::Version& result)
 
         return true;
     }
-    catch (dty::except::Exception)
+    catch (...)
     {
         return false;
     }
@@ -315,12 +306,8 @@ bool dty::Version::TryParse(const ::string version, dty::Version& result)
 
         return true;
     }
-    catch (dty::except::Exception)
+    catch (...)
     {
         return false;
     }
 }
-
-
-void _dty_native_version_parse(const ::string version, const ::string formatter, int32& major, int32& minor, int32& build, int32& revision);
-::string _dty_native_version_toString(dty::Version& version, const ::string formatter);
