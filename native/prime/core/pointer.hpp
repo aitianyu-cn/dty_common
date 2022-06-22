@@ -39,7 +39,7 @@ namespace dty
         __PRI__ SPType __VARIABLE__ _SmartPointerType;
 
         /**
-         * @brief 内部方法：释放对象的指针引用 
+         * @brief 内部方法：释放对象的指针引用
          * @brief Internal Function: Release object pointer reference
          */
         __PRI__ void __VARIABLE__ Release();
@@ -56,184 +56,32 @@ namespace dty
         __PRO__ T               __POINTER__  _Pointer;
         __PRO__ Property<int64> __VARIABLE__ _Size;
 
-        /**
-         * @brief 获取一个值指示当前指针实例的大小
-         * @brief Get a int64 indicates the current pointer size
-         *
-         * @return {int64} return pointer size
-         */
         __PUB__ IPropertyGetter<int64> __REFERENCE__ Size;
 
-        /**
-         * @brief 创建一个空指针对象
-         * @brief Create a ::null pointer
-         */
         __PUB__ explicit SmartPointer();
-        /**
-         * @brief 由指定的指针创建智能指针对象
-         * @brief Create a smart pointer from a specified pointer
-         *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
-         */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer);
-        /**
-         * @brief 由指定的指针和对象长度创建智能指针对象
-         * @brief Create a smart pointer from a specified pointer and object size
-         *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
-         * @exception dty::except::IndexOutOfRangeException: throw an exception if the specified pointer size is not more than zero.
-         */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, int64 __VARIABLE__ size);
-        /**
-         * @brief 由指定的指针创建智能指针对象，并指定指针类型
-         * @brief Create a smart pointer from a specified pointer and set the default pointer type
-         *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
-         */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, bool __VARIABLE__ weak);
-        /**
-         * @brief 由指定的指针和对象长度创建智能指针对象，并指定指针类型
-         * @brief Create a smart pointer from a specified pointer and object size and set the default pointer type
-         *
-         * @exception dty::except::NullPointerException: throw an exception if the specified pointer is ::null
-         * @exception dty::except::IndexOutOfRangeException: throw an exception if the specified pointer size is not more than zero.
-         */
         __PUB__ explicit SmartPointer(T __POINTER__ pointer, int64 __VARIABLE__ size, bool __VARIABLE__ weak);
-        /**
-         * @brief 从指定的智能指针对象创建新的智能指针对象
-         * @brief Create a new smart pointer object from a specified smart pointer
-         *
-         * @param {const SmartPointer<T>&} sp specified source smart pointer.
-         */
         __PUB__          SmartPointer(const SmartPointer<T> __REFERENCE__ sp);
-
-        /**
-         * @brief 析构函数 
-         * @brief disconstructor
-         */
         __PUB__ virtual  ~SmartPointer();
 
-        /**
-         * @brief 获取一个bool值指示当前实例是否为空指针
-         * @brief Get a bool value indicates whether the current pointer is ::null
-         *
-         * @return {bool} return true if current pointer is ::null, other wise is false
-         */
-        __PUB__ virtual bool __VARIABLE__ IsNull() override;
-        /**
-         * @brief
-         * @brief
-         *
-         * @return {SmartPointer<T>}
-         */
-        __PUB__ SmartPointer<T> __VARIABLE__ GetWeak();
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {SmartPointer<T>&} sp
-         * @return {bool}
-         */
-        __PUB__ bool   __VARIABLE__ Move(SmartPointer<T> __REFERENCE__ sp);
-        /**
-         * @brief
-         *
-         * @param {const SmartPointer<T>&} sp
-         * @return {void}
-         */
-        __PUB__ void   __VARIABLE__ Copy(const SmartPointer<T> __REFERENCE__ sp);
-        /**
-         * @brief 运算符 & 重载：获取当前指针的绝对地址
-         * @brief __override_func operator &: Get the absoult address of current pointer.
-         *
-         * @return {uint64} return current address
-         */
-        __PUB__ uint64 __VARIABLE__  operator __REFERENCE__();
-        /**
-         * @brief
-         * @brief
-         *
-         * @return {T&}
-         */
-        __PUB__ T      __REFERENCE__ operator __POINTER__();
+        __PUB__ virtual bool    __VARIABLE__  IsNull() override;
+        __PUB__ SmartPointer<T> __VARIABLE__  GetWeak();
+        __PUB__ bool            __VARIABLE__  Move(SmartPointer<T> __REFERENCE__ sp);
+        __PUB__ void            __VARIABLE__  Copy(const SmartPointer<T> __REFERENCE__ sp);
+        __PUB__ uint64          __VARIABLE__  operator __REFERENCE__();
+        __PUB__ T               __REFERENCE__ operator __POINTER__();
 
-        __PUB__                      operator T __POINTER__();
-        /**
-         * @brief
-         * @brief
-         *
-         * @return {T*}
-         */
-        __PUB__ T      __POINTER__   operator ->();
-        /**
-         * @brief
-         * @brief
-         *
-         * @return {T*}
-         */
-        __PUB__ T      __POINTER__   operator ->() const;
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {int64} index:
-         * @return {T&}
-         */
-        __PUB__ T      __REFERENCE__ operator[] (int64 __VARIABLE__ index);
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {int64} index:
-         * @return {T&}
-         */
-        __PUB__ T      __REFERENCE__ operator[] (int64 __VARIABLE__ index) const;
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {SmartPointer<T>&} other
-         * @return {bool}
-         */
-        __PUB__ bool __VARIABLE__ operator ==(SmartPointer<T> __REFERENCE__ other);
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {SmartPointer<T>&} other
-         * @return {bool}
-         */
-        __PUB__ bool __VARIABLE__ operator !=(SmartPointer<T> __REFERENCE__ other);
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {T} other
-         * @return {bool}
-         */
-        __PUB__ bool __VARIABLE__ operator ==(T __VARIABLE__ other);
-        /**
-         * @brief
-         * @brief
-         *
-         * @param {T} other
-         * @return {bool}
-         */
-        __PUB__ bool __VARIABLE__ operator !=(T __VARIABLE__ other);
-
-        __PUB__ template<class NT> operator NT __REFERENCE__()
-        {
-            // set a assert to make sure the converted type is correct
-            static_assert(
-                std::is_base_of<NT, T>::value || std::is_base_of<T, NT>::value,
-                "convert type should be child or parent of current type"
-                );
-
-            if (::null == this->_Pointer)
-                throw dty::except::NullPointerException();
-
-            return dynamic_cast<NT __REFERENCE__>(__PTR_TO_REF__(this->_Pointer));
-        }
+        __PUB__                    operator T __POINTER__();
+        __PUB__ T    __POINTER__   operator ->();
+        __PUB__ T    __POINTER__   operator ->() const;
+        __PUB__ T    __REFERENCE__ operator[] (int64 __VARIABLE__ index);
+        __PUB__ T    __REFERENCE__ operator[] (int64 __VARIABLE__ index) const;
+        __PUB__ bool __VARIABLE__  operator ==(SmartPointer<T> __REFERENCE__ other);
+        __PUB__ bool __VARIABLE__  operator !=(SmartPointer<T> __REFERENCE__ other);
+        __PUB__ bool __VARIABLE__  operator ==(T __VARIABLE__ other);
+        __PUB__ bool __VARIABLE__  operator !=(T __VARIABLE__ other);
 
         __PUB__ virtual ::string __VARIABLE__ ToString()    noexcept __override_func;
         __PUB__ virtual uint64   __VARIABLE__ GetTypeId()   __override_func;

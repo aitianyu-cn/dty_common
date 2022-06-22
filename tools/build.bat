@@ -82,6 +82,12 @@ copy .\native\prime\core\pointer.hpp .\target\header\prime\core
 @echo 创建基础核心 property.hpp (Copy property.hpp)
 copy .\native\prime\core\property.hpp .\target\header\prime\core
 
+@echo 创建基础组件 core.hxx (Copy core.hxx)
+copy .\native\prime\core.hxx .\target\header\prime
+
+@echo 创建基础组件 array.hpp (Copy array.hpp)
+copy .\native\prime\array.hpp .\target\header\prime
+
 @echo 开始生成目标头文件 (Done...)
 
 : 开始构建目标头文件 - 结束

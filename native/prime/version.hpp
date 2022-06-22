@@ -53,8 +53,6 @@ namespace dty
         __PUB__ virtual bool     __VARIABLE__ Equals(dty::TianyuObject __REFERENCE__ other) override;
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override;
 
-        __PUB__ dty::String __VARIABLE__  ToString(const string __VARIABLE__ formatter);
-
         __PUB__ Version     __REFERENCE__ operator =(const Version __REFERENCE__ version);
 
         __PUB__ static bool __VARIABLE__ TryParse(dty::String __VARIABLE__ version, Version __REFERENCE__ result);

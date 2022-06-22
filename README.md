@@ -33,14 +33,8 @@ All automation tools and scripts are stored in `${project root}/tools`.
 
 #### 邮箱 (Email)&nbsp;&nbsp;:&nbsp;[dev.aitianyu.cn@outlook.com](dev.aitianyu.cn@outlook.com)
 
-<!-- #### 主页 (Home)&nbsp;:&nbsp;[aitianyu.cn](aitianyu.cn) (Currently Unavailable) -->
+#### 文档 (Docs)&nbsp;&nbsp;&nbsp;:&nbsp;[aitianyu.cn/docs](http://aitianyu.cn/docs/api/tianyu-native)
+
+#### 下载 (Download)&nbsp;:&nbsp;[aitianyu.cn/download](http://aitianyu.cn/download)
 
 &nbsp;
-
-<!-- # 开发文档 (DEVELOPMENT DOCUMENT)
-
-### [中文](/.project/docs/DEVELOP_DOC_ZH.md)
-
-### [English](/.project/docs/DEVELOP_DOC_EN.md)
-
-&nbsp; -->

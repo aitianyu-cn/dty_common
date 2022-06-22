@@ -139,7 +139,7 @@ namespace dty
             az_AZ_Cyrl = 2092,
             // Azeri (Latin)
             az_AZ_Latn = 2093,
-            // Segoe UI (Basque)
+            // Basque (Basque)
             eu_ES = 1069,
             // Belarusian (Belarus)
             be_BY = 1059,

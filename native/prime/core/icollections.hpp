@@ -20,8 +20,11 @@ namespace dty::collection
     template<typename T>
     _interface ICollections : public virtual dty::TianyuObject
     {
+        __PRO__ Property<int32>        __VARIABLE__ _Count;
+
         __PUB__ IPropertyGetter<int32> __REFERENCE__ Count;
 
+        __PUB__         ICollections(int32 __VARIABLE__ _count);
         __PUB__         ICollections(IPropertyGetter<int32> __REFERENCE__ _count);
         __PUB__ virtual ~ICollections() __override_func;
 
@@ -38,7 +41,15 @@ namespace dty::collection
 template<typename T>
 __construction__ dty::collection::ICollections<T>::ICollections(dty::IPropertyGetter<int32>& count) :
     dty::TianyuObject(),
-    Count(count)
+    _Count(count),
+    Count(_Count)
+{ }
+
+template<typename T>
+__construction__ dty::collection::ICollections<T>::ICollections(int32 count) :
+    dty::TianyuObject(),
+    _Count(count),
+    Count(_Count)
 { }
 
 template<typename T>
