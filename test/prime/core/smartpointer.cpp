@@ -736,28 +736,6 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     );
                 }
             );
-
-            entity.StartSpec("operator T", [](TE& entity) -> void
-                {
-                    entity.RunExceptionTest("operator T", "expect an exception if try to convert a null pointer", [](TO& t) -> void
-                        {
-                            dty::SmartPointer<F> p;
-
-                            C& cr = p;
-                        }
-                    );
-
-                    entity.RunTest("operator T", "convert value should success", [](TO& t) -> void
-                        {
-                            dty::SmartPointer<F> p(new C(100));
-                            t.EQ(p->GetValue(), 100);
-
-                            C& cr = p;
-                            t.EQ(cr.GetValue(), 100);
-                        }
-                    );
-                }
-            );
         }
     );
 }

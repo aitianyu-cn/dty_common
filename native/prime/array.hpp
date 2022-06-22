@@ -22,10 +22,15 @@ namespace dty::collection
         __PRI__ Elem  __POINTER__  _Array;
         __PRI__ int32 __POINTER__  _Reference;
 
-        __PRI__ Property<bool>  __VARIABLE__ _NeedFree;
+        __PRI__ Property<bool>       __VARIABLE__ _NeedFree;
+        __PRI__ IteratorEntity<Elem> __POINTER__ _IteratorEntity;
 
         __PUB__ Array(Elem __POINTER__ arraySrc, int32 __VARIABLE__ count, bool __VARIABLE__ needFree = true)
-            : TianyuObject(), ICollections<Elem>(count), _Reference(::null), _NeedFree(needFree)
+            : TianyuObject(),
+            ICollections<Elem>(count),
+            _Reference(::null),
+            _NeedFree(needFree),
+            _IteratorEntity(::null)
         {
             if (::null == arraySrc && 0 != count)
                 throw dty::except::ArgumentNullException();
@@ -42,13 +47,21 @@ namespace dty::collection
                 this->_Reference = new int32(1);
         }
         __PUB__ Array(const Array<Elem> __REFERENCE__ arr)
-            : _Array(arr._Array), _Count(arr._Count), _Reference(arr._Reference), _NeedFree(arr._NeedFree)
+            : TianyuObject(),
+            ICollections<Elem>(arr.Count),
+            _Array(arr._Array),
+            _Reference(arr._Reference),
+            _NeedFree(arr._NeedFree),
+            _IteratorEntity(::null)
         {
-            if (0 != arr._Count)
+            if (0 != arr.Count)
                 (__PTR_TO_VAR__(this->_Reference)) += 1;
         }
         __PUB__ ~Array()
         {
+            if (::null != this->_IteratorEntity)
+                delete this->_IteratorEntity;
+
             if (0 == this->_Count)
                 return;
 
@@ -75,8 +88,10 @@ namespace dty::collection
         }
         __PUB__ virtual Iterator<Elem> __VARIABLE__   GetIterator() override
         {
-            throw dty::except::NotImplementationException();
-            // return Iterator<Elem>(IteratorEntity<Elem>(this->_Array, this->_Count));
+            if (::null == this->_IteratorEntity)
+                this->_IteratorEntity = new IteratorEntity<Elem>(this->_Array, (int32)(this->Count), false);
+
+            return Iterator<Elem>(__PTR_TO_REF__ this->_IteratorEntity);
         }
 
 #ifdef __DTY_UNSAFE_MODE__
@@ -87,7 +102,7 @@ namespace dty::collection
         __PUB__ void           __VARIABLE__   SetNeedDelete()
         {
             this->_NeedFree = true;
-        }
+    }
 #endif // !__DTY_UNSAFE_MODE__
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
@@ -98,7 +113,7 @@ namespace dty::collection
         {
             return dty::GetType(__PTR_TO_REF__ this).Id();
         }
-    };
+};
 
     using ByteArray = Array<byte>;
     using BoolArray = Array<bool>;
