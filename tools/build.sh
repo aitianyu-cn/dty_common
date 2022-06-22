@@ -85,7 +85,13 @@ cp ./native/prime/core/iterator.hpp ./target/header/prime/core
 print "创建基础核心 pointer.hpp (Copy pointer.hpp)"
 cp ./native/prime/core/pointer.hpp ./target/header/prime/core
 
-print 创"建基础核心 property.hpp (Copy property.hpp)"
+print "创建基础核心 property.hpp (Copy property.hpp)"
 cp ./native/prime/core/property.hpp ./target/header/prime/core
+
+print "创建基础组件 core.hxx (Copy core.hxx)"
+cp ./native/prime/core.hxx ./target/header/prime
+
+print "创建基础组件 array.hpp (Copy array.hpp)"
+cp ./native/prime/array.hpp ./target/header/prime
 
 print "开始生成目标头文件 (Done...)"
