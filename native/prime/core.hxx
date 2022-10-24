@@ -27,6 +27,29 @@
 #include "./core/pointer.hpp"
 #include "./core/property.hpp"
 
+namespace dty::collection
+{
+    template<typename T>
+    _interface IDynamicCollections
+        : public virtual dty::TianyuObject,
+        public virtual dty::collection::ICollections<T>
+    {
+        __PUB__         IDynamicCollections(int32 __VARIABLE__ _count)
+        : dty::TianyuObject(),
+        dty::collection::ICollections<T>(_count)
+        { }
+        __PUB__         IDynamicCollections(IPropertyGetter<int32> __REFERENCE__ _count)
+        : dty::TianyuObject(),
+        dty::collection::ICollections<T>(_count)
+        { }
+        __PUB__ virtual ~IDynamicCollections() __override_func { }
+
+        __PUB__ virtual void __VARIABLE__ Add(T __REFERENCE__ value) __pure_virtual_fun;
+        __PUB__ virtual void __VARIABLE__ Insert(T __REFERENCE__ value, int32 __VARIABLE__ index) __pure_virtual_fun;
+        __PUB__ virtual void __VARIABLE__ RemoveAt(T __REFERENCE__ value, int32 __VARIABLE__ index) __pure_virtual_fun;
+    };
+}
+
 #endif // !__cplusplus
 
 #endif // !__DTY_COMMON_NATIVE_H_PLUS_PLUS__

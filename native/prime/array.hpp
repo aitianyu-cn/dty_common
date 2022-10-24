@@ -102,7 +102,7 @@ namespace dty::collection
         __PUB__ void           __VARIABLE__   SetNeedDelete()
         {
             this->_NeedFree = true;
-    }
+        }
 #endif // !__DTY_UNSAFE_MODE__
 
         __PUB__ virtual ::string __VARIABLE__ ToString() noexcept override
@@ -113,7 +113,7 @@ namespace dty::collection
         {
             return dty::GetType(__PTR_TO_REF__ this).Id();
         }
-};
+    };
 
     using ByteArray = Array<byte>;
     using BoolArray = Array<bool>;
@@ -123,6 +123,17 @@ namespace dty::collection
     using FloatArray = Array<float>;
     using DoubleArray = Array<double>;
     using CharArray = Array<char>;
+}
+
+namespace dty::collection
+{
+    template<class Elem>
+    class DynamicArray final
+        : public virtual dty::TianyuObject,
+        public virtual dty::collection::IDynamicCollections<Elem>
+    {
+
+    };
 }
 
 #endif // !__DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__
