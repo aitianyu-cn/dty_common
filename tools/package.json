@@ -4,6 +4,7 @@
     "description": "Automatic tool to build tianyu native dependency resouces and run automatically workflows.",
     "main": "index.js",
     "scripts": {
+        "build": "node ./scripts/build.js",
         "build-i18n": "node ./scripts/i18n.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
