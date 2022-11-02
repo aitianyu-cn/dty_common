@@ -16,5 +16,6 @@
         }
     },
     "baseURL": "",
-    "output": "target"
+    "output": "target",
+    "language": null
 }

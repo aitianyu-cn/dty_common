@@ -6,44 +6,56 @@ const basicDefs = require("./define");
 
 const args = process.argv;
 const configuration = require("../../../resource/i18n/config.json");
+const globalConfig = require("../../../config/res.config.json");
 
 const I18N_SOURCE_PATH = "../../../resource/i18n";
 const I18N_RES_PATH_RELATION = `${basicDefs.TIANYU_NATIVE_NATIVE_RES_PATH}/${basicDefs.TIANYU_NATIVE_NATIVE_RES_I18N_NAME}`;
 
 const DEFAULT_LANGUAGE = { id: "default", desc: ["默认", "Default"] };
-const CHINESE_LANGUAGE = { id: "ch", desc: ["中文", "zh_CN"] };
-const ENGLISH_LANGUAGE = { id: "en", desc: ["英文", "en_EN"] };
 
-function getLanguageFromConfig() {
-    const globalConfig = require("../../../config/res.config.json");
-    return globalConfig.language || "";
+let localLanguageDef = null;
+const languageMatrix = {};
+
+function buildLanguageMatrix() {
+    console.log(`   ** build language matrix **`);
+
+    const defines = globalConfig.language?.defines || {};
+    for (const id of Object.keys(defines)) {
+        const def = defines[id];
+        const idPair = def.def;
+        const map = def.map;
+        if (!!!idPair || !Array.isArray(map)) {
+            continue;
+        }
+
+        for (const item of map) {
+            languageMatrix[item.toLowerCase()] = idPair;
+        }
+    }
+
+    console.log(`      current language is ${getLanguage().desc}`);
+    console.log();
+}
+
+function getLanguageFromConfig(lang) {
+    return lang || globalConfig.language?.default || "default";
 }
 
 function getLanguage() {
-    const source = args[2] || getLanguageFromConfig();
-    if (!!!source) return DEFAULT_LANGUAGE;
-    switch (source.toLowerCase()) {
-        case "chinese":
-        case "china":
-        case "ch":
-        case "cn":
-        case "zh":
-            return CHINESE_LANGUAGE;
-        case "english":
-        case "en":
-            return ENGLISH_LANGUAGE;
-        default:
-            return DEFAULT_LANGUAGE;
+    const source = args[2] || localLanguageDef;
+    if (!!!source) {
+        return DEFAULT_LANGUAGE;
     }
-}
 
-const language = getLanguage();
+    return languageMatrix[localLanguageDef] || DEFAULT_LANGUAGE;
+}
 
 async function createTargetContent(id, aData, desc) {
     desc = desc || [];
 
     const aResultLines = [];
 
+    const language = getLanguage();
     const date = new Date(Date.now());
 
     aResultLines.push("// #####################################################");
@@ -78,7 +90,8 @@ async function createTargetContent(id, aData, desc) {
 
         for (const key of Object.keys(jsonData)) {
             const value = jsonData[key];
-            aResultLines.push(`#define ${key} "${value[language.id]}"`);
+            const languageValue = value[language.id] || value[DEFAULT_LANGUAGE.id];
+            aResultLines.push(`#define ${key} "${languageValue}"`);
         }
 
         aResultLines.push("");
@@ -203,9 +216,13 @@ async function run() {
     );
 }
 
-module.exports.build = async function () {
+module.exports.build = async function (lang) {
     console.log("------ start build i18n resource ------");
     try {
+        localLanguageDef = getLanguageFromConfig(lang?.toLowerCase());
+
+        buildLanguageMatrix();
+
         const nativeResPath = path.resolve(__dirname, basicDefs.TIANYU_NATIVE_NATIVE_RES_PATH);
         if (!fs.existsSync(nativeResPath)) {
             fs.mkdirSync(nativeResPath);
@@ -218,7 +235,7 @@ module.exports.build = async function () {
 
         await run();
     } catch (e) {
-        console.log(`   create target failed: ${e.message}`);
+        console.error(`   create target failed: ${e.message}`);
     }
     console.log("------ build i18n resource end ------");
 };
