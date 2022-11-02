@@ -465,6 +465,7 @@ $RECYCLE.BIN/
 ##
 build
 target
+CMakeLists.txt
 
 ##
 ## DTY Define
