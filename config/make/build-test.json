@@ -8,11 +8,11 @@
             "exclude": [],
             "include": ["native/prime/core/src/error.cpp"]
         },
-        "dty-core": {
-            "path": ["native/prime/core", "native"],
+        "dty.common.native.test.dty-core": {
+            "path": ["native/prime/core"],
             "build": true,
             "type": "static",
-            "exclude": ["native/dty-test-core.cpp"],
+            "exclude": ["native/prime/core/src/error.cpp"],
             "include": []
         }
     },

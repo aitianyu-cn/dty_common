@@ -3,6 +3,9 @@
         "build": true,
         "src": ["array.cpp"],
         "include": ["native/dty-test-core.cpp", "native/dty-core.cpp"],
-        "lib": ["dty.common.native.test.core", "dty-core"]
+        "lib": [
+            "dty.common.native.test.core",
+            "dty.common.native.test.dty-core"
+        ]
     }
 }

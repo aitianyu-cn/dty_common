@@ -12,7 +12,7 @@
             "build": true,
             "type": "static",
             "exclude": [],
-            "include": []
+            "include": ["native/prime/core/src/error.cpp"]
         },
         "dty-prime": {
             "path": ["native/prime"],
