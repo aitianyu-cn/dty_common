@@ -469,8 +469,4 @@ target
 ##
 ## DTY Define
 ##
-native/res/i18n/*.h
-
-native/res/**/*.lock.json
-
-!native/res/creater/*
+native/res
