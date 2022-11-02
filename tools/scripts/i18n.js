@@ -2,9 +2,13 @@
 
 const fs = require("fs");
 const path = require("path");
+const basicDefs = require("./define");
 
 const args = process.argv;
-const configuration = require("../i18n/config.json");
+const configuration = require("../../resource/i18n/config.json");
+
+const I18N_SOURCE_PATH = "../../resource/i18n";
+const I18N_RES_PATH_RELATION = `${basicDefs.TIANYU_NATIVE_NATIVE_RES_PATH}/${basicDefs.TIANYU_NATIVE_NATIVE_RES_I18N_NAME}`;
 
 const DEFAULT_LANGUAGE = { id: "default", desc: ["默认", "Default"] };
 const CHINESE_LANGUAGE = { id: "ch", desc: ["中文", "zh_CN"] };
@@ -13,7 +17,7 @@ const ENGLISH_LANGUAGE = { id: "en", desc: ["英文", "en_EN"] };
 const _errorBuffer = [];
 
 function getLanguageFromConfig() {
-    const globalConfig = require("../res.config.json");
+    const globalConfig = require("../../config/res.config.json");
     return globalConfig.language || "";
 }
 
@@ -97,7 +101,7 @@ async function generateTarget(id, source, target, desc) {
 
     const aFileReadPromise = [];
     for (const sourceFile of source) {
-        const filePath = path.resolve(__dirname, "../i18n", `${sourceFile}.json`);
+        const filePath = path.resolve(__dirname, I18N_SOURCE_PATH, `${sourceFile}.json`);
         readFilePromise = new Promise((resolve, reject) => {
             fs.readFile(
                 filePath,
@@ -119,7 +123,7 @@ async function generateTarget(id, source, target, desc) {
     }
 
     Promise.all(aFileReadPromise).then((aData) => {
-        const targetPath = path.resolve(__dirname, "../i18n", `${target}.h`);
+        const targetPath = path.resolve(__dirname, I18N_RES_PATH_RELATION, `${target}.h`);
         try {
             console.log(`Start handle target file :${target}.h`);
             createTargetFile(id, aData, desc).then((result) => {
@@ -149,40 +153,72 @@ async function generateTarget(id, source, target, desc) {
     return oGeneratePromise;
 }
 
-const aPromises = [];
-const targetIds = Object.keys(configuration);
-for (const targetId of targetIds) {
-    const option = configuration[targetId];
-    const source = option.source || [];
-    const desc = option.description || [];
-    const target = option.target;
+async function run() {
+    const aPromises = [];
+    const aTargets = [];
+    const targetIds = Object.keys(configuration);
+    for (const targetId of targetIds) {
+        const option = configuration[targetId];
+        const source = option.source || [];
+        const desc = option.description || [];
+        const target = option.target;
+        aTargets.push(`${target}.h`);
 
-    if (!!!targetId || !!!source.length || !!!target) {
-        continue;
+        if (!!!targetId || !!!source.length || !!!target) {
+            continue;
+        }
+
+        const generatePromise = generateTarget(targetId.toUpperCase().replace(" ", "_").replace("-", "_"), source, target, desc);
+        aPromises.push(generatePromise);
     }
 
-    const generatePromise = generateTarget(targetId.toUpperCase().replace(" ", "_").replace("-", "_"), source, target, desc);
-    aPromises.push(generatePromise);
+    Promise.all(aPromises)
+        .then(
+            () => {
+                return new Promise((resolve) => {
+                    const targetPath = path.resolve(__dirname, I18N_RES_PATH_RELATION, `list.lock.json`);
+                    console.log(`build list file`);
+                    fs.writeFile(targetPath, JSON.stringify(aTargets), { encoding: "utf-8" }, (err) => {
+                        if (!!err) {
+                            _errorBuffer.push(`fs.writeFile cause an Error ${target}. ${err}`);
+                        } else {
+                            console.log("build list file SUCCESS");
+                        }
+                        console.log("i18n Process Success!!!");
+                        resolve();
+                    });
+                });
+            },
+            (err) => {
+                console.log("i18n Process Failed!!!");
+                _errorBuffer.push(`auto operations failed. ${err}`);
+            },
+        )
+        .finally(() => {
+            if (_errorBuffer.length === 0) {
+                console.log("Process with 0 error");
+            } else {
+                console.log(`Process with ${_errorBuffer.length} errors`);
+                let index = 1;
+                for (const error of _errorBuffer) {
+                    console.error(`   ${index++}. ${error}`);
+                }
+            }
+        });
 }
 
-Promise.all(aPromises)
-    .then(
-        () => {
-            console.log("i18n Process Success!!!");
-        },
-        (err) => {
-            console.log("i18n Process Failed!!!");
-            _errorBuffer.push(`auto operations failed. ${err}`);
-        },
-    )
-    .finally(() => {
-        if (_errorBuffer.length === 0) {
-            console.log("Process with 0 error");
-        } else {
-            console.log(`Process with ${_errorBuffer.length} errors`);
-            let index = 1;
-            for (const error of _errorBuffer) {
-                console.error(`   ${index++}. ${error}`);
-            }
-        }
-    });
+try {
+    const nativeResPath = path.resolve(__dirname, basicDefs.TIANYU_NATIVE_NATIVE_RES_PATH);
+    if (!fs.existsSync(nativeResPath)) {
+        fs.mkdirSync(nativeResPath);
+    }
+
+    const nativeResI18nPath = path.resolve(__dirname, I18N_RES_PATH_RELATION);
+    if (!fs.existsSync(nativeResI18nPath)) {
+        fs.mkdirSync(nativeResI18nPath);
+    }
+
+    run();
+} catch (e) {
+    console.log(`create target failed: ${e.message}`);
+}

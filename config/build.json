@@ -1,0 +1,28 @@
+{
+    "baseURL": "",
+    "output": "target",
+    "libs": {
+        "dty-core": {
+            "path": ["native/prime/core", "native"],
+            "build": true,
+            "type": "static",
+            "exclude": ["native/dty-test-core.cpp"]
+        },
+        "dty-test-core": {
+            "path": ["native"],
+            "build": true,
+            "type": "static",
+            "exclude": []
+        },
+        "dty-prime": {
+            "path": ["native/prime"],
+            "build": false,
+            "type": "static",
+            "exclude": []
+        }
+    },
+    "res": {
+        "base": "native/res",
+        "includes": ["i18n"]
+    }
+}
