@@ -1,0 +1,56 @@
+{
+    "event": {
+        "build": true,
+        "src": ["event.cpp"],
+        "include": ["native/prime/core/src/event.cpp"],
+        "lib": ["dty.common.native.test.core"]
+    },
+    "iterator": {
+        "build": true,
+        "src": [
+            "iterator.cpp",
+            "src/filter_result.cpp",
+            "src/iterator_entity.cpp",
+            "src/iterator_object.cpp"
+        ],
+        "include": [],
+        "lib": ["dty.common.native.test.core"]
+    },
+    "property": {
+        "build": true,
+        "src": ["property.cpp"],
+        "include": [],
+        "lib": ["dty.common.native.test.core"]
+    },
+    "pointer": {
+        "build": true,
+        "src": ["smartpointer.cpp"],
+        "include": [],
+        "lib": ["dty.common.native.test.core"]
+    },
+    "formatter": {
+        "build": true,
+        "src": ["formatter.cpp"],
+        "include": [
+            "native/prime/core/src/formatter.cpp",
+            "native/prime/core/src/parse.base.cpp"
+        ],
+        "lib": ["dty.common.native.test.core"]
+    },
+    "basetype": {
+        "build": true,
+        "src": [
+            "basetype.cpp",
+            "src/basetype_boolean.cpp",
+            "src/basetype_integer.cpp"
+        ],
+        "include": [
+            "native/prime/core/src/boolean.cpp",
+            "native/prime/core/src/double.cpp",
+            "native/prime/core/src/float.cpp",
+            "native/prime/core/src/formatter.cpp",
+            "native/prime/core/src/parse.base.cpp"
+        ],
+        "lib": ["dty.common.native.test.core"]
+    }
+}

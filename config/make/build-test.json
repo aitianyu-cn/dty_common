@@ -1,0 +1,34 @@
+{
+    "base": "test",
+    "libs": {
+        "dty.common.native.test.core": {
+            "path": ["native"],
+            "build": true,
+            "type": "static",
+            "exclude": [],
+            "include": ["native/prime/core/src/error.cpp"]
+        },
+        "dty-core": {
+            "path": ["native/prime/core", "native"],
+            "build": true,
+            "type": "static",
+            "exclude": ["native/dty-test-core.cpp"],
+            "include": []
+        }
+    },
+    "bin": {
+        "dty.common.native.test.dty-core": {
+            "path": "dty-core"
+        },
+        "dty.common.native.test.prime.core": {
+            "path": "prime/core"
+        },
+        "dty.common.native.test.prime": {
+            "path": "prime"
+        }
+    },
+    "res": {
+        "base": "native/res",
+        "includes": ["i18n"]
+    }
+}
