@@ -5,14 +5,7 @@ const path = require("path");
 
 const definition = require("./common/define");
 const buildHelper = require("./common/buildHelper");
-
-// pre-jobs import
-const buildI18n = require("./common/i18n");
-const { fileExists, StringHelper } = require("./common/utils");
-
-// pre-jobs done
-const aPrePromises = [];
-aPrePromises.push(buildI18n.build(definition.BUILD_LANGUAGE));
+const prebuild = require("./common/prebuild");
 
 /**
  * @type {{source:string;target:string;header:string[];}[]}
@@ -53,7 +46,7 @@ function generateCMake() {
 
 // run all jobs
 function run() {
-    Promise.all(aPrePromises).then(
+    prebuild.run().then(
         () => {
             generateCMake();
         },

@@ -5,14 +5,9 @@ const path = require("path");
 
 const definition = require("./common/define");
 const buildHelper = require("./common/buildHelper");
-
-// pre-jobs import
-const buildI18n = require("./common/i18n");
+const prebuild = require("./common/prebuild");
 const { handleTargetHeader } = require("./common/targetHelper");
-
-// pre-jobs done
-const aPrePromises = [];
-aPrePromises.push(buildI18n.build(definition.BUILD_LANGUAGE));
+const { printStart } = require("./common/utils");
 
 /**
  * @type {{source:string;target:string;header:string[];}[]}
@@ -62,17 +57,46 @@ function generateCMake() {
     fs.writeFileSync(libListFile, JSON.stringify(libList), { encoding: "utf-8" });
 }
 
+function getStartPrintInserts() {
+    const startPrintInsert = [];
+
+    startPrintInsert.push(`Build Type: Full build`);
+
+    return startPrintInsert;
+}
+
 // run all jobs
 function run() {
-    Promise.all(aPrePromises).then(
-        () => {
-            generateCMake();
-            handleTargetHeader(aTargetHeaderList);
-        },
-        (reason) => {
-            //
-        },
-    );
+    const inserts = getStartPrintInserts();
+    printStart(inserts);
+
+    console.log();
+    console.log(`PROGRESS START`);
+    console.log();
+
+    prebuild
+        .run()
+        .then(
+            () => {
+                console.log();
+                console.log(`\x1B[32m # Pre-build Successful \x1B[0m`);
+
+                generateCMake();
+                handleTargetHeader(aTargetHeaderList);
+            },
+            (reason) => {
+                console.log();
+                console.log(`\x1B[31m # Pre-build Failed`);
+                if (reason) {
+                    console.log(`\x1B[31m Failure:`);
+                    console.log(`\x1B[31m ${typeof reason === "string" ? reason : reason.message} \x1B[0m`);
+                }
+            },
+        )
+        .finally(() => {
+            console.log();
+            console.log(`PROGRESS END`);
+        });
 }
 
 // run
