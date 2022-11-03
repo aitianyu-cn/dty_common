@@ -36,9 +36,11 @@ function generateResource() {
 
 /**
  *
+ * @param {string[]} libList
+ * 
  * @returns {{name:string;source:{source:string;target:string;}[];buildType:string;exclude: string[];include: string[];}[]}
  */
-function generateLibaries(libSrc) {
+function generateLibaries(libSrc, libList) {
     const libraries = libSrc || {};
 
     const libraryList = [];
@@ -96,6 +98,7 @@ function generateLibaries(libSrc) {
         };
 
         libraryList.push(libray);
+        libList?.push(libName);
     }
 
     return libraryList;
@@ -103,9 +106,11 @@ function generateLibaries(libSrc) {
 
 /**
  *
+ * @param {string[]} binList
+ * 
  * @returns {{name: string;src: string[];include: string[];lib: string[];target: string;}[]}
  */
-function generateTestBinaries() {
+function generateTestBinaries(binList) {
     const binaries = definition.configure.test?.bin || {};
 
     // get sources
@@ -167,10 +172,11 @@ function generateTestBinaries() {
                 src: aSourceList,
                 include: aIncludeList,
                 lib: libs,
-                target: `${binPath.target}/${testCase}`,
+                target: `${testCase}`,
             };
 
             testList.push(test);
+            binList?.push(testCase);
         }
     }
 

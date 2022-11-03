@@ -34,7 +34,8 @@ function generateCMake() {
     }
 
     aLibContent.push("");
-    const testCases = buildHelper.generateTestBinaries();
+    const testList = [];
+    const testCases = buildHelper.generateTestBinaries(testList);
     for (const testCase of testCases) {
         const testContent = buildHelper.prepareBinContent(testCase);
         aLibContent.push(...testContent);
@@ -42,6 +43,12 @@ function generateCMake() {
 
     const content = buildHelper.prepareCMakeContent(aLibContent);
     fs.writeFileSync(cmakeFile, content, { encoding: "utf-8" });
+
+    if (!fs.existsSync(definition.PROJECT_BUILD_TARGET)) {
+        fs.mkdirSync(definition.PROJECT_BUILD_TARGET, { recursive: true });
+    }
+    const testListFile = path.resolve(definition.PROJECT_BUILD_TARGET, "test.list.json");
+    fs.writeFileSync(testListFile, JSON.stringify(testList), { encoding: "utf-8" });
 }
 
 // run all jobs

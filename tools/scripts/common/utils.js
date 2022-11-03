@@ -23,6 +23,6 @@ module.exports.StringHelper = {
             result = result.replace(raw, replace);
         }
 
-        return result;
+        return `"${result}"`;
     },
 };
