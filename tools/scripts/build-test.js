@@ -1,59 +1,54 @@
 /**@format */
 
-const fs = require("fs");
-const path = require("path");
-
-const definition = require("./common/define");
-const buildHelper = require("./common/buildHelper");
+const { generateCMake } = require("./common/build");
 const prebuild = require("./common/prebuild");
+const { printStart } = require("./common/utils");
 
-/**
- * @type {{source:string;target:string;header:string[];}[]}
- */
-const aTargetHeaderList = [];
+function getStartPrintInserts() {
+    const startPrintInsert = [];
 
-// generate cmake file
-function generateCMake() {
-    const cmakeFile = path.resolve(definition.PROJECT_BASE_PATH, "CMakeLists.txt");
+    startPrintInsert.push(`Build Type: native`);
 
-    const aLibContent = [];
-
-    aLibContent.push("");
-    const libSource = definition.configure.test.libs;
-    const libraries = buildHelper.generateLibaries(libSource);
-    for (const library of libraries) {
-        const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
-        aLibContent.push(...libContent);
-    }
-
-    aLibContent.push("");
-    const testList = [];
-    const testCases = buildHelper.generateTestBinaries(testList);
-    for (const testCase of testCases) {
-        const testContent = buildHelper.prepareBinContent(testCase);
-        aLibContent.push(...testContent);
-    }
-
-    const content = buildHelper.prepareCMakeContent(aLibContent);
-    fs.writeFileSync(cmakeFile, content, { encoding: "utf-8" });
-
-    if (!fs.existsSync(definition.PROJECT_BUILD_TARGET)) {
-        fs.mkdirSync(definition.PROJECT_BUILD_TARGET, { recursive: true });
-    }
-    const testListFile = path.resolve(definition.PROJECT_BUILD_TARGET, "test.list.json");
-    fs.writeFileSync(testListFile, JSON.stringify(testList), { encoding: "utf-8" });
+    return startPrintInsert;
 }
 
 // run all jobs
 function run() {
-    prebuild.run().then(
-        () => {
-            generateCMake();
-        },
-        (reason) => {
-            //
-        },
-    );
+    const inserts = getStartPrintInserts();
+    printStart(inserts);
+
+    console.log(`\x1B[34mPROGRESS START\x1B[0m`);
+    console.log();
+    console.log(`\x1B[33m*******************************************************\x1B[0m`);
+    console.log();
+
+    prebuild
+        .run()
+        .then(
+            () => {
+                console.log(`\x1B[33m*******************************************************\x1B[0m`);
+                console.log();
+                console.log(`\x1B[34m # Build Start \x1B[0m`);
+                console.log();
+
+                try {
+                    generateCMake("TEST");
+
+                    console.log(`\x1B[32m # Build Successful \x1B[0m`);
+                } catch (e) {
+                    console.log(`\x1B[31m # Build Failed ${e.toString()} \x1B[0m`);
+                }
+            },
+            (reason) => {
+                //
+            },
+        )
+        .finally(() => {
+            console.log();
+            console.log(`\x1B[33m*******************************************************\x1B[0m`);
+            console.log();
+            console.log(`\x1B[34mPROGRESS END\x1B[0m`);
+        });
 }
 
 // run

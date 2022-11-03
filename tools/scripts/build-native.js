@@ -1,53 +1,58 @@
 /**@format */
 
-const fs = require("fs");
-const path = require("path");
-
-const definition = require("./common/define");
-const buildHelper = require("./common/buildHelper");
+const { generateCMake } = require("./common/build");
 const prebuild = require("./common/prebuild");
 const { handleTargetHeader } = require("./common/targetHelper");
+const { printStart } = require("./common/utils");
 
-/**
- * @type {{source:string;target:string;header:string[];}[]}
- */
-const aTargetHeaderList = [];
+function getStartPrintInserts() {
+    const startPrintInsert = [];
 
-// generate cmake file
-function generateCMake() {
-    const cmakeFile = path.resolve(definition.PROJECT_BASE_PATH, "CMakeLists.txt");
+    startPrintInsert.push(`Build Type: test`);
 
-    const libList = [];
-
-    const libSource = definition.configure.native.libs;
-    const libraries = buildHelper.generateLibaries(libSource, libList);
-    const aLibContent = [];
-    for (const library of libraries) {
-        const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
-        aLibContent.push(...libContent);
-    }
-
-    const content = buildHelper.prepareCMakeContent(aLibContent);
-    fs.writeFileSync(cmakeFile, content, { encoding: "utf-8" });
-
-    if (!fs.existsSync(definition.PROJECT_BUILD_TARGET)) {
-        fs.mkdirSync(definition.PROJECT_BUILD_TARGET, { recursive: true });
-    }
-    const libListFile = path.resolve(definition.PROJECT_BUILD_TARGET, "lib.list.json");
-    fs.writeFileSync(libListFile, JSON.stringify(libList), { encoding: "utf-8" });
+    return startPrintInsert;
 }
 
 // run all jobs
 function run() {
-    prebuild.run().then(
-        () => {
-            generateCMake();
-            handleTargetHeader(aTargetHeaderList);
-        },
-        (reason) => {
-            //
-        },
-    );
+    const inserts = getStartPrintInserts();
+    printStart(inserts);
+
+    console.log(`\x1B[34mPROGRESS START\x1B[0m`);
+    console.log();
+    console.log(`\x1B[33m*******************************************************\x1B[0m`);
+    console.log();
+
+    prebuild
+        .run()
+        .then(
+            () => {
+                console.log(`\x1B[33m*******************************************************\x1B[0m`);
+                console.log();
+                console.log(`\x1B[34m # Build Start \x1B[0m`);
+                console.log();
+
+                try {
+                    const headerList = generateCMake("NATIVE");
+                    handleTargetHeader(headerList);
+
+                    console.log();
+                    console.log(`\x1B[32m # Build Successful \x1B[0m`);
+                } catch {
+                    console.log();
+                    console.log(`\x1B[31m # Build Failed \x1B[0m`);
+                }
+            },
+            (reason) => {
+                //
+            },
+        )
+        .finally(() => {
+            console.log();
+            console.log(`\x1B[33m*******************************************************\x1B[0m`);
+            console.log();
+            console.log(`\x1B[34mPROGRESS END\x1B[0m`);
+        });
 }
 
 // run

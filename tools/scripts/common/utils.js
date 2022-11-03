@@ -35,7 +35,7 @@ module.exports.StringHelper = {
  */
 module.exports.printStart = function printStart(insert) {
     const date = new Date(Date.now());
-
+    console.log(`\x1B[33m`);
     console.log(`#######################################################`);
     console.log(`     ______   ____    ____   ____    __ __   __ __ `);
     console.log(`    |      | |    |  /    | |    \  |  |  | |  |  |`);
@@ -44,7 +44,7 @@ module.exports.printStart = function printStart(insert) {
     console.log(`      |  |    |  |  |  _  | |  |  | |___, | |  :  |`);
     console.log(`      |  |    |  |  |  |  | |  |  | |     | |     |`);
     console.log(`      |__|   |____| |__|__| |__|__| |____/   \\__,_|`);
-    console.log(` ----------------------------------------------------`);
+    // console.log(` ----------------------------------------------------`);
     console.log();
     console.log(`  ${definition.cmake.CMAKE_PROJECT_NAME}`);
     console.log(`  ${definition.cmake.CMAKE_PROJECT_VERSION}`);
@@ -52,9 +52,10 @@ module.exports.printStart = function printStart(insert) {
     console.log();
     if (insert && insert.length) {
         for (const str of insert) {
-            console.log(`# ${str}`);
+            console.log(`  ${str}`);
         }
         console.log();
     }
     console.log(`#######################################################`);
+    console.log(`\x1B[0m`);
 };

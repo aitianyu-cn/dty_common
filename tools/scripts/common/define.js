@@ -17,6 +17,20 @@ const PROJECT_TEST_SOURCE = path.resolve(PROJECT_BASE_PATH, buildTestConfig.base
 const DEVELOPMENT_MODE = buildConfiguration.dev || true;
 const BUILD_LANGUAGE = buildConfiguration.language || null;
 
+const FULL_CONSOLE_LOG = (() => {
+    const logType = buildConfiguration.log;
+    if (!!!logType) {
+        return false;
+    }
+
+    switch (logType.toLowerCase()) {
+        case "full":
+            return true;
+        default:
+            return false;
+    }
+})();
+
 const CMAKE_VERSION = buildConfiguration.cmake?.version || "3.18";
 const CMAKE_PROJECT_NAME = buildConfiguration.cmake?.project?.name || "Tianyu Native";
 const CMAKE_PROJECT_VERSION = buildConfiguration.cmake?.project?.version || "0.0.0";
@@ -52,6 +66,7 @@ module.exports = {
     PROJECT_TEST_SOURCE: PROJECT_TEST_SOURCE,
     DEVELOPMENT_MODE: DEVELOPMENT_MODE,
     BUILD_LANGUAGE: BUILD_LANGUAGE,
+    FULL_CONSOLE_LOG: FULL_CONSOLE_LOG,
 
     TIANYU_NATIVE_NATIVE_RES_PATH: TIANYU_NATIVE_NATIVE_RES_PATH,
     TIANYU_NATIVE_NATIVE_RES_I18N_NAME: "i18n",

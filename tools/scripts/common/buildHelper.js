@@ -37,7 +37,7 @@ function generateResource() {
 /**
  *
  * @param {string[]} libList
- * 
+ *
  * @returns {{name:string;source:{source:string;target:string;}[];buildType:string;exclude: string[];include: string[];}[]}
  */
 function generateLibaries(libSrc, libList) {
@@ -98,7 +98,9 @@ function generateLibaries(libSrc, libList) {
         };
 
         libraryList.push(libray);
-        libList?.push(libName);
+        libList && libList.push(libName);
+
+        definition.FULL_CONSOLE_LOG && console.log(`          - detect library: ${libName}`);
     }
 
     return libraryList;
@@ -107,7 +109,7 @@ function generateLibaries(libSrc, libList) {
 /**
  *
  * @param {string[]} binList
- * 
+ *
  * @returns {{name: string;src: string[];include: string[];lib: string[];target: string;}[]}
  */
 function generateTestBinaries(binList) {
@@ -177,6 +179,7 @@ function generateTestBinaries(binList) {
 
             testList.push(test);
             binList?.push(testCase);
+            definition.FULL_CONSOLE_LOG && console.log(`          - detect test case: ${testCase}`);
         }
     }
 
@@ -204,7 +207,7 @@ function prepareLibsContent(lib, targetHeader) {
             }
         }
 
-        targetHeader.push({
+        targetHeader?.push({
             target: source.target,
             source: source.source,
             header: listData.header,

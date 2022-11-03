@@ -17,5 +17,6 @@
     },
     "baseURL": "",
     "output": "target",
-    "language": null
+    "language": null,
+    "log": "full"
 }

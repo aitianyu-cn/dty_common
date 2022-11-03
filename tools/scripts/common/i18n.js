@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const basicDefs = require("./define");
+const definition = require("./define");
 
 const args = process.argv;
 const configuration = require("../../../resource/i18n/config.json");
@@ -17,7 +18,7 @@ let localLanguageDef = null;
 const languageMatrix = {};
 
 function buildLanguageMatrix() {
-    console.log(`   ** build language matrix **`);
+    console.log(`     ** build language matrix **`);
 
     const defines = globalConfig.language?.defines || {};
     for (const id of Object.keys(defines)) {
@@ -33,7 +34,7 @@ function buildLanguageMatrix() {
         }
     }
 
-    console.log(`      current language is ${getLanguage().desc}`);
+    console.log(`        current language is ${getLanguage().desc}`);
     console.log();
 }
 
@@ -84,7 +85,7 @@ async function createTargetContent(id, aData, desc) {
         const sourceFile = dataItem.source;
         const jsonData = dataItem.data;
 
-        console.log(`      - detected source file: ${sourceFile} to ${id}`);
+        definition.FULL_CONSOLE_LOG && console.log(`        - detected source file: ${sourceFile} to ${id}`);
 
         aResultLines.push(`// ${sourceFile}.json`);
 
@@ -103,7 +104,7 @@ async function createTargetContent(id, aData, desc) {
 }
 
 async function generateTarget(id, source, target, desc) {
-    console.log(`   ** start build ${target}.h **`);
+    console.log(`     ** start build ${target}.h **`);
 
     let fnResolve = () => {};
     let fnReject = () => {};
@@ -123,10 +124,10 @@ async function generateTarget(id, source, target, desc) {
                 },
                 (err, data) => {
                     if (!!err) {
-                        console.error(`   - read file ${sourceFile} failed. ${err}`);
+                        definition.FULL_CONSOLE_LOG && console.error(`       - read file ${sourceFile} failed. ${err}`);
                         reject();
                     } else {
-                        console.log(`   - read File :${sourceFile}.json SUCCESS`);
+                        definition.FULL_CONSOLE_LOG && console.log(`       - read File :${sourceFile}.json SUCCESS`);
                         resolve({ source: sourceFile, data: JSON.parse(data) });
                     }
                 },
@@ -138,9 +139,9 @@ async function generateTarget(id, source, target, desc) {
     Promise.all(aFileReadPromise).then((aData) => {
         const targetPath = path.resolve(__dirname, I18N_RES_PATH_RELATION, `${target}.h`);
         try {
-            console.log(`   ** start handle target file :${target}.h **`);
+            console.log(`     ** start handle target file :${target}.h **`);
             createTargetContent(id, aData, desc).then((result) => {
-                console.log(`      # handle data for target file :${target}.h SUCCESS`);
+                definition.FULL_CONSOLE_LOG && console.log(`        # handle data for target file :${target}.h SUCCESS`);
                 fs.writeFile(
                     targetPath,
                     result,
@@ -149,20 +150,20 @@ async function generateTarget(id, source, target, desc) {
                     },
                     (err) => {
                         if (!!err) {
-                            console.error(`      fs.writeFile cause an Error ${target}. ${err}`);
+                            console.error(`        fs.writeFile cause an Error ${target}. ${err}`);
                             fnReject();
                         } else {
-                            console.log(`      # write into file :${target}.h SUCCESS`);
+                            definition.FULL_CONSOLE_LOG && console.log(`        # write into file :${target}.h SUCCESS`);
                             fnResolve();
                         }
 
-                        console.log(`   ** build ${target}.h end **`);
+                        console.log(`     ** build ${target}.h end **`);
                     },
                 );
             }, fnReject);
         } catch (e) {
-            console.error(`   # write file ${targetPath} failed. ${e.message}`);
-            console.log(`   ** build ${target}.h end **`);
+            console.error(`     # write file ${targetPath} failed. ${e.message}`);
+            console.log(`     ** build ${target}.h end **`);
         }
     }, fnReject);
 
@@ -194,30 +195,30 @@ async function run() {
                 console.log();
 
                 const targetPath = path.resolve(__dirname, I18N_RES_PATH_RELATION, `list.lock.json`);
-                console.log(`   build list file`);
+                console.log(`     build list file`);
                 fs.writeFile(targetPath, JSON.stringify(aTargets), { encoding: "utf-8" }, (err) => {
                     if (!!err) {
-                        console.error(`   fs.writeFile cause an Error ${target}. ${err}`);
+                        console.error(`     fs.writeFile cause an Error ${target}. ${err}`);
                     } else {
-                        console.log("   build list file SUCCESS");
+                        console.log("     build list file SUCCESS");
                     }
 
                     console.log();
-                    console.log("   ** i18n process success **");
+                    console.log("     ** i18n process success **");
                     resolve();
                 });
             });
         },
         (err) => {
             console.log();
-            console.log("   i18n Process Failed!!!");
-            console.error(`   auto operations failed. ${err}`);
+            console.log("     i18n Process Failed!!!");
+            console.error(`     auto operations failed. ${err}`);
         },
     );
 }
 
 module.exports.build = async function (lang) {
-    console.log("------ start build i18n resource ------");
+    console.log("  ------ start build i18n resource ------");
     try {
         localLanguageDef = getLanguageFromConfig(lang?.toLowerCase());
 
@@ -235,7 +236,7 @@ module.exports.build = async function (lang) {
 
         await run();
     } catch (e) {
-        console.error(`   create target failed: ${e.message}`);
+        console.error(`     create target failed: ${e.message}`);
     }
-    console.log("------ build i18n resource end ------");
+    console.log("  ------ build i18n resource end ------");
 };
