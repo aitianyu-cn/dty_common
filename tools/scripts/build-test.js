@@ -8,7 +8,7 @@ const buildHelper = require("./common/buildHelper");
 
 // pre-jobs import
 const buildI18n = require("./common/i18n");
-const { handleTargetHeader } = require("./common/targetHelper");
+const { fileExists, StringHelper } = require("./common/utils");
 
 // pre-jobs done
 const aPrePromises = [];
@@ -26,17 +26,9 @@ function generateCMake() {
     const aLibContent = [];
 
     aLibContent.push("");
-    const libSource = definition.configure.native.libs;
+    const libSource = definition.configure.test.libs;
     const libraries = buildHelper.generateLibaries(libSource);
     for (const library of libraries) {
-        const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
-        aLibContent.push(...libContent);
-    }
-
-    aLibContent.push("");
-    const testLibSource = definition.configure.test.libs;
-    const testLibraries = buildHelper.generateLibaries(testLibSource);
-    for (const library of testLibraries) {
         const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
         aLibContent.push(...libContent);
     }
@@ -57,7 +49,6 @@ function run() {
     Promise.all(aPrePromises).then(
         () => {
             generateCMake();
-            handleTargetHeader(aTargetHeaderList);
         },
         (reason) => {
             //

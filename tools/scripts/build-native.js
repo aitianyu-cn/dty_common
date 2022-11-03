@@ -23,29 +23,12 @@ const aTargetHeaderList = [];
 function generateCMake() {
     const cmakeFile = path.resolve(definition.PROJECT_BASE_PATH, "CMakeLists.txt");
 
-    const aLibContent = [];
-
-    aLibContent.push("");
     const libSource = definition.configure.native.libs;
     const libraries = buildHelper.generateLibaries(libSource);
+    const aLibContent = [];
     for (const library of libraries) {
         const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
         aLibContent.push(...libContent);
-    }
-
-    aLibContent.push("");
-    const testLibSource = definition.configure.test.libs;
-    const testLibraries = buildHelper.generateLibaries(testLibSource);
-    for (const library of testLibraries) {
-        const libContent = buildHelper.prepareLibsContent(library, aTargetHeaderList);
-        aLibContent.push(...libContent);
-    }
-
-    aLibContent.push("");
-    const testCases = buildHelper.generateTestBinaries();
-    for (const testCase of testCases) {
-        const testContent = buildHelper.prepareBinContent(testCase);
-        aLibContent.push(...testContent);
     }
 
     const content = buildHelper.prepareCMakeContent(aLibContent);

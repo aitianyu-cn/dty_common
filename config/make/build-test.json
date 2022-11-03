@@ -26,9 +26,5 @@
         "dty.common.native.test.prime": {
             "path": "prime"
         }
-    },
-    "res": {
-        "base": "native/res",
-        "includes": ["i18n"]
     }
 }
