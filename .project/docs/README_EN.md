@@ -12,7 +12,7 @@
 
 ### &nbsp;Environment Dependency
 
-- Dependency&nbsp;:&nbsp; .Net 6.0
+- Dependency&nbsp;:&nbsp; Node.Js
 - Compiler&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; MSVC(Microsoft Visual C++)、GNU、Clang
 - Tools&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; cmake，make（Visual Studio）
 
@@ -32,25 +32,31 @@
    Used to initialize basic dependencies, such as _Multi-Languages_.
 
    ```
-    · cd ${tianyu-native}
-    · ./init.sh             // PowerShell or Linux Shell or Mac Shell
-      init.bat              // Windows Command
-
-    · To Get Help: [init.sh | init.bat] help
+    · cd ${tianyu-native}/tools
+    · npm install           // install node.js dependencies (skipped if installed)
+    · npm run build-i18n    // init multiple language resource
    ```
+
+   - For more information of the tool, take references from `${tianyu-native}/tools/README.md`
+
+     ` `
 
 3. **Make Project**
 
    ```
-    · mkdir build       // Since cmake does not have the ability to clean up generated projects,
-                        // it is recommended to build a separate folder to keep the generated
-                        // files separate from the original project.
+    · cd cd ${tianyu-native}/tools
+    · npm install           // install node.js dependencies (skipped if installed)
+    · npm run build         // build tests and libraries
+              build-test    // build tests only
+              build-native  // build libraries only
+    · mkdir build           // create a individual folder to keep the project clear
     · cd build
-    · cmake .. [OPTION]
-
-        Option:
-            -D DTEST=true: Specifies that tianyu test modules can be generated for code testing.
+    · cmake ..
    ```
+
+   - For more information of the tool, take references from `${tianyu-native}/tools/README.md`
+
+     ` `
 
 4. **Compile**  
    After compiling, the generated files will be stored in the `${PROJECT_ROOT}/target` folder.

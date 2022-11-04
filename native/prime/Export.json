@@ -1,7 +1,0 @@
-{
-    "target": null,
-    "package": "prime",
-    "headers": [],
-    "excludes": [],
-    "subdir": ["core"]
-}

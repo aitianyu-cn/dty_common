@@ -1,0 +1,10 @@
+{
+    "core": {
+        "source": ["dty-core", "dty-test-core"],
+        "description": [
+            "天宇静态多语言文件",
+            "Dev Tianyu Static Language File"
+        ],
+        "target": "language"
+    }
+}
