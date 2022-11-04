@@ -1,7 +1,0 @@
-{
-    "target": null,
-    "package": "io",
-    "headers": [],
-    "excludes": [],
-    "subdir": ["base_stream"]
-}

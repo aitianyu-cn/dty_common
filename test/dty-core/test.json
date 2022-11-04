@@ -1,0 +1,14 @@
+{
+    "core_api": {
+        "build": true,
+        "src": ["core_api.cpp"],
+        "include": ["native/dty-test-core.cpp", "native/dty-core.cpp"],
+        "lib": []
+    },
+    "value_to_string": {
+        "build": true,
+        "src": ["val2str.cpp"],
+        "include": ["native/dty-test-core.cpp", "native/dty-core.cpp"],
+        "lib": []
+    }
+}
