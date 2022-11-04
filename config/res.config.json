@@ -1,0 +1,15 @@
+{
+    "language": {
+        "default": "default",
+        "defines": {
+            "CHINESE_LANGUAGE": {
+                "def": { "id": "ch", "desc": ["中文", "zh_CN"] },
+                "map": ["Chinese", "China", "ch", "cn", "zh"]
+            },
+            "ENGLISH_LANGUAGE": {
+                "def": { "id": "en", "desc": ["英文", "en_EN"] },
+                "map": ["English", "en"]
+            }
+        }
+    }
+}

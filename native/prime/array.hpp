@@ -125,4 +125,15 @@ namespace dty::collection
     using CharArray = Array<char>;
 }
 
+namespace dty::collection
+{
+    template<class Elem>
+    class DynamicArray final
+        : public virtual dty::TianyuObject,
+        public virtual dty::collection::IDynamicCollections<Elem>
+    {
+
+    };
+}
+
 #endif // !__DTY_COMMON_NATIVE_PRIME_ARRAY_H_PLUS_PLUS__

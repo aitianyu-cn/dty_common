@@ -293,6 +293,7 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+package-lock.json
 
 # Visual Studio 6 build log
 *.plg
@@ -465,10 +466,9 @@ $RECYCLE.BIN/
 ##
 build
 target
+CMakeLists.txt
 
 ##
 ## DTY Define
 ##
-native/res/i18n/language.h
-
-!native/res/creater/*
+native/res

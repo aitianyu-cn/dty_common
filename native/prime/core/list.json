@@ -1,0 +1,22 @@
+{
+    "src": [
+        "src/boolean.cpp",
+        "src/double.cpp",
+        "src/error.cpp",
+        "src/event.cpp",
+        "src/float.cpp",
+        "src/formatter.cpp",
+        "src/parse.base.cpp"
+    ],
+    "header": [
+        "basetype.hpp",
+        "error.hpp",
+        "event.hpp",
+        "formatter.hpp",
+        "icollections.hpp",
+        "iterator.hpp",
+        "pointer.hpp",
+        "property.hpp",
+        "internal.h"
+    ]
+}

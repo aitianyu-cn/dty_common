@@ -1,0 +1,4 @@
+{
+    "src": ["dty-core.cpp", "dty-test-core.cpp"],
+    "header": ["dty-core.hxx"]
+}
