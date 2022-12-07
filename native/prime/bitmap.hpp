@@ -19,9 +19,8 @@ namespace dty::collection
 {
     class Bitmap : public virtual TianyuObject
     {
-        __PRI__ int64           __VARIABLE__ _ArraySize;
-        __PRI__ byte            __POINTER__  _Map;
-        __PRI__ Property<int64> __VARIABLE__ _BitsCount;
+        __PRI__ dty::SmartPointer<byte> __VARIABLE__  _Map;
+        __PRI__ Property<int64>         __VARIABLE__ _BitsCount;
 
         __PUB__ IPropertyGetter<int64> __REFERENCE__ Count;
 

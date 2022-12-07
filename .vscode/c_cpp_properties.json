@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Apple",
+            "name": "Apple", // work for mac development environment
             "includePath": [
                 "${workspaceFolder}/native/*",
                 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Kernel.framework/Versions/A/Headers"
@@ -13,7 +13,7 @@
             "intelliSenseMode": "macos-clang-x64"
         },
         {
-            "name": "Win32",
+            "name": "Win32", // work for general environment which installs visual studio
             "includePath": ["${workspaceFolder}/native/*"],
             "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
             "windowsSdkVersion": "10.0.22000.0",
@@ -21,6 +21,19 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-msvc-x64"
+        },
+        {
+            "name": "Win32-PVG-Notebook", // only work for victor.yao@sap.com
+            "includePath": [
+                "${workspaceFolder}/native/*",
+                "C:/TianyuDevelop/tools/mingw64/x86_64-w64-mingw32/include"
+            ],
+            "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
+            "windowsSdkVersion": "10.0.22000.0",
+            "compilerPath": "C:/TianyuDevelop/tools/mingw64/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4

@@ -145,9 +145,13 @@ namespace dty
      */
     enum class PlatformID : signed int
     {
+        /** @brief Apple Mac 操作系统 */
         MacOSX = 6,
+        /** @brief 其他操作系统 */
         Other = 7,
+        /** @brief Linux/Unix系列操作系统 */
         Unix = 4,
+        /** @brief Windows 操作系统 */
         Windows = 1
     };
 }
@@ -165,95 +169,104 @@ namespace dty
 // ################################################################################################
 #pragma region pure c mode definition
 
- // 字符类型有符号数最小值
+/** @brief 字符类型有符号数最小值 */
 #define __SIGNED_CHAR_MIN__     (-128)
-// 字符类型有符号数最大值
+/** @brief 字符类型有符号数最大值 */
 #define __SIGNED_CHAR_MAX__     127
-// 字符类型无符号数最小值
+/** @brief 字符类型无符号数最小值 */
 #define __UNSIGNED_CHAR_MIN__   0
-// 字符类型无符号数最大值
+/** @brief 字符类型无符号数最大值 */
 #define __UNSIGNED_CHAR_MAX__   0xFF
 
-// 8位整数类型有符号数最小值
+/** @brief 8位整数类型有符号数最小值 */
 #define __SIGNED_INT8_MIN__     (-128)
-// 8位整数类型有符号数最大值
+/** @brief 8位整数类型有符号数最大值 */
 #define __SIGNED_INT8_MAX__     127
-// 8位整数类型无符号数最小值
+/** @brief 8位整数类型无符号数最小值 */
 #define __UNSIGNED_INT8_MIN__   0
-// 8位整数类型无符号数最大值
+/** @brief 8位整数类型无符号数最大值 */
 #define __UNSIGNED_INT8_MAX__   0xFF
 
-// 16位整数类型有符号数最小值
+/** @brief 16位整数类型有符号数最小值 */
 #define __SIGNED_INT16_MIN__    (-32768)
-// 16位整数类型无符号数最小值
+/** @brief 16位整数类型无符号数最小值 */
 #define __SIGNED_INT16_MAX__    32767
-// 16位整数类型无符号数最小值
+/** @brief 16位整数类型无符号数最小值 */
 #define __UNSIGNED_INT16_MIN__  0
-// 16位整数类型无符号数最大值
+/** @brief 16位整数类型无符号数最大值 */
 #define __UNSIGNED_INT16_MAX__  0xFFFF
 
-// 32位整数类型有符号数最小值
+/** @brief 32位整数类型有符号数最小值 */
 #define __SIGNED_INT32_MIN__    (-2147483647 - 1)
-// 32位整数类型无符号数最小值
+/** @brief 32位整数类型无符号数最小值 */
 #define __SIGNED_INT32_MAX__    2147483647
-// 32位整数类型无符号数最小值
+/** @brief 32位整数类型无符号数最小值 */
 #define __UNSIGNED_INT32_MIN__  0
-// 32位整数类型无符号数最大值
+/** @brief 32位整数类型无符号数最大值 */
 #define __UNSIGNED_INT32_MAX__  0xFFFFFFFF
 
-// 64位整数类型有符号数最小值
+/** @brief 64位整数类型有符号数最小值 */
 #define __SIGNED_INT64_MIN__    (-9223372036854775807 - 1)
-// 64位整数类型有符号数最大值
+/** @brief 64位整数类型有符号数最大值 */
 #define __SIGNED_INT64_MAX__    9223372036854775807
-// 64位整数类型无符号数最小值
+/** @brief 64位整数类型无符号数最小值 */
 #define __UNSIGNED_INT64_MIN__  0
-// 64位整数类型无符号数最大值
+/** @brief 64位整数类型无符号数最大值 */
 #define __UNSIGNED_INT64_MAX__  0xFFFFFFFFFFFFFFFF
 
+/** @brief 字符类型位数 */
 #define __CHAR_TYPE_BINARY_LENGTH__     8
+/** @brief 字节类型位数 */
 #define __BYTE_TYPE_BINARY_LENGTH__     8
+/** @brief 短整数类型位数 */
 #define __SHORT_TYPE_BINARY_LENGTH__    16
+/** @brief 整数类型位数 */
 #define __INT_TYPE_BINARY_LENGTH__      32
+/** @brief 长整数类型位数 */
 #define __LONG_TYPE_BINARY_LENGTH__     64
+/** @brief 实数（浮点）类型位数 */
 #define __FLOAT_TYPE_BINARY_LENGTH__    32
+/** @brief 双精度浮点类型位数 */
 #define __DOUBLE_TYPE_BINARY_LENGTH__   64
+/** @brief 布尔类型位数 */
 #define __BOOLEAN_TYPE_BINARY_LENGTH__  8
 
-// 前向引用 标志 用于标识未定义实体的方法、结构体、类等元素
+/** @brief 前向引用 标志 用于标识未定义实体的方法、结构体、类等元素 */
 #define __PREDEFINE__
-// 前向引用 标志 用于标识__PREDEFINE__定义的方法、结构体、类等元素的实现
+/** @brief 前向引用 标志 用于标识__PREDEFINE__定义的方法、结构体、类等元素的实现 */
 #define __PREREALIZ__
-// 默认实现 标志 用于标识可重载函数和拓展类型、数据的默认实现
+/** @brief 默认实现 标志 用于标识可重载函数和拓展类型、数据的默认实现 */
 #define __DEFAULT__
-// 构造函数 标志 用于标识类的构造函数（包含模拟OO）
+/** @brief 构造函数 标志 用于标识类的构造函数（包含模拟OO） */
 #define __CONSTRUCTOR__
-// 析构函数 标志 用于标识类的析构函数（包含模拟OO）
+/** @brief 析构函数 标志 用于标识类的析构函数（包含模拟OO） */
 #define __DESTRUCTOR__
-// 复制构造函数 标志 用于标识类的复制构造函数（包含模拟OO）
+/** @brief 复制构造函数 标志 用于标识类的复制构造函数（包含模拟OO） */
 #define __COPYSTRUCTOR__
-// 值类型 标志 用于标识以值类型保存、传递的属性、变量和参数
+/** @brief 值类型 标志 用于标识以值类型保存、传递的属性、变量和参数 */
 #define __VARIABLE__
-// 数组类型 后缀 用于标识当前值类型保存为数组
+/** @brief 数组类型 后缀 用于标识当前值类型保存为数组 */
 #define __ARRAY__ []
-// 名    称：指针类型 标志 用于标识以指针类型保存、传递的属性、变量和参数
+/** @brief 指针类型 标志 用于标识以指针类型保存、传递的属性、变量和参数 */
 #define __POINTER__ *
+/** @brief 二级指针类型 标志 用于标识以二级指针类型保存、传递的属性、变量和参数  */
 #define __DPOINTER__ **
-// 指针→值类型转换 标志 用于标识指针类型到值类型的转换
+/** @brief 指针→值类型转换 标志 用于标识指针类型到值类型的转换 */
 #define __PTR_TO_VAR__ *
-// 值→指针类型转换 标志 用于标识值类型到指针类型的转换
+/** @brief 值→指针类型转换 标志 用于标识值类型到指针类型的转换 */
 #define __VAR_TO_PTR__ &
-// 方法/函数纯输入参数 标志 用于标识方法与函数的参数类型为输入
+/** @brief 方法/函数纯输入参数 标志 用于标识方法与函数的参数类型为输入 */
 #define __INPUT__
-// 方法/函数纯输出参数 标志 用于标识方法与函数的参数类型为输出
+/** @brief 方法/函数纯输出参数 标志 用于标识方法与函数的参数类型为输出 */
 #define __OTPUT__
-// 方法/函数输入输出参数 标志 用于标识方法与函数的参数类型既可以进行输入也可作为返回
+/** @brief 方法/函数输入输出参数 标志 用于标识方法与函数的参数类型既可以进行输入也可作为返回 */
 #define __INOUT__
-// 传入实例标志 标志 用于标识方法的传入参数为当前操作的实例（用于C语言的模拟OO）
+/** @brief 传入实例标志 标志 用于标识方法的传入参数为当前操作的实例（用于C语言的模拟OO） */
 #define __INSTE__
 
 
 #ifdef __cplusplus
- // C语言编译模式 标志 用于标识所修饰的元素以C语言的方式进行编译
+/** @brief C语言编译模式 标志 用于标识所修饰的元素以C语言的方式进行编译 */
 #define __CMODE__ extern "C"
 #endif // !__cplusplus
 
@@ -265,40 +278,54 @@ __CMODE__
     // pure C mode
 
 #pragma region redefine for base data type
-// 无符号字符 数据类型
+// 
+/** @brief 无符号字符 数据类型 */
 typedef      unsigned char __VARIABLE__ uchar;
-// 有符号字节 数据类型
+// 
+/** @brief 有符号字节 数据类型 */
 typedef        signed char __VARIABLE__ sbyte;
-// 无符号字节 数据类型
+// 
+/** @brief 无符号字节 数据类型 */
 typedef      unsigned char __VARIABLE__ byte;
-// 有符号16位整数 数据类型
+// 
+/** @brief 有符号16位整数 数据类型 */
 typedef       signed short __VARIABLE__ int16;
-// 无符号16位整数 数据类型
+// 
+/** @brief 无符号16位整数 数据类型 */
 typedef     unsigned short __VARIABLE__ uint16;
-// 有符号32位整数 数据类型
+// 
+/** @brief 有符号32位整数 数据类型 */
 typedef         signed int __VARIABLE__ int32;
-// 无符号32位整数 数据类型
+// 
+/** @brief 无符号32位整数 数据类型 */
 typedef       unsigned int __VARIABLE__ uint32;
-// 有符号64位整数 数据类型
+// 
+/** @brief 有符号64位整数 数据类型 */
 typedef   signed long long __VARIABLE__ int64;
-// 无符号64位整数 数据类型
+// 
+/** @brief 无符号64位整数 数据类型 */
 typedef unsigned long long __VARIABLE__ uint64;
-// 对象类型（任意类型） 数据类型 指针类型
+// 
+/** @brief 对象类型（任意类型） 数据类型 指针类型 */
 typedef               void __POINTER__  object;
-// 字符串类型 数据类型 指针类型
+// 
+/** @brief 字符串类型 数据类型 指针类型 */
 typedef               char __POINTER__  string;
 
 #ifndef __cplusplus
-// 布尔类型 数据类型
+// 
+/** @brief 布尔类型（C） 数据类型 */
 typedef      unsigned char __VARIABLE__ bool;
 
+/** @brief 布尔类型值 - 真 */
 #define TRUE ((bool)1)
+/** @brief 布尔类型值 - 否 */
 #define FALSE ((bool)0)
 #endif // !__cplusplus }
 
 #pragma endregion
 
-// 定义用于tianyu native的通用id字节长度
+/** @brief 定义用于tianyu native的通用id字节长度 */
 __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 
 #ifdef __cplusplus
@@ -306,6 +333,7 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 #endif // !__cplusplus }
 
 #ifndef __cplusplus
+/** @brief 指针空值（C） */
 #define NULL ((void __POINTER__)0)
 #endif // !__cplusplus }
 
@@ -327,51 +355,70 @@ __DEFAULT__ const int32 __VARIABLE__ dty_native_id_default_size = 16;
 
 #endif // !__DTY_DEV_MODE__
 
-    // 公有访问权标志 指示修饰的函数与属性外部可访问
+/** @brief 公有访问权标志 指示修饰的函数与属性外部可访问 */
 #define __PUB__ public:
-// 私有访问权标志 指示修饰的函数与属性外部不可访问
+// 
+/** @brief 私有访问权标志 指示修饰的函数与属性外部不可访问 */
 #define __PRI__ private:
-// 继承访问权标志 指示修饰的函数与属性子类可访问
+// 
+/** @brief 继承访问权标志 指示修饰的函数与属性子类可访问 */
 #define __PRO__ protected:
 
-// 构造函数返回值替换宏定义
+// 
+/** @brief 构造函数返回值替换宏定义 */
 #define __construction__
-// 复制构造函数返回值替换宏定义
+// 
+/** @brief 复制构造函数返回值替换宏定义 */
 #define __cp_construct__
-// 析构函数返回值替换宏定义
+// 
+/** @brief 析构函数返回值替换宏定义 */
 #define __destruction__
 
-// 纯虚函数后缀
+// 
+/** @brief 纯虚函数后缀 */
 #define __pure_virtual_fun = 0
-// 纯虚常函数后缀
+// 
+/** @brief 纯虚常函数后缀 */
 #define __pure_const_fn const = 0
-// 函数重载
+// 
+/** @brief 函数重载 */
 #define __override_func override
-// 常函数重载
+// 
+/** @brief 常函数重载 */
 #define __override_cfun const override
 
-// 引用类型 标志 用于标识以引用类型保存、传递的属性、变量和参数
+// 
+/** @brief 引用类型 标志 用于标识以引用类型保存、传递的属性、变量和参数 */
 #define __REFERENCE__ &
-// 指针引用类型 标志 用于标识以指针引用类型保存、传递的属性、变量和参数
+// 
+/** @brief 指针引用类型 标志 用于标识以指针引用类型保存、传递的属性、变量和参数 */
 #define __PTRREFER__ *&
 
-// 指针→引用类型转换 标志 用于标识指针类型到引用类型的转换
+// 
+/** @brief 指针→引用类型转换 标志 用于标识指针类型到引用类型的转换 */
 #define __PTR_TO_REF__ *
-// 引用→指针类型转换 标志 用于标识引用类型到指针类型的转换
+// 
+/** @brief 引用→指针类型转换 标志 用于标识引用类型到指针类型的转换 */
 #define __REF_TO_PTR__ &
-// 引用→值类型转换 标志 用于标识引用类型到值类型的转换
+// 
+/** @brief 引用→值类型转换 标志 用于标识引用类型到值类型的转换 */
 #define __REF_TO_VAR__
-// 值→引用类型转换 标志 用于标识值类型到引用类型的转换
+// 
+/** @brief 值→引用类型转换 标志 用于标识值类型到引用类型的转换 */
 #define __VAR_TO_REF__
 
 // abstract class define
+/** @brief 抽象类定义标识符 */
 #define abstract
 // define interface that is an abstract class
+/** @brief 接口类型定义标识符 */
 #define _interface abstract class
 // define the export lable in internal code
+/** @brief 内部导出标签 */
 #define _internal_export
 
 // null value for pointer, must to be used by adding "::" ahead (::null)
+/** @brief 空指针类型值（使用时必须添加 "::" 作为前缀 - "::null"） */
 constexpr auto null = nullptr;
 
 // #################################################################################################
@@ -444,21 +491,107 @@ constexpr auto null = nullptr;
 
 namespace dty
 {
+    /**
+     * @brief 获取一个值指示指定字符串的长度
+     *
+     * @param str 指定的字符串
+     * @return int32 返回字符串长度 （字符串为空时返回0）
+     */
     int32    __VARIABLE__ strlen(const ::string __VARIABLE__ str);
+    /**
+     * @brief 获取一个值，该值指示指定两个字符串的大小关系
+     *
+     * @param s1 字符串1
+     * @param s2 字符串2
+     * @param ignoreCase 指示是否忽略大小写检查（默认检查大小写）
+     * @return int32 返回 0 - 字符串1和字符串2相等 | 1 - 字符串1大于字符串2 | -1 - 字符串1小于字符串2
+     */
     int32    __VARIABLE__ strcmp(const ::string __VARIABLE__ s1, const ::string __VARIABLE__ s2, bool __VARIABLE__ ignoreCase = false);
 }
 
+/**
+ * @brief 将指定字符转换为字符串
+ *
+ * @param ch 指定的字符
+ * @return ::string 返回字符串
+ */
 ::string __VARIABLE__ c2str(char __VARIABLE__ ch);
+/**
+ * @brief 将指定无符号字符转换为字符串
+ *
+ * @param ch 指定的字符
+ * @return ::string 返回字符串
+ */
 ::string __VARIABLE__ uc2str(uchar __VARIABLE__ ch);
+/**
+ * @brief 将指定无符号字节数转换为字符串（10进制转换）
+ *
+ * @param sb 指定的无符号字节数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ sb2str(sbyte __VARIABLE__ sb);
+/**
+ * @brief 将指定有符号字节数转换为字符串（10进制转换）
+ *
+ * @param b 指定的有符号字节数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ b2str(::byte __VARIABLE__ b);
+/**
+ * @brief 将指定无符号16位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的无符号16位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ s2str(int16 __VARIABLE__ s);
+/**
+ * @brief 将指定有符号16位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的有符号16位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ us2str(uint16 __VARIABLE__ us);
+/**
+ * @brief 将指定有符号32位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的有符号32位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ i2str(int32 __VARIABLE__ i);
+/**
+ * @brief 将指定无符号32位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的无符号32位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ ui2str(uint32 __VARIABLE__ ui);
+/**
+ * @brief 将指定有符号64位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的有符号64位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ l2str(int64 __VARIABLE__ l);
+/**
+ * @brief 将指定无符号64位整数转换为字符串（10进制转换）
+ *
+ * @param s 指定的无符号64位整数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ ul2str(uint64 __VARIABLE__ ul);
+/**
+ * @brief 将指定实数转换为字符串（10进制转换）
+ *
+ * @param s 指定的实数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ f2str(float __VARIABLE__ f);
+/**
+ * @brief 将指定双精度浮点数转换为字符串（10进制转换）
+ *
+ * @param s 指定的双精度浮点数
+ * @return ::string 返回等价的字符串
+ */
 ::string __VARIABLE__ d2str(double __VARIABLE__ d);
 
 ::string __VARIABLE__ c2str_f(char __VARIABLE__ ch, const ::string __VARIABLE__ formatter);

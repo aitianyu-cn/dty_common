@@ -57,7 +57,7 @@ namespace dty::collection
             if (0 != arr.Count)
                 (__PTR_TO_VAR__(this->_Reference)) += 1;
         }
-        __PUB__ ~Array()
+        __PUB__ virtual ~Array() __override_func
         {
             if (::null != this->_IteratorEntity)
                 delete this->_IteratorEntity;

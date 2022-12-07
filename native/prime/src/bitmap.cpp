@@ -4,7 +4,6 @@
 
 dty::collection::Bitmap::Bitmap(int64 bitsCount)
     : dty::TianyuObject(),
-    _ArraySize(0),
     _Map(::null),
     _BitsCount(bitsCount),
     Count(_BitsCount)
@@ -12,16 +11,16 @@ dty::collection::Bitmap::Bitmap(int64 bitsCount)
     if (0 >= bitsCount)
         throw dty::except::ArgumentOutOfRangeException();
 
-    this->_ArraySize = bitsCount >> 3;
+    int64 ArraySize = bitsCount >> 3;
     if (0 != (bitsCount & 0b111))
-        this->_ArraySize += 1;
+        ArraySize += 1;
 
-    this->_Map = new byte[this->_ArraySize];
+    dty::SmartPointer<byte> newMap(new byte[ArraySize], ArraySize);
+    this->_Map.Move(newMap);
 }
 
 dty::collection::Bitmap::Bitmap(int64 bitsCount, bool fillState)
     : dty::TianyuObject(),
-    _ArraySize(0),
     _Map(::null),
     _BitsCount(bitsCount),
     Count(_BitsCount)
@@ -29,20 +28,20 @@ dty::collection::Bitmap::Bitmap(int64 bitsCount, bool fillState)
     if (0 >= bitsCount)
         throw dty::except::ArgumentOutOfRangeException();
 
-    this->_ArraySize = bitsCount >> 3;
+    int64 ArraySize = bitsCount >> 3;
     if (0 != (bitsCount & 0b111))
-        this->_ArraySize += 1;
+        ArraySize += 1;
 
-    this->_Map = new byte[this->_ArraySize];
+    dty::SmartPointer<byte> newMap(new byte[ArraySize], ArraySize);
+    this->_Map.Move(newMap);
 
     byte fillValue = fillState ? 0xFF : 0x00;
-    for (int64 i = 0; i < this->_ArraySize; ++i)
+    for (int64 i = 0; i < this->_Map.Size; ++i)
         this->_Map[i] = fillValue;
 }
 
 dty::collection::Bitmap::Bitmap(byte* bits, int32 length, int32 bitsCount, bool copyBits)
     : dty::TianyuObject(),
-    _ArraySize(length),
     _Map(bits),
     _BitsCount(bitsCount),
     Count(_BitsCount)
@@ -62,8 +61,9 @@ dty::collection::Bitmap::Bitmap(byte* bits, int32 length, int32 bitsCount, bool 
 
     if (copyBits)
     {
-        this->_Map = new byte[this->_ArraySize];
-        for (int32 i = 0; i < this->_ArraySize; ++i)
+        dty::SmartPointer<byte> newMap(new byte[length], (int64)length);
+        this->_Map.Move(newMap);
+        for (int32 i = 0; i < this->_Map.Size; ++i)
             this->_Map[i] = bits[i];
     }
 }
@@ -80,7 +80,7 @@ void dty::collection::Bitmap::Fill(bool state)
         return;
 
     byte fillValue = state ? 0xFF : 0x00;
-    for (int64 i = 0; i < this->_ArraySize; ++i)
+    for (int64 i = 0; i < this->_Map.Size; ++i)
         this->_Map[i] = fillValue;
 }
 
@@ -117,12 +117,12 @@ bool dty::collection::Bitmap::Test(int64 bitIndex)
 
 byte* dty::collection::Bitmap::ToBytes(int64& arrayLength, bool copy)
 {
-    arrayLength = this->_ArraySize;
+    arrayLength = this->_Map.Size;
 
     if (!copy)
         return this->_Map;
 
-    byte* copyBits = new byte[this->_ArraySize];
+    byte* copyBits = new byte[arrayLength];
     for (int32 i = 0; i < arrayLength; ++i)
         copyBits[i] = this->_Map[i];
 
