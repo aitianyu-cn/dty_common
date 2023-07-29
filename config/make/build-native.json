@@ -1,6 +1,6 @@
 {
     "libs": {
-        "dty-core": {
+        "tianyu-core": {
             "path": ["native/prime/core", "native"],
             "build": true,
             "type": "static",

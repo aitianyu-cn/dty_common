@@ -1,4 +1,4 @@
 {
-    "src": ["dty-core.cpp", "dty-test-core.cpp"],
-    "header": ["dty-core.hxx"]
+    "src": ["core.cpp", "test-core.cpp"],
+    "header": ["core.hxx", "test-core.hxx", "basic-types.h", "cross-platform.h"]
 }

@@ -1,0 +1,9 @@
+{
+    "TIANYU_CORE": {
+        "defaultOn": true,
+        "description": "天宇核心功能",
+        "depends": [],
+        "version": "0000-00",
+        "require": "0000-00"
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "basic": {
+        "source": ["basic"],
+        "description": [
+            "天宇核心新功能管理组件",
+            "New feature control utilities of Tianyu Core"
+        ],
+        "target": "feature"
+    }
+}
