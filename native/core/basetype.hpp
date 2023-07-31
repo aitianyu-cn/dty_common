@@ -21,8 +21,8 @@
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.boolean?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_BASETYPE_H_PLUS_PLUS__
+#define __TIANYU_COMMON_NATIVE_CORE_BASETYPE_H_PLUS_PLUS__
 
 #ifdef __cplusplus
 
@@ -30,16 +30,16 @@
 #include "./formatter.hpp"
 #include "./property.hpp"
 
-namespace dty
+namespace tianyu
 {
     template<class TB, TB _Max, TB _Min>
     class TIntegerBase final :
-        public virtual dty::TianyuObject,
-        public virtual dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>,
-        public virtual dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>,
-        public virtual dty::IFormatter
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>,
+        public virtual tianyu::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>,
+        public virtual tianyu::IFormatter
     {
-        using CMPR = dty::collection::CompareResult;
+        using CMPR = tianyu::collection::CompareResult;
 
         __PRI__ TB __VARIABLE__ _Value;
 
@@ -116,14 +116,14 @@ namespace dty
     };
 
     class Float final :
-        public virtual dty::TianyuObject,
-        public virtual dty::collection::ICompareable<Float>,
-        public virtual dty::collection::IEquatable<Float>,
-        public virtual dty::IFormatter
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::collection::ICompareable<Float>,
+        public virtual tianyu::collection::IEquatable<Float>,
+        public virtual tianyu::IFormatter
     {
-        using CMPR = dty::collection::CompareResult;
+        using CMPR = tianyu::collection::CompareResult;
 
-        __PUB__ Property<double> __VARIABLE__ Precision;
+        __PUB__ tianyu::Property<double> __VARIABLE__ Precision;
 
         __PRI__ float __VARIABLE__ _Value;
 
@@ -188,14 +188,14 @@ namespace dty
     };
 
     class Double final :
-        public virtual dty::TianyuObject,
-        public virtual dty::collection::ICompareable<Double>,
-        public virtual dty::collection::IEquatable<Double>,
-        public virtual dty::IFormatter
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::collection::ICompareable<Double>,
+        public virtual tianyu::collection::IEquatable<Double>,
+        public virtual tianyu::IFormatter
     {
-        using CMPR = dty::collection::CompareResult;
+        using CMPR = tianyu::collection::CompareResult;
 
-        __PUB__ Property<double> __VARIABLE__ Precision;
+        __PUB__ tianyu::Property<double> __VARIABLE__ Precision;
 
         __PRI__ double __VARIABLE__ _Value;
 
@@ -261,11 +261,11 @@ namespace dty
     };
 
     class Boolean final :
-        public virtual dty::TianyuObject,
-        public virtual dty::collection::IEquatable<Boolean>,
-        public virtual dty::IFormatter
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::collection::IEquatable<Boolean>,
+        public virtual tianyu::IFormatter
     {
-        using CMPR = dty::collection::CompareResult;
+        using CMPR = tianyu::collection::CompareResult;
 
         __PRI__ bool __VARIABLE__ _Value;
 
@@ -321,7 +321,7 @@ namespace dty
 #include <type_traits>
 
 #define __TEMPLATE_DEF__ template<class TB, TB _Max, TB _Min>
-#define __TINTEGER_DEF__ dty::TIntegerBase<TB, _Max, _Min>
+#define __TINTEGER_DEF__ tianyu::TIntegerBase<TB, _Max, _Min>
 
 #define __OPERATOR_OVERRIDE_DEF__(ret, type)                                    \
     __TEMPLATE_DEF__ ret __TINTEGER_DEF__::operator type(__TINTEGER_DEF__& obj) \
@@ -350,36 +350,36 @@ namespace dty
     )
 
 __TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase() :
-    dty::TianyuObject(),
-    dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(),
+    tianyu::TianyuObject(),
+    tianyu::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::IFormatter(),
     _Value()
 {
     __STATIC_ASSERT_DEF__;
 }
 
 __TEMPLATE_DEF__ __construction__ __TINTEGER_DEF__::TIntegerBase(TB value) :
-    dty::TianyuObject(),
-    dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(),
+    tianyu::TianyuObject(),
+    tianyu::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::IFormatter(),
     _Value(value)
 {
     __STATIC_ASSERT_DEF__;
 }
 
 __TEMPLATE_DEF__ __cp_construct__ __TINTEGER_DEF__::TIntegerBase(const __TINTEGER_DEF__& value)
-    : dty::TianyuObject(),
-    dty::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
-    dty::IFormatter(),
+    : tianyu::TianyuObject(),
+    tianyu::collection::ICompareable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::collection::IEquatable<TIntegerBase<TB, _Max, _Min>>(),
+    tianyu::IFormatter(),
     _Value(value._Value)
 { }
 
 __TEMPLATE_DEF__ __destruction__  __TINTEGER_DEF__::~TIntegerBase() { }
 
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(dty::TianyuObject& obj)
+__TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(tianyu::TianyuObject& obj)
 {
     if (this->GetTypeId() != obj.GetTypeId())
         return false;
@@ -388,7 +388,7 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(dty::TianyuObject& obj)
     return this->Equals(cast_obj);
 }
 
-__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator==(dty::TianyuObject& obj)
+__TEMPLATE_DEF__ bool __TINTEGER_DEF__::operator==(tianyu::TianyuObject& obj)
 {
     return this->Equals(obj);
 }
@@ -398,14 +398,14 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::Equals(__TINTEGER_DEF__& obj)
     return this->_Value == obj._Value;
 }
 
-__TEMPLATE_DEF__ dty::collection::CompareResult __TINTEGER_DEF__::CompareTo(__TINTEGER_DEF__& obj)
+__TEMPLATE_DEF__ tianyu::collection::CompareResult __TINTEGER_DEF__::CompareTo(__TINTEGER_DEF__& obj)
 {
     if (this->_Value == obj._Value)
-        return dty::collection::CompareResult::EQUAL;
+        return tianyu::collection::CompareResult::EQUAL;
 
     return this->_Value > obj._Value
-        ? dty::collection::CompareResult::GREAT
-        : dty::collection::CompareResult::LESS;
+        ? tianyu::collection::CompareResult::GREAT
+        : tianyu::collection::CompareResult::LESS;
 }
 
 __TEMPLATE_DEF__ __TINTEGER_DEF__::operator TB()
@@ -462,7 +462,7 @@ __TEMPLATE_DEF__::string __TINTEGER_DEF__::ToString() noexcept
 
 __TEMPLATE_DEF__ uint64 __TINTEGER_DEF__::GetTypeId()
 {
-    return dty::GetType<TB>().Id();
+    return tianyu::GetType<TB>().Id();
 }
 
 __TEMPLATE_DEF__ uint64 __TINTEGER_DEF__::GetHashCode()
@@ -472,14 +472,14 @@ __TEMPLATE_DEF__ uint64 __TINTEGER_DEF__::GetHashCode()
 
 __TEMPLATE_DEF__::string __TINTEGER_DEF__::ToString(const ::string formatter)
 {
-    return dty::FormatHelper::Format(this->_Value, formatter);
+    return tianyu::FormatHelper::Format(this->_Value, formatter);
 }
 
 __TEMPLATE_DEF__ TB __TINTEGER_DEF__::Parse(const ::string s)
 {
     TB value;
 
-    dty::ParseHelper::Parse(s, value);
+    tianyu::ParseHelper::Parse(s, value);
 
     return value;
 }
@@ -488,11 +488,11 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::TryParse(const ::string s, TB& result)
 {
     try
     {
-        dty::ParseHelper::Parse(s, result);
+        tianyu::ParseHelper::Parse(s, result);
 
         return true;
     }
-    catch (const dty::except::Exception&)
+    catch (const tianyu::except::Exception&)
     {
         return false;
     }
@@ -502,11 +502,11 @@ __TEMPLATE_DEF__ bool __TINTEGER_DEF__::TryParse(const ::string s, __TINTEGER_DE
 {
     try
     {
-        dty::ParseHelper::Parse(s, result._Value);
+        tianyu::ParseHelper::Parse(s, result._Value);
 
         return true;
     }
-    catch (const dty::except::Exception&)
+    catch (const tianyu::except::Exception&)
     {
         return false;
     }
@@ -554,30 +554,30 @@ __OPERATOR_EQ_OVERRIDE_DEF__(TB, <<=)
 
 #pragma endregion
 
-namespace dty
+namespace tianyu
 {
-    using Char = dty::TIntegerBase<char, __SIGNED_CHAR_MAX__, __SIGNED_CHAR_MIN__>;
-    using UChar = dty::TIntegerBase<uchar, __UNSIGNED_CHAR_MAX__, __UNSIGNED_CHAR_MIN__>;
+    using Char = tianyu::TIntegerBase<char, __SIGNED_CHAR_MAX__, __SIGNED_CHAR_MIN__>;
+    using UChar = tianyu::TIntegerBase<uchar, __UNSIGNED_CHAR_MAX__, __UNSIGNED_CHAR_MIN__>;
 
-    using Byte = dty::TIntegerBase<byte, __UNSIGNED_CHAR_MAX__, __UNSIGNED_CHAR_MIN__>;
-    using SByte = dty::TIntegerBase<sbyte, __SIGNED_CHAR_MAX__, __SIGNED_CHAR_MIN__>;
+    using Byte = tianyu::TIntegerBase<byte, __UNSIGNED_CHAR_MAX__, __UNSIGNED_CHAR_MIN__>;
+    using SByte = tianyu::TIntegerBase<sbyte, __SIGNED_CHAR_MAX__, __SIGNED_CHAR_MIN__>;
 
-    using Int16 = dty::TIntegerBase<int16, __SIGNED_INT16_MAX__, __SIGNED_INT16_MIN__>;
-    using UInt16 = dty::TIntegerBase<uint16, __UNSIGNED_INT16_MAX__, __UNSIGNED_INT16_MIN__>;
+    using Int16 = tianyu::TIntegerBase<int16, __SIGNED_INT16_MAX__, __SIGNED_INT16_MIN__>;
+    using UInt16 = tianyu::TIntegerBase<uint16, __UNSIGNED_INT16_MAX__, __UNSIGNED_INT16_MIN__>;
 
-    using Short = dty::TIntegerBase<int16, __SIGNED_INT16_MAX__, __SIGNED_INT16_MIN__>;
-    using UShort = dty::TIntegerBase<uint16, __UNSIGNED_INT16_MAX__, __UNSIGNED_INT16_MIN__>;
+    using Short = tianyu::TIntegerBase<int16, __SIGNED_INT16_MAX__, __SIGNED_INT16_MIN__>;
+    using UShort = tianyu::TIntegerBase<uint16, __UNSIGNED_INT16_MAX__, __UNSIGNED_INT16_MIN__>;
 
-    using Int32 = dty::TIntegerBase<int32, __SIGNED_INT32_MAX__, __SIGNED_INT32_MIN__>;
-    using UInt32 = dty::TIntegerBase<uint32, __UNSIGNED_INT32_MAX__, __UNSIGNED_INT32_MIN__>;
+    using Int32 = tianyu::TIntegerBase<int32, __SIGNED_INT32_MAX__, __SIGNED_INT32_MIN__>;
+    using UInt32 = tianyu::TIntegerBase<uint32, __UNSIGNED_INT32_MAX__, __UNSIGNED_INT32_MIN__>;
 
-    using Int64 = dty::TIntegerBase<int64, __SIGNED_INT64_MAX__, __SIGNED_INT64_MIN__>;
-    using UInt64 = dty::TIntegerBase<uint64, __UNSIGNED_INT64_MAX__, __UNSIGNED_INT64_MIN__>;
+    using Int64 = tianyu::TIntegerBase<int64, __SIGNED_INT64_MAX__, __SIGNED_INT64_MIN__>;
+    using UInt64 = tianyu::TIntegerBase<uint64, __UNSIGNED_INT64_MAX__, __UNSIGNED_INT64_MIN__>;
 
-    using Long = dty::TIntegerBase<int64, __SIGNED_INT64_MAX__, __SIGNED_INT64_MIN__>;
-    using ULong = dty::TIntegerBase<uint64, __UNSIGNED_INT64_MAX__, __UNSIGNED_INT64_MIN__>;
+    using Long = tianyu::TIntegerBase<int64, __SIGNED_INT64_MAX__, __SIGNED_INT64_MIN__>;
+    using ULong = tianyu::TIntegerBase<uint64, __UNSIGNED_INT64_MAX__, __UNSIGNED_INT64_MIN__>;
 }
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_BASETYPE_H_PLUS_PLUS__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_BASETYPE_H_PLUS_PLUS__

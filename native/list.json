@@ -1,4 +1,4 @@
 {
-    "src": ["core.cpp", "test-core.cpp"],
+    "src": ["core.cpp", "test-core.cpp", "system-errors.c"],
     "header": ["core.hxx", "test-core.hxx", "basic-types.h", "cross-platform.h"]
 }

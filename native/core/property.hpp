@@ -1,25 +1,26 @@
 /**
- * @file property.hpp(prime/core)
+ * @file property.hpp(core)
  * @author senyun.yao
  * @brief
  * @version 0.1
  * @date 2021-12-16
+ * @date 2023-07-31
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_PROPERTY_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_PROPERTY_H_PLUS_PLUS__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_PROPERTY_H_PLUS_PLUS__
+#define __TIANYU_COMMON_NATIVE_CORE_PROPERTY_H_PLUS_PLUS__
 
 #ifdef __cplusplus
 
 #include "./internal.h"
 
-namespace dty
+namespace tianyu
 {
     template<class T>
-    _interface IPropertyGetter : public virtual dty::TianyuObject
+    _interface IPropertyGetter : public virtual tianyu::TianyuObject
     {
         __PUB__ virtual ~IPropertyGetter() __override_func { }
 
@@ -28,7 +29,7 @@ namespace dty
     };
 
     template<class T>
-    _interface IPropertySetter : public virtual dty::TianyuObject
+    _interface IPropertySetter : public virtual tianyu::TianyuObject
     {
         __PUB__ virtual ~IPropertySetter() __override_func { }
 
@@ -39,17 +40,17 @@ namespace dty
 
     template<class T>
     _interface IProperty
-        : public virtual dty::TianyuObject,
-        public virtual dty::IPropertyGetter<T>,
-        public virtual dty::IPropertySetter<T>
+        : public virtual tianyu::TianyuObject,
+        public virtual tianyu::IPropertyGetter<T>,
+        public virtual tianyu::IPropertySetter<T>
     {
         __PUB__ virtual ~IProperty() __override_func { }
     };
 
     template<class T>
     class Property final :
-        public virtual dty::TianyuObject,
-        public virtual dty::IProperty<T>
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::IProperty<T>
     {
         __PRI__ T __VARIABLE__ _Elem;
 
@@ -71,8 +72,8 @@ namespace dty
 
     template<class T>
     class LProperty final :
-        public virtual dty::TianyuObject,
-        public virtual dty::IProperty<T>
+        public virtual tianyu::TianyuObject,
+        public virtual tianyu::IProperty<T>
     {
         __PUB__ using PropertyGetDelegate = T    __VARIABLE__(__POINTER__)();
         __PUB__ using PropertySetDelegate = void __VARIABLE__(__POINTER__)(T __VARIABLE__ value);
@@ -104,20 +105,20 @@ namespace dty
 // ##########################################################
 
 #define __PROPERTY_TEMPLATE_DEF__ template<class T>
-#define __TPROPERTY_DEF__ dty::Property<T>
-#define __TLPROPERTY_DEF__ dty::LProperty<T>
+#define __TPROPERTY_DEF__ tianyu::Property<T>
+#define __TLPROPERTY_DEF__ tianyu::LProperty<T>
 
 // ####################################################################################################
 // Implementation for Property class
 // ####################################################################################################
 
 __PROPERTY_TEMPLATE_DEF__ __construction__ __TPROPERTY_DEF__::Property() :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     _Elem()
 { }
 
 __PROPERTY_TEMPLATE_DEF__ __construction__ __TPROPERTY_DEF__::Property(T value) :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     _Elem(value)
 { }
 
@@ -145,7 +146,7 @@ __PROPERTY_TEMPLATE_DEF__ T __TPROPERTY_DEF__::operator=(T value)
     return value;
 }
 
-__PROPERTY_TEMPLATE_DEF__ T __TPROPERTY_DEF__::operator=(dty::IPropertyGetter<T>& value)
+__PROPERTY_TEMPLATE_DEF__ T __TPROPERTY_DEF__::operator=(tianyu::IPropertyGetter<T>& value)
 {
     this->_Elem = value;
     return value;
@@ -153,12 +154,12 @@ __PROPERTY_TEMPLATE_DEF__ T __TPROPERTY_DEF__::operator=(dty::IPropertyGetter<T>
 
 __PROPERTY_TEMPLATE_DEF__::string __TPROPERTY_DEF__::ToString() noexcept
 {
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+    return tianyu::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
 __PROPERTY_TEMPLATE_DEF__ uint64 __TPROPERTY_DEF__::GetTypeId()
 {
-    return dty::GetType(__PTR_TO_REF__ this).Id();
+    return tianyu::GetType(__PTR_TO_REF__ this).Id();
 }
 
 __PROPERTY_TEMPLATE_DEF__ uint64 __TPROPERTY_DEF__::GetHashCode()
@@ -175,7 +176,7 @@ __PROPERTY_TEMPLATE_DEF__ __construction__ __TLPROPERTY_DEF__::LProperty
     __TLPROPERTY_DEF__::PropertyGetDelegate getter,
     __TLPROPERTY_DEF__::PropertySetDelegate setter
 ) :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     _Getter(getter),
     _Setter(setter)
 { }
@@ -205,7 +206,7 @@ __PROPERTY_TEMPLATE_DEF__ T __TLPROPERTY_DEF__::operator=(T value)
     return this->_Getter();
 }
 
-__PROPERTY_TEMPLATE_DEF__ T __TLPROPERTY_DEF__::operator=(dty::IPropertyGetter<T>& value)
+__PROPERTY_TEMPLATE_DEF__ T __TLPROPERTY_DEF__::operator=(tianyu::IPropertyGetter<T>& value)
 {
     this->_Setter(value);
 
@@ -214,12 +215,12 @@ __PROPERTY_TEMPLATE_DEF__ T __TLPROPERTY_DEF__::operator=(dty::IPropertyGetter<T
 
 __PROPERTY_TEMPLATE_DEF__::string __TLPROPERTY_DEF__::ToString() noexcept
 {
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+    return tianyu::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
 __PROPERTY_TEMPLATE_DEF__ uint64 __TLPROPERTY_DEF__::GetTypeId()
 {
-    return dty::GetType(__PTR_TO_REF__ this).Id();
+    return tianyu::GetType(__PTR_TO_REF__ this).Id();
 }
 
 __PROPERTY_TEMPLATE_DEF__ uint64 __TLPROPERTY_DEF__::GetHashCode()
@@ -236,4 +237,4 @@ __PROPERTY_TEMPLATE_DEF__ uint64 __TLPROPERTY_DEF__::GetHashCode()
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_PROPERTY_H_PLUS_PLUS__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_PROPERTY_H_PLUS_PLUS__

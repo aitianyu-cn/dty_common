@@ -35,6 +35,12 @@
 // ################################################################
 #pragma endregion
 
+#pragma region Toggle_Part
+// 引用静态核心功能描述文件
+// Includes static Feature Toggle file
+#include "./res/feature/feature_core.h"
+#pragma endregion
+
 #pragma region Cross_platform_Part
 //
 // ################################################################
@@ -63,7 +69,7 @@
 
 #if !defined(__TIANYU_WIN) && !defined(__TIANYU_APF) && !defined(__TIANYU_LINUX)
 #error __TY_CORE_MSG_CONVERT(__ERROR_CPP_TIANYU_PLATFORM_UNKNOWN_OS__)
-#endif // !!defined(__DTY_WIN) && !defined(__DTY_APF) && !defined(__DTY_LNX)
+#endif // !!defined(__TIANYU_WIN) && !defined(__TIANYU_APF) && !defined(__TIANYU_LINUX)
 // ################################################################
 // 平台定义部分结束
 // End
@@ -145,7 +151,7 @@ namespace tianyu
      *
      * @warning Pay attention: MUST to release the return value before it is discarded.
      */
-    __PREDEFINE__ template<typename T> ::string __VARIABLE__ _dty_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept;
+    __PREDEFINE__ template<typename T> ::string __VARIABLE__ _tianyu_native_cpp_default_to_string(T __REFERENCE__ obj) noexcept;
 
     /**
      * @brief Tianyu Type Operation Object
@@ -173,7 +179,7 @@ namespace tianyu
 
         friend Type<T>  __VARIABLE__ GetType<T>();
         friend Type<T>  __VARIABLE__ GetType<T>(T __REFERENCE__ obj);
-        friend ::string __VARIABLE__ _dty_native_cpp_default_to_string<T>(T __REFERENCE__ obj) noexcept;
+        friend ::string __VARIABLE__ _tianyu_native_cpp_default_to_string<T>(T __REFERENCE__ obj) noexcept;
     };
 
     /**
@@ -242,7 +248,7 @@ namespace tianyu
 #pragma region implementation_tianyu_type
 
 #define __TEMPLATE_DEF__ template<typename T>
-#define __DTY_TYPE_DEF__ tianyu::Type<T>
+#define __TY_TYPE_DEF__  tianyu::Type<T>
 #define __GET_TYPE_DEF__ tianyu::GetType
 
 #ifdef __GNUC__
@@ -251,11 +257,11 @@ namespace tianyu
 
 #include <typeinfo>
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
+__TEMPLATE_DEF__ __TY_TYPE_DEF__ __GET_TYPE_DEF__()
 {
     ::string sourceName = const_cast<::string>(typeid(T).name());
 
-    __DTY_TYPE_DEF__ type;
+    __TY_TYPE_DEF__ type;
 #ifdef __GNUC__
     int32 status;
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
@@ -280,11 +286,11 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__()
     return type;
 }
 
-__TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
+__TEMPLATE_DEF__ __TY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
 {
     ::string sourceName = const_cast<::string>(typeid(T).name());
 
-    __DTY_TYPE_DEF__ type((uint64)(__REF_TO_PTR__ obj));
+    __TY_TYPE_DEF__ type((uint64)(__REF_TO_PTR__ obj));
 #ifdef __GNUC__
     int32 status;
     ::string demangled_name = abi::__cxa_demangle(sourceName, NULL, NULL, __VAR_TO_PTR__ status);
@@ -309,9 +315,9 @@ __TEMPLATE_DEF__ __DTY_TYPE_DEF__ __GET_TYPE_DEF__(T& obj)
     return type;
 }
 
-__TEMPLATE_DEF__::string tianyu::_dty_native_cpp_default_to_string(T& obj) noexcept
+__TEMPLATE_DEF__::string tianyu::_tianyu_native_cpp_default_to_string(T& obj) noexcept
 {
-    __DTY_TYPE_DEF__ otype = __GET_TYPE_DEF__(obj);
+    __TY_TYPE_DEF__ otype = __GET_TYPE_DEF__(obj);
     ::string str = otype._Name;
 
     otype._Name = ::null;
@@ -323,55 +329,55 @@ __TEMPLATE_DEF__::string tianyu::_dty_native_cpp_default_to_string(T& obj) noexc
 // Implementation for Type class
 //#######################################################################################
 
-__TEMPLATE_DEF__ bool __DTY_TYPE_DEF__::_dummy = false;
+__TEMPLATE_DEF__ bool __TY_TYPE_DEF__::_dummy = false;
 
-__TEMPLATE_DEF__ __construction__ __DTY_TYPE_DEF__::Type()
+__TEMPLATE_DEF__ __construction__ __TY_TYPE_DEF__::Type()
     : _Name(::null),
     _Id(0ULL),
     _InstanceHash(0ULL)
 { }
 
-__TEMPLATE_DEF__ __construction__ __DTY_TYPE_DEF__::Type(uint64 instance)
+__TEMPLATE_DEF__ __construction__ __TY_TYPE_DEF__::Type(uint64 instance)
     : _Name(::null),
     _Id(0ULL),
     _InstanceHash(instance)
 { }
 
-__TEMPLATE_DEF__ __cp_construct__ __DTY_TYPE_DEF__::Type(const __DTY_TYPE_DEF__& other)
+__TEMPLATE_DEF__ __cp_construct__ __TY_TYPE_DEF__::Type(const __TY_TYPE_DEF__& other)
     : _Name(::null),
     _Id(other._Id),
     _InstanceHash(other._InstanceHash)
 {
-    __DTY_TYPE_DEF__& copy = const_cast<__DTY_TYPE_DEF__&>(other);
+    __TY_TYPE_DEF__& copy = const_cast<__TY_TYPE_DEF__&>(other);
     this->_Name = copy._Name;
 
     copy._Name = ::null;
 }
 
-__TEMPLATE_DEF__ __destruction__  __DTY_TYPE_DEF__::~Type()
+__TEMPLATE_DEF__ __destruction__  __TY_TYPE_DEF__::~Type()
 {
     if (::null != this->_Name)
         delete [](this->_Name);
 }
 
-__TEMPLATE_DEF__::string __DTY_TYPE_DEF__::Name() const
+__TEMPLATE_DEF__::string __TY_TYPE_DEF__::Name() const
 {
     return this->_Name;
 }
 
-__TEMPLATE_DEF__ uint64 __DTY_TYPE_DEF__::Id()
+__TEMPLATE_DEF__ uint64 __TY_TYPE_DEF__::Id()
 {
     return this->_Id;
 }
 
-__TEMPLATE_DEF__ uint64 __DTY_TYPE_DEF__::InstanceHashCode()
+__TEMPLATE_DEF__ uint64 __TY_TYPE_DEF__::InstanceHashCode()
 {
     return this->_InstanceHash;
 }
 
 // to cancel the macro definitions
 #undef __TEMPLATE_DEF__
-#undef __DTY_TYPE_DEF__
+#undef __TY_TYPE_DEF__
 #undef __GET_TYPE_DEF__
 
 #pragma endregion

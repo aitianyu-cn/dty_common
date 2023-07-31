@@ -32,14 +32,14 @@
    // Check for 64bit OS
 #ifdef _WIN64
 /**
- * @brief 定义__DTY_WIN描述当前系统为：微软 Windows
- * @brief Define __DTY_WIN to describe current system is: Microsoft Windows
+ * @brief 定义__TIANYU_WIN描述当前系统为：微软 Windows
+ * @brief Define __TIANYU_WIN to describe current system is: Microsoft Windows
  */
 #define __TIANYU_WIN 1
 #else
 /**
- * @brief 定义__DTY_ERR_64设置错误状态：当前系统需要64bit环境
- * @brief Define __DTY_ERR_64 to set error state: 64bit OS is required
+ * @brief 定义__TIANYU_ERROR_PLATFORM_WIN32设置错误状态：当前系统需要64bit环境
+ * @brief Define __TIANYU_ERROR_PLATFORM_WIN32 to set error state: 64bit OS is required
  */
 #define __TIANYU_PLATFORM_ERROR 1
 #define __TIANYU_ERROR_PLATFORM_WIN32 1
@@ -52,8 +52,8 @@
 */
 #if defined(__APPLE__) || defined(__MACH__)
 /**
- * @brief 定义__DTY_APF描述当前系统为：Apple 系列操作系统
- * @brief Define __DTY_APF to describe current system is: Apple Operations
+ * @brief 定义__TIANYU_APF描述当前系统为：Apple 系列操作系统
+ * @brief Define __TIANYU_APF to describe current system is: Apple Operations
  */
 #define __TIANYU_APF 1
  // 导入MacOS信息头文件
@@ -76,7 +76,7 @@
     * @brief 当前系统为Apple MacOS
     * @brief Current system is Apple OS for Mac
     */
-#define __DTY_APPLE_MAC 1
+#define __TIANYU_APPLE_MAC 1
 #else
    /**
     * @brief 未知的Apple系统平台
@@ -94,14 +94,14 @@
 #if defined(__linux__) || defined(__gnu_linux__)
 #if defined(__LP64__) || defined(__x86_64__) || defined(__amd64)
      /**
-      * @brief 定义__DTY_LNX描述当前系统为：Linux系列
-      * @brief Define __DTY_LNX to describe current system is: Linux Serials System
+      * @brief 定义__TIANYU_LINUX描述当前系统为：Linux系列
+      * @brief Define __TIANYU_LINUX to describe current system is: Linux Serials System
       */
 #define __TIANYU_LINUX 1
 #else
      /**
-      * @brief 定义__DTY_ERR_64设置错误状态：当前系统需要64bit环境
-      * @brief Define __DTY_ERR_64 to set error state: 64bit OS is required
+      * @brief 定义__TIANYU_ERROR_PLATFORM_LNX32设置错误状态：当前系统需要64bit环境
+      * @brief Define __TIANYU_ERROR_PLATFORM_LNX32 to set error state: 64bit OS is required
       */
 #define __TIANYU_PLATFORM_ERROR 1
 #define __TIANYU_ERROR_PLATFORM_LNX32 1

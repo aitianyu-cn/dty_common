@@ -1,26 +1,27 @@
 /**
- * @file error.hpp(prime/core)
+ * @file error.hpp(core)
  * @author senyun.yao
  * @brief
  * @version 0.1
  * @date 2021-12-16
+ * @date 2023-07-31
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_ERROR_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_ERROR_H_PLUS_PLUS__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_ERROR_H_PLUS_PLUS__
+#define __TIANYU_COMMON_NATIVE_CORE_ERROR_H_PLUS_PLUS__
 
 #ifdef __cplusplus
 
 #include "./internal.h"
 #include <exception>
 
-namespace dty::except
+namespace tianyu::except
 {
     class Exception :
-        public virtual dty::TianyuObject,
+        public virtual tianyu::TianyuObject,
         public virtual std::exception,
         public virtual collection::IEquatable<Exception>,
         public virtual collection::ICompareable<Exception>
@@ -150,4 +151,4 @@ namespace dty::except
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_ERROR_H_PLUS_PLUS__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_ERROR_H_PLUS_PLUS__

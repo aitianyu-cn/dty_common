@@ -1,34 +1,35 @@
 /**
- * @file internal.h(prime/core)
+ * @file internal.h(core)
  * @author senyun.yao
  * @brief C++ 本地方法导出模块（公共模块）
  * @brief native export module, common module
  *
  * @version 0.1
  * @date 2021-12-02
+ * @date 2023-07-31
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
  * @link https://docs.microsoft.com/zh-cn/dotnet/api/system.random?view=net-6.0
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_INTERNAL_H__
+#define __TIANYU_COMMON_NATIVE_CORE_INTERNAL_H__
 
 #ifdef __cplusplus
 
-#include "../../dty-core.hxx"
+#include "../core.hxx"
 
-namespace dty
+namespace tianyu
 {
-    _interface IObjectConverter : public virtual dty::TianyuObject
+    _interface IObjectConverter : public virtual tianyu::TianyuObject
     {
         __PUB__ virtual ~IObjectConverter() { }
 
         __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize)                                __pure_virtual_fun;
         __PUB__ virtual object __VARIABLE__ TryConvert(::byte __POINTER__ obj, int32 __VARIABLE__ objSize, int32 __VARIABLE__ startIndex) __pure_virtual_fun;
     };
-    _interface IStringConverter : public virtual dty::TianyuObject
+    _interface IStringConverter : public virtual tianyu::TianyuObject
     {
         __PUB__ virtual ~IStringConverter() { }
 
@@ -37,7 +38,7 @@ namespace dty
     };
 
     template<typename _Key, typename _Val>
-    class KeyValuePair final : public virtual dty::TianyuObject
+    class KeyValuePair final : public virtual tianyu::TianyuObject
     {
         __PUB__ _Key __VARIABLE__ Key;
         __PUB__ _Val __VARIABLE__ Value;
@@ -61,7 +62,7 @@ namespace dty
         };
 
         template<class Elem>
-        _interface IEquatable : public virtual dty::TianyuObject
+        _interface IEquatable : public virtual tianyu::TianyuObject
         {
             __PUB__         IEquatable() : TianyuObject() { }
             __PUB__ virtual ~IEquatable() __override_func { };
@@ -72,9 +73,9 @@ namespace dty
         };
 
         template<class Elem>
-        _interface ICompareable : public virtual dty::TianyuObject
+        _interface ICompareable : public virtual tianyu::TianyuObject
         {
-            using CPRT = dty::collection::CompareResult;
+            using CPRT = tianyu::collection::CompareResult;
 
             __PUB__         ICompareable() : TianyuObject() { }
             __PUB__ virtual ~ICompareable() __override_func { };
@@ -366,10 +367,10 @@ namespace dty
 #include <type_traits>
 
 #define __TEMPLATE_DEF__ template<typename K, typename V>
-#define __KEY_VAL_DEF__ dty::KeyValuePair<K, V>
+#define __KEY_VAL_DEF__ tianyu::KeyValuePair<K, V>
 
 __TEMPLATE_DEF__ __construction__ __KEY_VAL_DEF__::KeyValuePair(K key, V val) :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     Key(key),
     Value(val)
 {
@@ -377,7 +378,7 @@ __TEMPLATE_DEF__ __construction__ __KEY_VAL_DEF__::KeyValuePair(K key, V val) :
 }
 
 __TEMPLATE_DEF__ __cp_construct__ __KEY_VAL_DEF__::KeyValuePair(const __KEY_VAL_DEF__& other) :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     Key(other.Key),
     Value(other.Value)
 { }
@@ -386,12 +387,12 @@ __TEMPLATE_DEF__ __destruction__  __KEY_VAL_DEF__::~KeyValuePair() { }
 
 __TEMPLATE_DEF__::string __KEY_VAL_DEF__::ToString() noexcept
 {
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+    return tianyu::_tianyu_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
 __TEMPLATE_DEF__ uint64 __KEY_VAL_DEF__::GetTypeId()
 {
-    return dty::GetType(__PTR_TO_REF__ this).Id();
+    return tianyu::GetType(__PTR_TO_REF__ this).Id();
 }
 
 __TEMPLATE_DEF__ uint64 __KEY_VAL_DEF__::GetHashCode()
@@ -407,4 +408,4 @@ __TEMPLATE_DEF__ uint64 __KEY_VAL_DEF__::GetHashCode()
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_INTERNAL_H__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_INTERNAL_H__

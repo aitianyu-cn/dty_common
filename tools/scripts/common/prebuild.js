@@ -1,9 +1,10 @@
 /**@format */
 
-const definition = require("./define");
+const definition = require("../common/define");
 
 // pre-jobs import
 const buildI18n = require("./i18n");
+const buildFeature = require("./features");
 
 module.exports.run = async function () {
     const aPrePromises = [];
@@ -12,6 +13,7 @@ module.exports.run = async function () {
     console.log(`\x1B[36m`);
 
     aPrePromises.push(buildI18n.build(definition.BUILD_LANGUAGE));
+    aPrePromises.push(buildFeature.build());
 
     return new Promise((resolve, reject) => {
         Promise.all(aPrePromises).then(

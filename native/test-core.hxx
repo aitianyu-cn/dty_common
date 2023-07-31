@@ -39,7 +39,7 @@ namespace tianyu::test
     };
 
     // ####################################################################################
-    // dty test core
+    // tianyu test core
     // used to define base structures and functions
     // ####################################################################################
     namespace core
@@ -374,10 +374,6 @@ namespace tianyu::test
         __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, const ::string __VARIABLE__ description, TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ EndRecord();
     };
-
-    constexpr int32 _dty_test_entity_fail_param_too_few = -1;
-    constexpr int32 _dty_test_entity_fail_param_pre_more = -2;
-    constexpr int32 _dty_test_entity_fail_file_open = -3;
 }
 
 #pragma region template function implementation
@@ -519,15 +515,15 @@ using N = const ::string;
         {                                                                                               \
             switch (err)                                                                                \
             {                                                                                           \
-                case tianyu::test::_dty_test_entity_fail_param_too_few:                                 \
+                case tianyu::test::_tianyu_test_entity_fail_param_too_few:                              \
                     std::cout << __TY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_AT_LEAST_ONE_PARAM__)          \
                               << std::endl;                                                             \
                     break;                                                                              \
-                case tianyu::test::_dty_test_entity_fail_param_pre_more:                                \
+                case tianyu::test::_tianyu_test_entity_fail_param_pre_more:                             \
                     std::cout << __TY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_WRONG_PARAM_PRE___)            \
                               << std::endl;                                                             \
                     break;                                                                              \
-                case tianyu::test::_dty_test_entity_fail_file_open:                                     \
+                case tianyu::test::_tianyu_test_entity_fail_file_open:                                  \
                     std::cout << __TY_CORE_MSG_CONVERT(__ERROR_CPP_DTEST_FILE_OPEN_FAILED__)            \
                               << std::endl;                                                             \
                     break;                                                                              \

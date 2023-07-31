@@ -123,7 +123,8 @@
         "xhash": "cpp",
         "*.tcc": "cpp",
         "memory_resource": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "core.hxx": "c"
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,

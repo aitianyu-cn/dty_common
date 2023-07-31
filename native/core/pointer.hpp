@@ -1,26 +1,27 @@
 /**
- * @file pointer.hpp(prime/core)
+ * @file pointer.hpp(core)
  * @author senyun.yao
  * @brief 用于天宇平台的智能指针，提供较为安全的指针类型操作
  * @brief Smart Pointer designed for Tianyu Platform to provide little more safe pointer operations.
  * @version 0.1
  * @date 2021-11-18
+ * @date 2023-07-31
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_POINTER_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_POINTER_H_PLUS_PLUS__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_POINTER_H_PLUS_PLUS__
+#define __TIANYU_COMMON_NATIVE_CORE_POINTER_H_PLUS_PLUS__
 
 #include "./internal.h"
 #include "./error.hpp"
 #include "./property.hpp"
 
-namespace dty
+namespace tianyu
 {
     template<typename T>
-    class SmartPointer : public virtual dty::TianyuObject
+    class SmartPointer : public virtual tianyu::TianyuObject
     {
 #pragma region Tianyu SmartPointer Internal Block
         //
@@ -96,11 +97,11 @@ namespace dty
 // ##########################################################
 
 #define __TEMPLATE_DEF__ template<typename T>
-#define __DTY_SPTR_DEF__ dty::SmartPointer<T>
+#define __TY_SPTR_DEF__ tianyu::SmartPointer<T>
 
 #pragma region Tianyu SmartPointer Internal Block
 
-__TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Release()
+__TEMPLATE_DEF__ void __TY_SPTR_DEF__::Release()
 {
     if (::null == this->_Pointer)
         return;
@@ -113,7 +114,7 @@ __TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Release()
         delete [] this->_Pointer;
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsSame(__DTY_SPTR_DEF__& sp)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::IsSame(__TY_SPTR_DEF__& sp)
 {
     // 检查是否为相同对象
     if (this->_Pointer == sp._Pointer)
@@ -131,66 +132,66 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsSame(__DTY_SPTR_DEF__& sp)
 
 #pragma endregion
 
-__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer() :
-    dty::TianyuObject(),
-    _SmartPointerType(__DTY_SPTR_DEF__::SPType::STRONG),
+__TEMPLATE_DEF__ __construction__ __TY_SPTR_DEF__::SmartPointer() :
+    tianyu::TianyuObject(),
+    _SmartPointerType(__TY_SPTR_DEF__::SPType::STRONG),
     _Pointer(::null),
     _Size(0),
     Size(_Size)
 { }
 
-__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer) :
-    dty::TianyuObject(),
+__TEMPLATE_DEF__ __construction__ __TY_SPTR_DEF__::SmartPointer(T* pointer) :
+    tianyu::TianyuObject(),
     _Size(),
     Size(_Size)
 {
     if (::null == pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     // create a strong pointer in default.
-    this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::STRONG;
+    this->_SmartPointerType = __TY_SPTR_DEF__::SPType::STRONG;
     this->_Pointer = pointer;
     this->_Size = 1;
 }
 
-__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size) :
-    dty::TianyuObject(),
+__TEMPLATE_DEF__ __construction__ __TY_SPTR_DEF__::SmartPointer(T* pointer, int64 size) :
+    tianyu::TianyuObject(),
     _Size(),
     Size(_Size)
 {
     if (::null == pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     if (0 >= size)
-        throw dty::except::IndexOutOfRangeException();
+        throw tianyu::except::IndexOutOfRangeException();
 
     // create a strong pointer in default.
-    this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::STRONG;
+    this->_SmartPointerType = __TY_SPTR_DEF__::SPType::STRONG;
     this->_Pointer = pointer;
     this->_Size = size;
 }
 
-__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, bool weak) :
-    __DTY_SPTR_DEF__(pointer)
+__TEMPLATE_DEF__ __construction__ __TY_SPTR_DEF__::SmartPointer(T* pointer, bool weak) :
+    __TY_SPTR_DEF__(pointer)
 {
     // To reset pointer type only if weak is true
     if (weak)
-        this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
+        this->_SmartPointerType = __TY_SPTR_DEF__::SPType::WEAK;
 }
 
-__TEMPLATE_DEF__ __construction__ __DTY_SPTR_DEF__::SmartPointer(T* pointer, int64 size, bool weak) :
-    __DTY_SPTR_DEF__(pointer, size)
+__TEMPLATE_DEF__ __construction__ __TY_SPTR_DEF__::SmartPointer(T* pointer, int64 size, bool weak) :
+    __TY_SPTR_DEF__(pointer, size)
 {
     // To reset pointer type only if weak is true
     if (weak)
-        this->_SmartPointerType = __DTY_SPTR_DEF__::SPType::WEAK;
+        this->_SmartPointerType = __TY_SPTR_DEF__::SPType::WEAK;
 }
 
-__TEMPLATE_DEF__ __cp_construct__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPTR_DEF__& sp) :
+__TEMPLATE_DEF__ __cp_construct__ __TY_SPTR_DEF__::SmartPointer(const __TY_SPTR_DEF__& sp) :
     // to copy a weak smart pointer by copy constructor only when in __DTY_SMART_POINTER_COPY_WEAK_MODE__
     // and in __DTY_UNSAFE_MODE__ mode
 #if defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
-    _SmartPointerType(__DTY_SPTR_DEF__::SPType::WEAK),
+    _SmartPointerType(__TY_SPTR_DEF__::SPType::WEAK),
     _Pointer(sp._Pointer),
     _Size(sp._Size),
     Size(_Size)
@@ -205,35 +206,35 @@ __TEMPLATE_DEF__ __cp_construct__ __DTY_SPTR_DEF__::SmartPointer(const __DTY_SPT
 {
     // move pointer from source pointer only when it is strong pointer
     // weak pointer just to copy
-    if (__DTY_SPTR_DEF__::SPType::STRONG == sp._SmartPointerType)
+    if (__TY_SPTR_DEF__::SPType::STRONG == sp._SmartPointerType)
     {
         // unsafe mode should change const to normal reference
         // --dty-cpp-lint: unsafe-convert-constRef_to_Ref
-        __DTY_SPTR_DEF__& spMove = const_cast<__DTY_SPTR_DEF__&>(sp);
+        __TY_SPTR_DEF__& spMove = const_cast<__TY_SPTR_DEF__&>(sp);
         spMove._Pointer = ::null;
         spMove._Size = 0;
     }
 }
 #endif // !defined(__DTY_SMART_POINTER_COPY_WEAK_MODE__) && defined(__DTY_UNSAFE_MODE__)
 
-__TEMPLATE_DEF__ __destruction__  __DTY_SPTR_DEF__::~SmartPointer()
+__TEMPLATE_DEF__ __destruction__  __TY_SPTR_DEF__::~SmartPointer()
 {
     // to release pointer only when the current instance is strong type
-    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType)
+    if (__TY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType)
         this->Release();
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::IsNull()
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::IsNull()
 {
     return ::null == this->_Pointer;
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__::operator T* ()
+__TEMPLATE_DEF__ __TY_SPTR_DEF__::operator T* ()
 {
     return this->_Pointer;
 }
 
-__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::operator &()
+__TEMPLATE_DEF__ uint64 __TY_SPTR_DEF__::operator &()
 {
     if (this->IsNull())
         return 0ULL;
@@ -241,53 +242,53 @@ __TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::operator &()
     return (uint64)(this->_Pointer);
 }
 
-__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator *()
+__TEMPLATE_DEF__ T& __TY_SPTR_DEF__::operator *()
 {
     if (::null == this->_Pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     return __PTR_TO_REF__(this->_Pointer);
 }
 
-__TEMPLATE_DEF__ T* __DTY_SPTR_DEF__::operator ->()
+__TEMPLATE_DEF__ T* __TY_SPTR_DEF__::operator ->()
 {
     if (::null == this->_Pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     return this->_Pointer;
 }
 
-__TEMPLATE_DEF__ T* __DTY_SPTR_DEF__::operator ->() const
+__TEMPLATE_DEF__ T* __TY_SPTR_DEF__::operator ->() const
 {
     if (::null == this->_Pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     return this->_Pointer;
 }
 
-__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator[] (int64 index)
+__TEMPLATE_DEF__ T& __TY_SPTR_DEF__::operator[] (int64 index)
 {
     if (::null == this->_Pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     if (0 > index || this->_Size <= index)
-        throw dty::except::ArgumentOutOfRangeException();
+        throw tianyu::except::ArgumentOutOfRangeException();
 
     return (this->_Pointer)[index];
 }
 
-__TEMPLATE_DEF__ T& __DTY_SPTR_DEF__::operator[] (int64 index) const
+__TEMPLATE_DEF__ T& __TY_SPTR_DEF__::operator[] (int64 index) const
 {
     if (::null == this->_Pointer)
-        throw dty::except::NullPointerException();
+        throw tianyu::except::NullPointerException();
 
     if (0 > index || this->_Size <= index)
-        throw dty::except::ArgumentOutOfRangeException();
+        throw tianyu::except::ArgumentOutOfRangeException();
 
     return (this->_Pointer)[index];
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(__DTY_SPTR_DEF__& other)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::operator==(__TY_SPTR_DEF__& other)
 {
     try
     {
@@ -300,7 +301,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(__DTY_SPTR_DEF__& other)
 
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(__DTY_SPTR_DEF__& other)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::operator!=(__TY_SPTR_DEF__& other)
 {
     try
     {
@@ -313,7 +314,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(__DTY_SPTR_DEF__& other)
 
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(T other)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::operator==(T other)
 {
     try
     {
@@ -326,7 +327,7 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator==(T other)
 
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(T other)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::operator!=(T other)
 {
     try
     {
@@ -339,17 +340,17 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::operator!=(T other)
 
 }
 
-__TEMPLATE_DEF__ __DTY_SPTR_DEF__ __DTY_SPTR_DEF__::GetWeak()
+__TEMPLATE_DEF__ __TY_SPTR_DEF__ __TY_SPTR_DEF__::GetWeak()
 {
     return SmartPointer<T>(this->_Pointer, this->_Size, true);
 }
 
-__TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Copy(const __DTY_SPTR_DEF__& sp)
+__TEMPLATE_DEF__ void __TY_SPTR_DEF__::Copy(const __TY_SPTR_DEF__& sp)
 {
     if (this->_Pointer == sp._Pointer)
         return;
 
-    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
+    if (__TY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
     {
         if (1 < this->_Size)
             delete [] this->_Pointer;
@@ -362,15 +363,15 @@ __TEMPLATE_DEF__ void __DTY_SPTR_DEF__::Copy(const __DTY_SPTR_DEF__& sp)
     this->_Size = sp._Size;
 }
 
-__TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::Move(__DTY_SPTR_DEF__& sp)
+__TEMPLATE_DEF__ bool __TY_SPTR_DEF__::Move(__TY_SPTR_DEF__& sp)
 {
-    if (__DTY_SPTR_DEF__::SPType::STRONG != sp._SmartPointerType)
+    if (__TY_SPTR_DEF__::SPType::STRONG != sp._SmartPointerType)
         return false;
 
     if (this->_Pointer == sp._Pointer)
         return false;
 
-    if (__DTY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
+    if (__TY_SPTR_DEF__::SPType::STRONG == this->_SmartPointerType && ::null != this->_Pointer)
     {
         if (1 < this->_Size)
             delete [] this->_Pointer;
@@ -388,28 +389,28 @@ __TEMPLATE_DEF__ bool __DTY_SPTR_DEF__::Move(__DTY_SPTR_DEF__& sp)
     return true;
 }
 
-__TEMPLATE_DEF__::string __DTY_SPTR_DEF__::ToString() noexcept
+__TEMPLATE_DEF__::string __TY_SPTR_DEF__::ToString() noexcept
 {
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+    return tianyu::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
-__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::GetTypeId()
+__TEMPLATE_DEF__ uint64 __TY_SPTR_DEF__::GetTypeId()
 {
-    return dty::GetType(__PTR_TO_REF__ this).Id();
+    return tianyu::GetType(__PTR_TO_REF__ this).Id();
 }
 
-__TEMPLATE_DEF__ uint64 __DTY_SPTR_DEF__::GetHashCode()
+__TEMPLATE_DEF__ uint64 __TY_SPTR_DEF__::GetHashCode()
 {
     return (uint64)(this->_Pointer);
 }
 
 // to cancel the macro definitions
 #undef __TEMPLATE_DEF__
-#undef __DTY_SPTR_DEF__
+#undef __TY_SPTR_DEF__
 
 #pragma endregion
 
-namespace dty
+namespace tianyu
 {
 #pragma region Pre-define default safe pointer
     using byte_ptr = SmartPointer<byte>;
@@ -423,4 +424,4 @@ namespace dty
 #pragma endregion
 }
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_POINTER_H_PLUS_PLUS__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_POINTER_H_PLUS_PLUS__

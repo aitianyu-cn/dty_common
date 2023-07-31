@@ -138,43 +138,43 @@ __CMODE__
     // 
     /** @brief 无符号字符 数据类型 */
     typedef      unsigned char __VARIABLE__ uchar;
-    // 
-    /** @brief 有符号字节 数据类型 */
-    typedef        signed char __VARIABLE__ sbyte;
-    // 
-    /** @brief 无符号字节 数据类型 */
-    typedef      unsigned char __VARIABLE__ byte;
-    // 
-    /** @brief 有符号16位整数 数据类型 */
-    typedef       signed short __VARIABLE__ int16;
-    // 
-    /** @brief 无符号16位整数 数据类型 */
-    typedef     unsigned short __VARIABLE__ uint16;
-    // 
-    /** @brief 有符号32位整数 数据类型 */
-    typedef         signed int __VARIABLE__ int32;
-    // 
-    /** @brief 无符号32位整数 数据类型 */
-    typedef       unsigned int __VARIABLE__ uint32;
-    // 
-    /** @brief 有符号64位整数 数据类型 */
-    typedef   signed long long __VARIABLE__ int64;
-    // 
-    /** @brief 无符号64位整数 数据类型 */
-    typedef unsigned long long __VARIABLE__ uint64;
-    // 
-    /** @brief 对象类型（任意类型） 数据类型 指针类型 */
-    typedef               void __POINTER__  object;
-    // 
-    /** @brief 字符串类型 数据类型 指针类型 */
-    typedef               char __POINTER__  string;
+// 
+/** @brief 有符号字节 数据类型 */
+typedef        signed char __VARIABLE__ sbyte;
+// 
+/** @brief 无符号字节 数据类型 */
+typedef      unsigned char __VARIABLE__ byte;
+// 
+/** @brief 有符号16位整数 数据类型 */
+typedef       signed short __VARIABLE__ int16;
+// 
+/** @brief 无符号16位整数 数据类型 */
+typedef     unsigned short __VARIABLE__ uint16;
+// 
+/** @brief 有符号32位整数 数据类型 */
+typedef         signed int __VARIABLE__ int32;
+// 
+/** @brief 无符号32位整数 数据类型 */
+typedef       unsigned int __VARIABLE__ uint32;
+// 
+/** @brief 有符号64位整数 数据类型 */
+typedef   signed long long __VARIABLE__ int64;
+// 
+/** @brief 无符号64位整数 数据类型 */
+typedef unsigned long long __VARIABLE__ uint64;
+// 
+/** @brief 对象类型（任意类型） 数据类型 指针类型 */
+typedef               void __POINTER__  object;
+// 
+/** @brief 字符串类型 数据类型 指针类型 */
+typedef               char __POINTER__  string;
 
 #ifndef __cplusplus
-    // 
-    /** @brief 布尔类型（C） 数据类型 */
-    typedef      unsigned char __VARIABLE__ bool;
+// 
+/** @brief 布尔类型（C） 数据类型 */
+typedef      unsigned char __VARIABLE__ bool;
 
-    /** @brief 布尔类型值 - 真 */
+/** @brief 布尔类型值 - 真 */
 #define TRUE ((bool)1)
     /** @brief 布尔类型值 - 否 */
 #define FALSE ((bool)0)
@@ -200,7 +200,7 @@ __CMODE__
 // Handle Version of Cpp
 #ifndef __TIANYU_DEV_MODE__
 #if __cplusplus < 201700L
-#define __TIANYU_CPP_ENV_LOW
+#define __TIANYU_CPP_ENV_LOW 1
 #endif // !__cplusplus < 201700L
 #endif // !__TIANYU_DEV_MODE__
 

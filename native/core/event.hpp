@@ -1,25 +1,26 @@
 /**
- * @file event.hpp(prime/core)
+ * @file event.hpp(core)
  * @author senyun.yao
  * @brief
  * @version 0.1
  * @date 2021-12-16
+ * @date 2023-07-31
  *
  * @copyright aitianyu.cn Copyright (c) 2021
  *
  */
 
-#ifndef __DTY_COMMON_NATIVE_PRIME_CORE_EVENT_H_PLUS_PLUS__
-#define __DTY_COMMON_NATIVE_PRIME_CORE_EVENT_H_PLUS_PLUS__
+#ifndef __TIANYU_COMMON_NATIVE_CORE_EVENT_H_PLUS_PLUS__
+#define __TIANYU_COMMON_NATIVE_CORE_EVENT_H_PLUS_PLUS__
 
 #ifdef __cplusplus
 
 #include "./internal.h"
 #include "./property.hpp"
 
-namespace dty
+namespace tianyu
 {
-    class EventArgs : public virtual dty::TianyuObject
+    class EventArgs : public virtual tianyu::TianyuObject
     {
         __PUB__         EventArgs();
         __PUB__ virtual ~EventArgs() __override_func;
@@ -43,7 +44,7 @@ namespace dty
     };
 
     template<class TEventArgs = EventArgs>
-    class EventHandler : public virtual dty::TianyuObject
+    class EventHandler : public virtual tianyu::TianyuObject
     {
         using EventHandlerDelegate = void __VARIABLE__(__POINTER__)(object __VARIABLE__ sender, TEventArgs __VARIABLE__ e);
 
@@ -75,15 +76,15 @@ namespace dty
 #include <type_traits>
 
 #define __TEMPLATE_DEF__ template<class T>
-#define __EVENT_HD_DEF__ dty::EventHandler<T>
+#define __EVENT_HD_DEF__ tianyu::EventHandler<T>
 
 __TEMPLATE_DEF__ __construction__ __EVENT_HD_DEF__::EventHandler() :
-    dty::TianyuObject(),
+    tianyu::TianyuObject(),
     _Count(0),
-    _Handlers(new dty::EventHandlerItem<T>()),
+    _Handlers(new tianyu::EventHandlerItem<T>()),
     Count(_Count)
 {
-    static_assert(std::is_base_of<dty::EventArgs, T>::value, "expect dty::EventArgs or its child class");
+    static_assert(std::is_base_of<tianyu::EventArgs, T>::value, "expect tianyu::EventArgs or its child class");
 
     this->_Handlers->_id = 0;
     this->_Handlers->_next = ::null;
@@ -112,7 +113,7 @@ __TEMPLATE_DEF__ void __EVENT_HD_DEF__::Invoke(object sender, T e)
 __TEMPLATE_DEF__ void __EVENT_HD_DEF__::AddHandler(int32 handlerId, __EVENT_HD_DEF__::EventHandlerDelegate handler)
 {
     bool hasFind = false;
-    dty::EventHandlerItem<T>* head = this->_Handlers;
+    tianyu::EventHandlerItem<T>* head = this->_Handlers;
     while (::null != head->_next && !hasFind)
     {
         if (handlerId == head->_next->_id)
@@ -126,7 +127,7 @@ __TEMPLATE_DEF__ void __EVENT_HD_DEF__::AddHandler(int32 handlerId, __EVENT_HD_D
 
     if (!hasFind)
     {
-        dty::EventHandlerItem<T>* newHandler = new EventHandlerItem<T>();
+        tianyu::EventHandlerItem<T>* newHandler = new EventHandlerItem<T>();
         newHandler->_handler = handler;
         newHandler->_id = handlerId;
 
@@ -141,10 +142,10 @@ __TEMPLATE_DEF__ void __EVENT_HD_DEF__::Clear()
     if (0 == this->_Count)
         return;
 
-    dty::EventHandlerItem<T>* head = this->_Handlers;
+    tianyu::EventHandlerItem<T>* head = this->_Handlers;
     while (::null != head->_next)
     {
-        dty::EventHandlerItem<T>* del = head->_next;
+        tianyu::EventHandlerItem<T>* del = head->_next;
         head->_next = del->_next;
         delete del;
     }
@@ -157,8 +158,8 @@ __TEMPLATE_DEF__ void __EVENT_HD_DEF__::RemoveHandler(int32 handlerId)
     if (0 == this->_Count)
         return;
 
-    dty::EventHandlerItem<T>* head = this->_Handlers;
-    dty::EventHandlerItem<T>* del = ::null;
+    tianyu::EventHandlerItem<T>* head = this->_Handlers;
+    tianyu::EventHandlerItem<T>* del = ::null;
     while (::null != head->_next && ::null == del)
     {
         if (handlerId == head->_next->_id)
@@ -178,12 +179,12 @@ __TEMPLATE_DEF__ void __EVENT_HD_DEF__::RemoveHandler(int32 handlerId)
 
 __TEMPLATE_DEF__::string __EVENT_HD_DEF__::ToString() noexcept
 {
-    return dty::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
+    return tianyu::_dty_native_cpp_default_to_string(__PTR_TO_REF__ this);
 }
 
 __TEMPLATE_DEF__ uint64 __EVENT_HD_DEF__::GetTypeId()
 {
-    return dty::GetType(__PTR_TO_REF__ this).Id();
+    return tianyu::GetType(__PTR_TO_REF__ this).Id();
 }
 
 __TEMPLATE_DEF__ uint64 __EVENT_HD_DEF__::GetHashCode()
@@ -199,4 +200,4 @@ __TEMPLATE_DEF__ uint64 __EVENT_HD_DEF__::GetHashCode()
 
 #endif // !__cplusplus
 
-#endif // !__DTY_COMMON_NATIVE_PRIME_CORE_EVENT_H_PLUS_PLUS__
+#endif // !__TIANYU_COMMON_NATIVE_CORE_EVENT_H_PLUS_PLUS__

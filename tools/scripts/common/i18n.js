@@ -2,8 +2,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const basicDefs = require("./define");
-const definition = require("./define");
+const basicDefs = require("../utils/define");
+const definition = require("../utils/define");
+
+const fileReader = require("../utils/fileReader");
 
 const args = process.argv;
 const configuration = require("../../../resource/i18n/config.json");
@@ -76,7 +78,7 @@ async function createTargetContent(id, aData, desc) {
     aResultLines.push("//");
     aResultLines.push("// #####################################################");
 
-    const fileMacroDef = `__DTY_COMMON_NATIVE_RES_I18N_${id}_${language.desc[1].toUpperCase()}_H__`;
+    const fileMacroDef = `__TIANYU_COMMON_NATIVE_RES_I18N_${id}_${language.desc[1].toUpperCase()}_H__`;
     aResultLines.push(`#ifndef ${fileMacroDef}`);
     aResultLines.push(`#define ${fileMacroDef}`);
     aResultLines.push("");
@@ -113,30 +115,7 @@ async function generateTarget(id, source, target, desc) {
         fnReject = reject;
     });
 
-    const aFileReadPromise = [];
-    for (const sourceFile of source) {
-        const filePath = path.resolve(__dirname, I18N_SOURCE_PATH, `${sourceFile}.json`);
-        readFilePromise = new Promise((resolve, reject) => {
-            fs.readFile(
-                filePath,
-                {
-                    encoding: "utf-8",
-                },
-                (err, data) => {
-                    if (!!err) {
-                        definition.FULL_CONSOLE_LOG && console.error(`       - read file ${sourceFile} failed. ${err}`);
-                        reject();
-                    } else {
-                        definition.FULL_CONSOLE_LOG && console.log(`       - read File :${sourceFile}.json SUCCESS`);
-                        resolve({ source: sourceFile, data: JSON.parse(data) });
-                    }
-                },
-            );
-        });
-        aFileReadPromise.push(readFilePromise);
-    }
-
-    Promise.all(aFileReadPromise).then((aData) => {
+    fileReader.readFiles(source, I18N_SOURCE_PATH).then((aData) => {
         const targetPath = path.resolve(__dirname, I18N_RES_PATH_RELATION, `${target}.h`);
         try {
             console.log(`     ** start handle target file :${target}.h **`);
