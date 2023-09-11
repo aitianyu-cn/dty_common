@@ -97,22 +97,81 @@ const uint64 __VARIABLE__ _tianyu_except_generic_operationNotSupportException = 
 const uint64 __VARIABLE__ _tianyu_except_generic_operationFailedException = 0x30000001FFFFFFFFULL;
 
 
+/**
+ * @namespace tianyu::except
+ * @brief parse value error in formatting
+ */
 const uint64 __VARIABLE__ _tianyu_except_formatter_parseException = 0xF0000001FFFFFFFFULL;
+
+
+/**
+ * @namespace tianyu::except
+ * @brief parse a value from empty string
+ */
 const uint64 __VARIABLE__ _tianyu_except_formatter_parseStringEmptyException = 0xF0000002FFFFFFFFULL;
 
 #pragma endregion
 
 #pragma region tianyu_except_formatter_error_part_0x00000000
 
+/**
+ * @namespace tianyu::except
+ * @brief duplicated scale setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_scale = 0x1FFFFFFF;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated prefix setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_prefix = 0x1FFFFFFE;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated integer length setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_count_int = 0x1FFFFFFD;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated decimal length setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_count_float = 0x1FFFFFFC;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated repeat times setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_count_times = 0x1FFFFFFB;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated align setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_align = 0x1FFFFFFA;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated force symbol flag in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_sym_force = 0x1FFFFFF9;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated set formatting to char
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_char_case = 0x1FFFFFF8;
+
+/**
+ * @namespace tianyu::except
+ * @brief duplicated fill char setting in formatting control string
+ */
 const int32 _tianyu_except_number_formatter_error_duplicate_fill_char = 0x1FFFFFF7;
+
+/**
+ * @namespace tianyu::except
+ * @brief an error in formatting string that lost a formatting char type
+ */
 const int32 _tianyu_except_number_formatter_error_fill_char_not_assign = 0x1FFFFFF6;
 
 #pragma endregion

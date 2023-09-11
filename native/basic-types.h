@@ -136,8 +136,9 @@ __CMODE__
 
     // pure C mode
     // 
-    /** @brief 无符号字符 数据类型 */
-    typedef      unsigned char __VARIABLE__ uchar;
+
+/** @brief 无符号字符 数据类型 */
+typedef      unsigned char __VARIABLE__ uchar;
 // 
 /** @brief 有符号字节 数据类型 */
 typedef        signed char __VARIABLE__ sbyte;

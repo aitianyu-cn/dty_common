@@ -124,7 +124,9 @@
         "*.tcc": "cpp",
         "memory_resource": "cpp",
         "queue": "cpp",
-        "core.hxx": "c"
+        "core.hxx": "c",
+        "__verbose_abort": "cpp",
+        "variant": "cpp"
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
