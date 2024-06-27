@@ -1,5 +1,5 @@
 #include "../../../testframe.hxx"
-#include "../../../../native/prime/core/iterator.hpp"
+#include "../../../../native/core/iterator.hpp"
 
 class TestClass_ItObject
 {
@@ -14,14 +14,14 @@ public:
     }
 
 public:
-    object operator new[](size_t size)
+    object operator new [](size_t size)
     {
         ++TestClass_ItObject::NewCounter;
         return ::operator new [](size);
     }
 
 public:
-    void operator delete[](object obj)
+    void operator delete [](object obj)
     {
         --TestClass_ItObject::NewCounter;
         ::operator delete [](obj);
@@ -36,13 +36,13 @@ public:
 int32 TestClass_ItObject::Counter = 0;
 int32 TestClass_ItObject::NewCounter = 0;
 
-using IE = dty::collection::IteratorEntity<int32>;
-using IO = dty::collection::Iterator<int32>;
+using IE = tianyu::collection::IteratorEntity<int32>;
+using IO = tianyu::collection::Iterator<int32>;
 
 IE* IteratorEntityInstance = ::null;
 IO* pIteratorObj = ::null;
 
-void test_spec_iterator_object(dty::test::TestEntity& entity)
+void test_spec_iterator_object(tianyu::test::TestEntity& entity)
 {
     entity.RunTest("Before All", "constructor", [](TO& t) -> void
         {

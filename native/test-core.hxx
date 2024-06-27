@@ -374,6 +374,10 @@ namespace tianyu::test
         __PRI__ void       __VARIABLE__ Record(const ::string __VARIABLE__ name, const ::string __VARIABLE__ description, TestState __VARIABLE__ state);
         __PRI__ void       __VARIABLE__ EndRecord();
     };
+
+    constexpr int32 _tianyu_test_entity_fail_param_too_few = -1;
+    constexpr int32 _tianyu_test_entity_fail_param_pre_more = -2;
+    constexpr int32 _tianyu_test_entity_fail_file_open = -3;
 }
 
 #pragma region template function implementation

@@ -1,5 +1,5 @@
 #include "../../../testframe.hxx"
-#include "../../../../native/prime/core/iterator.hpp"
+#include "../../../../native/core/iterator.hpp"
 
 class TestClass_Filter
 {
@@ -14,14 +14,14 @@ public:
     }
 
 public:
-    object operator new[](size_t size)
+    object operator new [](size_t size)
     {
         ++TestClass_Filter::NewCounter;
         return ::operator new [](size);
     }
 
 public:
-    void operator delete[](object obj)
+    void operator delete [](object obj)
     {
         --TestClass_Filter::NewCounter;
         ::operator delete [](obj);
@@ -36,12 +36,12 @@ public:
 int32 TestClass_Filter::Counter = 0;
 int32 TestClass_Filter::NewCounter = 0;
 
-using FR = dty::collection::FilterResult<int32>;
-using FRC = dty::collection::FilterResult<TestClass_Filter>;
+using FR = tianyu::collection::FilterResult<int32>;
+using FRC = tianyu::collection::FilterResult<TestClass_Filter>;
 
 FR* pFilter;
 
-void test_spec_filter_result(dty::test::TestEntity& entity)
+void test_spec_filter_result(tianyu::test::TestEntity& entity)
 {
     entity.StartSpec("constructor", [](TE& entity) -> void
         {

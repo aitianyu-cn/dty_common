@@ -1,5 +1,5 @@
 #include "../../testframe.hxx"
-#include "../../../native/prime/core/property.hpp"
+#include "../../../native/core/property.hpp"
 
 _enum TestEnum
 {
@@ -8,25 +8,25 @@ _enum TestEnum
     CCC
 };
 
-dty::Property<int32>* pProp_1 = ::null;
-dty::Property<TestEnum>* pProp_2 = ::null;
+tianyu::Property<int32>* pProp_1 = ::null;
+tianyu::Property<TestEnum>* pProp_2 = ::null;
 
-dty::LProperty<int32>* pLProp_1 = ::null;
-dty::LProperty<TestEnum>* pLProp_2 = ::null;
+tianyu::LProperty<int32>* pLProp_1 = ::null;
+tianyu::LProperty<TestEnum>* pLProp_2 = ::null;
 
 int32 LProp_1_Value;
 TestEnum LProp_2_Value;
 
-TEST_MAIN("dty.common.native.test.prime.core.property")
+TEST_MAIN("tianyu.common.native.test.prime.core.property")
 {
-    entity.StartSpec("Property Spec", [](dty::test::TestEntity& entity) -> void
+    entity.StartSpec("Property Spec", [](tianyu::test::TestEntity& entity) -> void
         {
-            entity.StartSpec("integer 32bit", [](dty::test::TestEntity& entity) -> void
+            entity.StartSpec("integer 32bit", [](tianyu::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for property class constructor",
                         {
                             int32 value = 1;
-                            pProp_1 = new dty::Property<int32>(value);
+                            pProp_1 = new tianyu::Property<int32>(value);
 
                             tobj.IsNotNull(pProp_1);
                             tobj.EQ(pProp_1->Get(), value);
@@ -53,7 +53,7 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     );
                     TEST_ITEM("operator equal", "test for property operator equal",
                         {
-                            dty::Property p2(1000);
+                            tianyu::Property p2(1000);
                             __PTR_TO_REF__ pProp_1 = p2;
                             tobj.EQ(pProp_1->Get(), 1000);
                         }
@@ -62,12 +62,12 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     delete pProp_1;
                 }, true);
 
-            entity.StartSpec("enum type", [](dty::test::TestEntity& entity) -> void
+            entity.StartSpec("enum type", [](tianyu::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for property class constructor",
                         {
                             TestEnum value = TestEnum::AAA;
-                            pProp_2 = new dty::Property<TestEnum>(value);
+                            pProp_2 = new tianyu::Property<TestEnum>(value);
 
                             tobj.IsNotNull(pProp_2);
                             tobj.EQ(pProp_2->Get(), value);
@@ -94,7 +94,7 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     );
                     TEST_ITEM("operator equal", "test for property operator equal",
                         {
-                            dty::Property<TestEnum> p2(TestEnum::AAA);
+                            tianyu::Property<TestEnum> p2(TestEnum::AAA);
                             __PTR_TO_REF__ pProp_2 = p2;
                             tobj.EQ(pProp_2->Get(), TestEnum::AAA);
                         }
@@ -104,13 +104,13 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                 }, true);
         }
     );
-    entity.StartSpec("Lambda Property Spec", [](dty::test::TestEntity& entity) -> void
+    entity.StartSpec("Lambda Property Spec", [](tianyu::test::TestEntity& entity) -> void
         {
-            entity.StartSpec("integer 32bit", [](dty::test::TestEntity& entity) -> void
+            entity.StartSpec("integer 32bit", [](tianyu::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for lambda property class constructor",
                         {
-                            pLProp_1 = new dty::LProperty<int32>(
+                            pLProp_1 = new tianyu::LProperty<int32>(
                                 []()->int32 { return LProp_1_Value; },
                                 [](int32 value)->void { LProp_1_Value = value; }
                             );
@@ -142,7 +142,7 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     );
                     TEST_ITEM("operator equal", "test for property operator equal",
                         {
-                            dty::Property<int32> p2(1000);
+                            tianyu::Property<int32> p2(1000);
 
                             __PTR_TO_REF__ pLProp_1 = p2;
 
@@ -154,11 +154,11 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     delete pLProp_1;
                 }, true);
 
-            entity.StartSpec("enum type", [](dty::test::TestEntity& entity) -> void
+            entity.StartSpec("enum type", [](tianyu::test::TestEntity& entity) -> void
                 {
                     TEST_ITEM("constructor", "test for lambda property class constructor",
                         {
-                            pLProp_2 = new dty::LProperty<TestEnum>(
+                            pLProp_2 = new tianyu::LProperty<TestEnum>(
                                 []()->TestEnum { return LProp_2_Value; },
                                 [](TestEnum value)->void { LProp_2_Value = value; }
                             );
@@ -190,7 +190,7 @@ TEST_MAIN("dty.common.native.test.prime.core.property")
                     );
                     TEST_ITEM("operator equal", "test for property operator equal",
                         {
-                            dty::Property<TestEnum> p2(TestEnum::CCC);
+                            tianyu::Property<TestEnum> p2(TestEnum::CCC);
 
                             __PTR_TO_REF__ pLProp_2 = p2;
 

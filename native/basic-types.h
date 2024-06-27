@@ -260,12 +260,12 @@ constexpr auto null = nullptr;
 #define _ty_class(cname, ...) class cname : __VA_ARGS__
 
 // Macro Definition for Tianyu Class Type
-// Default externed from dty::TianyuObject, provide external functions
-#define _class(cname, ...) _ty_class(cname, public virtual dty::TianyuObject, ##__VA_ARGS__)
+// Default externed from tianyu::TianyuObject, provide external functions
+#define _class(cname, ...) _ty_class(cname, public virtual tianyu::TianyuObject, ##__VA_ARGS__)
 
 // Macro Definition for Tianyu Class final Type
-// Default externed from dty::TianyuObject, provide external functions
-#define _sealed(cname, ...) _ty_class(cname final, public virtual dty::TianyuObject, ##__VA_ARGS__)
+// Default externed from tianyu::TianyuObject, provide external functions
+#define _sealed(cname, ...) _ty_class(cname final, public virtual tianyu::TianyuObject, ##__VA_ARGS__)
 
 // Macro Definition for clearly enum define
 // enum class

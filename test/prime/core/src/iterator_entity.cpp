@@ -1,5 +1,5 @@
 #include "../../../testframe.hxx"
-#include "../../../../native/prime/core/iterator.hpp"
+#include "../../../../native/core/iterator.hpp"
 
 class TestClass_Entity
 {
@@ -14,14 +14,14 @@ public:
     }
 
 public:
-    object operator new[](size_t size)
+    object operator new [](size_t size)
     {
         ++TestClass_Entity::NewCounter;
         return ::operator new [](size);
     }
 
 public:
-    void operator delete[](object obj)
+    void operator delete [](object obj)
     {
         --TestClass_Entity::NewCounter;
         ::operator delete [](obj);
@@ -36,13 +36,13 @@ public:
 int32 TestClass_Entity::Counter = 0;
 int32 TestClass_Entity::NewCounter = 0;
 
-using IE = dty::collection::IteratorEntity<int32>;
-using IEC = dty::collection::IteratorEntity<TestClass_Entity>;
+using IE = tianyu::collection::IteratorEntity<int32>;
+using IEC = tianyu::collection::IteratorEntity<TestClass_Entity>;
 
 IE* pIterator = ::null;
 int32 EnumCounter = 0;
 
-void test_spec_iterator_entity(dty::test::TestEntity& entity)
+void test_spec_iterator_entity(tianyu::test::TestEntity& entity)
 {
     entity.StartSpec("construct", [](TE& entity) -> void
         {
@@ -296,7 +296,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
                         {
                             IE e(::null, 0);
 
-                            dty::collection::FilterResult<int32> fr = e.Filter([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = e.Filter([](int32& value) -> bool
                                 {
                                     return true;
                                 }
@@ -309,7 +309,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Filter", "return empty FilterResult object if no element mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
                                 {
                                     return value >= 10;
                                 }
@@ -322,7 +322,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Filter", "get a not empty FilterResult if at least one element mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = pIterator->Filter([](int32& value) -> bool
                                 {
                                     return value == 9;
                                 }
@@ -342,7 +342,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
                         {
                             IE e(::null, 0);
 
-                            dty::collection::FilterResult<int32> fr = e.Never([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = e.Never([](int32& value) -> bool
                                 {
                                     return true;
                                 }
@@ -355,7 +355,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Never", "return empty FilterResult object if all element mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
                                 {
                                     return value < 10;
                                 }
@@ -368,7 +368,7 @@ void test_spec_iterator_entity(dty::test::TestEntity& entity)
 
                     entity.RunTest("Never", "get a not empty FilterResult if at least one element not mapping", [](TO& t) -> void
                         {
-                            dty::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
+                            tianyu::collection::FilterResult<int32> fr = pIterator->Never([](int32& value) -> bool
                                 {
                                     return value != 9;
                                 }

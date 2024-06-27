@@ -1,22 +1,22 @@
 #include "../../testframe.hxx"
-#include "../../../native/prime/core/event.hpp"
+#include "../../../native/core/event.hpp"
 
-class CustomEventArgs : public virtual dty::EventArgs
+class CustomEventArgs : public virtual tianyu::EventArgs
 {
     __PUB__ int32 Value;
 
-    __PUB__         CustomEventArgs(int32 value) :dty::EventArgs(), Value(value)
+    __PUB__         CustomEventArgs(int32 value) :tianyu::EventArgs(), Value(value)
     { }
     __PUB__ virtual ~CustomEventArgs() __override_func { }
 };
 
-dty::EventHandler<dty::EventArgs>* defaultHandler;
-dty::EventHandler<CustomEventArgs>* customHandler;
+tianyu::EventHandler<tianyu::EventArgs>* defaultHandler;
+tianyu::EventHandler<CustomEventArgs>* customHandler;
 
 int32 defaultHandlerValue;
 int32 customHandlerValue;
 
-TEST_MAIN("dty.common.native.test.prime.core.event")
+TEST_MAIN("tianyu.common.native.test.prime.core.event")
 {
     TEST_SPEC("default Event Arg",
         {
@@ -25,7 +25,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
 
             TEST_ITEM("Spec Init", "prepare the test obj",
                 {
-                    defaultHandler = new dty::EventHandler<dty::EventArgs>();
+                    defaultHandler = new tianyu::EventHandler<tianyu::EventArgs>();
 
                     tobj.IsNotNull(defaultHandler);
                     tobj.EQ((int32)(defaultHandler->Count), 0);
@@ -37,7 +37,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
 
-                    defaultHandler->AddHandler(1, [](object sender, dty::EventArgs e) -> void
+                    defaultHandler->AddHandler(1, [](object sender, tianyu::EventArgs e) -> void
                         {
                             defaultHandlerValue |= 0b00000001;
                             return;
@@ -53,7 +53,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
                     if (!tobj.IsNotNull(defaultHandler))
                         return;
 
-                    defaultHandler->AddHandler(2, [](object sender, dty::EventArgs e) -> void
+                    defaultHandler->AddHandler(2, [](object sender, tianyu::EventArgs e) -> void
                         {
                             defaultHandlerValue |= 0b00000010;
                             return;
@@ -70,7 +70,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
                         return;
 
                     defaultHandlerValue = 0;
-                    defaultHandler->Invoke(::null, dty::EventArgs());
+                    defaultHandler->Invoke(::null, tianyu::EventArgs());
 
                     tobj.EQ(defaultHandlerValue, 0b00000011);
                 }
@@ -93,7 +93,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
                         return;
 
                     defaultHandlerValue = 0;
-                    defaultHandler->Invoke(::null, dty::EventArgs());
+                    defaultHandler->Invoke(::null, tianyu::EventArgs());
 
                     tobj.EQ(defaultHandlerValue, 0b00000010);
                 }
@@ -115,7 +115,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
                         return;
 
                     defaultHandlerValue = 0;
-                    defaultHandler->Invoke(::null, dty::EventArgs());
+                    defaultHandler->Invoke(::null, tianyu::EventArgs());
 
                     tobj.EQ(defaultHandlerValue, 0b00000000);
                 }
@@ -133,7 +133,7 @@ TEST_MAIN("dty.common.native.test.prime.core.event")
 
             TEST_ITEM("Spec Init", "prepare the test obj",
                 {
-                    customHandler = new dty::EventHandler<CustomEventArgs>();
+                    customHandler = new tianyu::EventHandler<CustomEventArgs>();
 
                     tobj.IsNotNull(customHandler);
                     tobj.EQ((int32)(customHandler->Count), 0);

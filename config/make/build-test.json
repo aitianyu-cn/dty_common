@@ -1,29 +1,29 @@
 {
     "base": "test",
     "libs": {
-        "dty.common.native.test.core": {
+        "tianyu.common.native.test.core": {
+            "path": ["native/core"],
+            "build": true,
+            "type": "static",
+            "exclude": [],
+            "include": []
+        },
+        "tianyu.common.native.test.tianyu-infra": {
             "path": ["native"],
             "build": true,
             "type": "static",
             "exclude": [],
-            "include": ["native/prime/core/src/error.cpp"]
-        },
-        "dty.common.native.test.dty-core": {
-            "path": ["native/prime/core"],
-            "build": true,
-            "type": "static",
-            "exclude": ["native/prime/core/src/error.cpp"],
             "include": []
         }
     },
     "bin": {
-        "dty.common.native.test.dty-core": {
-            "path": "dty-core"
+        "tianyu.common.native.test.tianyu-core": {
+            "path": "tianyu-infra"
         },
-        "dty.common.native.test.prime.core": {
-            "path": "prime/core"
+        "tianyu.common.native.test.prime.core": {
+            "path": "core"
         },
-        "dty.common.native.test.prime": {
+        "tianyu.common.native.test.prime": {
             "path": "prime"
         }
     }

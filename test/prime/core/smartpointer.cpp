@@ -1,5 +1,5 @@
 #include "../../testframe.hxx"
-#include "../../../native/prime/core/pointer.hpp"
+#include "../../../native/core/pointer.hpp"
 
 class TestClass
 {
@@ -57,9 +57,9 @@ class C : public F
     }
 };
 
-dty::SmartPointer<TestClass>* sp;
+tianyu::SmartPointer<TestClass>* sp;
 
-RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
+RUNTEST(entity, "tianyu.common.native.test.prime.core.pointer")
 {
     sp = ::null;
 
@@ -68,7 +68,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
             entity.RunTest("constructor", "default", [](TO& t) -> void
                 {
                     int32 pre_counter = TestClass::Counter;
-                    sp = new dty::SmartPointer<TestClass>();
+                    sp = new tianyu::SmartPointer<TestClass>();
 
                     if (!t.IsNotNull(sp))
                         return;
@@ -92,7 +92,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         return;
 
                     int32 pre_counter = TestClass::Counter;
-                    sp = new dty::SmartPointer<TestClass>(test_p);
+                    sp = new tianyu::SmartPointer<TestClass>(test_p);
                     if (!t.IsNotNull(sp))
                     {
                         delete test_p;
@@ -121,7 +121,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         return;
 
                     int32 pre_counter = TestClass::Counter;
-                    sp = new dty::SmartPointer<TestClass>(test_p, (int64)2);
+                    sp = new tianyu::SmartPointer<TestClass>(test_p, (int64)2);
                     if (!t.IsNotNull(sp))
                     {
                         delete [] test_p;
@@ -152,7 +152,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                                 return;
 
                             int32 pre_counter = TestClass::Counter;
-                            sp = new dty::SmartPointer<TestClass>(test_p, false);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p, false);
                             if (!t.IsNotNull(sp))
                             {
                                 delete test_p;
@@ -181,7 +181,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                                 return;
 
                             int32 pre_counter = TestClass::Counter;
-                            sp = new dty::SmartPointer<TestClass>(test_p, true);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p, true);
                             if (!t.IsNotNull(sp))
                             {
                                 delete test_p;
@@ -210,7 +210,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                                 return;
 
                             int32 pre_counter = TestClass::Counter;
-                            sp = new dty::SmartPointer<TestClass>(test_p, (int64)2, false);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p, (int64)2, false);
                             if (!t.IsNotNull(sp))
                             {
                                 delete [] test_p;
@@ -239,7 +239,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                                 return;
 
                             int32 pre_counter = TestClass::Counter;
-                            sp = new dty::SmartPointer<TestClass>(test_p, (int64)2, true);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p, (int64)2, true);
                             if (!t.IsNotNull(sp))
                             {
                                 delete [] test_p;
@@ -270,7 +270,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
                                 return;
-                            sp = new dty::SmartPointer<TestClass>(test_p);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p);
                             if (!t.IsNotNull(sp))
                             {
                                 delete test_p;
@@ -281,7 +281,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             int32 pre_counter = TestClass::Counter;
 
                             // copy data from sp
-                            dty::SmartPointer<TestClass>* csp = new dty::SmartPointer(*sp);
+                            tianyu::SmartPointer<TestClass>* csp = new tianyu::SmartPointer(*sp);
                             if (!t.IsNotNull(csp))
                             {
                                 delete sp;
@@ -313,7 +313,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             TestClass* test_p = new TestClass();
                             if (!t.IsNotNull(test_p))
                                 return;
-                            sp = new dty::SmartPointer<TestClass>(test_p, true);
+                            sp = new tianyu::SmartPointer<TestClass>(test_p, true);
                             if (!t.IsNotNull(sp))
                             {
                                 delete test_p;
@@ -324,7 +324,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             int32 pre_counter = TestClass::Counter;
 
                             // copy data from sp
-                            dty::SmartPointer<TestClass>* csp = new dty::SmartPointer(*sp);
+                            tianyu::SmartPointer<TestClass>* csp = new tianyu::SmartPointer(*sp);
                             if (!t.IsNotNull(csp))
                             {
                                 delete sp;
@@ -358,7 +358,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunExceptionTest("single", "create from a pointer", [](TO& t) -> void
                         {
                             // create a sp from a null object
-                            sp = new dty::SmartPointer<TestClass>(::null);
+                            sp = new tianyu::SmartPointer<TestClass>(::null);
                         }
                     );
 
@@ -367,21 +367,21 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             entity.RunExceptionTest("p & size (null)", "create from a null pointer", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
-                                    sp = new dty::SmartPointer<TestClass>(::null, (int64)1);
+                                    sp = new tianyu::SmartPointer<TestClass>(::null, (int64)1);
                                 }
                             );
 
                             entity.RunExceptionTest("p & size (size = 0)", "create from a size equals 0", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
-                                    sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)0);
+                                    sp = new tianyu::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)0);
                                 }
                             );
 
                             entity.RunExceptionTest("p & size (size = 0)", "create from a size less than 0", [](TO& t) -> void
                                 {
                                     // create a sp from a null object
-                                    sp = new dty::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)-1);
+                                    sp = new tianyu::SmartPointer<TestClass>((TestClass*)1 /** only for test */, (int64)-1);
                                 }
                             );
                         }
@@ -399,7 +399,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     if (!t.IsNotNull(test_p))
                         return;
 
-                    sp = new dty::SmartPointer<TestClass>(test_p);
+                    sp = new tianyu::SmartPointer<TestClass>(test_p);
                     t.IsNotNull(sp);
                     if (!t.IsNotNull(sp))
                     {
@@ -412,7 +412,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
             entity.RunTest("GetWeak (Strong)", "get a weak object from sp", [](TO& t) -> void
                 {
                     int32 pre_counter = TestClass::Counter;
-                    dty::SmartPointer<TestClass> wsp = sp->GetWeak();
+                    tianyu::SmartPointer<TestClass> wsp = sp->GetWeak();
 
                     t.EQ(TestClass::Counter, pre_counter);
                 }
@@ -425,7 +425,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
             entity.StartSpec("GetWeak (from Weak)", [](TE& entity) -> void
                 {
                     TestClass* test_p = new TestClass();
-                    sp = new dty::SmartPointer<TestClass>(test_p, true);
+                    sp = new tianyu::SmartPointer<TestClass>(test_p, true);
 
                     entity.RunTest("GetWeak (from Weak)", "Before Test", [](TO& t) -> void
                         {
@@ -436,7 +436,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunTest("GetWeak (from Weak)", "get a weak object from sp", [](TO& t) -> void
                         {
                             int32 pre_counter = TestClass::Counter;
-                            dty::SmartPointer<TestClass> wsp = sp->GetWeak();
+                            tianyu::SmartPointer<TestClass> wsp = sp->GetWeak();
 
                             t.EQ(TestClass::Counter, pre_counter);
                         }
@@ -446,8 +446,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         delete sp;
                 },
                 false,
-                    true
-                    );
+                true
+            );
         }
     );
 
@@ -457,8 +457,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                 {
                     // create a weak pointer
                     TestClass* test_p = new TestClass();
-                    dty::SmartPointer<TestClass> p1(test_p, true);
-                    dty::SmartPointer<TestClass> p2;
+                    tianyu::SmartPointer<TestClass> p1(test_p, true);
+                    tianyu::SmartPointer<TestClass> p2;
 
                     t.ToBeFalse(p1.IsNull());
 
@@ -471,8 +471,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                 {
                     // create a weak pointer
                     TestClass* test_p = new TestClass();
-                    dty::SmartPointer<TestClass> p1(test_p);
-                    dty::SmartPointer<TestClass> p2(test_p, true);
+                    tianyu::SmartPointer<TestClass> p1(test_p);
+                    tianyu::SmartPointer<TestClass> p2(test_p, true);
 
                     t.ToBeFalse(p1.IsNull());
 
@@ -485,8 +485,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     // create a weak pointer
                     TestClass* test_p1 = new TestClass();
                     TestClass* test_p2 = new TestClass();
-                    dty::SmartPointer<TestClass> p1(test_p1);
-                    dty::SmartPointer<TestClass> p2(test_p2);
+                    tianyu::SmartPointer<TestClass> p1(test_p1);
+                    tianyu::SmartPointer<TestClass> p2(test_p2);
 
                     t.ToBeFalse(p1.IsNull());
                     t.ToBeFalse(p2.IsNull());
@@ -506,7 +506,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                 {
                     entity.RunTest("operator &", "null object should return 0", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p;
+                            tianyu::SmartPointer<int32> p;
 
                             t.EQ(0ULL, &p);
                         }
@@ -514,7 +514,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunTest("operator &", "not null object should return address", [](TO& t) -> void
                         {
                             int32* ip = new int32(0);
-                            dty::SmartPointer<int32> p(ip);
+                            tianyu::SmartPointer<int32> p(ip);
 
                             t.EQ((uint64)ip, &p);
                         }
@@ -527,7 +527,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunTest("operator *", "return real value", [](TO& t) -> void
                         {
                             int32* ip = new int32(1);
-                            dty::SmartPointer<int32> p(ip);
+                            tianyu::SmartPointer<int32> p(ip);
 
                             *ip = 10;
                             t.EQ(*p, 10);
@@ -537,7 +537,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunTest("operator *", "should return a reference, should be set value", [](TO& t) -> void
                         {
                             int32* ip = new int32(1);
-                            dty::SmartPointer<int32> p(ip);
+                            tianyu::SmartPointer<int32> p(ip);
 
                             *p = 10;
                             t.EQ(*ip, 10);
@@ -546,7 +546,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                     entity.RunExceptionTest("operator *", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p;
+                            tianyu::SmartPointer<int32> p;
 
                             *p;
                         }
@@ -558,7 +558,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                 {
                     entity.RunTest("operator ->", "should access successful", [](TO& t) -> void
                         {
-                            dty::SmartPointer<TestClass> p(new TestClass());
+                            tianyu::SmartPointer<TestClass> p(new TestClass());
 
                             int32 counter = TestClass::Counter;
                             t.EQ(p->GetValue(), counter);
@@ -566,7 +566,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     );
                     entity.RunExceptionTest("operator ->", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
-                            dty::SmartPointer<TestClass> p;
+                            tianyu::SmartPointer<TestClass> p;
 
                             p->GetValue();
                         }
@@ -578,7 +578,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                 {
                     entity.RunExceptionTest("operator []", "throw an exception if try to require from null object", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p;
+                            tianyu::SmartPointer<int32> p;
 
                             p[0];
                         }
@@ -586,7 +586,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                     entity.RunExceptionTest("operator []", "throw an exception if index less than 0", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p(new int32[2], 2LL);
+                            tianyu::SmartPointer<int32> p(new int32[2], 2LL);
 
                             p[-1];
                         }
@@ -594,7 +594,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                     entity.RunExceptionTest("operator []", "throw an exception if index out of range", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p(new int32[2], 2LL);
+                            tianyu::SmartPointer<int32> p(new int32[2], 2LL);
 
                             p[2];
                         }
@@ -602,7 +602,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                     entity.RunTest("operator []", "return the value", [](TO& t) -> void
                         {
-                            dty::SmartPointer<int32> p(new int32[2]{ 1,2 }, 2LL);
+                            tianyu::SmartPointer<int32> p(new int32[2]{ 1,2 }, 2LL);
 
                             t.EQ(p[0], 1);
                             t.EQ(p[1], 2);
@@ -612,7 +612,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                     entity.RunTest("operator []", "value can be set through reference", [](TO& t) -> void
                         {
                             int32* ip = new int32[2]{ 1,2 };
-                            dty::SmartPointer<int32> p(ip, 2LL);
+                            tianyu::SmartPointer<int32> p(ip, 2LL);
 
                             t.EQ(p[0], 1);
                             t.EQ(p[1], 2);
@@ -633,7 +633,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         {
                             entity.RunTest("valueable", "should return true if equals", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<int32> p(new int32(0));
+                                    tianyu::SmartPointer<int32> p(new int32(0));
 
                                     t.ToBeTrue(p == 0);
                                 }
@@ -641,7 +641,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                             entity.RunTest("valueable", "should return false if address is not equal", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<EQTestClass> p(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p(new EQTestClass());
                                     EQTestClass tc;
 
                                     t.ToBeFalse(p == tc);
@@ -655,8 +655,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             entity.RunTest("reference", "should return true if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass* tp = new EQTestClass();
-                                    dty::SmartPointer<EQTestClass> p(tp, true);
-                                    dty::SmartPointer<EQTestClass> wp(tp, true);
+                                    tianyu::SmartPointer<EQTestClass> p(tp, true);
+                                    tianyu::SmartPointer<EQTestClass> wp(tp, true);
 
                                     t.ToBeTrue(p == wp);
 
@@ -666,8 +666,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                             entity.RunTest("reference", "should return false if address is not equal", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<EQTestClass> p1(new EQTestClass());
-                                    dty::SmartPointer<EQTestClass> p2(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p1(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p2(new EQTestClass());
 
                                     t.ToBeFalse(p1 == p2);
                                 }
@@ -683,7 +683,7 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         {
                             entity.RunTest("valueable", "should return true if not equals", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<int32> p(new int32(0));
+                                    tianyu::SmartPointer<int32> p(new int32(0));
 
                                     t.ToBeTrue(p != 1);
                                 }
@@ -691,8 +691,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
 
                             entity.RunTest("valueable", "should return true if address is not equal", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<EQTestClass> p1(new EQTestClass());
-                                    dty::SmartPointer<EQTestClass> p2(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p1(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p2(new EQTestClass());
 
                                     t.ToBeTrue(p1 != p2);
                                 }
@@ -701,8 +701,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             entity.RunTest("valueable", "should return false if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass tc;
-                                    dty::SmartPointer<EQTestClass> p1(&tc, true);
-                                    dty::SmartPointer<EQTestClass> p2(&tc, true);
+                                    tianyu::SmartPointer<EQTestClass> p1(&tc, true);
+                                    tianyu::SmartPointer<EQTestClass> p2(&tc, true);
 
                                     t.ToBeFalse(p1 != p2);
                                 }
@@ -714,8 +714,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                         {
                             entity.RunTest("reference", "should return true if address is not equal", [](TO& t) -> void
                                 {
-                                    dty::SmartPointer<EQTestClass> p1(new EQTestClass());
-                                    dty::SmartPointer<EQTestClass> p2(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p1(new EQTestClass());
+                                    tianyu::SmartPointer<EQTestClass> p2(new EQTestClass());
 
                                     t.ToBeTrue(p1 != p2);
                                 }
@@ -724,8 +724,8 @@ RUNTEST(entity, "dty.common.native.test.prime.core.pointer")
                             entity.RunTest("reference", "should return false if address is equal", [](TO& t) -> void
                                 {
                                     EQTestClass* tp = new EQTestClass();
-                                    dty::SmartPointer<EQTestClass> p1(tp, true);
-                                    dty::SmartPointer<EQTestClass> p2(tp, true);
+                                    tianyu::SmartPointer<EQTestClass> p1(tp, true);
+                                    tianyu::SmartPointer<EQTestClass> p2(tp, true);
 
                                     t.ToBeFalse(p1 != p2);
 

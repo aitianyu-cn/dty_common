@@ -1,11 +1,11 @@
 #include "../../testframe.hxx"
-#include "../../../native/prime/core/iterator.hpp"
+#include "../../../native/core/iterator.hpp"
 
-extern void test_spec_filter_result(dty::test::TestEntity& entity);
-extern void test_spec_iterator_entity(dty::test::TestEntity& entity);
-extern void test_spec_iterator_object(dty::test::TestEntity& entity);
+extern void test_spec_filter_result(tianyu::test::TestEntity& entity);
+extern void test_spec_iterator_entity(tianyu::test::TestEntity& entity);
+extern void test_spec_iterator_object(tianyu::test::TestEntity& entity);
 
-RUNTEST(entity, "dty.common.native.test.prime.core.iterator")
+RUNTEST(entity, "tianyu.common.native.test.prime.core.iterator")
 {
     // test sub spec for FilterResult
     entity.StartSpec("FilterResult Class", test_spec_filter_result);
